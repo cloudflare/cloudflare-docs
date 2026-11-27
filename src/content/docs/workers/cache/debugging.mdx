@@ -6,6 +6,8 @@ sidebar:
   order: 5
 ---
 
+import { DashButton, Steps } from "~/components";
+
 If caching is not behaving the way you expect, the `Cf-Cache-Status` response header is the first place to look. Every response carries it, and its value tells you exactly what happened for that request.
 
 :::note
@@ -95,6 +97,7 @@ If your origin data changed but requests still return stale content:
 - **Check the TTL.** The response stays cached for `max-age` seconds. You may be looking at a response that is still within its freshness window.
 - **Purge the affected responses.** Use `ctx.cache.purge()` with tags or a path prefix to delete specific entries. Refer to [Purging the cache](/workers/cache/purge/).
 - **Add tags at write time.** If you did not set `Cache-Tag` headers, you cannot purge by tag. Add tags to your cached responses, deploy, and once new entries are written they become purgeable.
+- **Change the `ETag` when the content changes.** If your Worker answers a revalidation with a `200` that carries the same `ETag` as the cached response, the lower cache tier and visitors' browsers keep the old body. Refer to [Answer conditional requests](/workers/cache/purge/#answer-conditional-requests).
 
 ## Two callers receive each other's cached responses
 
@@ -148,4 +151,16 @@ For per-plan response size limits, refer to [Cacheable size limits](/cache/conce
 
 ## I need more visibility
 
-At launch, the primary debugging surfaces are the `Cf-Cache-Status` response header and per-invocation cache-hit information in the [Workers observability dashboard](/workers/observability/).
+Beyond the `Cf-Cache-Status` response header and per-invocation cache-hit information in the [Workers observability dashboard](/workers/observability/), you can review aggregate cache analytics for your Worker in the Cloudflare dashboard:
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+    <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select your Worker.
+3. Go to **Metrics** and find the cache analytics.
+
+</Steps>
+
+Cache analytics show how your Worker's cached traffic behaves over time, which helps you confirm whether caching is working across all requests rather than one request at a time. Refer to [Workers metrics](/workers/observability/metrics-and-analytics/#workers-metrics) for more on the **Metrics** page.

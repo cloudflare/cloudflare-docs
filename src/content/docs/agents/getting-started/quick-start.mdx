@@ -119,7 +119,7 @@ export class Assistant extends DurableObject<Env> {
 				context,
 			);
 		},
-		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
+		defaults: { model: this.ai("@cf/deepseek-ai/deepseek-v4.1-flash-1017") },
 	});
 
 	// The Lifecycle starts the harness inside the Durable Object
@@ -240,7 +240,7 @@ export class Assistant extends DurableObject<Env> {
 				context,
 			);
 		},
-		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
+		defaults: { model: this.ai("@cf/deepseek-ai/deepseek-v4.1-flash-1017") },
 	});
 
 	// lifecycle and onRequest() are unchanged
@@ -358,7 +358,7 @@ export class Assistant extends DurableObject<Env> {
 				context,
 			);
 		},
-		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
+		defaults: { model: this.ai("@cf/deepseek-ai/deepseek-v4.1-flash-1017") },
 	});
 
 	// Capability: clients send prompts and get replies over WebSockets

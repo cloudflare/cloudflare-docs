@@ -1,0 +1,24 @@
+---
+title: Sign storage requests with HMAC and automatic UTC dates
+description: Use Rules language HMAC functions, a native SigV4 signer, and UTC date formatting to authenticate private storage origin requests.
+date: 2026-11-27
+---
+
+The Rules language supports HMAC signing, Signature Version 4 (SigV4) key derivation, and UTC date formatting. Use these functions in Request Header Transform Rules to authenticate reads from private Amazon S3 and Google Cloud Storage buckets.
+
+- `hmac_md5()`, `hmac_sha1()`, `hmac_sha256()`, and `hmac_sha512()` compute raw keyed digests.
+- `sign_sigv4_hmac_sha256()` derives the signing key and returns the lowercase hexadecimal signature in one call.
+- `format_date()` formats the request timestamp for date headers and credential scopes.
+- `encode_hex()` converts raw digests to lowercase hexadecimal text.
+
+For example, set `x-amz-date` or `x-goog-date` dynamically using:
+
+```txt
+format_date(http.request.timestamp.sec, "%Y%m%dT%H%M%SZ")
+```
+
+The same rule can build an `Authorization` header from that request timestamp. Callers do not need to supply a date header. You remain responsible for constructing the canonical request and string to sign.
+
+The HMAC and SigV4 signing functions are available on Pro, Business, and Enterprise plans. `format_date()` is available on all plans without an additional entitlement. Use it in URI, request header, and response header rewrite expressions, not rule filters.
+
+For complete expressions and security considerations, refer to [Sign requests to private S3 and GCS buckets](/rules/transform/examples/sign-private-storage-requests/) and the [Rules language function reference](/ruleset-engine/rules-language/functions/).

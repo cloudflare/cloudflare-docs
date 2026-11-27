@@ -44,8 +44,10 @@ function initPageActions(root: HTMLElement): () => void {
 				copyIcon?.classList.add("hidden");
 				checkIcon?.classList.remove("hidden");
 				if (label) label.textContent = "Copied!";
-			} else if (label) {
-				label.textContent = "Couldn't copy";
+			} else {
+				copyIcon?.classList.remove("hidden");
+				checkIcon?.classList.add("hidden");
+				if (label) label.textContent = "Couldn't copy";
 			}
 			if (resetTimer) window.clearTimeout(resetTimer);
 			resetTimer = window.setTimeout(() => {

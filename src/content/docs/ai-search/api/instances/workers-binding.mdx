@@ -192,33 +192,33 @@ const updated = await env.AI_SEARCH.get("my-instance").update({
 
 #### Parameters
 
-Accepts a partial version of the [create parameters](#parameters). Only the fields you include are updated.
+Accepts a partial version of the [create parameters](#parameters-2). Only the fields you include are updated. `indexing_options` is replaced as a whole, so include the current value of every indexing option.
 
-| Field               | Type    | Description                                                            |
-| ------------------- | ------- | ---------------------------------------------------------------------- |
-| `ai_search_model`   | string  | The text-generation model.                                             |
-| `embedding_model`   | string  | The embedding model.                                                   |
-| `index_method`      | object  | Indexing methods: `\{ vector: boolean, keyword: boolean \}`.           |
-| `fusion_method`     | string  | How vector and keyword scores are combined (`rrf` or `max`).           |
-| `indexing_options`  | object  | Indexing configuration including `keyword_tokenizer` and `use_ocr`.    |
-| `retrieval_options` | object  | Retrieval configuration including `keyword_match_mode` and `boost_by`. |
-| `reranking`         | boolean | Turn on or off reranking.                                              |
-| `reranking_model`   | string  | The reranking model.                                                   |
-| `rewrite_query`     | boolean | Turn on or off query rewriting.                                        |
-| `rewrite_model`     | string  | The query rewriting model.                                             |
-| `source`            | string  | The data source location. Cannot be changed after creation.            |
-| `cache`             | boolean | Turn on or off response caching.                                       |
-| `cache_ttl`         | number  | Cache entry time to live in seconds.                                   |
-| `chunk_size`        | number  | Token size of each chunk.                                              |
-| `chunk_overlap`     | number  | Token overlap between chunks.                                          |
-| `score_threshold`   | number  | Minimum score threshold for results.                                   |
-| `max_num_results`   | number  | Maximum number of results per query.                                   |
-| `custom_metadata`   | array   | Custom metadata field definitions.                                     |
-| `sync_interval`     | number  | Seconds between automatic data source syncs.                           |
+| Field               | Type    | Description                                                                          |
+| ------------------- | ------- | ------------------------------------------------------------------------------------ |
+| `ai_search_model`   | string  | The text-generation model.                                                           |
+| `embedding_model`   | string  | The embedding model.                                                                 |
+| `index_method`      | object  | Indexing methods: `\{ vector: boolean, keyword: boolean \}`.                         |
+| `fusion_method`     | string  | How vector and keyword scores are combined (`rrf` or `max`).                         |
+| `indexing_options`  | object  | Indexing configuration including `keyword_tokenizer`, `use_ocr`, and `file_summary`. |
+| `retrieval_options` | object  | Retrieval configuration including `keyword_match_mode` and `boost_by`.               |
+| `reranking`         | boolean | Turn on or off reranking.                                                            |
+| `reranking_model`   | string  | The reranking model.                                                                 |
+| `rewrite_query`     | boolean | Turn on or off query rewriting.                                                      |
+| `rewrite_model`     | string  | The query rewriting model.                                                           |
+| `source`            | string  | The data source location. Cannot be changed after creation.                          |
+| `cache`             | boolean | Turn on or off response caching.                                                     |
+| `cache_ttl`         | number  | Cache entry time to live in seconds.                                                 |
+| `chunk_size`        | number  | Token size of each chunk.                                                            |
+| `chunk_overlap`     | number  | Token overlap between chunks.                                                        |
+| `score_threshold`   | number  | Minimum score threshold for results.                                                 |
+| `max_num_results`   | number  | Maximum number of results per query.                                                 |
+| `custom_metadata`   | array   | Custom metadata field definitions.                                                   |
+| `sync_interval`     | number  | Seconds between automatic data source syncs.                                         |
 
 #### Response
 
-Returns the updated instance configuration. Same shape as [info()](#response-2).
+Returns the updated instance configuration. Same shape as [info()](#response-4).
 
 ### `info()`
 
@@ -251,7 +251,7 @@ const info = await env.AI_SEARCH.get("my-instance").info();
 | `cache_ttl`         | number  | Cache entry time to live in seconds.                                                                             |
 | `index_method`      | object  | Which indexing methods are enabled (`vector`, `keyword`).                                                        |
 | `fusion_method`     | string  | How vector and keyword scores are combined (`rrf` or `max`).                                                     |
-| `indexing_options`  | object  | Indexing configuration including `keyword_tokenizer` and `use_ocr`.                                              |
+| `indexing_options`  | object  | Indexing configuration including `keyword_tokenizer`, `use_ocr`, and `file_summary`.                             |
 | `retrieval_options` | object  | Retrieval configuration including `keyword_match_mode` and `boost_by`.                                           |
 | `chunk_size`        | number  | Token size of each chunk.                                                                                        |
 | `chunk_overlap`     | number  | Token overlap between chunks.                                                                                    |

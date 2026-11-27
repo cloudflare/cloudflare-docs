@@ -51,6 +51,16 @@ Note that when you update and save build settings, the updated settings will be 
 | **[API token](/workers/ci-cd/builds/configuration/#api-token)** _(Optional)_ | The API token is used to authenticate your build request and authorize the upload and deployment of your Worker to Cloudflare. By default, Cloudflare will automatically generate an API token for your account when using Workers Builds, and continue to use this API token for all subsequent builds. Alternatively, you can [create your own API token](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/authentication/#generate-tokens), or select one that you already own. |
 | **Build variables and secrets** _(Optional)_                                 | Add environment variables and secrets accessible only to your build. Build variables will not be accessible at runtime. If you would like to configure runtime variables you can do so in **Settings** > **Variables & Secrets**                                                                                                                                                                                                                                                       |
 
+### Configure the Node.js heap
+
+To adjust the heap available to a Node.js build process, add `NODE_OPTIONS` under **Settings** > **Build** > **Build variables and secrets**. For example:
+
+| Name | Value |
+| --- | --- |
+| `NODE_OPTIONS` | `--max-old-space-size=4096` |
+
+This sets a 4 GiB heap ceiling without increasing the build machine's memory. This build variable does not change your Worker's runtime memory limit. To select a Node.js version instead, refer to [Override default versions](/workers/ci-cd/builds/build-image/#overriding-default-versions).
+
 :::note
 Currently, Workers Builds does not honor the configurations set in [Custom Builds](/workers/wrangler/custom-builds/) within your Wrangler configuration file.
 :::

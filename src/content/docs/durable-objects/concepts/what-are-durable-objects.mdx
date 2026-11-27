@@ -30,12 +30,13 @@ Durable Objects have properties that make them a great fit for distributed state
 
 - Each [Durable Object instance has an identifier](/durable-objects/api/id/), either randomly-generated or user-generated, which allows you to globally address which Durable Object should handle a specific action or request.
 - Durable Objects are single-threaded and cooperatively multi-tasked, just like code running in a web browser. For more details on how safety and correctness are achieved, refer to the blog post ["Durable Objects: Easy, Fast, Correct — Choose three"](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).
+- Multiple instances of the same Durable Object class can share an isolate. Only one thread can execute JavaScript in that isolate at a time, so synchronous work in one object can delay others sharing it. Refer to [Shared isolates and event-loop contention](/durable-objects/best-practices/architecture-guidance/#shared-isolates) for workload sizing and testing guidance.
 
 **Elastic horizontal scaling across Cloudflare's global network**
 
 - Durable Objects can be spread around the world, and you can [optionally influence where each instance should be located](/durable-objects/reference/data-location/#provide-a-location-hint). Durable Objects are not yet available in every Cloudflare data center; refer to the [where.durableobjects.live](https://where.durableobjects.live/) project for live locations.
 - Each Durable Object type (or ["Namespace binding"](/durable-objects/api/namespace/) in Cloudflare terms) corresponds to a JavaScript class implementing the actual logic. There is no hard limit on how many Durable Objects can be created for each namespace.
-- Durable Objects scale elastically as your application creates millions of objects. There is no need for applications to manage infrastructure or plan ahead for capacity.
+- Durable Objects scale elastically as your application creates millions of objects. Cloudflare manages the infrastructure, but you still need to [size and load-test your workloads](/durable-objects/best-practices/architecture-guidance/#step-2-size).
 
 ## Durable Objects features
 

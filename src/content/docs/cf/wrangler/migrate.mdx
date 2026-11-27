@@ -18,7 +18,7 @@ the items that you finish by hand. This page covers the whole migration:
 preview, run, resolve follow-up items, finish the project, validate, and
 deploy.
 
-<Render file="beta-note" product="cf" />
+<Render file="release-candidate-note" product="cf" />
 
 The examples on this page migrate `orders-api`, a Worker with a D1 database, a
 queue, a cron trigger, a route, and a Durable Object:
@@ -69,7 +69,7 @@ queue, a cron trigger, a route, and a Durable Object:
   not write files when `git status` reports changes anywhere in the
   repository. Files that `.gitignore` excludes do not count.
 - Install the project's dependencies. With the Wrangler bundler, the Worker's
-  package needs Wrangler 4.136.0 or later installed. `cf migrate` uses it to
+  package needs the latest release of Wrangler installed. `cf migrate` uses it to
   write `wrangler.config.ts`, and `cf dev`, `cf build`, and `cf deploy` run it.
 - Do not run `cf dev`, `cf build`, or `cf deploy` in the project first. In an
   unmigrated project they
@@ -132,9 +132,9 @@ choice, as in the `orders-api` preview. To override the choice, pass
 
 `cf migrate` does not install Vite or create `vite.config.ts`. To move a
 project that does not use Vite yet to the Vite bundler, pass `--bundler vite`,
-then install Vite and the Cloudflare Vite plugin beta that `cf` uses:
+then install Vite and the Cloudflare Vite plugin 2.0 that `cf` uses:
 
-<PackageManagers type="add" pkg="vite @cloudflare/vite-plugin@beta" dev />
+<PackageManagers type="add" pkg="vite @cloudflare/vite-plugin@rc" dev />
 
 Then create `vite.config.ts`:
 
@@ -148,9 +148,10 @@ export default defineConfig({
 ```
 
 If the project already uses the Cloudflare Vite plugin, install
-`@cloudflare/vite-plugin@beta` in the same way. The beta reads
+`@cloudflare/vite-plugin@rc` in the same way. Version 2.0 reads
 `cloudflare.config.ts` and has no `configPath` option. Remove `configPath` if
-`vite.config.ts` passes it to `cloudflare()`.
+`vite.config.ts` passes it to `cloudflare()`. `cf` supports the latest release
+of the Cloudflare Vite plugin 2.0.
 
 ## Run the migration
 
@@ -281,6 +282,8 @@ export default defineConfig({
 });
 ```
 
+For isolated Durable Objects in Previews, use [`ctx.exports` with `cf` configuration](/workers/previews/resources/#use-cf-configuration). A named `bindings.durableObject()` binding targets the deployed Worker.
+
 Some items link to Wrangler or Workers runtime documentation. The next section
 describes how to resolve each item for `cf`. When you have resolved every item,
 delete the `TODO(@cloudflare)` comments, the comment that starts with
@@ -398,7 +401,7 @@ export default defineWranglerConfig({
 });
 ```
 
-`wrangler.config.ts` is experimental and can change during the beta.
+`wrangler.config.ts` is experimental and can change.
 
 With the Vite bundler, `cf migrate` lists these fields in a required item and
 does not move them. Move each setting to its Vite equivalent in
@@ -418,7 +421,7 @@ Worker's Vite environment by default from version 1.64.0. You do not need to
 replace `upload_source_maps: true`.
 
 To stop uploading source maps, set `build.sourcemap` to `false` for the
-Worker's Vite environment. By default, the Cloudflare Vite plugin beta names
+Worker's Vite environment. By default, the Cloudflare Vite plugin 2.0 names
 the Worker's environment `ssr`:
 
 ```ts title="vite.config.ts" {6-12}
@@ -440,7 +443,7 @@ export default defineConfig({
 On earlier versions of the Cloudflare Vite plugin, set `build.sourcemap` to
 `true` to generate source maps.
 
-How `cf migrate` reports source maps can change during the beta.
+How `cf migrate` reports source maps can change before 1.0.
 
 ### D1 migrations {/* d1-migrations */}
 
@@ -614,8 +617,7 @@ file. Delete the Wrangler file after you deploy with `cf` and your scripts and
 CI use `cf`.
 
 Wrangler does not read `cloudflare.config.ts`. If you still run Wrangler
-commands in the project, such as `wrangler tail`, keep the Wrangler
-configuration file until you no longer need them.
+commands in the project, keep the Wrangler configuration file until you no longer need them.
 
 ## Troubleshooting
 
@@ -660,11 +662,11 @@ even for a dry run. Without one, it reports:
 Generating wrangler.config.ts requires wrangler 4.100.0 or newer because earlier versions do not export wrangler/experimental-config. No local Wrangler installation was found. Update Wrangler and retry the migration.
 ```
 
-After the migration, `cf dev`, `cf build`, and `cf deploy` need Wrangler
-4.136.0 or later. With an older version, their error includes:
+After the migration, `cf dev`, `cf build`, and `cf deploy` need the latest
+release of Wrangler. With an older version, their error includes:
 
 ```txt output
-cf requires wrangler@4.136.0 or newer for cf dev, cf build, cf deploy, and cf previews deploy.
+cf requires wrangler@4.163.0 or newer for cf dev, cf build, cf deploy, and cf previews deploy.
 ```
 
 Install the project's dependencies or update Wrangler, then run the command

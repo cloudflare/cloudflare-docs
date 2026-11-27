@@ -25,9 +25,13 @@ import { Details, Render } from "~/components";
 | Windows  | ✅           | 2025.9.173.1         |
 | macOS    | ✅           | 2025.9.173.1         |
 | Linux    | ✅           | 2025.9.173.1         |
-| iOS      | ❌           |                      |
-| Android  | ❌           |                      |
-| ChromeOS | ❌           |                      |
+| iOS      | ✅           | 1.12.5               |
+| Android  | ✅           | 2.5.5                |
+| ChromeOS | ✅           | 2.5.5                |
+
+:::note
+PMTUD is disabled by default on iOS, Android, and ChromeOS. To enable it, set `enable_pmtud` to `true` in your [MDM configuration](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/#ios).
+:::
 
 </Details>
 
@@ -45,7 +49,7 @@ Certain features may be disabled or degraded at low MTU thresholds. For details,
 
 ## Enable or disable Path MTU Discovery
 
-PMTUD is now enabled by default (Cloudflare One Client version 2026.6.822.0 and above). To disable PMTUD on your devices, [deploy an MDM file](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/#windows) with the `enable_pmtud` key set to `false`. For example:
+PMTUD is enabled by default on Windows, macOS, and Linux starting with Cloudflare One Client version 2026.6.822.0. To disable it on these platforms, [deploy an MDM file](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/#windows) with the `enable_pmtud` key set to `false`. For example:
 
 ```xml
 <dict>

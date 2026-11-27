@@ -48,7 +48,7 @@ Install `agents` with Pi Durable, Pi AI, Pi Schema, and Chord:
 
 <Render file="pi-install" product="agents" />
 
-Agents SDK 0.33.0 and later support Pi 1.5. A new Pi minor version can store conversations in a format the previous one cannot read. After a conversation runs on Pi 1.5, rolling your Worker back to an Agents SDK version on Pi 1.4 leaves that conversation unreadable, so roll forward to fix a bad deploy instead.
+Agents SDK 0.34.0 and later support Pi 1.6. A new Pi minor version can store conversations in a format the previous one cannot read. After a conversation runs on Pi 1.6, rolling your Worker back to an Agents SDK version on Pi 1.5 blocks its tool calls and model requests, because Pi 1.6 stores them in versions that Pi 1.5 does not run. Roll forward to fix a bad deploy instead.
 
 The `agents/models/pi-ai` entry point supports AI Gateway and Workers AI models, so you can get started with Cloudflare models right away or use your existing Pi AI provider. The examples on this page use Workers AI through the `AI` binding and the [Pi AI model provider](/agents/models/pi-ai/). Add the binding and a SQLite-backed Durable Object to your Wrangler configuration:
 
@@ -101,7 +101,7 @@ export class Assistant extends DurableObject<Env> {
 				context,
 			);
 		},
-		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
+		defaults: { model: this.ai("@cf/deepseek-ai/deepseek-v4.1-flash-1017") },
 	});
 
 	lifecycle = Lifecycle.install(this).use(this.harness);
@@ -189,6 +189,8 @@ An `operationId` makes a submission idempotent. Submitting the same id again ret
 
 A submission made while the session is running is queued and answered after the current run, as its own run. Set `whenBusy: "steer"`, or call `session.steer()`, to join the running work after its current tool round instead. Set `whenIdle: "reject"` so an idle session refuses the input with Pi's `ConversationIdle` instead of starting a run. With `whenBusy: "steer"` as well, the input joins the running work or is refused, without racing the end of the run.
 
+Aborting a session withdraws the inputs queued in it. Set `onAbort: "keep"` on input that its sender cannot send again, such as another agent's message, and the input stays queued through an abort instead. The next input, `continue()`, or `reset()` runs it first. A kept steer waits for the next input or `continue()`. `abort(operationId)` still withdraws it.
+
 `harness.pending()` lists submissions Pi has not finished, with their status: `queued` or `running`.
 
 ### Label input the user did not type
@@ -239,11 +241,11 @@ harness: ({ storage, context, onWake }) =>
 
 </TypeScriptExample>
 
-With `keep`, the kept submissions are not work for Pi, so the object can hibernate until the next `submit()` or `reset()`. Pass a `signal` to `wait()` if a caller should not wait that long. To withdraw a kept submission, call `abort(operationId)`.
+With `keep`, the kept submissions are not work for Pi, so the object can hibernate until the next `submit()` or `reset()`. Pass a `signal` to `wait()` if a caller should not wait that long. To withdraw a kept submission, call `abort(operationId)`. `session.abort()` with no id withdraws every kept submission too, apart from those submitted with `onAbort: "keep"`.
 
 ## Work with sessions
 
-A session is a Pi conversation. The root session has the id `"1"` and exists from the start. The `harness` methods take an optional `session` option, and `harness.session(id)` returns a handle for one session:
+A session is a Pi conversation. The root session has the id `"1"`. The `harness` methods take an optional `session` option, and `harness.session(id)` returns a handle for one session:
 
 ```ts
 const session = await this.harness.sessions.create();
@@ -251,30 +253,139 @@ await session.submit("Draft a release note");
 
 const fork = await this.harness.sessions.fork(session.id);
 const all = await this.harness.sessions.list();
-// [{ id: "1", busy: false }, { id: "2", busy: true }, { id: "3", parent: "2", busy: false }]
+// Each session's id, busy state, and parent, if it is a fork.
 ```
 
 | Method                      | Description                                                                                           |
 | --------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `submit(input, options)`    | Durably submit input with `operationId`, `whenBusy`, `whenIdle`, or `entry`. Returns a receipt.       |
-| `continue(options)`         | Start a run on the transcript as it is, without a new message. Only an idle session takes one.        |
+| `submit(input, options)`    | Durably submit input with `operationId`, `whenBusy`, `whenIdle`, `onAbort`, `entry`, or `notify`. Returns a receipt.                                                                    |
+| `continue(options)`         | Start a run on the transcript as it is, without a new message. Only an idle session takes one. Takes `operationId` and `notify`.                                                        |
 | `prompt(input, options)`    | Submit and wait for the answer and the updated transcript.                                            |
 | `steer(input)`              | Submit with `whenBusy: "steer"`.                                                                      |
 | `wait(operationId, signal)` | Wait for an operation. Aborting `signal` stops the wait, not the work.                                |
-| `abort(operationId)`        | Withdraw a queued operation, or abort the run it joined. With no id, abort everything in the session. |
+| `abort(operationId)`        | Withdraw a queued operation, or abort the run it joined. With no id, abort everything in the session and withdraw its queued inputs, apart from those submitted with `onAbort: "keep"`. |
 | `pending()`                 | Operations Pi has not settled yet: `queued` or `running`.                                             |
-| `reset(handoff)`            | Start a new context, optionally from a handoff note.                                                  |
-| `setModel(model)`           | Change this session's model to a Pi AI `Model`, such as `ai("@cf/zai-org/glm-5.3-flash")`.            |
+| `reset(handoff)`            | Start a new context, optionally from a handoff note. Inputs kept behind a failed run or an abort start a run in it.                                                                     |
+| `setModel(model)`           | Change this session's model to a Pi AI `Model`, such as `ai("@cf/deepseek-ai/deepseek-v4.1-flash-1017")`.                                                                               |
 | `messages()`                | The active transcript, as Pi's `EntryRecord` entries since the newest reset.                          |
 | `watch(window)`             | Pi's view of the session: the newest transcript entries and the session's live state.                 |
 | `entries(query, limit)`     | A page of the session's transcript, including entries before its resets.                              |
 | `busy()`                    | Whether the session is running.                                                                       |
 
-`sessions.create()` makes a new top-level session with the harness defaults. `sessions.fork(id)` makes a session that sees another's history up to its newest entry. `sessions.list()` includes sessions that Pi's subagent tools created.
+`sessions.create()` makes a new top-level session with the harness defaults. `sessions.fork(id)` makes a session that sees another's history up to its newest entry. `sessions.list()` includes sessions that Pi's subagent tools created. `harness.signal()` delivers a signal to a parked tool call. Refer to [Tools that wait](#tools-that-wait).
+
+The harness creates the root session, with `defaults`, the first time a call works with it, such as `prompt()`, `submit()`, `messages()`, or `watch()`. Calls that only read around it, such as `pending()`, `busy()`, and `sessions.list()`, do not create it, and `sessions.list()` does not include the root until it exists. To create the root yourself, with your own configuration or history, call `harness.root()`. Refer to [Seed a session with an existing history](#seed-a-session-with-an-existing-history).
 
 Session ids are Pi's conversation ids, so you cannot choose them. To give each user or chat its own agent, use one Durable Object per conversation and the root session in each.
 
 `session.continue()` answers the transcript as it is, for example after a run ended unanswered because the model errored or the run reached `maxTurns`. A busy session rejects it with Pi's `ConversationBusy`. A transcript that already ends in an answer has nothing to continue, so the operation settles `unanswered` with reason `nothing_to_answer`. Like `submit()`, it takes an `operationId` and returns a receipt for `wait()`.
+
+### Seed a session with an existing history
+
+To start a session from a chat history your application already has, such as one imported from another system, write the history into the session's transcript in the commit that creates the session. `harness.root()`, `sessions.create()`, and `sessions.fork()` take two options for that:
+
+| Option  | Description                                                                                                                                                                                                                                                                                              |
+| ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `agent` | Pi's `AgentChange`, such as `instructions` or `thinkingLevel`. For the root and `create()`, it is applied over `defaults`. A fork starts with the configuration of the session it forks, and `agent` is applied over that. A field that is `undefined` keeps the value underneath, and `null` clears it. |
+| `init`  | Pi's `ConversationInit`, `(tx, conversationId) => ...`. It runs inside the commit that creates the session, after `agent`. Append one entry per message with `tx.appendEntry()`. If it throws, the commit fails and the session is not created.                                                          |
+
+Use Pi's own entry kinds, so Pi treats the messages as if they had happened in the session: `UserEntry` for a user message, `AssistantEntry` for a model message, and `ToolResultEntry` for a tool result, with an empty `diagnostics` list. An assistant message needs `usage`, which Pi sums. An imported message has none, so give it zeros. Its `api`, `provider`, and `model` name the model that wrote it. The example takes them from a model of `createAI`:
+
+```ts
+import type {
+	Api,
+	AssistantMessage,
+	Model,
+	Usage,
+} from "@earendil-works/pi-ai";
+import {
+	AssistantEntry,
+	ToolResultEntry,
+	UserEntry,
+	type ConversationInit,
+} from "@earendil-works/pi-durable";
+
+const NO_USAGE: Usage = {
+	input: 0,
+	output: 0,
+	cacheRead: 0,
+	cacheWrite: 0,
+	totalTokens: 0,
+	cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0, total: 0 },
+};
+
+// The history, one entry per message, as `model` wrote it.
+function history(model: Model<Api>): ConversationInit {
+	const answer = (
+		content: AssistantMessage["content"],
+		stopReason: AssistantMessage["stopReason"],
+	): AssistantMessage => ({
+		role: "assistant",
+		content,
+		api: model.api,
+		provider: model.provider,
+		model: model.id,
+		usage: NO_USAGE,
+		stopReason,
+		timestamp: Date.now(),
+	});
+	return async (tx, conversationId) => {
+		const timestamp = Date.now();
+		await tx.appendEntry(UserEntry, conversationId, {
+			model: [
+				{ role: "user", content: "How many words is the draft?", timestamp },
+			],
+		});
+		await tx.appendEntry(AssistantEntry, conversationId, {
+			model: [
+				answer(
+					[
+						{
+							type: "toolCall",
+							id: "call-1",
+							name: "word_count",
+							arguments: { text: "The quick brown fox" },
+						},
+					],
+					"toolUse",
+				),
+			],
+		});
+		await tx.appendEntry(ToolResultEntry, conversationId, {
+			model: [
+				{
+					role: "toolResult",
+					toolCallId: "call-1",
+					toolName: "word_count",
+					content: [{ type: "text", text: "4" }],
+					isError: false,
+					timestamp,
+				},
+			],
+			data: { diagnostics: [] },
+		});
+		await tx.appendEntry(AssistantEntry, conversationId, {
+			model: [
+				answer([{ type: "text", text: "The draft is 4 words long." }], "stop"),
+			],
+		});
+	};
+}
+
+// In the Durable Object:
+const { session, created } = await this.harness.root({
+	agent: { instructions: "You are an editor." },
+	init: history(this.ai("@cf/deepseek-ai/deepseek-v4.1-flash-1017")),
+});
+if (!created) {
+	// The root already existed, so the history was not written.
+}
+await session.prompt("Make it longer.");
+```
+
+`harness.root()` returns the root session and `created`. When the root does not exist yet, `root()` creates it with `agent` and `init` in one commit, and `created` is `true`. When the root already exists, because another call used it first or an earlier `root()` created it, nothing is written, `init` does not run, and `created` is `false`. Call `root()` before anything else uses the root, and check `created` instead of assuming the history was written. A `root()` whose `init` throws creates nothing, so a later `root()` can try again.
+
+`sessions.create({ agent, init })` and `sessions.fork(from, { agent, init })` seed the session they create the same way. A fork's `init` appends after the history that the fork copies from `from`.
 
 ## Watch sessions from clients
 
@@ -312,7 +423,120 @@ A client that connects mid-run gets the partial answer in its first value. A wat
 
 The entries in `messages()` and the view are Pi's transcript entries, not a chat UI format. Map them to what your client renders.
 
-For anything `PiHarness` does not cover, `await harness.pi()` returns the opened Pi `Harness`.
+For anything `PiHarness` does not cover, `await harness.pi()` returns the opened Pi `Harness`. Call `harness.root()` before you reach the root session through it: until the root is first used, Pi's `pi.conversation(ROOT_CONVERSATION_ID)` returns `undefined`, and Pi's own `pi.root()` would create the root without the harness `defaults`. Deliver signals with `harness.signal()`, not with `pi.signal()`.
+
+## Tools that wait
+
+A tool call usually ends when its `execute()` returns a result. A Pi tool can instead return a "tool park" (Pi's `ToolPark` type), which says what the call is waiting for: a signal, a deadline, or both. Returning a tool park registers the wait. Pi stores it with the call, and when the signal arrives or the deadline passes, Pi runs `execute()` again with the same arguments.
+
+Think of a tool park as an `await` that survives hibernation. A call cannot keep a promise open while the Durable Object sleeps, so it tells Pi what it is waiting for, and Pi keeps that in storage instead of in memory. While the call is parked, it holds no invocation, so the Durable Object can hibernate or be evicted. Your agent delivers a signal with `harness.signal()`, for example from the request that carries a person's answer.
+
+![A sequence diagram of a tool that asks the user a question. The model calls the tool, and run 1 of execute() starts. readSignal() finds no answer, so the tool shows the question with its task id and returns a tool park naming the signal key it waits for. Run 1 ends there. Pi stores the tool park: the call's task id and the signal key. Between the runs the object can hibernate, with no tool code in memory and only the stored tool park kept. Later your app calls harness.signal() with the task id and the answer. Pi matches the stored tool park and starts run 2 of execute() with the same arguments. This time readSignal() returns the answer, and the tool returns it to the model as its result.](~/assets/images/agents/pi-tool-park.svg)
+
+Because Pi runs the whole of `execute()` again after a wake, a tool that waits for a person's answer does three things each time it runs, in this order:
+
+1. Check for the answer with `api.readSignal()`. On the first run there is none. After the wake, the answer is there, and the tool returns it as its result.
+2. If there is no answer yet, show the question. Send `api.taskId` with it: your agent needs the task id later to deliver the answer.
+3. Return a tool park that names the signal key to wait for.
+
+![The ask_user tool's execute() code, with two gutters marking which lines each run reaches. Run 1, before the answer: readSignal() returns nothing, the if is skipped, the tool shows the question and returns the tool park. Run 2, after the wake, starts again from the top with the same arguments: readSignal() returns the answer, and the tool returns it as its result, so the question is not shown again.](~/assets/images/agents/pi-tool-park-runs.svg)
+
+The whole example, with the signal it waits on and the call your agent makes later:
+
+```ts
+import { defineSignal } from "@earendil-works/pi-durable";
+import { obj, str } from "@earendil-works/pi-schema";
+
+const Answer = defineSignal({
+	name: "app.answer",
+	version: 1,
+	schema: obj({ text: str() }),
+});
+
+// In the tool's execute(args, api, context):
+// 1. Check for the answer. After the wake, it is there.
+const answer = await api.readSignal(Answer, "answer", context);
+if (answer?.kind === "value") {
+	return { output: [{ type: "text", text: answer.value.text }] };
+}
+// 2. No answer yet: show the question, with the task id to answer it with.
+// showQuestion() is your code, for example a message to the user's client.
+await showQuestion(api.taskId, args.question);
+// 3. Park until a value arrives for the "answer" key.
+return { kind: "sleep", signals: [Answer.key("answer")] };
+
+// Later, in your agent, with the task id the question was shown with:
+await this.harness.signal(taskId, Answer, "answer", { text: "Yes" });
+```
+
+The signal key (`"answer"` here) ties the three calls together: `readSignal()`, `Answer.key()` in the tool park, and `harness.signal()` must use the same one. A tool park can also set `until`, a time on Pi's clock such as `api.now()` plus two hours, to stop waiting at a deadline. After the deadline, `readSignal()` returns `{ kind: "expired" }` instead of a value, so handle that case before showing the question again.
+
+`harness.signal()` returns Pi's result: `delivered`, or `duplicate`, `invalid`, `closed`, or `not_found` when the call did not take the value. It schedules the harness's wake-up job before it hands Pi the value, so if the object dies while the woken call runs, the job's alarm restarts it. Deliver signals through `harness.signal()`, not through `harness.pi()`.
+
+A tool park takes one of two shapes: `{ kind: "sleep", signals, until }` to wait for a signal, a deadline, or both, or `{ kind: "wait", on, policy }` to wait for tasks the call owns. Either can also carry a `checkpoint`, which the next run of `execute()` reads as `api.checkpoint`. A result has no `kind`, so check `kind` to tell a tool park from a result.
+
+- **Cancelling:** a tool can have a `cancel()` function, which Pi runs when a parked call is aborted, for example to cancel the work it was waiting on.
+- **Gates:** a `beforeTool` hook can return `{ sleep: { signals, until } }` to park a call before it runs, for example until a person approves it. A hook's result nests `signals` and `until` under `sleep`, unlike a tool park. Pi runs the hook again on every wake and whenever the harness reopens, so keep it idempotent.
+- **Waiting on nested calls:** start them with `api.executeTool(name, args, context, { key, wait: false })`, park with `{ kind: "wait", on: [taskId], policy: "any" }`, and read `api.wake.ended` after the wake. For the other policies, refer to [Child Tasks](https://github.com/earendil-works/pi/tree/main/packages/durable#child-tasks).
+- **What a parked call shows:** its slot in `pi.live` is `sleeping` or `waiting`. The operation that made the call stays `running` in `pending()`, and `busy()` is `true`.
+- **Invalid parks:** a tool park that breaks a rule ends the call with an `invalid_park` error. Examples are an object whose `kind` is not `sleep` or `wait`, a `sleep` with no `signals` and no `until`, a signal key that already woke the call or expired, and a `wait` on a task the call does not own.
+
+A tool park is not the `parked` status that `pending()` showed in Agents SDK 0.31.0 and 0.32.0. That status marked a task stopped by Pi's restart limit, and it was removed in 0.33.0.
+
+For the rules a parking tool follows, refer to [Tools that park](https://github.com/earendil-works/pi/tree/main/packages/durable#tools-that-park) and [Gates before a tool runs](https://github.com/earendil-works/pi/tree/main/packages/durable#gates-before-a-tool-runs) in the Pi Durable README.
+
+### Wait for a subagent
+
+To have a tool wait for another session's answer, create a session owned by the call, submit to it with `notify`, and park on Pi's `SubmissionSettled` signal under the same key. This is Pi's own subagent pattern:
+
+```ts
+import type { AssistantMessage } from "@earendil-works/pi-ai";
+import { SubmissionSettled } from "@earendil-works/pi-durable";
+
+// Inside a tool's execute({ task }, api, context):
+const state = await api.readSignal(SubmissionSettled, "answered", context);
+if (state?.kind === "value") {
+	const settled = state.value;
+	if (settled.status !== "done" || settled.type === "write") {
+		return {
+			output: [{ type: "text", text: `Subagent ended: ${settled.status}` }],
+			isError: true,
+		};
+	}
+	const answer = await api.commit((tx) => tx.entry(settled.answer), context);
+	const message = answer?.model?.[0] as AssistantMessage | undefined;
+	if (message === undefined) {
+		return {
+			output: [{ type: "text", text: "Subagent gave no answer" }],
+			isError: true,
+		};
+	}
+	return { output: message.content.filter((part) => part.type === "text") };
+}
+// The call's own child: found again on a rerun, stopped with the call.
+const child = await api.commit(async (tx) => {
+	const existing = (await tx.scanConversations({ ownerTaskId: api.taskId }, 1))
+		.items[0];
+	if (existing !== undefined) return existing.id;
+	const created = await tx.createConversation({
+		ownership: { kind: "task", taskId: api.taskId },
+	});
+	return created.id;
+}, context);
+const conversation = await api.conversation(child, context);
+await conversation?.submit(
+	{
+		type: "input",
+		content: task,
+		requestId: `subagent:${api.taskId}`,
+		notify: { taskId: api.taskId, key: "answered" },
+	},
+	context,
+);
+return { kind: "sleep", signals: [SubmissionSettled.key("answered")] };
+```
+
+When the child's input settles, Pi delivers the settled record to the call in the same commit, and the tool runs again with it. Because the call owns the child, aborting the parent session stops the child too, and a rerun before the tool park was stored finds the same child instead of creating another. The `requestId` makes a rerun find the same submission. If the task to notify has ended or does not exist, the input still settles as usual. `session.submit()` and `session.continue()` take the same `notify` option, for a child session that your own code created.
 
 ## Recovery
 
@@ -330,6 +554,8 @@ While Pi has work, the job's heartbeat alarm fires every 30 seconds. A crashed o
 
 While Pi's tasks sleep, such as during a retry backoff, the job is due when the first one wakes. Pi reports when through the `onWake` callback that the factory passes to `Harness.open()`, and sets no in-memory timer, so the object can hibernate until then.
 
+A tool parked on a signal with no deadline leaves nothing due, so the job completes, no alarm is set, and the object can hibernate until your code delivers the signal. `harness.signal()` opens Pi again, schedules the wake-up job, and resumes the call. A restart while a call is parked runs no tool code, even for a tool that is not replay-safe.
+
 Pi shows a streaming answer and running tool output in the view at once, but stores them in batches: with the next change that depends on them, such as the end of the answer, and at the latest after `settings.progress.persistWithinMs` (default 1,000 ms). A crash mid-stream loses up to that much of the stream. To store every update instead, at the cost of one storage write each, set `settings: { progress: { persistWithinMs: 0 } }` in `Harness.open()`.
 
 If the factory passes `onReport` to `Harness.open()`, Pi reports failures there as one report tagged by `kind`, such as `storage_failed` when a storage error closes Pi.
@@ -345,7 +571,7 @@ Either way, the job completes and the object can hibernate. Pi reports the task 
 
 ## Limitations
 
-- **Approvals.** Pi Durable has no approval or permission step for tool calls yet.
+- **Approvals.** `PiHarness` has no built-in approval step for tool calls. To hold a call for a person's approval, park it with a `beforeTool` hook and deliver the answer with `harness.signal()`. Refer to [Tools that wait](#tools-that-wait).
 - **Abort and tools.** `abort()` waits until the session is idle. A tool that ignores its abort signal keeps the session busy until it returns.
 - **Long model calls.** The wake-up job waits inside an alarm invocation, and an alarm invocation runs for up to 15 minutes. The harness hands off to a new alarm every 10 minutes, but one model request that streams for more than 15 minutes can be cut off.
 - **Background tasks.** Work that Pi runs in the background is checked on each heartbeat, so the harness notices it finish up to 30 seconds late.

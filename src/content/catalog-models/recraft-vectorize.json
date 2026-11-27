@@ -1,0 +1,201 @@
+{
+	"model_id": "recraft/vectorize",
+	"name": "Recraft Vectorize",
+	"description": "Recraft Vectorize converts a raster image (PNG, JPG or WEBP) into a clean, editable SVG made of shapes. Use it to make logos, icons and illustrations scalable. V1 Pro produces higher-quality vectors.",
+	"task": "Image-to-Image",
+	"tags": [
+		"Image-to-Image",
+		"Vectorization",
+		"SVG"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Per provider unit": 0.001
+	},
+	"examples": [
+		{
+			"name": "Sticker Art to SVG (V1 Pro)",
+			"description": "Turn flat sticker art into a clean, editable SVG with the higher-quality V1 Pro version.",
+			"input": {
+				"image": "https://arkdocs-en.tos-ap-southeast-1.volces.com/images/image-generation/ocr-test3.png",
+				"version": "v1_pro"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/recraft/vectorize/sticker-art-to-svg-v1-pro.svg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/recraft/vectorize/sticker-art-to-svg-v1-pro.svg"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/vectorize',\n  {\n    image: 'https://arkdocs-en.tos-ap-southeast-1.volces.com/images/image-generation/ocr-test3.png',\n    version: 'v1_pro',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/vectorize\",\n  \"input\": {\n    \"image\": \"https://arkdocs-en.tos-ap-southeast-1.volces.com/images/image-generation/ocr-test3.png\",\n    \"version\": \"v1_pro\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Vectorize an Illustration",
+			"description": "Turn a raster illustration into an editable SVG.",
+			"input": {
+				"image": "https://cdn.prod.website-files.com/655727fe69827d9a402de12c/679b82f54ef9617939df9d8e_motorcycle--going-fast.png"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/recraft/vectorize/vectorize-an-illustration.svg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/recraft/vectorize/vectorize-an-illustration.svg"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/vectorize',\n  {\n    image:\n      'https://cdn.prod.website-files.com/655727fe69827d9a402de12c/679b82f54ef9617939df9d8e_motorcycle--going-fast.png',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/vectorize\",\n  \"input\": {\n    \"image\": \"https://cdn.prod.website-files.com/655727fe69827d9a402de12c/679b82f54ef9617939df9d8e_motorcycle--going-fast.png\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Cut-Out Shapes",
+			"description": "Shapes that don't overlap, for vinyl cutters and screen printing.",
+			"input": {
+				"image": "https://cdn.prod.website-files.com/655727fe69827d9a402de12c/679b82f54ef9617939df9d8e_motorcycle--going-fast.png",
+				"shape_stacking": "cut_out"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/recraft/vectorize/cut-out-shapes.svg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/recraft/vectorize/cut-out-shapes.svg"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/vectorize',\n  {\n    image:\n      'https://cdn.prod.website-files.com/655727fe69827d9a402de12c/679b82f54ef9617939df9d8e_motorcycle--going-fast.png',\n    shape_stacking: 'cut_out',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"recraft/vectorize\",\n  \"input\": {\n    \"image\": \"https://cdn.prod.website-files.com/655727fe69827d9a402de12c/679b82f54ef9617939df9d8e_motorcycle--going-fast.png\",\n    \"shape_stacking\": \"cut_out\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://www.recraft.ai/docs/api-reference/tools/vectorize",
+	"terms": null,
+	"cover_image_url": null,
+	"metadata": {
+		"Input Formats": "PNG, JPG, WEBP (up to 20 MB, 16 MP)",
+		"Output Format": "SVG",
+		"Versions": "v1, v1_pro"
+	},
+	"request_formats": null,
+	"provider_id": "recraft",
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "recraft",
+			"pricing": {
+				"units": 0.001
+			}
+		}
+	],
+	"model_providers": [
+		{
+			"provider": "recraft",
+			"pricing": {
+				"units": 0.001
+			},
+			"rates": [
+				{
+					"key": null,
+					"label": null,
+					"description": null,
+					"rates": [
+						{
+							"key": "units",
+							"label": "Per provider unit",
+							"unit": null,
+							"value": 0.001
+						}
+					]
+				}
+			]
+		}
+	],
+	"banner": null,
+	"pinned": false,
+	"created_at": "2026-11-20 17:11:29",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"minLength": 1,
+					"description": "URL or data URL of the input image: PNG, JPG or WEBP, under 20 MB, up to 16 MP, sides 256 to 4096 px."
+				},
+				"version": {
+					"description": "\"v1\" ($0.01) or \"v1_pro\" (higher-quality vectors, $0.04). Defaults to \"v1\".",
+					"type": "string",
+					"enum": [
+						"v1",
+						"v1_pro"
+					]
+				},
+				"shape_stacking": {
+					"description": "\"hierarchical\" layers shapes; \"cut_out\" makes shapes that do not overlap (for cutters and printing). Defaults to \"hierarchical\".",
+					"type": "string",
+					"enum": [
+						"hierarchical",
+						"cut_out"
+					]
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
+}

@@ -44,7 +44,7 @@ import { Tabs, TabItem, APIRequest, Code } from "~/components";
    	title="Response"
    />
 
-2. Create an Access policy on the downstream application, replacing the `app_uid` value with the `uid` of {props.sourceAppLabel}:
+2. Create a reusable Access policy, replacing the `app_uid` value with the `uid` of {props.sourceAppLabel}:
 
    <APIRequest
    	path="/accounts/{account_id}/access/policies"
@@ -65,6 +65,8 @@ import { Tabs, TabItem, APIRequest, Code } from "~/components";
    :::note
    The `linked_app_token` rule type only works with [`non_identity` decisions](/cloudflare-one/access-controls/policies/#service-auth), similar to service token rules.
    :::
+
+3. Add the returned policy `id` to {props.downstreamAppLabel} using the [Update an Access application API](/api/resources/zero_trust/subresources/access/subresources/applications/methods/update/). Include the policy ID in the application's `policies` array. Retrieve the application's current configuration first and preserve its other settings and existing policies when updating it. Creating the reusable policy alone does not apply it to the application.
 
 </TabItem>
 </Tabs>

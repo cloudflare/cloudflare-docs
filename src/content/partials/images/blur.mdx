@@ -11,6 +11,19 @@ Applies a blur radius to the image. Accepts an integer from `0` (no blur) to `25
 
 This parameter should not be used to reliably obscure image content when optimizing via URL, as the URL can be modified to remove the blur parameter. Instead, you can [restrict access to the original image](/images/optimization/transformations/transform-via-workers/) through Workers.
 
+<Tabs>
+  <TabItem label="URL format">
+    ```txt
+    blur=50
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js
+  cf: {image: {blur: 50}}
+  ```
+  </TabItem>
+</Tabs>
+
 <table style="width:100%; table-layout:fixed; text-align:center; border:none">
   <tr style="border:none; background:none">
     <td style="width:50%; border:none; vertical-align:bottom">
@@ -30,16 +43,3 @@ This parameter should not be used to reliably obscure image content when optimiz
     </td>
   </tr>
 </table>
-
-<Tabs>
-  <TabItem label="URL format">
-    ```txt
-    blur=50
-    ```
-  </TabItem>
-  <TabItem label="Workers">
-  ```js
-  cf: {image: {blur: 50}}
-  ```
-  </TabItem>
-</Tabs>

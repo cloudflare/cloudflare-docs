@@ -282,28 +282,28 @@ Attempting to re-enable a token before rotation returns `409`. Requesting a futu
 
 ## Renew service tokens
 
-Service tokens expire according to the token duration you selected when you created the token.
+Refreshing a service token resets its expiration to the current time plus its configured duration. It does not add that duration to the existing expiration date or change the Client ID or Client Secret. For example, refreshing a token configured for 24 hours makes it expire 24 hours from the refresh.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Service credentials** > **Service Tokens**.
 2. Locate the token you want to renew.
-3. To extend the token's lifetime by one year, select **Refresh**.
-4. To extend the token's lifetime by more than a year:
+3. To renew using the current duration, select the token's refresh action.
+4. To use a different duration:
    1. Select **Edit**.
    2. Choose a new **Service Token Duration**.
-   3. Select **Save**. The expiration date will be extended by the selected amount of time.
+   3. Select **Save**. Access resets the expiration relative to the time of the update.
 
 </TabItem> <TabItem label="API">
 
-To extend the token's lifetime by one year, make a `POST` request to the [Refresh a service token](/api/resources/zero_trust/subresources/access/subresources/service_tokens/methods/refresh/) endpoint:
+To renew using the token's configured duration, make a `POST` request to the [Refresh a service token](/api/resources/zero_trust/subresources/access/subresources/service_tokens/methods/refresh/) endpoint:
 
 <APIRequest
 	path="/accounts/{account_id}/access/service_tokens/{service_token_id}/refresh"
 	method="POST"
 />
 
-To extend the token's lifetime by a custom duration, make a `PUT` request to the [Update a service token](/api/resources/zero_trust/subresources/access/subresources/service_tokens/methods/update/) endpoint with the new `duration`:
+To change the duration and reset the expiration, make a `PUT` request to the [Update a service token](/api/resources/zero_trust/subresources/access/subresources/service_tokens/methods/update/) endpoint with the new `duration`:
 
 <APIRequest
 	path="/accounts/{account_id}/access/service_tokens/{service_token_id}"
@@ -444,7 +444,7 @@ terraform destroy -target=cloudflare_zero_trust_access_service_token.example_ser
 
 :::note
 
-When editing an Access application, selecting **Revoke existing tokens** revokes existing sessions but does not prevent the user from starting a new session. As long as the Client ID and Client Secret are still valid, they can be exchanged for a new token on the next request. To revoke access, you must delete the service token.
+When editing an Access application, selecting **Revoke existing tokens** revokes existing sessions but does not prevent new sessions while the service token remains valid. To prevent new sessions, [disable](#turn-a-service-token-on-or-off) or delete the service token.
 :::
 
 ## Set a token expiration alert

@@ -103,8 +103,8 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 					</a>
 				</div>
 				<p class="node-caption">
-					Mesh and WAN traffic flows through Gateway, with policies enforced and
-					traffic{" "}
+					Public Internet, Mesh, and WAN traffic flows through Gateway, with
+					policies enforced and traffic{" "}
 					<a class="logs-link" href={logsHref}>
 						logged
 					</a>
@@ -136,7 +136,10 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 					<span class="destination-dot public-dot" aria-hidden="true"></span>
 					<span class="destination-title">Public Internet</span>
 				</div>
-				<p class="destination-caption">Reachable via Mesh or WAN</p>
+				<p class="destination-caption">
+					Reachable directly through Gateway with <code>cf1:network</code>, no
+					on-ramp required
+				</p>
 			</div>
 		</div>
 	</div>
@@ -479,6 +482,20 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		font-size: 12px;
 		line-height: 1.5;
 		text-align: center;
+	}
+
+	.destination-caption code {
+		display: inline;
+		padding: 1px 6px;
+		border: 1px solid var(--map-line);
+		border-radius: 5px;
+		background: var(--map-elevated);
+		color: var(--map-text);
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 11px;
+		white-space: nowrap;
 	}
 
 	.logs-link {

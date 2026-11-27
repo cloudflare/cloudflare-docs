@@ -1,0 +1,320 @@
+{
+	"model_id": "bytedance/seedream-5.5",
+	"name": "Seedream 5.5",
+	"description": "Seedream 5.5 is ByteDance's image generation and editing model with text prompts, up to 10 reference images, 1K, 1.5K, 2K, or custom pixel-size output, PNG or JPEG output, and native transparent backgrounds.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"Image Editing",
+		"Multi-Reference",
+		"Transparent Background"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Per image": 0.035,
+		"output_size_1k": 0.02,
+		"output_size_2k": 0.035,
+		"Per input image": 0.008
+	},
+	"examples": [
+		{
+			"name": "Transparent Acrylic Standee",
+			"description": "Native transparent PNG straight from text, at 2K.",
+			"input": {
+				"prompt": "A transparent acrylic standee with a Christmas theme and a thin white edge. Scrapbook collage style: a red-and-green vinyl record with a golden rim at the center, surrounded by a wreath of pine branches, red berries, golden stars and snowflake stickers. A minimalist white music-player UI below with a progress bar (01:24 / 04:32). Transparent background.",
+				"background": "transparent",
+				"output_format": "png",
+				"size": "2K"
+			},
+			"output": {
+				"images": [
+					"https://examples.aig.cloudflare.com/bytedance/seedream-5.5/transparent-acrylic-standee-0.png"
+				]
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"images": [
+						"https://examples.aig.cloudflare.com/bytedance/seedream-5.5/transparent-acrylic-standee-0.png"
+					]
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5.5',\n  {\n    prompt:\n      'A transparent acrylic standee with a Christmas theme and a thin white edge. Scrapbook collage style: a red-and-green vinyl record with a golden rim at the center, surrounded by a wreath of pine branches, red berries, golden stars and snowflake stickers. A minimalist white music-player UI below with a progress bar (01:24 / 04:32). Transparent background.',\n    background: 'transparent',\n    output_format: 'png',\n    size: '2K',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-5.5\",\n  \"input\": {\n    \"prompt\": \"A transparent acrylic standee with a Christmas theme and a thin white edge. Scrapbook collage style: a red-and-green vinyl record with a golden rim at the center, surrounded by a wreath of pine branches, red berries, golden stars and snowflake stickers. A minimalist white music-player UI below with a progress bar (01:24 / 04:32). Transparent background.\",\n    \"background\": \"transparent\",\n    \"output_format\": \"png\",\n    \"size\": \"2K\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Extract Stickers from Two Images",
+			"description": "Multi-reference input with transparent output: pull the stickers out of two images into one PNG.",
+			"input": {
+				"prompt": "Extract the sticker elements from Image 1 and Image 2, then place all of them in one transparent-background image. Keep each sticker's text, colors and shapes, remove everything else, and arrange them without overlap with sharp edges.",
+				"image": [
+					"https://arkdocs-en.tos-ap-southeast-1.volces.com/images/image-generation/ocr-test3.png",
+					"https://arkdocs-en.tos-ap-southeast-1.volces.com/images/image-generation/ocr-test4.png"
+				],
+				"background": "transparent",
+				"output_format": "png",
+				"size": "2K"
+			},
+			"output": {
+				"images": [
+					"https://examples.aig.cloudflare.com/bytedance/seedream-5.5/extract-stickers-from-two-images-0.png"
+				]
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"images": [
+						"https://examples.aig.cloudflare.com/bytedance/seedream-5.5/extract-stickers-from-two-images-0.png"
+					]
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5.5',\n  {\n    prompt:\n      \"Extract the sticker elements from Image 1 and Image 2, then place all of them in one transparent-background image. Keep each sticker's text, colors and shapes, remove everything else, and arrange them without overlap with sharp edges.\",\n    image: [\n      'https://arkdocs-en.tos-ap-southeast-1.volces.com/images/image-generation/ocr-test3.png',\n      'https://arkdocs-en.tos-ap-southeast-1.volces.com/images/image-generation/ocr-test4.png',\n    ],\n    background: 'transparent',\n    output_format: 'png',\n    size: '2K',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-5.5\",\n  \"input\": {\n    \"prompt\": \"Extract the sticker elements from Image 1 and Image 2, then place all of them in one transparent-background image. Keep each sticker'\\''s text, colors and shapes, remove everything else, and arrange them without overlap with sharp edges.\",\n    \"image\": [\n      \"https://arkdocs-en.tos-ap-southeast-1.volces.com/images/image-generation/ocr-test3.png\",\n      \"https://arkdocs-en.tos-ap-southeast-1.volces.com/images/image-generation/ocr-test4.png\"\n    ],\n    \"background\": \"transparent\",\n    \"output_format\": \"png\",\n    \"size\": \"2K\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Consistent Portrait Edit",
+			"description": "Edit a portrait while keeping the person's identity, pose and style.",
+			"input": {
+				"prompt": "Have the person blow a round, semi-transparent pink bubblegum bubble. Keep the identity, facial features, gaze, hairstyle, pearl earrings, clothing, pose, blue background and composition unchanged.",
+				"image": "https://arkdocs-en.tos-ap-southeast-1.volces.com/images/image-generation/seedream-5-5-multi-round-editing-input.png",
+				"background": "opaque",
+				"output_format": "png",
+				"size": "2K"
+			},
+			"output": {
+				"images": [
+					"https://examples.aig.cloudflare.com/bytedance/seedream-5.5/consistent-portrait-edit-0.png"
+				]
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"images": [
+						"https://examples.aig.cloudflare.com/bytedance/seedream-5.5/consistent-portrait-edit-0.png"
+					]
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5.5',\n  {\n    prompt:\n      'Have the person blow a round, semi-transparent pink bubblegum bubble. Keep the identity, facial features, gaze, hairstyle, pearl earrings, clothing, pose, blue background and composition unchanged.',\n    image:\n      'https://arkdocs-en.tos-ap-southeast-1.volces.com/images/image-generation/seedream-5-5-multi-round-editing-input.png',\n    background: 'opaque',\n    output_format: 'png',\n    size: '2K',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-5.5\",\n  \"input\": {\n    \"prompt\": \"Have the person blow a round, semi-transparent pink bubblegum bubble. Keep the identity, facial features, gaze, hairstyle, pearl earrings, clothing, pose, blue background and composition unchanged.\",\n    \"image\": \"https://arkdocs-en.tos-ap-southeast-1.volces.com/images/image-generation/seedream-5-5-multi-round-editing-input.png\",\n    \"background\": \"opaque\",\n    \"output_format\": \"png\",\n    \"size\": \"2K\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Widescreen JPEG",
+			"description": "Custom pixel size with JPEG output.",
+			"input": {
+				"prompt": "A dramatic mountain lake at sunrise, mist over the water, cinematic landscape photography",
+				"size": "1664x936",
+				"output_format": "jpeg"
+			},
+			"output": {
+				"images": [
+					"https://examples.aig.cloudflare.com/bytedance/seedream-5.5/widescreen-jpeg-0.jpeg"
+				]
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"images": [
+						"https://examples.aig.cloudflare.com/bytedance/seedream-5.5/widescreen-jpeg-0.jpeg"
+					]
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5.5',\n  {\n    prompt:\n      'A dramatic mountain lake at sunrise, mist over the water, cinematic landscape photography',\n    size: '1664x936',\n    output_format: 'jpeg',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedream-5.5\",\n  \"input\": {\n    \"prompt\": \"A dramatic mountain lake at sunrise, mist over the water, cinematic landscape photography\",\n    \"size\": \"1664x936\",\n    \"output_format\": \"jpeg\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": true,
+	"zdr_comment": null,
+	"external_info": "https://docs.byteplus.com/en/docs/modelark/seedream-5-5",
+	"terms": null,
+	"cover_image_url": null,
+	"metadata": {
+		"Max Reference Images": "10",
+		"Output Formats": "PNG, JPEG",
+		"Output Sizes": "1K, 1.5K, 2K, custom WIDTHxHEIGHT",
+		"Reference Image Formats": "JPEG, PNG, WebP, BMP, TIFF, GIF, HEIC, HEIF",
+		"Transparent Background": "Yes"
+	},
+	"request_formats": null,
+	"provider_id": "bytedance",
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "bytedance",
+			"pricing": {
+				"output_image_count": 0.035,
+				"output_size_1k": 0.02,
+				"output_size_2k": 0.035,
+				"input_image_count": 0.008
+			}
+		}
+	],
+	"model_providers": [
+		{
+			"provider": "bytedance",
+			"pricing": {
+				"output_image_count": 0.035,
+				"output_size_1k": 0.02,
+				"output_size_2k": 0.035,
+				"input_image_count": 0.008
+			},
+			"rates": [
+				{
+					"key": null,
+					"label": null,
+					"description": null,
+					"rates": [
+						{
+							"key": "output_image_count",
+							"label": "Per image",
+							"unit": null,
+							"value": 0.035
+						},
+						{
+							"key": "input_image_count",
+							"label": "Per input image",
+							"unit": null,
+							"value": 0.008
+						},
+						{
+							"key": "output_size_1k",
+							"label": "Per 1K image",
+							"unit": null,
+							"value": 0.02
+						},
+						{
+							"key": "output_size_2k",
+							"label": "Per 2K image",
+							"unit": null,
+							"value": 0.035
+						}
+					]
+				}
+			]
+		}
+	],
+	"banner": null,
+	"pinned": false,
+	"created_at": "2026-11-18 21:01:25",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string",
+					"description": "Text prompt describing the image to generate or the edit to make"
+				},
+				"image": {
+					"description": "Reference image(s) for editing or multi-reference generation (1-10)",
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"minItems": 1,
+							"maxItems": 10,
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						}
+					]
+				},
+				"size": {
+					"description": "Output size: 1K, 1.5K, 2K, or WIDTHxHEIGHT (921,600-4,624,220 total pixels)",
+					"type": "string"
+				},
+				"output_format": {
+					"description": "Output image format. Provider default is png.",
+					"type": "string",
+					"enum": [
+						"png",
+						"jpeg"
+					]
+				},
+				"background": {
+					"description": "Background handling. \"transparent\" returns an RGBA PNG and requires png output.",
+					"type": "string",
+					"enum": [
+						"auto",
+						"transparent",
+						"opaque"
+					]
+				},
+				"watermark": {
+					"default": false,
+					"description": "Whether to add an AI-generated watermark to the output image",
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"prompt",
+				"watermark"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"images": {
+					"minItems": 1,
+					"type": "array",
+					"items": {
+						"type": "string",
+						"format": "uri"
+					}
+				}
+			},
+			"required": [
+				"images"
+			],
+			"additionalProperties": false
+		}
+	}
+}

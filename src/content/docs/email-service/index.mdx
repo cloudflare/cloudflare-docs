@@ -1,6 +1,6 @@
 ---
 title: Cloudflare Email Service
-description: Send transactional email and route incoming email with Cloudflare Email Service. Arbitrary-recipient sending requires Workers Paid, while routing supports Workers Free and Paid.
+description: Send transactional email and route incoming email with Cloudflare Email Service. Both are available on the Workers Free and Workers Paid plans.
 pcx_content_type: overview
 sidebar:
   order: 1
@@ -21,19 +21,19 @@ import {
 
 <Description>
 
-Send transactional email and route incoming email with Cloudflare Email Service. Arbitrary-recipient sending requires Workers Paid, while routing supports Workers Free and Paid.
+Send transactional email and route incoming email with Cloudflare Email Service. Both are available on the Workers Free and Workers Paid plans.
 
 </Description>
 
 Cloudflare Email Service sends transactional email and handles incoming email.
 
 - **Email Sending** <Badge text="Beta" /> sends outbound transactional emails.
-  <Plan type="workers-paid" />
+  <Plan type="workers-all" />
 - **Email Routing** processes incoming emails with Workers or forwards them to destination addresses.
   <Plan type="workers-all" />
 
 :::note
-Sending to [verified destination addresses](/email-service/configuration/email-routing-addresses/#destination-addresses) in your account is free on Workers Free and Paid plans, even when only Email Routing is configured.
+On the Workers Free plan, Email Sending sends only to [verified destination addresses](/email-service/configuration/destination-addresses/) in your account. Sending to any other recipient requires the Workers Paid plan. Sends to verified destination addresses are free on both plans, even when only Email Routing is configured.
 :::
 
 Use Email Sending for account emails, order confirmations, and alerts. Use Email Routing to process or forward incoming messages.

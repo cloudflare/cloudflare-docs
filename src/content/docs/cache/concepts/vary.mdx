@@ -166,6 +166,8 @@ You can provide an optional `languages` list. If provided, any language not in t
 
 By default, Cloudflare's CDN overrides the `Accept-Encoding` header based on the enabled compression encodings. If Brotli compression is enabled, the `Accept-Encoding` forwarded to the origin is `gzip, br`. If Brotli compression is not enabled, the `Accept-Encoding` forwarded to the origin is `gzip`. Cloudflare can then recompress cached assets based on the visitor's `Accept-Encoding`. For details, refer to [ETag headers](/cache/reference/etag-headers/).
 
+`GET` range requests that Cloudflare does not cache are an exception on HTTPS. For those, Cloudflare forwards the visitor's raw `Accept-Encoding` header instead of Cloudflare's override or a Vary-normalized value. For details, refer to [Uncached range requests](/cache/reference/range-requests/#uncached-range-requests).
+
 This behavior can be turned off by enabling [Respect Strong ETags](/cache/how-to/cache-rules/settings/#respect-strong-etags). With Respect Strong ETags enabled, the visitor's `Accept-Encoding` is forwarded to the origin instead of Cloudflare's compression override. If Vary normalization is enabled for `Accept-Encoding`, the normalized value is used both to select the cached version and as the value forwarded to the origin.
 
 Because Cloudflare controls `Accept-Encoding` when Respect Strong ETags is turned off, `Accept-Encoding` normalization only rewrites the origin request when Respect Strong ETags is turned on.

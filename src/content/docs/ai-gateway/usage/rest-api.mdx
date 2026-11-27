@@ -330,17 +330,18 @@ All AI Gateway features configured on that gateway — caching, rate limiting, g
 
 Use `cf-aig-*` headers to control AI Gateway behavior on a per-request basis:
 
-| Header                   | Type        | Description                                             |
-| ------------------------ | ----------- | ------------------------------------------------------- |
-| `cf-aig-skip-cache`      | boolean     | Skip the cache for this request.                        |
-| `cf-aig-cache-ttl`       | number      | Cache TTL in seconds.                                   |
-| `cf-aig-cache-key`       | string      | Custom cache key.                                       |
-| `cf-aig-collect-log`     | boolean     | Turn logging on or off for this request.                |
-| `cf-aig-request-timeout` | number      | Request timeout in milliseconds.                        |
-| `cf-aig-max-attempts`    | number      | Retry attempts (max 5).                                 |
-| `cf-aig-retry-delay`     | number      | Retry delay in milliseconds (max 60000).                |
-| `cf-aig-backoff`         | string      | Backoff method: `constant`, `linear`, or `exponential`. |
-| `cf-aig-metadata`        | JSON string | Custom metadata to attach to the log entry.             |
+| Header                       | Type        | Description                                                                |
+| ---------------------------- | ----------- | -------------------------------------------------------------------------- |
+| `cf-aig-skip-cache`          | boolean     | Skip the cache for this request.                                           |
+| `cf-aig-cache-ttl`           | number      | Cache TTL in seconds.                                                      |
+| `cf-aig-cache-key`           | string      | Custom cache key.                                                          |
+| `cf-aig-collect-log`         | boolean     | Turn logging on or off for this request.                                   |
+| `cf-aig-collect-log-payload` | boolean     | Store or skip the request and response bodies in the log for this request. |
+| `cf-aig-request-timeout`     | number      | Request timeout in milliseconds.                                           |
+| `cf-aig-max-attempts`        | number      | Retry attempts (max 5).                                                    |
+| `cf-aig-retry-delay`         | number      | Retry delay in milliseconds (max 60000).                                   |
+| `cf-aig-backoff`             | string      | Backoff method: `constant`, `linear`, or `exponential`.                    |
+| `cf-aig-metadata`            | JSON string | Custom metadata to attach to the log entry.                                |
 
 For more details on these options, refer to [Request handling](/ai-gateway/configuration/request-handling/) and [Caching](/ai-gateway/features/caching/).
 

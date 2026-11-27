@@ -1,0 +1,105 @@
+---
+title: Content hints
+description: Set browser content hints on RealtimeKit audio, video, and screen-sharing tracks to match speech, motion, music, or detailed content.
+pcx_content_type: how-to
+sidebar:
+  order: 2
+products:
+  - realtime
+---
+
+import { Steps } from "~/components";
+import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
+import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
+
+Use `MediaStreamTrack.contentHint` to describe the content of local media tracks. The browser can use this hint to guide media processing and encoding.
+
+This guide applies to the RealtimeKit Web SDKs, including applications that use Web UI Kit.
+
+<RTKSDKSelector disabledPlatforms={["mobile"]} />
+
+<RTKCodeSnippet id={["web-web-components", "web-angular", "web-react"]}>
+
+## Choose a hint
+
+Choose a hint based on the content, not only the capture source.
+
+| Track kind | Hint                   | Use case                                                    |
+| ---------- | ---------------------- | ----------------------------------------------------------- |
+| Audio      | `"speech"`             | Microphone conversations and spoken presentations.          |
+| Audio      | `"music"`              | Music performances or shared audio that contains music.     |
+| Audio      | `"speech-recognition"` | Audio intended for machine speech recognition.              |
+| Video      | `"motion"`             | Camera video, movies, or games where smooth motion matters. |
+| Video      | `"detail"`             | Presentations, diagrams, or artwork where detail matters.   |
+| Video      | `"text"`               | Documents, code editors, or web pages with text.            |
+| Either     | `""`                   | Clear the explicit hint and let the browser choose.         |
+
+For example, use `"text"` for a shared code editor, but `"motion"` for a shared video. Use `"music"` for shared music and `"speech"` for spoken content.
+
+## Apply hints to local tracks
+
+Set hints on the outgoing tracks exposed by [`meeting.self`](/realtime/realtimekit/humans/core/local-participant/#media-properties). Listen to `audioUpdate`, `videoUpdate`, and `screenShareUpdate` to apply hints when tracks become available or change.
+
+<Steps>
+
+1. [Initialize the Core SDK](/realtime/realtimekit/humans/core/#initialize-core-sdk) and obtain the `meeting` instance.
+
+2. Register update listeners and apply hints to existing tracks.
+
+   This example assumes spoken microphone audio, camera video, and presentation screen sharing. It uses `"music"` for optional shared audio. Change these hints to match your content.
+
+   ```js
+   function applyContentHints(meeting) {
+   	const { self } = meeting;
+
+   	function setHint(track, hint) {
+   		if (track && "contentHint" in track) {
+   			track.contentHint = hint;
+   		}
+   	}
+
+   	function handleAudioUpdate({ audioTrack }) {
+   		setHint(audioTrack, "speech");
+   	}
+
+   	function handleVideoUpdate({ videoTrack }) {
+   		setHint(videoTrack, "motion");
+   	}
+
+   	function handleScreenShareUpdate({ screenShareTracks }) {
+   		setHint(screenShareTracks?.video, "detail");
+   		setHint(screenShareTracks?.audio, "music");
+   	}
+
+   	self.on("audioUpdate", handleAudioUpdate);
+   	self.on("videoUpdate", handleVideoUpdate);
+   	self.on("screenShareUpdate", handleScreenShareUpdate);
+
+   	// Initialization may have already created local tracks.
+   	handleAudioUpdate(self);
+   	handleVideoUpdate(self);
+   	handleScreenShareUpdate(self);
+
+   	return () => {
+   		self.off("audioUpdate", handleAudioUpdate);
+   		self.off("videoUpdate", handleVideoUpdate);
+   		self.off("screenShareUpdate", handleScreenShareUpdate);
+   	};
+   }
+
+   const removeContentHintListeners = applyContentHints(meeting);
+   ```
+
+3. When your component unmounts or before you replace the meeting instance, remove the listeners you registered.
+
+   ```js
+   removeContentHintListeners();
+   ```
+
+</Steps>
+
+A content hint belongs to an individual track. The example automatically reapplies hints when update events provide replacement tracks. This covers device changes and switches to a different shared screen.
+
+For browser compatibility and property details, refer to [`MediaStreamTrack.contentHint` on MDN](https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack/contentHint/) and [Can I use: content hints](https://caniuse.com/?search=contentHint).
+
+</RTKCodeSnippet>

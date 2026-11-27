@@ -1,0 +1,1262 @@
+{
+	"model_id": "openai/gpt-6.2-astra",
+	"name": "GPT-6.2 Astra",
+	"description": "OpenAI's most capable model for the hardest projects, from start to finish. GPT-6.2 Astra supports advanced reasoning, coding, and agentic workflows.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Coding",
+		"Reasoning",
+		"Multimodal",
+		"Computer Use"
+	],
+	"context_length": 1050000,
+	"max_output_tokens": 128000,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Short-context input (per 1M)": 8,
+		"Short-context cached input (per 1M)": 0.4,
+		"Short-context cache write (per 1M)": 10,
+		"Short-context output (per 1M)": 40,
+		"Long-context input (per 1M)": 12,
+		"Long-context cached input (per 1M)": 0.6,
+		"Long-context cache write (per 1M)": 15,
+		"Long-context output (per 1M)": 60
+	},
+	"examples": [
+		{
+			"name": "Complex Reasoning (RunV2)",
+			"description": "Use high reasoning effort to plan a complex, reversible migration",
+			"input": {
+				"input": "Plan a phased migration of a high-traffic API from one database to another. Include validation gates, observability, and rollback criteria.",
+				"instructions": "Return a concise sequence of actionable phases.",
+				"max_output_tokens": 768,
+				"reasoning": {
+					"effort": "high"
+				}
+			},
+			"output": {
+				"text": "1. **Set gates and rehearse.** Baseline peak-hour p99 latency, error rate, throughput, and database saturation. Set numeric promotion and rollback thresholds, a breach duration, and a maximum replication lag. Treat any confirmed critical data mismatch as an immediate stop. Assign a cutover owner and rehearse both cutover and rollback under peak load.\n\n2. **Backfill while the source owns writes.** Take a consistent snapshot, record its change-log position, and copy in throttled batches. Replay changes from that position, including deletes, in commit order with idempotent retries. Pause the backfill if source health degrades. **Gate:** at a common checkpoint, partition checksums and business invariants match, and replication lag stays within budget under peak traffic.\n\n3. **Shadow reads.** Mirror a sample of production reads to the target without serving its responses. Compare results at equivalent data versions so replication lag is not mistaken for corruption. Dashboard latency, errors, saturation, lag, and mismatches by endpoint and database. **Gate:** no unexplained differences; target performance meets the agreed thresholds.\n\n4. **Canary served reads.** Route stable cohorts to the target in steps, for example 1% \u2192 5% \u2192 25% \u2192 100%. Keep read-after-write requests on the source unless the target has applied the required commit. Promote only after a representative observation window at each step, including peak load before full rollout. **Rollback:** return reads to the source on a threshold breach or critical mismatch.\n\n5. **Switch write ownership.** Briefly queue new writes, drain in-flight source writes, fence the source writer, and verify the target has applied the final source commit. Enable target writes and release the queue. Start reverse replication from the cutover checkpoint, with only the target accepting application writes. **Rollback:** fence target writes, drain and verify reverse replication through the last acknowledged commit, then reopen the source. If catch-up cannot be verified, hold writes rather than fail back to stale data.\n\n6. **Soak and retire.** Keep the source synchronized through the agreed rollback window. **Exit gate:** peak-load SLOs hold, reconciliation remains clean, and a target backup has been successfully restored. Only then stop reverse replication and retire the source."
+			},
+			"raw_response": {
+				"id": "resp_0f32c611638e55d9006afc9fe98b2487d190b0aa37da1ca2f8",
+				"object": "response",
+				"created_at": 1794940905,
+				"status": "completed",
+				"access_programs": {
+					"cyber": "standard"
+				},
+				"background": false,
+				"billing": {
+					"payer": "developer"
+				},
+				"completed_at": 1794940920,
+				"error": null,
+				"frequency_penalty": 0,
+				"image": {
+					"context_compression": "disabled"
+				},
+				"incomplete_details": null,
+				"input_transformations": [],
+				"instructions": "Return a concise sequence of actionable phases.",
+				"max_output_tokens": 768,
+				"max_tool_calls": null,
+				"model": "gpt-6.2-astra",
+				"moderation": null,
+				"output": [
+					{
+						"id": "rs_0f32c611638e55d9006afc9feb253487d1814767f22dbd6094",
+						"type": "reasoning",
+						"content": [],
+						"encrypted_content": "gAAAAABq_J_5TOouOzkeVM7arFJnW7DOvd0OGjH131XBsGFxrWzTTmEu21h0nP3HWaP5GisK8ZpVs38CGVfob84osPoyb3Odid7M4ANsj6CB6o6z3DYFC5KPPWsA6oLeFQ0C5U2Z3lZaek4yvcNA3gQh_NkZpnDmP-4jtpKWAKExJKzyx05-WNCAdEwz9FLyreLQamnHAytdt9cdY7sXhiRMxQbXwxIgh3xry1OfulyaU2cyCmSpssRfUAcIuI6RJ_UVIkuYpil7Ff9Lf4iygbpgLHv9AXOLVsnWlpVvmaCNMmUk38QZo984zcOkRZ2j7-U_YJ0O3_48kEaBGEfRVwtYxxEmqKpGjbynDz0NXR1aP44sEL1sRCuiiFwLqYKPa-xfA8Gv83vJ182BkSfpouqgwomm-0yDTEXVBy1LzODvt5KhAonZWkStq_u_vbp-dVQYlKl5AkuGHPU5xN1LypMoTPJsYxu08JmVHO6u6pi4iJhi4vq4kahLVgvigsWAi4YCaOZuepwxZ0UwulON4aVrQwTRVNPxfrk2S6bN-EDlDatPrf8bI1tuqbkTfnGvwlD8XvbcWc6j4kU_9S14AzCzwcGRnSoAkN9fb9U7K4ckxSlomTA_nGgUe-wBk5ZSX3aUxQRKET3t2A3UbSyFNQSBUPECyM66iE2839veXCq9XyGP3D-GqszKnjS4pNV8BnEOUewEe8JCqliI6lNvDnwVGEFjsdVTMw9l89B7I5m_ctGwIr4mEVU31a956pRP1KNLIa_YqHZ7OIvcinIPk1Rd9d-kX7nLbuKDkWY3TVV51N8rA8lOrqAhKWx7xtBzfVzOD6Qi5FX9TpjvCuURWdeQAlHxiDWZBaOyEWUueGykYeflhSd-JpzgsA9GfLixYgBfr2qs2mGWxRR-R2tDU85G1oIYrAf_HnDV34pQOPGVIrmB9lUrjPbY3X8w7jbk7196ObgmmGM3nRs8JIg7sVKFwChsrWfxFskU95E-hCpMQrKsiSCyBMt2jY15LKt3E1nh0pX3MIgSsSfk_v-w_7kLQTgGxjikKyxxGKi0JrxkZtqed6jfDTGgOgPJ15KfjrukWl_CZG751kSyUe4MbYh6kS3jfeecwwkE2DY1TK3flNCaxd2Afj_PurT7KRiTHlne1uL3f_kKgzqzZrQqcCeGT_yNSrYjU9OsDVTOdU27VPI4GZu2sMI5v_9-o6y-rSu7c6S4TcNQvUWDRhHCV-4LRK0mqqjF-KQQaICFQmE0wNO1Ybqf6Sb2DNtDRdV5iWhB52aGliwnYWHw3wfafCeE6ZZ6OjFgaOE9UNXA0MuXJ_QXMQbxO9HxmSBnB_GEeBCzzJHSpTN9PIPqmvXO-8qLFJmxSKDmKtNpwAfcmyxO14eQTKMH8CZzBgJNVTQwCLpI5PGg7WPZk27G5DJAbbGOhpoXZkRC880Ugblan6ifK6LGn3rpFtBqI1otmG80TwHEqahveL7_DwjUYr4AjakAGMzb2natp2v3qwSTasdxOT09oh5g7_lOVIFvd0nGzQHldVu8tQMlLG4MPfiVQtvZTCp64GY3nq85eHt5F2oAXVeW3KF857uZqYMfetT3hXocUdFX77PBmAIsLBWJJVS01CaPzU0FV3TYybFFdeCaOatcbVPxrIheo9oDX6ADgGaHLvYVl39Xww8sq-zmyZa0B3UmDMsP4YFhIG9ZmdXY3YiElEgh3DAm6z9um5YsRBeUxdpAqoXXGvZyNRumER20kMILSBG9T2fGcjS_GE_c-5ghHH9afyOKh6WopVs3gPLTKYBXBzNjJJTKi1P10EA3Qqf5IagADX2yRfuTUmJpn1S0v4dsB828i8zRO96TdDuxjY22a1z4dzI2QX0fSVkmwmBrGLg6N0iI9n1qQAme4JRhP_cv2ktmG8e14aUjPN8ZXdkX2bfVBl4eGus_BDoXYW-lYFiI2QZhcv0ZHveme8HhJ6Ap65t8_gOtgI67UvtjXsz4JUy5K9v8EmvhKg7SR_hmRiWcTfxOzgRl37fM7r2ikaiDM6TSDGI8PLBsokmyYyL3nnYVqq7k4Ak9Yi-PvugM3t6rRi8nsoDFPJJVq78cFE69vndy_ZYca2j-zPqzokFt_9VYYheO63rgZbfrPAhjLmjpXdiK0E2JPoI6jNUFCs4xiFHEiJJG23Rk1a4tgc_2Dli6CngwHuVCIpBZEXWdKqU44dwqPJocrVzCcU6RZTva-WMyJeRI7PIP6rnS6sjIPr5mAvh_8ZuCl1d0Y7xXocZvwyTGY7uJWR7DBFySjNa-0P9myTgq5qsKfdScgNcz-CZZ0crEGRzXN5E0IK1XQZ1esrUdG0b8BmBi_BJZGRk3cJt32kc8DgQ1gOi-P7XMGhprZ4n4kN7m7Vbqo81iCURIBwwRmU4R7rkKFEdIVsoHRrXoxLncesyx1uz-ULnm7FWg8ks9JNRETovYXW6_Zm6E4t5ZnsD7Kii6GojBEeGv8NVxNkyUMsHmGCfSRp6HymQE_v1xfPGil3OmBdi4HyU-6xyhrfskHqlT9x2Iq8MWVvoTFBoPICrCDFTrsS-hWJN0UoxI1VusTvCfSGZJpA0z2KyWhwwSoBwY1ApCn6F4xfWpmQ4thEedrwNLS1Bi0TtIMduiR6RpynDY8aFnep5WznEgpPVrxx53Z4aff-lEmLG2OA6Apsbk-cfgYt44KWgzrRswnVU7SZZiMAW2-9zIfI34KDFLq1-HxYbmEhRwwSvpnVSjQ9bmXtaDG2IIhAPP8ke8LupGCe1VZZwWfEhUrVwUN-VxbeLDciwQn4w2s8j_hi7aQFSiGXaezzxeAD18jYQcB_Lg5YicOGXC4fd-Sj3yHEnRn3iTzfCoEXkvvB0E5LPOEJvqWpuo1o411Kn0M3a_Q_sCZIVSkeLE2ddb5cdj7LuNgJxJo9pRjLx9BcaA9WZcjdBxm5m-cAOQdonCXxSuQiYDX-yeZBNbWPZTYJMptZ10zk1rf-rohEHpH56dmTqYA1WkD1TW-8b_8jjf02oks0j_LHx5MiHofsnHdhYnttdO7c3y3Q3OWHadWZHwukEtzmHVWoalYhycJZWSsJ4kICed8nANNRuhb_ChCpnJC5YdEdAXhxoNL7iJc3YJx8MImJG7CAGWJghsd3ndXczMuYqG9ClDPX-MqibONKGwA19CIrIgNzee1CW3wk1PxIL9v8sToJVTQ17vJ0uStdv_J07Eqc1-vr4G5i7v1yPOFJUoCM77r1CYjEXX5k8gVxhcTYjwZw5nknBnOzNXiHti7GiXS88QoXkc7ktKDeGmmpgBuxuiEFnmEdi1_qIYfWuK96-k3VHExxI9t5yjNWlenX5gZYyGvRK__iAVQgY4jhkMdqbHe7NZ5EATlBHZG_leIaUTlQHQRQtQqG2oH12pBDYwFEhtx-9S71ie3nzhlX-fOqaJdg_IaUaJ6910sk8YhcYurtKbHjg_X_TMIK5w3vxOZh7ibJq521NhUrFl0nQIhTRnqQsn4QlT_xB_Tdjoa4cU1iWIZfEKN3cvAoHl8_ge-DbLPK69f6BzgVUVsWBNrBjCU7moisqqXys2ItiDjkTIVRybJpBnjdVtgoANt79jtQvGuhCMNeVGabKRaPG04BMq1Qx2dQe-W4laM3_pSKsuv78_QkYqZkp_9T2e-8KpQ8m5F--2VzgRqewrmlpKFe1ewYsQJ68VYKQCoLT3qXWh_TwKAV6yPv5aZuhLcw4ji47TPYt_QwqydbqLSe71pRM7ounUpmUgVe6KuhayRlyW_fs-1k4as8LSX5sUT91xlgdrre_P4xud6pKArhjt1AUnvVOhTHNssGUP9BISdC7lIYGUrzBH5PbkPNj6sIInyt_XLjaAGDyqPs75HFTTFwbNbzh8xMs3fSoRM4wOfQPOq-BxhsCxrm5PF0x7ISsu2egj7hT3aE5BPn3DV37amMjNeW-JVyh-lq_dteajGY88fbfxWbbq1ggbMjmEe1QNWDrv1GrFcj9F65ywxouLgClQZVy3pRnJffB8feg3K2Sk7ZCQW7o4ziKYpcYvm9vOMBn43AIJd5PFxpekmVJkIcWNIH155lMoUXeKZIv7mFYQC7k8cSMNus93nmd62o-oirjBN1ZoguFTwWfCAkSSi-iiivqbwhbc59wkdlNa4fAlmxS92L6pDNZuVAGp1TFs-6qgIGDH06FknAg1LqAJlDeEh6dc8PHtS5sqGsmFAqodSDGrDZOfIdTRZwLQoGxY1XjoxyeLoBGk_CTfGpLb39FwVDd8exdZRtlKgLcLlxQzbu44vxOTYS9YGJjqYnaDDQvUTzgKFe81qNbBmZwYtj9U4xO9OqLlMzTt-nH8hD2su_ZOTKwGrCGvWysXEnKCH1dcHVI4n4MWyMrB8CuGi1BOEFj4K9R79YNa3WtZQIbh_C_gSuVvE_0kt9GFgPO4V_3LSsOpE2rq6GM6fPEhacKqWmKFIiBJjOPW7ML5yeLyI1GPVaz-F8HnO1r9hiTSUCovdzmqIytd5o3kRTEtPuiRqV8ny9VIVKgs_IvyUju8Lfn1-pGnziC1mNDoxmILuCuIx2yL32dEqEDndF5veUO9t8g9wzEvbH8GC9cob0yQjZLc2wmP-CKPkdjsDLaR8CBKQE1RW67gRluKFxIxaeuSxLI6EHclVUcCzvC-C6dx83A1ngWtXJPh0qXC2uwobDenok-NYYumKkU7O9vCKzg_lVYWYzpxAyvjEu26ekLB5P-8Al9gu13MIU0eR8NPs2NgZ-lci663tm_DS88zhLMygRNVdwjnZEbZCV38ifaWPaz0IgEGHSWi6iP5tFPADFotXPIMIdy1C4aQN-xJYNvtwjD-tKCyAYUKOARV1atUgeMQ044DCPDz0lus6bc3jDTFI7LbUVRJjzMTcFrztPmWxluy0uWtPJMMlK515tsQ6e1Kk39GsnewkaXM5Cdg1bnLXGBKwcUsmbpC78kAr-x3UFgq9pykGkzi7gmquTJUn_P2F4x8xUCmKTiEBK9_Xkw7OPkBQfS4hmHa8NDkQ_8n7LfcaQ2FOdXZzcUk8cieXKv26NlYV23aA6ga5V40iXfoOgwhEVVm4cNiJUGSCndoxvVYBQ496dMIl2SkoD8YQOPkm5_myHHOad7NsXsKpz_9AqmpsnT00hlfj6RlXVd0_xZtG2Xe9ziNFtpOLLEW55I5sUfNPYnt",
+						"summary": []
+					},
+					{
+						"id": "msg_0f32c611638e55d9006afc9ff0715487d1b743fbbcf86d83ea",
+						"type": "message",
+						"status": "completed",
+						"content": [
+							{
+								"type": "output_text",
+								"annotations": [],
+								"logprobs": [],
+								"text": "1. **Set gates and rehearse.** Baseline peak-hour p99 latency, error rate, throughput, and database saturation. Set numeric promotion and rollback thresholds, a breach duration, and a maximum replication lag. Treat any confirmed critical data mismatch as an immediate stop. Assign a cutover owner and rehearse both cutover and rollback under peak load.\n\n2. **Backfill while the source owns writes.** Take a consistent snapshot, record its change-log position, and copy in throttled batches. Replay changes from that position, including deletes, in commit order with idempotent retries. Pause the backfill if source health degrades. **Gate:** at a common checkpoint, partition checksums and business invariants match, and replication lag stays within budget under peak traffic.\n\n3. **Shadow reads.** Mirror a sample of production reads to the target without serving its responses. Compare results at equivalent data versions so replication lag is not mistaken for corruption. Dashboard latency, errors, saturation, lag, and mismatches by endpoint and database. **Gate:** no unexplained differences; target performance meets the agreed thresholds.\n\n4. **Canary served reads.** Route stable cohorts to the target in steps, for example 1% \u2192 5% \u2192 25% \u2192 100%. Keep read-after-write requests on the source unless the target has applied the required commit. Promote only after a representative observation window at each step, including peak load before full rollout. **Rollback:** return reads to the source on a threshold breach or critical mismatch.\n\n5. **Switch write ownership.** Briefly queue new writes, drain in-flight source writes, fence the source writer, and verify the target has applied the final source commit. Enable target writes and release the queue. Start reverse replication from the cutover checkpoint, with only the target accepting application writes. **Rollback:** fence target writes, drain and verify reverse replication through the last acknowledged commit, then reopen the source. If catch-up cannot be verified, hold writes rather than fail back to stale data.\n\n6. **Soak and retire.** Keep the source synchronized through the agreed rollback window. **Exit gate:** peak-load SLOs hold, reconciliation remains clean, and a target backup has been successfully restored. Only then stop reverse replication and retire the source."
+							}
+						],
+						"phase": "final_answer",
+						"role": "assistant"
+					}
+				],
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"prompt_cache_retention": "24h",
+				"reasoning": {
+					"context": "all_turns",
+					"effort": "high",
+					"mode": "standard",
+					"summary": null
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"store": true,
+				"temperature": 1,
+				"text": {
+					"format": {
+						"type": "text"
+					},
+					"verbosity": "medium"
+				},
+				"tool_choice": "auto",
+				"tool_usage": {
+					"image_gen": {
+						"input_tokens": 0,
+						"input_tokens_details": {
+							"image_tokens": 0,
+							"text_tokens": 0
+						},
+						"output_tokens": 0,
+						"output_tokens_details": {
+							"image_tokens": 0,
+							"text_tokens": 0
+						},
+						"total_tokens": 0
+					},
+					"web_search": {
+						"num_requests": 0
+					}
+				},
+				"tools": [],
+				"top_logprobs": 0,
+				"top_p": 1,
+				"truncation": "disabled",
+				"usage": {
+					"input_tokens": 45,
+					"input_tokens_details": {
+						"cache_write_tokens": 0,
+						"cache_write_tokens_details": {
+							"ttl_12h_tokens": 0,
+							"ttl_30m_tokens": 0
+						},
+						"cached_tokens": 0
+					},
+					"output_tokens": 665,
+					"output_tokens_details": {
+						"reasoning_tokens": 194
+					},
+					"total_tokens": 710
+				},
+				"user": null,
+				"metadata": {}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-6.2-astra',\n  {\n    input:\n      'Plan a phased migration of a high-traffic API from one database to another. Include validation gates, observability, and rollback criteria.',\n    instructions: 'Return a concise sequence of actionable phases.',\n    max_output_tokens: 768,\n    reasoning: { effort: 'high' },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/responses \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/gpt-6.2-astra\",\n  \"input\": \"Plan a phased migration of a high-traffic API from one database to another. Include validation gates, observability, and rollback criteria.\",\n  \"instructions\": \"Return a concise sequence of actionable phases.\",\n  \"max_output_tokens\": 768,\n  \"reasoning\": {\n    \"effort\": \"high\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Web Search (RunV2)",
+			"description": "Search the web and summarize current migration guidance",
+			"input": {
+				"input": "Find current best practices for migrating a high-traffic API between databases. Summarize three recommendations and cite sources.",
+				"max_output_tokens": 512,
+				"tools": [
+					{
+						"type": "web_search_preview"
+					}
+				]
+			},
+			"output": {
+				"text": "1. **Copy data while the old database serves traffic.** Keep the old database as the only place the API writes. Copy existing records in batches and use change data capture (CDC) to replicate writes that arrive during the copy. Test at peak traffic and slow the copy if API latency exceeds its target or replication lag keeps growing. ([docs.aws.amazon.com](https://docs.aws.amazon.com/pdfs/prescriptive-guidance/latest/strategy-database-migration/strategy-database-migration.pdf?utm_source=openai))\n\n2. **Test what clients would see, not just whether the rows match.** Validate the copied records, then run a sample of real read requests against both databases while returning only the old database\u2019s response. Compare results and latency. Investigate mismatches after accounting for replication lag; expand reads on the new database only when it meets the endpoint\u2019s correctness and latency requirements. ([stripe.com](https://stripe.com/blog/online-migrations))\n\n3. **Rehearse the write switch and the rollback.** For a single-writer migration, briefly pause all writers\u2014including background jobs\u2014and verify that the new database has applied the last committed transaction before redirecting writes. Decide in advance who can call a rollback and what triggers it. Once the new database accepts writes, switching traffic back is not enough: first synchronize those writes back to the old database, or fix the issue on the new one. ([docs.aws.amazon.com](https://docs.aws.amazon.com/prescriptive-guidance/latest/best-practices-migration-cutover/cutover-stage.html?utm_source=openai))"
+			},
+			"raw_response": {
+				"id": "resp_01db8d6cecbd7035006afc9ff975b087d1981da4c2f71cea36",
+				"object": "response",
+				"created_at": 1794940921,
+				"status": "completed",
+				"access_programs": {
+					"cyber": "standard"
+				},
+				"background": false,
+				"billing": {
+					"payer": "developer"
+				},
+				"completed_at": 1794940935,
+				"error": null,
+				"frequency_penalty": 0,
+				"image": {
+					"context_compression": "disabled"
+				},
+				"incomplete_details": null,
+				"input_transformations": [],
+				"instructions": null,
+				"max_output_tokens": 512,
+				"max_tool_calls": null,
+				"model": "gpt-6.2-astra",
+				"moderation": null,
+				"output": [
+					{
+						"id": "ws_01db8d6cecbd7035006afc9ffa8a5087d1bf62223a20de9b28",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"queries": [
+								"site:docs.aws.amazon.com database migration cutover CDC stop writes replication lag rollback database best practices high traffic",
+								"site:stripe.com blog online migrations dual writing shadow reads throttle backfill database migration"
+							],
+							"query": "site:docs.aws.amazon.com database migration cutover CDC stop writes replication lag rollback database best practices high traffic"
+						}
+					},
+					{
+						"id": "ws_01db8d6cecbd7035006afc9ffffdf087d1ad8db4ff8bca5bc9",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://stripe.com/blog/online-migrations"
+						}
+					},
+					{
+						"id": "msg_01db8d6cecbd7035006afca00200a487d189639ca33ee87d12",
+						"type": "message",
+						"status": "completed",
+						"content": [
+							{
+								"type": "output_text",
+								"annotations": [
+									{
+										"type": "url_citation",
+										"end_index": 499,
+										"start_index": 335,
+										"title": "AWS Prescriptive Guidance - Migration strategy for relational databases",
+										"url": "https://docs.aws.amazon.com/pdfs/prescriptive-guidance/latest/strategy-database-migration/strategy-database-migration.pdf?utm_source=openai"
+									},
+									{
+										"type": "url_citation",
+										"end_index": 964,
+										"start_index": 907,
+										"title": "Online migrations at scale",
+										"url": "https://stripe.com/blog/online-migrations"
+									},
+									{
+										"type": "url_citation",
+										"end_index": 1584,
+										"start_index": 1433,
+										"title": "Cutover stage - AWS Prescriptive Guidance",
+										"url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/best-practices-migration-cutover/cutover-stage.html?utm_source=openai"
+									}
+								],
+								"logprobs": [],
+								"text": "1. **Copy data while the old database serves traffic.** Keep the old database as the only place the API writes. Copy existing records in batches and use change data capture (CDC) to replicate writes that arrive during the copy. Test at peak traffic and slow the copy if API latency exceeds its target or replication lag keeps growing. ([docs.aws.amazon.com](https://docs.aws.amazon.com/pdfs/prescriptive-guidance/latest/strategy-database-migration/strategy-database-migration.pdf?utm_source=openai))\n\n2. **Test what clients would see, not just whether the rows match.** Validate the copied records, then run a sample of real read requests against both databases while returning only the old database\u2019s response. Compare results and latency. Investigate mismatches after accounting for replication lag; expand reads on the new database only when it meets the endpoint\u2019s correctness and latency requirements. ([stripe.com](https://stripe.com/blog/online-migrations))\n\n3. **Rehearse the write switch and the rollback.** For a single-writer migration, briefly pause all writers\u2014including background jobs\u2014and verify that the new database has applied the last committed transaction before redirecting writes. Decide in advance who can call a rollback and what triggers it. Once the new database accepts writes, switching traffic back is not enough: first synchronize those writes back to the old database, or fix the issue on the new one. ([docs.aws.amazon.com](https://docs.aws.amazon.com/prescriptive-guidance/latest/best-practices-migration-cutover/cutover-stage.html?utm_source=openai))"
+							}
+						],
+						"phase": "final_answer",
+						"role": "assistant"
+					}
+				],
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"prompt_cache_retention": "24h",
+				"reasoning": {
+					"context": "all_turns",
+					"effort": "medium",
+					"mode": "standard",
+					"summary": null
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"store": true,
+				"temperature": 1,
+				"text": {
+					"format": {
+						"type": "text"
+					},
+					"verbosity": "medium"
+				},
+				"tool_choice": "auto",
+				"tool_usage": {
+					"image_gen": {
+						"input_tokens": 0,
+						"input_tokens_details": {
+							"image_tokens": 0,
+							"text_tokens": 0
+						},
+						"output_tokens": 0,
+						"output_tokens_details": {
+							"image_tokens": 0,
+							"text_tokens": 0
+						},
+						"total_tokens": 0
+					},
+					"web_search": {
+						"num_requests": 1
+					}
+				},
+				"tools": [
+					{
+						"type": "web_search_preview",
+						"search_content_types": [
+							"text"
+						],
+						"search_context_size": "medium",
+						"user_location": {
+							"type": "approximate",
+							"city": null,
+							"country": "US",
+							"region": null,
+							"timezone": null
+						}
+					}
+				],
+				"top_logprobs": 0,
+				"top_p": 1,
+				"truncation": "disabled",
+				"usage": {
+					"input_tokens": 14663,
+					"input_tokens_details": {
+						"cache_write_tokens": 0,
+						"cache_write_tokens_details": {
+							"ttl_12h_tokens": 0,
+							"ttl_30m_tokens": 0
+						},
+						"cached_tokens": 4462
+					},
+					"output_tokens": 411,
+					"output_tokens_details": {
+						"reasoning_tokens": 95
+					},
+					"total_tokens": 15074
+				},
+				"user": null,
+				"metadata": {}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-6.2-astra',\n  {\n    input:\n      'Find current best practices for migrating a high-traffic API between databases. Summarize three recommendations and cite sources.',\n    max_output_tokens: 512,\n    tools: [{ type: 'web_search_preview' }],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/responses \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/gpt-6.2-astra\",\n  \"input\": \"Find current best practices for migrating a high-traffic API between databases. Summarize three recommendations and cite sources.\",\n  \"max_output_tokens\": 512,\n  \"tools\": [\n    {\n      \"type\": \"web_search_preview\"\n    }\n  ]\n}'"
+				}
+			]
+		},
+		{
+			"name": "Chat Completions Coding (RunV2)",
+			"description": "Generate a concise, practical coding answer through Chat Completions",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Write a TypeScript helper that retries an async operation up to three times with exponential backoff. Include a short usage example."
+					}
+				],
+				"max_completion_tokens": 768,
+				"reasoning_effort": "medium"
+			},
+			"output": {
+				"text": "```ts\nasync function withRetry<T>(\n  operation: () => Promise<T>,\n  initialDelayMs = 100,\n): Promise<T> {\n  const maxRetries = 3;\n\n  for (let attempt = 0; ; attempt++) {\n    try {\n      return await operation();\n    } catch (error) {\n      if (attempt >= maxRetries) throw error;\n\n      const delayMs = initialDelayMs * 2 ** attempt;\n      await new Promise<void>((resolve) => setTimeout(resolve, delayMs));\n    }\n  }\n}\n```\n\nThe first attempt runs immediately. If it fails, the helper retries up to three times, waiting 100 ms, 200 ms, then 400 ms by default. If all four attempts fail, it rethrows the last error.\n\n```ts\nconst status = await withRetry(async () => {\n  const response = await fetch(\"https://example.com/status\");\n  if (!response.ok) throw new Error(`HTTP ${response.status}`);\n  return response.text();\n});\n\nconsole.log(status);\n```"
+			},
+			"raw_response": {
+				"id": "resp_00db3ebe6f5e0285006afc9fb7d1c087d19ca378f226fffd3c",
+				"object": "response",
+				"created_at": 1794940855,
+				"status": "completed",
+				"access_programs": {
+					"cyber": "standard"
+				},
+				"background": false,
+				"billing": {
+					"payer": "developer"
+				},
+				"completed_at": 1794940859,
+				"error": null,
+				"frequency_penalty": 0,
+				"image": {
+					"context_compression": "disabled"
+				},
+				"incomplete_details": null,
+				"input_transformations": [],
+				"instructions": null,
+				"max_output_tokens": 768,
+				"max_tool_calls": null,
+				"model": "gpt-6.2-astra",
+				"moderation": null,
+				"output": [
+					{
+						"id": "rs_00db3ebe6f5e0285006afc9fb9118887d1aaa7ae8c8d45fc13",
+						"type": "reasoning",
+						"content": [],
+						"encrypted_content": "gAAAAABq_J-8C2fKwrp1kWMzQ_oJ1-w0l92o2AxPyvV_YmBWUNPvVa9Usb4mCfAVlZHLs8N08bzm5jKvQmK2wqjoig4jhxXIi-ePqXo8FuHwgT6inThs2BDbVjHOBd5eW3K4n3CVfbWjVbjN6t5EXF3917-_PWdZYTIP4LF6-1ld7vTKKV3Aw_cWCNX6jOoL9TsqR64YupdN3U6ffpxqMksKYa1kpmP9r9L0eCnlxMLTvGybx0ZSBZRlsXwj8YcTJP-PFarHgjMMZh3SepgFqky_uPcF_mIl3tWUkx2MHMJwhIZe_jbSVEjh6scM0y_XPCvGXzMHY44BNySCL4-Z5SkC3UI6MUu3emRk5P4JAUeOl0QVsaOMhgnDcQZyLeUZiCcq2_FR9bpUsBbxURTmcokA7d9_2bpTlggvGnkzEDgLtIu_mydMjdHOgWszS-yVmncx1zrUeGnojw0aMng8kOLEcdLPgdsAqO_GAT5Hnx0h7sDjNKT_i6eSfA5WG1NemMQOrsoxPFANjwuOK2c2bOCFKZCg58dHY5npj6b52Khnn9drxJ9LD1aXDpnsLzObko0ogo59AAWksPWpxDlEYjs2xH9YbKrrhbkY0rggEuTYo0Y6qSdwFJmlOwUhQEF_t2AuWtjZt1cp4GXjyXXV6lsU-wdwd4dcVxeDgzptBQC9DDmUfpgMPB2a0hbA56jZEHnbscXzdwpok8-EFgnwcCa-b_sTwAL5Y8aW23cKv-E2VrCJOweVnDhHJsSA2QP1GDM2bbUrSvMps5e9o3N_B0WH3rzkiQp677tswIdhfEvvCMBAuKxeP9oz4n91jsgPknNCetUzexf2_zB5a2CaGq3C8NnSYZF9QuFbSPWRVNcxYrVGCRDM54XVqoC2evsdjTdtMawGuE0gvs9zgfsw4lURbC7-BBGWB2Vvlhak405cCb8v4QEisqmQDMnxTkY2o3SHe8rBW6OYS21xZSYcYkL4ikN1Mnuff0RCqxgqNsQ2Ej9QNOykVizde1z_gJrcnAXF-KN-Q7BgUHQp28w6t3dw88yB_QR4s8p8UyPN6Pheav5zQrDOWa6rT6nzhEpZNlHa0hZUYAmyhK7vZaDgk3me6SZVP-sftx926AfSQHGI3NTwSkphS-D_posNw7VAkHo4tqoTeW_6WNXbP9xcUaqyPcqNYD4j0clfqe2IdhIZtYQY6cAgKxJg-S64jWIPM1Q6tvQcLPefEJtAGdcGLY0DyHGJ7kmWSymQ6qdL86ekwratlKGNgQxrXS-pDlJ4kGQLQ7I7q5oMPA1JoJ85k-7CMHmfnzbd1cPWPMf22pwaJWk4xJniqWvwVU_edvekvAC2LWR4hVvOWARTJ-MqSs3VnGzaEfxPoDz5_l1f700aBXf9bG655iFnkyzARHm2wc6Jq8DYkTipKWXux1ovhZtkB_rjQpg5RxJuiExguy9AVoKZRLkfQo5R9M6PGvNK8gR8M3rcHeKEoIYpXtAmFSxN8KN5SHuLgNhWdifzMQT5DkVPpSP1BS2auCovKba1w8HhKja4aeHv4LU7vIyMeVOPwY804aCuo5J-HXcwPkzZboVfqHxLB3yT_Cq2R-YRusghvZntcCT1zaCAtKPUIwhrIVi5hTlebAEucSIYRdaDECUdQANT1QEQl_26FESPLM5kpv74kUG2CjWhNUDj0SkmREy5XhXFoivZzCNrwfVNM7myV6Ia2sTWZ9hBi1wxz5YlAnV-RswJFctZJxU5-0V5ckJtGwaJyv5BPkxk2P5LwO_BkGJNw1c45Wmh3Na7Xj2xtI-DS03_AWnUNQAaNqMAin-Ug_XP5uvXDq5p5u9NXGQHBhcniNCSVrN-Lk8nHNHXIzK_14fISuwebaj-0Qk1z7LOZleu6QKurwYJFFNzh9xJp8PQ2Cvw8p9IDk7d030CzcND3TUYndVb8c42hRxR5g6Irgew7-CPivRTYWHFtk2-lm9zQaseaPqUqSC5bjuKMELujwEET8_jCQslMIB4I2QJ5s0sSg_s3a6lkt2h8q_H98qtuMnCQxFJ48k5jBrxjwhTw5nSVYNLtbhIHKkvuHIrgEkDJFKZ3OEfh24IOYGswuqQ9TFi8GRDGugUh4tf2P6bDhDWObcfZaCgr8sIwK-Z6V8QLHnbnsPQeJiRnc0MtqqSPtteljZs1CQkN_c_wQ62_s0rWMeUoIENOVe86kS5L5YM9VAYBJntpKA8aVsZl_oLfmlaPsrv1bFEts2BC_UWCFDiFsg8OC8WYmu2L_u9MJCBt8yymtYe6SJDPHlpOyFq6BApqQ_qJIRumSPrsHv4KVCnnHkYXAvF8qBdcpP8oAeJW5B-hupE7QSci_t5RBkbozLLC8_NoC_-0FnCLzfJekuhic8FAPn-X4-I8IGrAUSKZtFUyHxU1N5CsEUVQDkGBhSfceCgwuc1LkHZrXA0nRGym-E_TlegS8D6Hyu45WzEM1kiZ82tTyU5VA8_dxPBGOiqT3LEZ0BZB7cdXuO26CweeSTAM09RLCIUypO6hEHO-NrKfad82qL0GipLWLS1qe8wpxEeOb_IBCGAaa1sc-G4YbJlbvnMJrSvlvRBZUCOMgQi5aw4BvgmpEeGF5fYzBQ_S3Io0MbQNe1qSHvk_g_EwmFqsrItRaqwYccxk6ZynREeKIO_ig1cj5g2h_rZkPwY_QCEPH19QF8fkVcyM1oKTHRlpnGRFSHmIcgRDd-arUpQNHmHee1WlD4tq_9O0Hc=",
+						"summary": []
+					},
+					{
+						"id": "msg_00db3ebe6f5e0285006afc9fb9a3f887d1a47ab77ea144d880",
+						"type": "message",
+						"status": "completed",
+						"content": [
+							{
+								"type": "output_text",
+								"annotations": [],
+								"logprobs": [],
+								"text": "```ts\nasync function withRetry<T>(\n  operation: () => Promise<T>,\n  initialDelayMs = 100,\n): Promise<T> {\n  const maxRetries = 3;\n\n  for (let attempt = 0; ; attempt++) {\n    try {\n      return await operation();\n    } catch (error) {\n      if (attempt >= maxRetries) throw error;\n\n      const delayMs = initialDelayMs * 2 ** attempt;\n      await new Promise<void>((resolve) => setTimeout(resolve, delayMs));\n    }\n  }\n}\n```\n\nThe first attempt runs immediately. If it fails, the helper retries up to three times, waiting 100 ms, 200 ms, then 400 ms by default. If all four attempts fail, it rethrows the last error.\n\n```ts\nconst status = await withRetry(async () => {\n  const response = await fetch(\"https://example.com/status\");\n  if (!response.ok) throw new Error(`HTTP ${response.status}`);\n  return response.text();\n});\n\nconsole.log(status);\n```"
+							}
+						],
+						"phase": "final_answer",
+						"role": "assistant"
+					}
+				],
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"prompt_cache_retention": "24h",
+				"reasoning": {
+					"context": "all_turns",
+					"effort": "medium",
+					"mode": "standard",
+					"summary": null
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"store": true,
+				"temperature": 1,
+				"text": {
+					"format": {
+						"type": "text"
+					},
+					"verbosity": "medium"
+				},
+				"tool_choice": "auto",
+				"tool_usage": {
+					"image_gen": {
+						"input_tokens": 0,
+						"input_tokens_details": {
+							"image_tokens": 0,
+							"text_tokens": 0
+						},
+						"output_tokens": 0,
+						"output_tokens_details": {
+							"image_tokens": 0,
+							"text_tokens": 0
+						},
+						"total_tokens": 0
+					},
+					"web_search": {
+						"num_requests": 0
+					}
+				},
+				"tools": [],
+				"top_logprobs": 0,
+				"top_p": 1,
+				"truncation": "disabled",
+				"usage": {
+					"input_tokens": 31,
+					"input_tokens_details": {
+						"cache_write_tokens": 0,
+						"cache_write_tokens_details": {
+							"ttl_12h_tokens": 0,
+							"ttl_30m_tokens": 0
+						},
+						"cached_tokens": 0
+					},
+					"output_tokens": 241,
+					"output_tokens_details": {
+						"reasoning_tokens": 22
+					},
+					"total_tokens": 272
+				},
+				"user": null,
+				"metadata": {}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-6.2-astra',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'Write a TypeScript helper that retries an async operation up to three times with exponential backoff. Include a short usage example.',\n      },\n    ],\n    max_completion_tokens: 768,\n    reasoning_effort: 'medium',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/gpt-6.2-astra\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Write a TypeScript helper that retries an async operation up to three times with exponential backoff. Include a short usage example.\"\n    }\n  ],\n  \"max_completion_tokens\": 768,\n  \"reasoning_effort\": \"medium\"\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": true,
+	"zdr_comment": null,
+	"external_info": "https://developers.openai.com/api/docs/models/gpt-6.2-astra",
+	"terms": "https://openai.com/policies/",
+	"cover_image_url": null,
+	"metadata": {
+		"API": "Responses, Chat Completions",
+		"Architecture": "Transformer",
+		"Input modalities": "Text, image",
+		"Knowledge cutoff": "May 18, 2026",
+		"Reasoning effort": "low, medium, high, xhigh, max",
+		"Tools": "Functions, web search, file search, computer use"
+	},
+	"request_formats": [
+		"responses",
+		"chat-completions"
+	],
+	"provider_id": "openai",
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "openai",
+			"pricing": {
+				"short_context_input_tokens": 8,
+				"short_context_input_cached_tokens": 0.4,
+				"short_context_input_cache_creation_tokens": 10,
+				"short_context_output_tokens": 40,
+				"long_context_input_tokens": 12,
+				"long_context_input_cached_tokens": 0.6,
+				"long_context_input_cache_creation_tokens": 15,
+				"long_context_output_tokens": 60,
+				"long_context_threshold_tokens": 272000
+			}
+		}
+	],
+	"model_providers": [
+		{
+			"provider": "openai",
+			"pricing": {
+				"short_context_input_tokens": 8,
+				"short_context_input_cached_tokens": 0.4,
+				"short_context_input_cache_creation_tokens": 10,
+				"short_context_output_tokens": 40,
+				"long_context_input_tokens": 12,
+				"long_context_input_cached_tokens": 0.6,
+				"long_context_input_cache_creation_tokens": 15,
+				"long_context_output_tokens": 60,
+				"long_context_threshold_tokens": 272000
+			},
+			"rates": [
+				{
+					"key": null,
+					"label": null,
+					"description": null,
+					"rates": [
+						{
+							"key": "short_context_input_tokens",
+							"label": "Short-context input",
+							"unit": "per_1m_tokens",
+							"value": 8
+						},
+						{
+							"key": "short_context_output_tokens",
+							"label": "Short-context output",
+							"unit": "per_1m_tokens",
+							"value": 40
+						},
+						{
+							"key": "long_context_input_tokens",
+							"label": "Long-context input",
+							"unit": "per_1m_tokens",
+							"value": 12
+						},
+						{
+							"key": "long_context_output_tokens",
+							"label": "Long-context output",
+							"unit": "per_1m_tokens",
+							"value": 60
+						},
+						{
+							"key": "long_context_input_cache_creation_tokens",
+							"label": "Long-context cache write",
+							"unit": "per_1m_tokens",
+							"value": 15
+						},
+						{
+							"key": "long_context_input_cached_tokens",
+							"label": "Long-context cached input",
+							"unit": "per_1m_tokens",
+							"value": 0.6
+						},
+						{
+							"key": "short_context_input_cache_creation_tokens",
+							"label": "Short-context cache write",
+							"unit": "per_1m_tokens",
+							"value": 10
+						},
+						{
+							"key": "short_context_input_cached_tokens",
+							"label": "Short-context cached input",
+							"unit": "per_1m_tokens",
+							"value": 0.4
+						}
+					]
+				}
+			]
+		}
+	],
+	"banner": null,
+	"pinned": false,
+	"created_at": "2026-11-18 15:54:28",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"input": {
+							"anyOf": [
+								{
+									"type": "string"
+								},
+								{
+									"type": "array",
+									"items": {}
+								}
+							]
+						},
+						"instructions": {
+							"type": "string"
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
+						"max_output_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"text": {
+							"type": "object",
+							"properties": {
+								"format": {}
+							},
+							"additionalProperties": {}
+						},
+						"reasoning": {
+							"type": "object",
+							"properties": {
+								"effort": {
+									"description": "Reasoning effort; availability and accepted values are model-dependent.",
+									"type": "string",
+									"enum": [
+										"none",
+										"low",
+										"medium",
+										"high",
+										"xhigh",
+										"max"
+									]
+								}
+							},
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"input"
+					],
+					"additionalProperties": {},
+					"title": "Responses"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"messages": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"enum": [
+											"system",
+											"developer",
+											"user",
+											"assistant",
+											"tool"
+										]
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											},
+											{
+												"type": "array",
+												"items": {}
+											}
+										]
+									}
+								},
+								"required": [
+									"role"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
+						"max_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"max_completion_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"frequency_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"presence_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"stream_options": {
+							"type": "object",
+							"properties": {
+								"include_usage": {
+									"type": "boolean"
+								}
+							},
+							"additionalProperties": false
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"response_format": {},
+						"modalities": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"enum": [
+									"text",
+									"audio"
+								]
+							}
+						},
+						"audio": {
+							"type": "object",
+							"properties": {
+								"voice": {
+									"type": "string",
+									"enum": [
+										"alloy",
+										"ash",
+										"ballad",
+										"coral",
+										"echo",
+										"sage",
+										"shimmer",
+										"verse"
+									]
+								},
+								"format": {
+									"type": "string",
+									"enum": [
+										"wav",
+										"mp3",
+										"flac",
+										"opus",
+										"pcm16"
+									]
+								}
+							},
+							"additionalProperties": false
+						},
+						"reasoning_effort": {
+							"description": "Optional reasoning control; availability and accepted values are model-dependent.",
+							"type": [
+								"string",
+								"null"
+							]
+						}
+					},
+					"required": [
+						"messages"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"messages": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"enum": [
+											"user",
+											"assistant",
+											"system"
+										]
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "array",
+												"items": {
+													"type": "object",
+													"properties": {
+														"type": {
+															"type": "string"
+														},
+														"text": {
+															"type": "string"
+														},
+														"source": {},
+														"cache_control": {
+															"type": "object",
+															"properties": {
+																"type": {
+																	"type": "string",
+																	"const": "ephemeral"
+																},
+																"ttl": {
+																	"type": "string",
+																	"enum": [
+																		"5m",
+																		"1h"
+																	]
+																}
+															},
+															"required": [
+																"type"
+															],
+															"additionalProperties": false
+														}
+													},
+													"required": [
+														"type"
+													],
+													"additionalProperties": {}
+												}
+											}
+										]
+									}
+								},
+								"required": [
+									"role",
+									"content"
+								],
+								"additionalProperties": false
+							}
+						},
+						"max_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"system": {
+							"anyOf": [
+								{
+									"type": "string"
+								},
+								{
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"type": {
+												"type": "string",
+												"const": "text"
+											},
+											"text": {
+												"type": "string"
+											},
+											"cache_control": {
+												"type": "object",
+												"properties": {
+													"type": {
+														"type": "string",
+														"const": "ephemeral"
+													},
+													"ttl": {
+														"type": "string",
+														"enum": [
+															"5m",
+															"1h"
+														]
+													}
+												},
+												"required": [
+													"type"
+												],
+												"additionalProperties": false
+											}
+										},
+										"required": [
+											"type",
+											"text"
+										],
+										"additionalProperties": {}
+									}
+								}
+							]
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"top_k": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"metadata": {
+							"type": "object",
+							"propertyNames": {
+								"type": "string"
+							},
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"messages",
+						"max_tokens"
+					],
+					"additionalProperties": {},
+					"title": "Messages"
+				}
+			]
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string",
+							"const": "response"
+						},
+						"created_at": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"output": {
+							"type": "array",
+							"items": {}
+						},
+						"output_text": {
+							"type": "string"
+						},
+						"status": {
+							"type": "string",
+							"enum": [
+								"in_progress",
+								"completed",
+								"failed",
+								"incomplete"
+							]
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"input_tokens": {
+									"type": "number"
+								},
+								"output_tokens": {
+									"type": "number"
+								},
+								"total_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"input_tokens",
+								"output_tokens",
+								"total_tokens"
+							],
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"id",
+						"object",
+						"created_at",
+						"model",
+						"output"
+					],
+					"additionalProperties": {},
+					"title": "Responses"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string"
+						},
+						"created": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"choices": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"index": {
+										"type": "number"
+									},
+									"message": {
+										"type": "object",
+										"properties": {
+											"role": {
+												"type": "string"
+											},
+											"content": {
+												"type": [
+													"string",
+													"null"
+												]
+											},
+											"tool_calls": {
+												"anyOf": [
+													{
+														"type": "array",
+														"items": {}
+													},
+													{
+														"type": "null"
+													}
+												]
+											},
+											"audio": {
+												"anyOf": [
+													{
+														"type": "object",
+														"properties": {
+															"id": {
+																"type": "string"
+															},
+															"data": {
+																"type": "string"
+															},
+															"expires_at": {
+																"type": "number"
+															},
+															"transcript": {
+																"type": "string"
+															}
+														},
+														"additionalProperties": {}
+													},
+													{
+														"type": "null"
+													}
+												]
+											}
+										},
+										"required": [
+											"role"
+										],
+										"additionalProperties": {}
+									},
+									"finish_reason": {
+										"type": [
+											"string",
+											"null"
+										]
+									}
+								},
+								"required": [
+									"index",
+									"message",
+									"finish_reason"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"prompt_tokens": {
+									"type": "number"
+								},
+								"completion_tokens": {
+									"type": "number"
+								},
+								"total_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"prompt_tokens",
+								"completion_tokens",
+								"total_tokens"
+							],
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"id",
+						"object",
+						"created",
+						"model",
+						"choices"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"type": {
+							"type": "string",
+							"const": "message"
+						},
+						"role": {
+							"type": "string",
+							"const": "assistant"
+						},
+						"content": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string"
+									},
+									"text": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"type"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"model": {
+							"type": "string"
+						},
+						"stop_reason": {
+							"type": [
+								"string",
+								"null"
+							]
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"input_tokens": {
+									"type": "number"
+								},
+								"output_tokens": {
+									"type": "number"
+								},
+								"cache_creation_input_tokens": {
+									"type": [
+										"number",
+										"null"
+									]
+								},
+								"cache_read_input_tokens": {
+									"type": [
+										"number",
+										"null"
+									]
+								},
+								"speed": {
+									"type": [
+										"string",
+										"null"
+									]
+								}
+							},
+							"required": [
+								"input_tokens",
+								"output_tokens"
+							],
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"id",
+						"type",
+						"role",
+						"content",
+						"model",
+						"stop_reason",
+						"usage"
+					],
+					"additionalProperties": {},
+					"title": "Messages"
+				}
+			]
+		}
+	}
+}

@@ -133,6 +133,8 @@ If DKIM validation is failing:
 
 While not required, DMARC significantly improves email deliverability. When Email Sending is enabled on a domain, Cloudflare adds a `p=reject` DMARC record to the sending domain if none exists. If you already have a DMARC record, Cloudflare keeps it unchanged.
 
+You can edit the record Cloudflare adds, and Cloudflare keeps your changes. To choose a policy, refer to [Sending records](/email-service/configuration/domains/#sending-records).
+
 To add a DMARC record manually:
 
 1. Go to **DNS** > **Records** in the Cloudflare dashboard.
@@ -249,6 +251,16 @@ To reduce bounce rates:
 2. Maintain clean lists: Remove hard bounces immediately
 3. Monitor feedback loops: Subscribe to ISP feedback loops
 4. Gradual warm-up: For new domains, start with small volumes
+
+### Recipient is not a verified destination address
+
+On the Workers Free plan, Email Sending sends only to [verified destination addresses](/email-service/configuration/destination-addresses/) in your account. If any recipient in `to`, `cc`, or `bcc` is not verified, Email Service rejects the whole message:
+
+- The Workers binding throws `E_RECIPIENT_PLAN_RESTRICTED`.
+- The REST API returns `403` with code `10208`.
+- SMTP refuses the recipient with `550 5.7.1`.
+
+To send to that recipient, [add and verify](/email-service/configuration/destination-addresses/#add-a-destination-address) it as a destination address, or upgrade to the [Workers Paid plan](/workers/platform/pricing/).
 
 ### Suppressed recipient
 

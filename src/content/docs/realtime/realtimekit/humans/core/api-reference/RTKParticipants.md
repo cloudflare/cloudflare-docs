@@ -98,22 +98,27 @@ Return the controls for Picture-in-Picture
 <a name="module_RTKParticipants+viewMode"></a>
 
 ### meeting.participants.viewMode
-Indicates whether the meeting is in 'ACTIVE_GRID' mode or 'PAGINATED' mode.
+Controls how participants are selected for the participants.active map.
 
-In 'ACTIVE_GRID' mode, participants are populated in the participants.active map
-dynamically. The participants present in the map will keep changing when other
-participants unmute their audio or turn on their videos.
+In 'ACTIVE_GRID' mode, the SDK automatically moves speakers into the grid,
+replacing non-speakers as needed.
 
-In 'PAGINATED' mode, participants are populated in the participants.active map
-just once, and the participants in the map will only change if the page number is
-changed by the user using setPage(page).
+In 'PAGINATED' mode, participants are split into numbered pages starting at 1,
+with up to maxActiveParticipantsCount participants per page. Use setPage(page)
+to select which page populates participants.active. Speaking does not move
+participants between pages. If all participants fit on page 1, page 2 is empty.
+
+In 'MANUAL' mode, the application controls participant selection and media
+subscriptions instead of relying on the SDK's automatic grid or pagination.
+
+Reconnect preserves the current mode; an unavailable paginated page is adjusted.
 
 **Kind**: instance property of [<code>RTKParticipants</code>](#module_RTKParticipants)  
 <a name="module_RTKParticipants+currentPage"></a>
 
 ### meeting.participants.currentPage
 This indicates the current page that has been set by the user in PAGINATED mode.
-If the meeting is in ACTIVE_GRID mode, this value will be 0.
+PAGINATED starts at page 1. ACTIVE_GRID and MANUAL use page 0.
 
 **Kind**: instance property of [<code>RTKParticipants</code>](#module_RTKParticipants)  
 <a name="module_RTKParticipants+lastActiveSpeaker"></a>
@@ -200,7 +205,7 @@ has appropriate permissions.
 <a name="module_RTKParticipants+setViewMode"></a>
 
 ### meeting.participants.setViewMode(viewMode)
-Sets the view mode of the meeting to either ACTIVE_GRID or PAGINATED.
+Sets the view mode of the meeting to either ACTIVE_GRID, PAGINATED, or MANUAL.
 
 **Kind**: instance method of [<code>RTKParticipants</code>](#module_RTKParticipants)  
 

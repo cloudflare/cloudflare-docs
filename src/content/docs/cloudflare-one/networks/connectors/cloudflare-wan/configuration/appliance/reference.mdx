@@ -104,6 +104,7 @@ If you do not have more than one anycast IP configured in your account, and you 
 - **Priority**: Assigns a priority to the WAN interface. Lower numbers have higher priority. For details on how Cloudflare calculates priorities, refer to [Traffic steering](/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/).
 - **Health check rate:** Configures the health check frequency for your WAN. Options are low, mid, and high. For details, refer to [Update tunnel health checks frequency](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/common-settings/update-tunnel-health-checks-frequency/).
 - **Addressing:** Configures the Cloudflare One Appliance to work in a DHCP or static IP environment.
+- **Provisioned upload bandwidth** and **Provisioned download bandwidth**: Optional. The upload and download speeds of the WAN circuit, in Mbps in the dashboard or kbps in the API. When you set the upload value, the appliance shapes upload traffic on the WAN to 95% of it, so that [prioritized traffic](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/network-options/application-based-policies/prioritized-traffic/) takes effect when the circuit is congested. Download traffic is not currently shaped.
 
 ## LAN settings
 
@@ -112,6 +113,7 @@ If you do not have more than one anycast IP configured in your account, and you 
 - **Static addressing:** Configures the type of IP addressing for your Appliance. Depending on your use case, this is where you configure your LAN interface IP address, or enable  DHCP server or DHCP relay. For details, refer to [DHCP options](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/network-options/dhcp/).
 - **Static NAT prefix**: Enable NAT (network address translation). This is an optional setting.
 - **Routed subnets:** Configures additional subnets behind a layer 3 router. For details, refer to [Routed subnets](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/network-options/routed-subnets/).
+- **DNAT translations:** Maps a local pre-NAT prefix to a remote subnet reachable through Cloudflare (destination NAT). This is an optional setting. For details, refer to [DNAT translations](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/network-options/dnat-translations/).
 
 ### Restrict traffic to your premises
 

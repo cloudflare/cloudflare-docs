@@ -1,0 +1,25 @@
+---
+title: Use IP and ASN lists in response-side and other CDN rule filters
+description: Reuse custom IP and ASN lists in Response Header Transform Rules, rate-limit response counting, and other customer-owned CDN filters.
+date: 2026-11-27
+---
+
+Custom IP and autonomous system number (ASN) lists are supported in response-side filters, including Response Header Transform Rules and rate-limit response-counting expressions. You can reuse network groups on both the request and response sides.
+
+Support extends across customer-owned CDN rule filters, including WAF custom rules, Cache Rules, Redirect Rules, and Request Header Transform Rules.
+
+For example, reference an ASN list named `partner_networks`:
+
+```txt
+ip.src.asnum in $partner_networks
+```
+
+For an IP list named `office_network`, use:
+
+```txt
+ip.src in $office_network
+```
+
+This expands where you can reference existing lists. It does not change plan availability, quotas, or dynamic action-value expression support. ASN lists remain Enterprise-only, and hostname lists retain their product-specific restrictions.
+
+For details, refer to [IP and ASN lists across Rules products](/waf/tools/lists/custom-lists/#ip-and-asn-lists-across-rules-products).

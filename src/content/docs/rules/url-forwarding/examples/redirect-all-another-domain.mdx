@@ -33,6 +33,8 @@ In this example the original domain was replaced with a different domain. All fu
 
 </Example>
 
+The target URL uses `${2}` instead of `${1}`. In the request URL, the `*` in `http*` is `${1}`, and the second `*` captures the path. Refer to [How wildcard references are numbered](/rules/url-forwarding/single-redirects/settings/#how-wildcard-references-are-numbered).
+
 This configuration will perform the following redirects:
 
 | Request URL                               | URL after redirect                        | Status code |

@@ -30,6 +30,8 @@ This example single redirect for zone `example.com` will redirect requests for t
 
 </Example>
 
+The request URL ends in `/admin*`, so it also matches other paths that start with `/admin`, such as `/administrator/`. To redirect only the admin area, use the request URL `http://store.example.com/admin/*` with the target URL `https://store.example.com/admin/${1}`. This pattern does not match `/admin` without a trailing slash, so create a second rule for that URL if needed.
+
 For example, the redirect rule would perform the following redirects:
 
 | Request URL                                       | Target URL                                         | Status code |

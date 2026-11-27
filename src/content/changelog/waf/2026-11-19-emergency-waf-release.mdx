@@ -1,0 +1,150 @@
+---
+title: "WAF Emergency Release - 2026-11-19"
+description: Cloudflare WAF managed and free rulesets 2026-11-19 release
+date: 2026-11-19
+
+updates:
+  - date: 2026-11-19
+    summary: updated typo in CVE id, updating CVE:CVE-2026-13282 to CVE:CVE-2026-132825
+---
+
+import { RuleID } from "~/components";
+
+This release introduces updates to an existing PHP Remote Code Execution rule to improve detection accuracy, as well as a few new generic, PHP and Ruby CVE specific rules. The new PHP rules are being deployed in log mode by default (in lieu of False Positive risk) and can be overridden after evaluating requests matching the rules. Supplementary information around the CVEs are available through Zero Wire [phpAfterShell and six other PHP critical flaws](https://radar.cloudflare.com/zero-wire/php-november-2026-security-release-phpaftershell) and [ruby2shell: heap overflow in Ruby string case conversion](https://radar.cloudflare.com/zero-wire/ruby2shell).
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>	
+		<tr>
+			<td>Cloudflare Free Ruleset</td>
+			<td>
+				<RuleID id="19373a83abb840e18ab3ce5a7975ce1b" />
+			</td>
+			<td>N/A</td>
+			<td>PHP Remote Code Execution Attack (CVE-2026-109618, CVE-2026-109619, CVE-2026-115560, CVE-2026-126714) #6</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>Rule detection and description updated.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Free Ruleset</td>
+			<td>
+				<RuleID id="7328f23691e44b07892ebd25b19210f1" />
+			</td>
+			<td>N/A</td>
+			<td>Ruby - Heap Overflow - CVE:CVE-2026-132825</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Free Ruleset</td>
+			<td>
+				<RuleID id="8660e37e86444f9f9267ba22e9855f05" />
+			</td>
+			<td>N/A</td>
+			<td>Ruby - Integer Overflow - GHSA-87fm-7w84-j2px</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="4148ae686fdb4d01be673fab9d9c073d" />
+			</td>
+			<td>N/A</td>
+			<td>PHP Remote Code Execution Attack (CVE-2026-109618, CVE-2026-109619, CVE-2026-115560, CVE-2026-126714) #6</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>Rule detection and description updated.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="1afa543a1ed84893b01df04c34402c88" />
+			</td>
+			<td>N/A</td>
+			<td>Ruby - Heap Overflow - CVE:CVE-2026-132825</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="6defac6a52334542adf4a162daf25922" />
+			</td>
+			<td>N/A</td>
+			<td>Ruby - Integer Overflow - GHSA-87fm-7w84-j2px</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="8ef1c34a424b4ccfa6f6fe186c6f42b2" />
+			</td>
+			<td>N/A</td>
+			<td>PHP-FPM - CVE:CVE-2026-129289</td>
+			<td>N/A</td>
+			<td>Log</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="5c5a9d6397e44837a3214b5ba54028d4" />
+			</td>
+			<td>N/A</td>
+			<td>PHP SOAP - CVE:CVE-2026-15353</td>
+			<td>N/A</td>
+			<td>Log</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="00a23de67a684876ba67c5d44521b819" />
+			</td>
+			<td>N/A</td>
+			<td>PHP SOAP - CVE:CVE-2026-129506</td>
+			<td>N/A</td>
+			<td>Log</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="ab34e00582934bceaa5239af3f53db3c" />
+			</td>
+			<td>N/A</td>
+			<td>Generic Rules - Authentication Bypass</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="09e86df4f32e41269f99fbc936ba9f71" />
+			</td>
+			<td>N/A</td>
+			<td>Anomaly - Embedded Application Request</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+	</tbody>
+</table>

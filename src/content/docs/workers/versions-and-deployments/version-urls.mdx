@@ -12,6 +12,12 @@ import { DashButton, WranglerConfig } from "~/components";
 
 Version URLs, previously called preview URLs, let you access an uploaded version of your Worker before deploying it to production. A Version URL uses that Worker version's existing configuration and resources instead of creating a separate environment.
 
+:::caution[Version URLs are not Previews]
+
+A Version URL runs one uploaded version against your production resources, and it is deleted with its version under [version retention](/workers/versions-and-deployments/#version-retention). For branches and pull requests, use [Previews](/workers/previews/), which have their own variables, secrets, bindings, and URL. For which resources are isolated, refer to [Resources and isolation](/workers/previews/resources/).
+
+:::
+
 This is useful for testing a specific version directly. To test the version with your zone's performance or security settings, use [version overrides](/workers/versions-and-deployments/version-overrides/).
 
 For isolated branch or pull request testing, use [Previews](/workers/previews/). To compare Previews, Version URLs, and Wrangler environments, refer to [Compare workflows](/workers/previews/compare-workflows/).
@@ -62,7 +68,7 @@ npx wrangler versions upload
 
 ## Aliased Version URLs
 
-Aliased Version URLs let you assign a readable alias to a specific Worker version. This can be useful when you want a stable URL for a manually uploaded version.
+Aliased Version URLs let you assign a readable alias to a specific Worker version. This can be useful when you want a readable URL for a manually uploaded version. An aliased Version URL runs against your production resources, and it stops working when its version is deleted under [version retention](/workers/versions-and-deployments/#version-retention). For branches and pull requests, use [Previews](/workers/previews/) instead.
 
 Create an alias during version upload with `--preview-alias`:
 
@@ -143,10 +149,11 @@ If `preview_urls` is omitted, Wrangler does not change an existing Version URL s
 - Aliases must begin with a lowercase letter.
 - The alias and Worker name combined with a dash must not exceed 63 characters due to DNS label limits.
 - Only the 1000 most recently deployed aliases are retained. When a new alias is created beyond this limit, the least recently deployed alias is deleted.
+- A Version URL and any aliases pointing to it stop working when the version is deleted under [version retention](/workers/versions-and-deployments/#version-retention). An alias does not prevent its version from being deleted. For URLs that keep working, use [Previews](/workers/previews/compare-workflows/#migrate-from-aliased-version-urls-to-previews).
 
 ## Limitations
 
-- Version URLs are not generated for Workers that implement a [Durable Object](/durable-objects/), including [Containers](/containers/) and [Sandbox](/sandbox/) Workers. For Containers testing options, refer to [Deploy Containers](/containers/guides/deploy/#before-production).
+- Version URLs are not generated for Workers that implement a [Durable Object](/durable-objects/), including [Containers](/containers/) and [Sandbox](/sandbox/) Workers. To test Durable Objects in isolation, use [Previews](/workers/previews/). For Containers testing options, refer to [Deploy Containers](/containers/guides/deploy/#before-production).
 - Version URLs are not generated for [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) [user Workers](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#user-workers).
 - You cannot configure Version URLs to run on a subdomain other than [`workers.dev`](/workers/configuration/routing/workers-dev/).
 - You cannot view logs for Version URLs with Workers Logs, Wrangler tail, or Logpush.

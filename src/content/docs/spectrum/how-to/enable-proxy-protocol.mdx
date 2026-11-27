@@ -28,8 +28,9 @@ This feature requires an Enterprise plan. If you would like to upgrade, contact 
 
    <DashButton url="/?to=/:account/:zone/spectrum" />
 
-2. Locate the application that will use the PROXY protocol and select **Configure**.
-3. From the dropdown, select **PROXY Protocol v1**.
+2. Locate the application that will use the PROXY protocol and select its hostname, or select the three dots next to it > **Edit**.
+3. Under **Advanced Options**, select **PROXY Protocol v1** in **Proxy Protocols**.
+4. Select **Save**.
 
 When TCP applications are configured to use **PROXY Protocol v1**, Cloudflare will prepend each inbound TCP connection with the PROXY Protocol plain-text header.
 
@@ -59,8 +60,9 @@ PROXY TCP6 2001:db8:: 2001:db8:ffff:ffff:ffff:ffff:ffff:ffff 42300 443\r\n
 
    <DashButton url="/?to=/:account/:zone/spectrum" />
 
-2. Locate the application that will use the PROXY protocol and select **Configure**.
-3. From the dropdown, select **PROXY Protocol v2**.
+2. Locate the application that will use the PROXY protocol and select its hostname, or select the three dots next to it > **Edit**.
+3. Under **Advanced Options**, select **PROXY Protocol v2** in **Proxy Protocols**.
+4. Select **Save**.
 
 When TCP applications are configured to use **PROXY Protocol v2**, Cloudflare will prepend each inbound TCP connection with the PROXY Protocol binary header.
 
@@ -130,7 +132,7 @@ A PROXY Protocol binary header for a IPv6 incoming address has the format:
 
 When using Spectrum for UDP, the client source IP and port information can be obtained by using Simple Proxy Protocol, a lightweight protocol developed specifically for UDP.
 
-To enable it, select **Configure** on a Spectrum application and toggle the setting for Simple Proxy Protocol to **On**.
+To enable it, edit a UDP Spectrum application, select **Simple Proxy Protocol** in **Proxy Protocols** under **Advanced Options**, and select **Save**.
 
 Simple Proxy Protocol dictates that your origin must also prepend packets meant for the client with the same header, including original client source information. This is done to validate that packets coming in are in fact intended for the client.
 

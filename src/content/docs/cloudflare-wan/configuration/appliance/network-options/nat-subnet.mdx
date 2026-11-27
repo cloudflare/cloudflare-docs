@@ -43,6 +43,8 @@ To avoid overlapping addresses in the overlay, Cloudflare WAN enforces the follo
 
 These rules allow you to reuse local space at multiple sites, as long as each subnet in the Cloudflare WAN overlay has a unique overlay-facing prefix.
 
+Subnet NAT translates the source addresses of your own subnets. To reach a remote subnet whose addresses overlap your local addresses, also use [DNAT translations](/cloudflare-wan/configuration/appliance/network-options/dnat-translations/), which translate destination addresses.
+
 ## Example
 
 Consider a subnet that uses the following prefixes:

@@ -1,0 +1,22 @@
+---
+title: Match response cookies by name in Rules expressions
+description: Use parsed response cookie fields to match cookie values without parsing Set-Cookie header strings.
+date: 2026-11-27
+---
+
+Rules expressions can inspect response cookies by name using two fields:
+
+- `http.response.set_cookies`: Parsed cookies from the current response headers.
+- `raw.http.response.set_cookies`: Parsed cookies from the original response headers.
+
+For example, use this expression in a Response Header Transform Rule to match a response that sets an `app` cookie to `preview`:
+
+```txt
+http.response.set_cookies["app"][0] eq "preview"
+```
+
+Both fields map URL-decoded cookie names to arrays of values. Duplicate names retain multiple values. Cookie attributes such as `Path` and `HttpOnly` are excluded.
+
+The current field reflects changes from earlier phases. The raw field preserves the original cookies. Normal within-phase field immutability still applies.
+
+For details, refer to the [`http.response.set_cookies`](/ruleset-engine/rules-language/fields/reference/http.response.set_cookies/) and [`raw.http.response.set_cookies`](/ruleset-engine/rules-language/fields/reference/raw.http.response.set_cookies/) field references.

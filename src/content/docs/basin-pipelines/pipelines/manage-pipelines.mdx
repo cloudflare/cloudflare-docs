@@ -14,6 +14,8 @@ Learn how to:
 
 - Create pipelines with SQL transformations
 - View pipeline configuration and SQL
+- Update pipelines after a stream or sink changes
+- Fix a failed pipeline
 - Delete pipelines when no longer needed
 
 ## Create a pipeline
@@ -131,6 +133,42 @@ To view a specific pipeline, run the `basin pipelines get` command with either t
 To list all pipelines in your account, run the `basin pipelines list` command:
 
 <PackageManagers type="exec" pkg="wrangler" args={"basin pipelines list"} />
+
+## Update a pipeline
+
+After a stream or sink changes, for example when you [update a sink's credentials](/basin-pipelines/sinks/manage-sinks/#update-sink-credentials), a pipeline keeps the earlier version until you update the pipeline. Updating a failed pipeline also retries it.
+
+### Dashboard
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **Basin Pipelines** page.
+
+   <DashButton url="/?to=/:account/pipelines/overview" />
+2. Select the pipeline.
+3. Select **Update pipeline**. The button appears only when a stream or sink the pipeline uses has changed.
+</Steps>
+
+### API
+
+The [API token](/fundamentals/api/get-started/create-token/) for this request must have **Basin Pipelines Edit** permission.
+
+```bash wrap
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/pipelines/v1/pipelines/$PIPELINE_ID/update_tables" \
+  --request POST \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+To check whether a pipeline needs an update, [get the pipeline](/api/resources/pipelines/methods/get_v1/) and read its `outdated` field.
+
+## Fix a failed pipeline
+
+A failed pipeline stops processing data. Its page in the dashboard shows the reason, and the API returns it in the pipeline's `failure_reason` field.
+
+**Cause**: One cause is that the pipeline can no longer write to its sink, because the sink's credentials expired or were revoked.
+
+**Fix**: [Update the sink's credentials](/basin-pipelines/sinks/manage-sinks/#update-sink-credentials), then [update the pipeline](#update-a-pipeline). Updating a failed pipeline retries it.
+
+**Verify**: The pipeline's status changes from failed to running.
 
 ## Delete a pipeline
 

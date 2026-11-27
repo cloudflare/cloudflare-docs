@@ -22,6 +22,8 @@ Worker Previews requires `Wrangler 4.135.0` or later. Update the project depende
 
 Add a `previews` block to your Wrangler configuration file. Top-level settings define production, and the `previews` block defines Preview settings. The `previews` block can be empty if your Preview does not need separate settings.
 
+Use [test resources](/workers/previews/resources/) for bindings that can affect production. Previews bound to the same D1 `database_id` share data and schema changes. To isolate a Preview, [configure a separate database](/workers/previews/resources/#d1-migrations).
+
 <WranglerConfig>
 
 ```jsonc
@@ -48,6 +50,10 @@ To determine which settings belong at the top level or in `previews`, refer to [
 Settings that you add or import in the dashboard must also be copied to your [Wrangler configuration file](/workers/previews/configuration/#dashboard-configuration).
 
 ## Step 2: Deploy a Preview
+
+Cron Triggers do not invoke a Preview's `scheduled()` handler. To test scheduled logic, use the [Preview testing workaround](/workers/previews/resources/#cron-triggers).
+
+Preview URLs are public by default. [Configure Cloudflare Access](/workers/previews/custom-domains/#protect-preview-content) before sharing a Preview that contains private content.
 
 Run the same Preview command locally or in your existing CI workflow:
 

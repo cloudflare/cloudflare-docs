@@ -57,8 +57,6 @@ Additional parameters for the data source.
       - Maximum number of link hops to follow from the source URL. Valid values: `1` to `100000`. Defaults to `5`.
     - `max_age` <Type text="number" /> <MetaInfo text="optional" />
       - How long, in seconds, the crawler reuses cached page content before it re-fetches from the origin. Valid values: `0` to `604800`. Defaults to `86400`.
-    - `include_external_links` <Type text="boolean" /> <MetaInfo text="optional" />
-      - Whether to follow links that point to other domains. Defaults to `false`.
     - `include_subdomains` <Type text="boolean" /> <MetaInfo text="optional" />
       - Whether to follow links that point to subdomains of the source URL. Defaults to `false`.
   - `store_options` <Type text="object" /> <MetaInfo text="optional" />
@@ -104,6 +102,8 @@ Configuration for how content is indexed.
   - The tokenizer used for keyword search indexing. Valid values: `porter` (stemming-based), `trigram` (character n-gram). Defaults to `porter`.
 - `use_ocr` <Type text="boolean" /> <MetaInfo text="optional" />
   - Use optical character recognition (OCR) when ingesting PDFs and images. Defaults to `false`. OCR is available on every account and is billed as image-processing ingestion tokens.
+- `file_summary` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Generate a summary, topics, and keywords for each eligible file during indexing. Defaults to `false`. The LLM calls are billed to your account as Workers AI usage, not as AI Search ingestion. Refer to [File summaries](/ai-search/configuration/data-source/#file-summaries).
 
 ---
 
@@ -122,19 +122,19 @@ Default retrieval configuration for the instance. These defaults can be overridd
 
 `sync_interval` <Type text="number" /> <MetaInfo text="optional" />
 
-Seconds between automatic data source syncs. Valid values: `3600`, `7200`, `14400`, `21600`, `43200`, `86400`. Defaults to `21600` (6 hours).
+Seconds between automatic data source syncs. Valid values: `900`, `1800`, `3600`, `7200`, `14400`, `21600`, `43200`, `86400`. Defaults to `86400` (24 hours).
 
 ---
 
 `token_id` <Type text="string" /> <MetaInfo text="optional" />
 
-The UUID of the [service API token](/ai-search/configuration/indexing/service-api-token/) to use for this instance. Required for `d1` instances. For other types, only required if you have never created an AI Search instance before. Refer to the [API get started guide](/ai-search/get-started/api/) for how to create and register a service token.
+The UUID of the [service API token](/ai-search/configuration/indexing/service-api-token/) to use for this instance. Required for `d1` instances. For R2 data sources, only required if your account has no service API token registered yet. If omitted, AI Search uses the most recently registered service API token for your account. Refer to the [API get started guide](/ai-search/get-started/api/) for how to create and register a service token.
 
 ---
 
 `ai_gateway_id` <Type text="string" /> <MetaInfo text="optional" />
 
-The AI Gateway ID for generation, query rewriting, and external-provider requests. Workers AI embedding and reranking usage is included in AI Search usage. These requests do not appear in your AI Gateway logs or Workers AI bill.
+The AI Gateway ID for generation, query rewriting, file summaries, and external-provider requests. File summaries use the `default` gateway when this is not set. Workers AI embedding and reranking usage is included in AI Search usage. These requests do not appear in your AI Gateway logs or Workers AI bill.
 
 ---
 

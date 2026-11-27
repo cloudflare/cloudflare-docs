@@ -103,3 +103,11 @@ Refer to [Fields](/ruleset-engine/rules-language/fields/reference/) for referenc
 :::
 
 For information on the available functions, refer to [Functions](/ruleset-engine/rules-language/functions/).
+
+## Date and signing functions
+
+Use [`format_date()`](/ruleset-engine/rules-language/functions/#format_date) in a dynamic header value to format `http.request.timestamp.sec` as UTC text. This function is available on all plans without an additional entitlement. It can appear up to four times per header value expression. It is not available in filter expressions.
+
+The [HMAC functions](/ruleset-engine/rules-language/functions/#hmac_sha256) and [`sign_sigv4_hmac_sha256()`](/ruleset-engine/rules-language/functions/#sign_sigv4_hmac_sha256) are available on Pro, Business, and Enterprise plans. Each HMAC function can appear up to five times per header value expression, and the SigV4 signer can appear once. Arguments remain subject to signing and hash field restrictions.
+
+Do not expose secret keys or origin authorization headers to visitors. To authenticate storage origin requests, use a [Request Header Transform Rule](/rules/transform/examples/sign-private-storage-requests/) instead.

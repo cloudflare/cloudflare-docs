@@ -8,7 +8,7 @@ products:
   - workers
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, TypeScriptExample } from "~/components";
 
 ## Binding reference
 
@@ -38,6 +38,35 @@ This table shows which resources are automatically provisioned and which require
 | `ratelimits`                        | Creates a Rate Limiting binding. The runtime binding name comes from `name`, not `binding`.                                                                      | Use a different `namespace_id`.              |
 | `send_email`                        | Creates a Send Email binding. The runtime binding name comes from `name`, not `binding`. Successful delivery requires valid Email Routing setup.                 | Not applicable.                              |
 
+### Select resources with `cf`
+
+With [`cloudflare.config.ts`](/cf/projects/cloudflare-config/), use `isPreview` to select different account-level resources:
+
+<TypeScriptExample filename="cloudflare.config.ts">
+
+```ts
+import { bindings, defineConfig } from "cf/config";
+
+export default defineConfig(({ isPreview }) => ({
+	worker: {
+		name: "my-worker",
+		entrypoint: "./src/index.ts",
+		compatibilityDate: "$today",
+		env: {
+			DB: bindings.d1({
+				id: isPreview
+					? "<PREVIEW_DATABASE_ID>"
+					: "<PRODUCTION_DATABASE_ID>",
+			}),
+		},
+	},
+}));
+```
+
+</TypeScriptExample>
+
+Replace the placeholders with your database IDs. All Previews using `<PREVIEW_DATABASE_ID>` share that database. To isolate Previews from each other, use a different database ID for each Preview. For schema changes, refer to [D1 migrations](#d1-migrations).
+
 ## Durable Objects
 
 Durable Objects use a stateful singleton model: within a namespace, each object ID resolves to one instance and its storage. If Previews shared a namespace, they could read and overwrite the same state. For a class defined in the same Worker without `script_name`, each Preview automatically gets its own namespace and storage.
@@ -47,6 +76,7 @@ State persists across deployments within the same Preview and is deleted when th
 | Access pattern                               | Preview configuration                   | Result                                                             |
 | -------------------------------------------- | --------------------------------------- | ------------------------------------------------------------------ |
 | [`ctx.exports`](#use-ctxexports-recommended) | Class and migration only                | Recommended. Each Preview gets a separate namespace automatically. |
+| [`cf` configuration](#use-cf-configuration) | Class in `worker.exports`; call `ctx.exports.Counter` | Each Preview gets a separate namespace automatically. |
 | [`env` binding](#use-an-env-binding)         | Class, migration, and a Preview binding | Use when your code needs `env.COUNTER`.                            |
 
 ### Use `ctx.exports` (recommended)
@@ -70,6 +100,12 @@ With [`ctx.exports`](/workers/runtime-apis/context/#exports) (recommended, requi
 </WranglerConfig>
 
 Production, `feature-login`, and `redesign` each get their own Durable Object namespace and storage. The empty `previews` block is sufficient because no Preview-specific Durable Object binding is needed.
+
+### Use `cf` configuration
+
+With [`cloudflare.config.ts`](/cf/projects/cloudflare-config/), declare `Counter` in `worker.exports` using `exports.durableObject({ storage: "sqlite" })`. Call `ctx.exports.Counter` to use the Preview's isolated namespace.
+
+`bindings.durableObject({ worker: "my-worker", exportName: "Counter" })` targets the named Worker's deployed namespace, even when the name matches your Worker. With `cf` configuration, use `ctx.exports.Counter` for automatic isolation of the Preview's own namespace; the named `env` binding does not provide it.
 
 ### Use an `env` binding
 
