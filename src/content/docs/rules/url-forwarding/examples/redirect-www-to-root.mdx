@@ -27,7 +27,9 @@ This example creates a redirect rule that forwards HTTPS requests from the WWW s
 
 </Example>
 
-This rule ensures that only HTTPS requests from `www.` subdomains are redirected to the root domain, leaving other requests (such as HTTP or non-WWW) unchanged.
+This rule ensures that only HTTPS requests from `www.` subdomains are redirected to the root domain, leaving other requests (such as HTTP or non-WWW) unchanged. The target URL uses `${1}` because the request URL has only one `*`, which captures everything after `www.`: the rest of the hostname, the path, and the query string.
+
+To also redirect HTTP requests, turn on [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/), or use the request URL `http*://www.*` with the target URL `https://${2}`. The `http*` rule redirects HTTP visitors in one step. With Always Use HTTPS, HTTP visitors are redirected twice: first to `https://www.`, then to the root domain. Refer to [How wildcard references are numbered](/rules/url-forwarding/single-redirects/settings/#how-wildcard-references-are-numbered).
 
 For example, the redirect rule would perform the following redirects:
 

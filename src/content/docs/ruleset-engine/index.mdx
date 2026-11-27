@@ -5,22 +5,58 @@ products:
   - ruleset-engine
 sidebar:
   order: 2
-description: Create and deploy rules and rulesets across Cloudflare products using the Ruleset Engine's powerful syntax and high-performance evaluation.
+description: Learn how rules, expressions, actions, rulesets, and phases work across Cloudflare products built on the Ruleset Engine.
 head:
   - tag: title
     content: Overview
 ---
 
-import { LinkButton } from "~/components";
+Many Cloudflare products work the same way: you write a rule that says "when a request looks like this, do that." Redirect Rules, Transform Rules, Cache Rules, Configuration Rules, and WAF custom rules all follow this model.
 
-The Cloudflare Ruleset Engine allows you to create and deploy rules and rulesets in different Cloudflare products using the same basic syntax.
+The Ruleset Engine is the shared system behind these products. All of them use the same Rules language and the same API. After you learn to write a rule for one product, you can write rules for the others.
 
-## Main features
+In the Cloudflare dashboard, you usually create rules only. For most products, Cloudflare manages rulesets and phases for you.
 
-- **Powerful syntax**: Rule expressions use a powerful Rules language similar to the wirefilter syntax that allows you to create complex rules.
-- **High-performance rule evaluation**: Allows you to have many rules in different Cloudflare products with almost no impact on performance.
-- **Engine powering different Cloudflare products**: Cloudflare keeps building products on top of the Ruleset Engine, which means that you can use the same API methods for configuring different products, with the same customization possibilities. Additionally, the Ruleset Engine supports the different phases of the request life cycle at Cloudflare.
+## Key concepts
+
+The Ruleset Engine uses the following concepts:
+
+| Concept        | What it is                                                                                       | Example                                                    |
+| -------------- | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------- |
+| **Rule**       | An expression plus an action.                                                                    | When the path starts with `/old/`, redirect to `/new/`.    |
+| **Expression** | The condition that selects which requests a rule applies to. You write it in the Rules language, or build it from drop-down menus in the dashboard. | `http.request.uri.path wildcard "/old/*"`                  |
+| **Action**     | What happens when the expression matches a request.                                              | Redirect, rewrite, set a header, cache, or block.          |
+| **Ruleset**    | An ordered list of rules. Each product stores its rules in a ruleset.                            | All redirect rules for a zone.                             |
+| **Phase**      | A point in the request life cycle where rulesets run. Phases always run in the same order.       | Redirect Rules (Single Redirects) run before Cache Rules.  |
+
+For more information, refer to [About Ruleset Engine](/ruleset-engine/about/).
+
+## How Cloudflare evaluates a request
+
+1. A request arrives at Cloudflare.
+2. Cloudflare runs each phase in a fixed order. Refer to the [Phases list](/ruleset-engine/reference/phases-list/) for the full order.
+3. Within a phase, Cloudflare checks rules in the order you define them.
+4. When an expression matches, Cloudflare runs the rule's action.
+
+Terminating actions, such as _Redirect_, _Block_, or a challenge, stop rule evaluation, and Cloudflare responds immediately. The remaining rules in the phase and later request phases do not run for that request. Response phases can still apply to the response that Cloudflare generates. For example, [Response Header Transform Rules](/rules/transform/response-header-modification/) apply to redirect responses, and [Custom Error Rules](/rules/custom-errors/) apply to the error response of a _Block_ action.
+
+Non-terminating actions, such as setting a header, do not stop evaluation. If several rules in the same phase change the same value, the last rule wins. Refer to [Actions](/ruleset-engine/rules-language/actions/) for details.
+
+## Where to start
+
+Use the following table to find documentation for your task:
+
+| Goal                               | Refer to                                                             |
+| ---------------------------------- | -------------------------------------------------------------------- |
+| Redirect URLs                      | [Redirects](/rules/url-forwarding/)                                  |
+| Rewrite URLs or modify headers     | [Transform Rules](/rules/transform/)                                 |
+| Control caching                    | [Cache Rules](/cache/how-to/cache-rules/)                            |
+| Adjust settings for some requests  | [Configuration Rules](/rules/configuration-rules/)                   |
+| Block or challenge traffic         | [WAF custom rules](/waf/custom-rules/)                               |
+| Migrate from Page Rules            | [Page Rules migration guide](/rules/reference/page-rules-migration/) |
+| Learn to write expressions         | [Rules language](/ruleset-engine/rules-language/)                    |
+| Configure rules with the API       | [Rulesets API](/ruleset-engine/rulesets-api/)                        |
 
 ## Availability
 
-The Ruleset Engine supports different Cloudflare products. Refer to [Phases list](/ruleset-engine/reference/phases-list/) and to each product's documentation for details.
+Each product built on the Ruleset Engine has its own quotas and plan availability. Some features, such as regular expressions, depend on your plan. Refer to each product's documentation for details.
