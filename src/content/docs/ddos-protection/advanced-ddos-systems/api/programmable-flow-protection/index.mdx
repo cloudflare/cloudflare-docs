@@ -7,21 +7,26 @@ products:
 sidebar:
   order: 3
   label: Configure via the API
-  badge:
-    text: Beta
 head:
   - tag: title
     content: Configure Programmable Flow Protection via API
 
 ---
 
-Use the [Cloudflare API](/api/) to configure Programmable Flow Protection.
+Use the [Cloudflare API](/api/) to configure [Programmable Flow Protection](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/).
 
-For examples of API calls, refer to [Common API calls](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/examples/).
+For examples of API calls, refer to [Common API calls](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/examples/). For the fields of each object, refer to [JSON objects](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/json-objects/).
+
+## Authentication
+
+Use an [API token](/fundamentals/api/get-started/create-token/) with one of the following permissions:
+
+- **DDoS Protection Read**: list and get programs, rules, and parameters.
+- **DDoS Protection Write**: all operations, including uploading programs, debugging with packet captures, and changing rules and parameters.
 
 ## Endpoints
 
-To obtain the complete endpoint, append the Programmable Flow Protection API endpoints listed below to the Cloudflare API base URL:
+To obtain the complete endpoint, append the Programmable Flow Protection API endpoints in the following sections to the Cloudflare API base URL:
 
 ```txt
 https://api.cloudflare.com/client/v4
@@ -31,24 +36,16 @@ The `{account_id}` argument is the [account ID](/fundamentals/account/find-accou
 
 The tables in the following sections summarize the available operations.
 
-## Program versions
-
-Each uploaded program starts at version `1`. Updating a program with a `PATCH` request creates a new version under the same program ID. Program responses include the current version in the `version` field.
-
-Each rule is pinned to a specific program version, which appears in the rule's `program_version` field. Creating a rule without `program_version` pins it to the program's current version. Updating a program does not update existing rules that reference it.
-
-To move an existing rule to another successful version of its program, send a `PATCH` request to the rule endpoint with the target `program_version`. For an example, refer to [Update a rule](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/examples/#update-a-rule).
-
 ### Program operations
 
 | Operation | Method and endpoint / Description |
 | --- | --- |
-| List programs | <p>`GET accounts/{account_id}/magic/programmable_flow_protection/configs/programs`</p>Fetches all Programmable Flow Protection programs in the account. |
-| Upload a program | <p>`POST accounts/{account_id}/magic/programmable_flow_protection/configs/programs`</p>Uploads a new program to the account. Include the optional `X-Program-Name` header to specify a human-readable program name. If omitted, the API generates a UUID as the program name. |
+| List programs | <p>`GET accounts/{account_id}/magic/programmable_flow_protection/configs/programs`</p>Fetches all Programmable Flow Protection programs in the account. To filter the list, use the `status` query parameter with a program [state](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/json-objects/#program), and the `active` query parameter with `true` or `false`. |
+| Upload a program | <p>`POST accounts/{account_id}/magic/programmable_flow_protection/configs/programs`</p>Uploads the C source code of a new program, and compiles and verifies it. Include the optional `X-Program-Name` header to specify a program name. If omitted, the API uses the program ID as the program name. |
 | Get a program | <p>`GET accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}`</p>Fetches the details of an existing program. |
-| Update a program | <p>`PATCH accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}`</p>Updates an existing program. |
-| Delete a program | <p>`DELETE accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}`</p>Deletes an existing program from the account. |
-| Delete all programs | <p>`DELETE accounts/{account_id}/magic/programmable_flow_protection/configs/programs`</p>Deletes all existing programs from the account. |
+| Update a program | <p>`PATCH accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}`</p>Replaces the source code or the name of an existing program, and creates a new version. |
+| Delete a program | <p>`DELETE accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}`</p>Deletes an existing program from the account. You cannot delete a program that a rule uses. |
+| Delete all programs | <p>`DELETE accounts/{account_id}/magic/programmable_flow_protection/configs/programs`</p>Deletes all existing programs from the account. Fails if the account has any rule. |
 
 ### Rule operations
 
@@ -57,7 +54,7 @@ To move an existing rule to another successful version of its program, send a `P
 | List rules | <p>`GET accounts/{account_id}/magic/programmable_flow_protection/configs/rules`</p>Fetches all Programmable Flow Protection rules in the account. |
 | Create a rule | <p>`POST accounts/{account_id}/magic/programmable_flow_protection/configs/rules`</p>Creates a new rule in the account. |
 | Get a rule | <p>`GET accounts/{account_id}/magic/programmable_flow_protection/configs/rules/{rule_id}`</p>Fetches the details of an existing rule. |
-| Update a rule | <p>`PATCH accounts/{account_id}/magic/programmable_flow_protection/configs/rules/{rule_id}`</p>Updates an existing rule in the account. |
+| Update a rule | <p>`PATCH accounts/{account_id}/magic/programmable_flow_protection/configs/rules/{rule_id}`</p>Updates the program, program version, mode, or expression of an existing rule. |
 | Delete a rule | <p>`DELETE accounts/{account_id}/magic/programmable_flow_protection/configs/rules/{rule_id}`</p>Deletes an existing rule from the account. |
 | Delete all rules | <p>`DELETE accounts/{account_id}/magic/programmable_flow_protection/configs/rules`</p>Deletes all existing rules from the account. |
 
@@ -65,7 +62,7 @@ To move an existing rule to another successful version of its program, send a `P
 
 | Operation | Method and endpoint / Description |
 | --- | --- |
-| Debug with PCAP | <p>`POST accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}/pcap`</p>Runs a program against a PCAP file and returns an annotated PCAP with program verdicts. |
+| Debug with PCAP | <p>`POST accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}/pcap`</p>Runs the current version of a program against a packet capture, and returns the capture with the program verdict for each packet. For details, refer to [Test programs](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/test-programs/#debug-with-a-packet-capture). |
 
 ### Parameter operations
 
@@ -74,14 +71,59 @@ To move an existing rule to another successful version of its program, send a `P
 | Get parameters | <p>`GET accounts/{account_id}/magic/programmable_flow_protection/configs/parameters`</p>Fetches the account's [parameter maps](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/json-objects/#parameters). |
 | Replace parameters | <p>`PUT accounts/{account_id}/magic/programmable_flow_protection/configs/parameters`</p>Replaces all of the account's parameter maps. To remove all maps, send `{"params": {}}`. |
 
+Parameter maps must be enabled for your account. Otherwise, both operations return error `1029`. A `PUT` request with malformed JSON, or with missing, unknown, or duplicate fields, returns error `1022`. A request with invalid values, such as an address that does not match the key type or non-contiguous IDs, returns error `1012`.
+
 A `PUT` request replaces all maps. To change a single entry, get the current maps, edit them, and send the complete document back. If any part of the document is invalid, the request fails and the existing maps stay active.
 
-#### Limits
+For the limits on parameter maps, refer to [Limits](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/reference/limits/#parameter-maps). Requests that exceed the rate limit return HTTP status `429` with a `Retry-After` header.
 
-- Your account's allocation sets the maximum number of maps and the maximum document size. Contact your account team to change your allocation.
-- Request bodies cannot exceed 32 MiB.
-- You can replace the maps at most once per second. Faster requests return `429` with a `Retry-After` header.
+## Program versions
+
+Each uploaded program starts at version `1`. Each successful `PATCH` request to a program creates a new version under the same program ID, including a request that only changes the name. Program responses include the current version in the `version` field, and rule responses include the version that the rule runs in the `program_version` field. Creating a rule without `program_version` uses the current version of the program.
+
+:::caution
+When an update passes verification, every rule that uses the program switches to the new version. For how versions, rules, and state interact, refer to [Program versions](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#program-versions).
+:::
+
+If the new version does not compile or verify:
+
+- If a rule uses the program, the request fails with error `1012`, and the program does not change.
+- If no rule uses the program, the API stores the new version with a `failed_compiler` or `failed_verifier` state.
+
+To run an earlier version that passed verification, send a `PATCH` request to the rule endpoint with the target `program_version`. For an example, refer to [Update a rule](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/examples/#update-a-rule).
 
 ## Pagination
 
-The API operations that return a list of items use pagination. For more information on the available pagination query parameters, refer to [Pagination](/fundamentals/api/how-to/make-api-calls/#pagination).
+The list operations for programs and rules use pagination. They support the following query parameters:
+
+| Parameter | Description |
+| --- | --- |
+| `page` | Page number. Default: `1`. |
+| `per_page` | Number of items per page. Default: `25`. Minimum: `10`. Maximum: `1000`. |
+| `order` | Field to sort by. Programs: `id`, `created_on`, or `modified_on`. Rules: `id`, `scope`, `name`, `created_on`, or `modified_on`. Default: `id`. |
+| `direction` | Sort direction: `ASC` or `DESC`. Default: `ASC`. |
+
+The response includes a `result_info` object with the `page`, `per_page`, `count`, `total_count`, and `total_pages` fields. For more information, refer to [Pagination](/fundamentals/api/how-to/make-api-calls/#pagination).
+
+## Errors
+
+Failed requests return an error code and message in the `errors` array. The following error codes are specific to Programmable Flow Protection:
+
+| HTTP status | Code | Meaning |
+| --- | --- | --- |
+| `400` | `1012` | A parameter is invalid. For example, an invalid expression, a program that is in use, or a program version that did not pass verification. The message contains details. |
+| `400` | `1022` | The request is invalid. For example, malformed JSON, an unknown or missing field, a body that is too large, or an update that does not change anything. |
+| `401` | `8888` | Programmable Flow Protection is not enabled for your account. |
+| `403` | `1027` | The rule would exceed the number of distinct programs that rules can use. |
+| `403` | `1029` | Parameter maps are not enabled for your account. |
+| `403` | `1030` | The parameter maps exceed the limits for your account. |
+| `404` | `1003` | The resource does not exist. For example, a rule, or a program that a rule or a PCAP debug request refers to. |
+| `404` | `1024` | The rule to delete does not exist. |
+| `404` | `1025` | The program to update or delete does not exist. |
+| `409` | `1004` | A rule with the same scope and name already exists. |
+| `409` | `1028` | A program with the same name already exists. |
+| `429` | `1031` | Too many requests to replace the parameters. |
+
+Requests that upload programs, debug with packet captures, and create or update rules are also rate limited. Requests over the limit return HTTP status `429`.
+
+A program that does not compile or verify is not an error. The upload request succeeds, and the program `state` and `err_msg` fields describe the problem. For details, refer to [Troubleshooting](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/troubleshooting/#upload-errors).
