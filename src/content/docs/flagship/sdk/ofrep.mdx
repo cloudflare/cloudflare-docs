@@ -1,0 +1,128 @@
+---
+pcx_content_type: how-to
+title: OFREP providers
+description: Evaluate Flagship feature flags from .NET and other languages with an OpenFeature Remote Evaluation Protocol (OFREP) provider.
+sidebar:
+  order: 4
+products:
+  - flagship
+---
+
+Flagship supports the evaluation endpoints of the [OpenFeature Remote Evaluation Protocol (OFREP)](https://openfeature.dev/specification/appendix-c). Use an OFREP provider when Flagship does not have an official SDK for your language, such as .NET.
+
+OFREP providers evaluate flags remotely over HTTP. They do not support the [Workers binding](/flagship/binding/) or local evaluation. If an [official SDK](/flagship/sdk/) exists for your language, use it instead.
+
+## Endpoints
+
+Configure your OFREP provider with this base URL:
+
+```txt
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/flagship/apps/<APP_ID>/
+```
+
+Replace `<ACCOUNT_ID>` with your [account ID](/fundamentals/account/find-account-and-zone-ids/) and `<APP_ID>` with your Flagship app ID.
+
+The provider appends the OFREP paths to the base URL. Flagship supports the following endpoints:
+
+| Method | Path                                  | Description                                                                            |
+| ------ | ------------------------------------- | -------------------------------------------------------------------------------------- |
+| `POST` | `/ofrep/v1/evaluate/flags/{flag_key}` | Evaluates one flag.                                                                    |
+| `POST` | `/ofrep/v1/evaluate/flags`            | Evaluates all flags in the app. Returns an `ETag` header and supports `If-None-Match`. |
+
+Send the evaluation context in the request body as `{"context": {...}}`. Context follows the same rules and [limits](/flagship/reference/limits/) as the [evaluation API](/flagship/reference/evaluation-api/). Use `targetingKey` for the user or entity identifier.
+
+## Authentication
+
+Send an [API token](/flagship/api-tokens/) with Flagship Evaluate or Flagship App Evaluate permission in the `Authorization` header:
+
+```txt
+Authorization: Bearer <API_TOKEN>
+```
+
+Use OFREP providers only in server-side applications. Do not expose an API token in browser code. For browser applications, use the [TypeScript Client SDK](/flagship/sdk/client-provider/).
+
+## Use the .NET provider
+
+To evaluate flags from .NET, use the [`OpenFeature.Providers.Ofrep`](https://www.nuget.org/packages/OpenFeature.Providers.Ofrep) provider. The OpenFeature community maintains this provider.
+
+1. Install the OpenFeature SDK and the OFREP provider:
+
+   ```sh
+   dotnet add package OpenFeature
+   dotnet add package OpenFeature.Providers.Ofrep
+   ```
+
+2. Configure the provider with the Flagship base URL and an `Authorization` header:
+
+   ```csharp
+   using OpenFeature;
+   using OpenFeature.Model;
+   using OpenFeature.Providers.Ofrep;
+   using OpenFeature.Providers.Ofrep.Configuration;
+
+   var options = new OfrepOptions(
+       "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/flagship/apps/<APP_ID>/")
+   {
+       Timeout = TimeSpan.FromSeconds(5),
+   };
+   options.Headers["Authorization"] =
+       $"Bearer {Environment.GetEnvironmentVariable("FLAGSHIP_API_TOKEN")}";
+
+   await Api.Instance.SetProviderAsync(new OfrepProvider(options));
+   var client = Api.Instance.GetClient();
+   ```
+
+3. Evaluate flags with an evaluation context:
+
+   ```csharp
+   var context = EvaluationContext.Builder()
+       .SetTargetingKey("user-42")
+       .Set("plan", "enterprise")
+       .Build();
+
+   var enabled = await client.GetBooleanValueAsync("new-checkout", false, context);
+
+   var details = await client.GetStringDetailsAsync("homepage-hero", "control", context);
+   Console.WriteLine($"{details.Value} ({details.Reason}, {details.Variant})");
+   ```
+
+The provider supports boolean, string, integer, double, and object flags. Use the `Get*DetailsAsync` methods to read the reason, variant, and error details.
+
+You can also configure the provider with environment variables. Then create the provider with `new OfrepProvider()`:
+
+```sh
+OFREP_ENDPOINT="https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/flagship/apps/<APP_ID>/"
+OFREP_HEADERS="Authorization=Bearer <API_TOKEN>"
+OFREP_TIMEOUT_MS="5000"
+```
+
+### .NET provider behavior
+
+Version `0.1.7` of the .NET provider behaves as follows with Flagship:
+
+- Each evaluation sends one HTTPS request to the single-flag endpoint. The provider does not cache results.
+- The provider does not poll for changes or emit `ProviderConfigurationChanged` events. Flag changes apply on the next evaluation.
+- After an HTTP `429` response, the provider returns your default value until the `Retry-After` period ends.
+- Some failures, such as network errors and timeouts, return an `ERROR` reason without an error type. Check the `Reason` property to detect failed evaluations.
+
+## Use other OFREP providers
+
+Other OpenFeature OFREP providers use the same base URL and `Authorization` header. For example, the [`@openfeature/ofrep-provider`](https://www.npmjs.com/package/@openfeature/ofrep-provider) package works with Flagship. For JavaScript and TypeScript, use the official [TypeScript Server SDK](/flagship/sdk/server-provider/) instead.
+
+Providers that poll the bulk endpoint can send `If-None-Match` to detect changes. Flagship returns `304 Not Modified` when the evaluated flags have not changed.
+
+## Disabled flags
+
+When a flag is disabled, the OFREP response contains the `DISABLED` reason without a value. OFREP providers then return the default value you pass in code, not the flag's default variant. The Workers binding and the official SDKs return the flag's default variant.
+
+## Limitations
+
+- Flagship does not support the OFREP configuration endpoint (`/ofrep/v1/configuration`) or event streams.
+- Authentication errors return a standard Cloudflare API error body, not an OFREP error body.
+- OFREP providers cannot use the Workers binding or local evaluation.
+
+## Related resources
+
+- [Evaluation reasons and error codes](/flagship/reference/evaluation-reasons/)
+- [Evaluation API](/flagship/reference/evaluation-api/)
+- [API tokens](/flagship/api-tokens/)

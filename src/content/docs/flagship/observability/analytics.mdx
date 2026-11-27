@@ -1,0 +1,225 @@
+---
+title: Analytics
+description: Query Flagship flag evaluation volume, variants, errors, and latency with the GraphQL Analytics API.
+pcx_content_type: reference
+sidebar:
+  order: 1
+products:
+  - flagship
+---
+
+Flagship records server-side flag evaluations. Query these records with the [GraphQL Analytics API](/analytics/graphql-api/) to see how often each flag is evaluated, which variants are returned, and how long evaluations take.
+
+Flagship records evaluations from the [Workers binding](/flagship/binding/), the [evaluation API](/flagship/reference/evaluation-api/), and the [OpenFeature SDKs](/flagship/sdk/) when they evaluate over HTTP. [Local evaluations](/flagship/sdk/server-provider/) run in your application and do not appear in analytics.
+
+To query Flagship analytics, create an [API token](/analytics/graphql-api/getting-started/authentication/api-token-auth/) with the **Account Analytics Read** permission.
+
+## Datasets
+
+Flagship exports two GraphQL datasets:
+
+| Dataset                                 | Description                                                                                        |
+| --------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `flagshipFlagEvaluationsAdaptiveGroups` | Aggregated evaluations. Use it to count evaluations and measure latency over time.                 |
+| `flagshipFlagEvaluationsAdaptive`       | Individual evaluations, including the evaluation context. Use it to debug a flag's recent results. |
+
+You can query data from the past 32 days. Queries require an `accountTag` filter with your Cloudflare [account ID](/fundamentals/account/find-account-and-zone-ids/).
+
+Both datasets use [adaptive sampling](/analytics/graphql-api/sampling/). Use `count` to get the number of evaluations, because it accounts for sampling.
+
+## Metrics
+
+The `flagshipFlagEvaluationsAdaptiveGroups` dataset exposes these metrics:
+
+| Metric           | GraphQL field             | Description                                               |
+| ---------------- | ------------------------- | --------------------------------------------------------- |
+| Evaluations      | `count`                   | Number of flag evaluations that match the query filter.   |
+| Total duration   | `sum.durationMs`          | Total evaluation time, in milliseconds.                   |
+| Average duration | `avg.durationMs`          | Average evaluation time, in milliseconds.                 |
+| Duration p50     | `quantiles.durationMsP50` | Median evaluation time, in milliseconds.                  |
+| Duration p95     | `quantiles.durationMsP95` | 95th percentile evaluation time, in milliseconds.         |
+| Duration p99     | `quantiles.durationMsP99` | 99th percentile evaluation time, in milliseconds.         |
+| Unique flags     | `uniq.flagKey`            | Number of distinct flag keys that match the query filter. |
+
+Evaluations through the Workers binding usually take a few milliseconds. Evaluations over HTTP take longer, because the duration includes the API request.
+
+## Dimensions
+
+Use these dimensions to filter or group results:
+
+| Dimension          | Description                                                                                                                                   |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `appId`            | Flagship app ID.                                                                                                                              |
+| `flagKey`          | Key of the evaluated flag. This includes keys that do not exist in the app.                                                                   |
+| `variant`          | Variant that was returned. Empty when the evaluation fails.                                                                                   |
+| `flagValue`        | Returned value, as a string. JSON values are serialized. This field can have many distinct values, so filter on it instead of grouping by it. |
+| `flagEnabled`      | `true` or `false`, as a string. Empty when the flag does not exist.                                                                           |
+| `evaluationReason` | [Evaluation reason](/flagship/reference/evaluation-reasons/), such as `TARGETING_MATCH`, `SPLIT`, `DEFAULT`, `DISABLED`, or `ERROR`.          |
+| `colo`             | Numeric identifier of the Cloudflare data center that served the evaluation.                                                                  |
+| `date`             | Calendar date of the evaluation.                                                                                                              |
+| `datetime`         | Exact evaluation timestamp.                                                                                                                   |
+| `datetimeMinute`   | Evaluation time truncated to the minute.                                                                                                      |
+| `datetimeHour`     | Evaluation time truncated to the hour.                                                                                                        |
+
+The `flagshipFlagEvaluationsAdaptive` dataset also includes these fields:
+
+| Field                 | Description                                                                |
+| --------------------- | -------------------------------------------------------------------------- |
+| `durationMs`          | Evaluation time, in milliseconds.                                          |
+| `matchedRulePriority` | Priority of the targeting rule that matched, or `-1` when no rule matched. |
+| `evaluationContext`   | Evaluation context sent with the request, as a JSON string.                |
+| `sampleInterval`      | Sampling interval for the row.                                             |
+
+:::caution[Evaluation context can contain personal data]
+The `evaluationContext` field stores every attribute you send when you evaluate a flag, such as user IDs or email addresses. Any user or token with the **Account Analytics Read** permission can read these attributes. Only send the attributes you need for targeting.
+:::
+
+## Example GraphQL queries
+
+The following examples use the `flagshipFlagEvaluationsAdaptiveGroups` and `flagshipFlagEvaluationsAdaptive` datasets. For more information about how to send a query, refer to [Querying basics](/analytics/graphql-api/getting-started/querying-basics/).
+
+### Evaluations by flag and variant
+
+Use this query to find which flags your applications evaluate most often, and which variants they receive.
+
+```graphql
+query FlagshipEvaluationsByVariant(
+	$accountTag: String!
+	$appId: String!
+	$datetimeStart: Time
+	$datetimeEnd: Time
+) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			flagshipFlagEvaluationsAdaptiveGroups(
+				limit: 100
+				filter: {
+					appId: $appId
+					datetime_geq: $datetimeStart
+					datetime_leq: $datetimeEnd
+				}
+				orderBy: [count_DESC]
+			) {
+				count
+				dimensions {
+					flagKey
+					variant
+					evaluationReason
+				}
+			}
+		}
+	}
+}
+```
+
+### Failed evaluations
+
+Use this query to find flags that return the `ERROR` reason. Failed evaluations return the default value from your code. Common causes are a flag key that does not exist or a type mismatch.
+
+```graphql
+query FlagshipFailedEvaluations(
+	$accountTag: String!
+	$appId: String!
+	$datetimeStart: Time
+	$datetimeEnd: Time
+) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			flagshipFlagEvaluationsAdaptiveGroups(
+				limit: 100
+				filter: {
+					appId: $appId
+					evaluationReason: "ERROR"
+					datetime_geq: $datetimeStart
+					datetime_leq: $datetimeEnd
+				}
+				orderBy: [count_DESC]
+			) {
+				count
+				dimensions {
+					flagKey
+				}
+			}
+		}
+	}
+}
+```
+
+To calculate an error rate, divide this count by the total evaluation count for the same filter.
+
+### Evaluation latency by hour
+
+Use this query to track average and percentile evaluation time.
+
+```graphql
+query FlagshipEvaluationLatency(
+	$accountTag: String!
+	$appId: String!
+	$datetimeStart: Time
+	$datetimeEnd: Time
+) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			flagshipFlagEvaluationsAdaptiveGroups(
+				limit: 1000
+				filter: {
+					appId: $appId
+					datetime_geq: $datetimeStart
+					datetime_leq: $datetimeEnd
+				}
+				orderBy: [datetimeHour_ASC]
+			) {
+				count
+				avg {
+					durationMs
+				}
+				quantiles {
+					durationMsP50
+					durationMsP95
+					durationMsP99
+				}
+				dimensions {
+					datetimeHour
+				}
+			}
+		}
+	}
+}
+```
+
+### Recent evaluations for a flag
+
+Use this query to inspect individual results for one flag, including the context that was sent.
+
+```graphql
+query FlagshipRecentEvaluations(
+	$accountTag: String!
+	$appId: String!
+	$flagKey: String!
+	$datetimeStart: Time
+	$datetimeEnd: Time
+) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			flagshipFlagEvaluationsAdaptive(
+				limit: 50
+				filter: {
+					appId: $appId
+					flagKey: $flagKey
+					datetime_geq: $datetimeStart
+					datetime_leq: $datetimeEnd
+				}
+				orderBy: [datetime_DESC]
+			) {
+				datetime
+				variant
+				flagValue
+				evaluationReason
+				matchedRulePriority
+				durationMs
+				evaluationContext
+			}
+		}
+	}
+}
+```
