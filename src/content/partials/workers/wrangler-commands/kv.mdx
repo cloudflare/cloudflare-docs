@@ -15,7 +15,7 @@ import {
 <TabItem label="Cloudflare CLI (cf)">
 
 :::note
-In `cf`, `cf kv` commands act on your remote Cloudflare KV namespaces by default and identify namespaces by `--namespace-id` (there is no `--binding` shortcut). Pass `--local` on key and metadata commands to target local development state instead. Refer to the [Workers KV guide](/kv/get-started/) to get started.
+In `cf`, `cf kv` commands act on your remote Cloudflare KV namespaces by default and identify namespaces by `--namespace-id` (there is no `--binding` shortcut). Pass `--local` on `cf kv keys` commands to target local development state instead (`cf kv metadata get` targets the remote API). Refer to the [Workers KV guide](/kv/get-started/) to get started.
 :::
 
 ## `kv namespaces`
@@ -64,7 +64,7 @@ Manage single and bulk key-value pairs within a Workers KV namespace. Pass `--lo
 
 ## `kv metadata`
 
-Read key metadata without fetching the key's value.
+Read key metadata without fetching the key's value. `cf kv metadata get` targets the remote Cloudflare API.
 
 <CfCommand command="kv metadata get" headingLevel={3} />
 
