@@ -96,14 +96,18 @@ A subset of options are supported, including resize, rotate, format, and backgro
 
 ## Error handling
 
-When an image cannot be resized — for example, because the image does not exist or the resizing parameters were invalid — the response will have an HTTP status indicating an error (for example, `400`, `404`, or `502`).
+When an image cannot be resized — for example, because the image does not exist or the resizing parameters were invalid — the response usually has an HTTP error status (for example, `400`, `404`, or `502`).
 
-By default, the error will be forwarded to the browser, but you can decide how to handle errors. For example, you can redirect the browser to the original, unresized image instead:
+In some cases — such as unsupported input formats, oversized animations, or passthrough fallbacks — Cloudflare returns HTTP `200` with the unmodified original image and reports the failure code in the `Cf-Resized` response header (for example, `Cf-Resized: err=9404`). Refer to [Troubleshooting](/images/reference/troubleshooting/) for error code definitions.
+
+Check both `response.ok` and the `Cf-Resized` header to detect transformation failures reliably. For example, you can redirect the browser to the original, unresized image on error:
 
 ```js
 const response = await fetch(imageURL, options);
+const resizedHeader = response.headers.get("Cf-Resized") || "";
+const hasTransformError = /err=\d+/.test(resizedHeader);
 
-if (response.ok || response.redirected) {
+if ((response.ok || response.redirected) && !hasTransformError) {
 	// fetch() may respond with status 304
 	return response;
 } else {
@@ -117,7 +121,11 @@ You can also replace failed images with a placeholder image:
 
 ```js
 const response = await fetch(imageURL, options);
-if (response.ok || response.redirected) {
+const hasTransformError = /err=\d+/.test(
+	response.headers.get("Cf-Resized") || "",
+);
+
+if ((response.ok || response.redirected) && !hasTransformError) {
 	return response;
 } else {
 	// Change to a URL on your server
