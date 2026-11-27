@@ -85,6 +85,24 @@ The next incoming request or event starts the cycle again.
 A Durable Object incurs charges only when it is **actively running in-memory**, or when it is **idle in-memory and non-hibernateable** (indicated as green rectangles in the diagram).
 :::
 
+## Activation and cold starts
+
+When a request wakes a **hibernated** Durable Object, the object remains on the same host with its storage still attached. The runtime runs your `constructor()` again and delivers the request.
+
+When a request activates an **inactive** Durable Object, the runtime places the object on a host, initializes the isolate if needed, and — for SQLite-backed Durable Objects — attaches the object's SQLite database before your `constructor()` runs. If the object's database is not already present on that host, the runtime restores it from durable storage first.
+
+During an activation from **inactive**, waiting for placement and storage attachment appears in logs and metrics as elevated wall time with near-zero CPU time. JavaScript has not started executing yet, so CPU time stays near zero while the runtime initializes the object. This behavior is expected and is not a runtime error.
+
+Activation latency depends on whether storage state is already cached on the host, the size of the SQLite database, the network distance between the caller and the Durable Object, and any work inside `constructor()` or `blockConcurrencyWhile()`.
+
+To reduce activation latency:
+
+- Keep `constructor()` and [`blockConcurrencyWhile()`](/durable-objects/best-practices/rules-of-durable-objects/#use-blockconcurrencywhile-sparingly) callbacks minimal.
+- Use [location hints](/durable-objects/reference/data-location/) or create Durable Objects in response to traffic from the region where they will be used.
+- Remove unused data so the SQLite database stays small.
+
+Do not use background timers or `this.ctx.waitUntil()` loops to keep a Durable Object warm. Keeping an object pinned in memory prevents hibernation, incurs continuous [duration charges](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges), delays [`deferred` code updates](/durable-objects/deployments/durable-objects-code-updates/) until `max_delay` forces a reset, and still does not prevent shutdowns from deployments or runtime updates.
+
 ## Shutdown behavior
 
 Durable Objects will occasionally shut down and objects are restarted, which will run your Durable Object class constructor. This can happen for various reasons, including:
@@ -113,29 +131,3 @@ Refer to [Durable Objects code updates](/durable-objects/deployments/durable-obj
 ### Working without shutdown hooks
 
 <Render file="working-without-shutdown-hooks" product="durable-objects" />
-
-## Activation latency and keep-alive
-
-When a Durable Object transitions from **inactive** to **active**, the platform must allocate the instance and attach its SQLite storage backend before your constructor runs. This initialization phase is reflected as **wall-time latency — typically hundreds of milliseconds to several seconds — while CPU usage remains near-zero**. This is expected behavior, not a platform error.
-
-If your application is latency-sensitive, you can keep a Durable Object warm by sending periodic lightweight requests at an interval shorter than the eviction timeout. The example below shows a simple keep-alive pattern using `setInterval`:
-
-```js
-export class MyDurableObject extends DurableObject {
-  constructor(ctx, env) {
-    super(ctx, env);
-    this.ctx.waitUntil(
-      (async () => {
-        while (true) {
-          await new Promise(resolve => setTimeout(resolve, 25_000));
-          await this.ctx.storage.get('__keepalive__');
-        }
-      })()
-    );
-  }
-}
-```
-
-:::caution[Keep-alive has a cost]
-Keeping a Durable Object warm with `waitUntil` consumes CPU and storage reads continuously. Use this pattern only when the latency cost of cold activation outweighs the ongoing compute cost.
-:::
