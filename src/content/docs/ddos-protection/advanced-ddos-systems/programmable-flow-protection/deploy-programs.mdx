@@ -1,0 +1,118 @@
+---
+title: Deploy programs
+pcx_content_type: how-to
+description: Upload Programmable Flow Protection programs, create rules, roll out changes gradually, and roll back.
+products:
+  - ddos-protection
+sidebar:
+  order: 5
+---
+
+import { Steps, DashButton } from "~/components";
+
+This page describes how to manage programs and rules, and how to deploy changes without impacting legitimate traffic. Each section links to the equivalent API request in [Common API calls](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/examples/).
+
+Changing the program of an existing rule, which you need to roll out a new program gradually and to roll back, is only available with the API.
+
+To manage Programmable Flow Protection in the dashboard:
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **L3/4 DDoS protection** page.
+
+   <DashButton url="/?to=/:account/network-security/ddos" />
+
+2. Go to **Advanced Protection** > **Programmable Flow Protection**.
+
+</Steps>
+
+## Manage programs
+
+### Upload a program
+
+Under **Programs**, select **Upload new program**, and select the `.c` file with your source code.
+
+Cloudflare compiles and verifies the program, and stores it with a [state](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#programs) of `success`, `failed_compiler`, or `failed_verifier`. Only programs in the `success` state can be used in rules. To catch errors before you upload, refer to [Test programs](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/test-programs/).
+
+Program names must be unique in your account. API: [Upload a program](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/examples/#upload-a-program).
+
+### Update a program
+
+Select the menu next to the program, select **Overwrite**, and select the file with the new source code. Each update creates a new version of the program.
+
+:::caution
+When the new version passes verification, every rule that uses the program switches to it immediately, in every location. If the source code changed, the state of those rules is reset. To roll out a change gradually, follow [Update a program safely](#update-a-program-safely) instead.
+:::
+
+If a rule uses the program and the new version does not compile or verify, Cloudflare rejects the update. API: [Update a program](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/examples/#update-a-program).
+
+### Delete a program
+
+Select the menu next to the program, and select **Delete**. You cannot delete a program that a rule uses, in any mode. Delete or update those rules first. API: [Delete a program](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/examples/#delete-a-program).
+
+## Manage rules
+
+### Create a rule
+
+<Steps>
+1. Under **Rules**, select **Create rule**.
+2. Select a program in the `success` state.
+3. Select a [mode](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#mode). For a new program, select **Monitoring**.
+4. Select a [scope](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#scope): global, a region, or a data center.
+5. (Optional) Filter the packets the rule applies to by source and destination IP and UDP port. By default, the rule applies to all UDP packets.
+6. Select **Deploy**.
+
+</Steps>
+
+Each scope can have only one rule for the same region or data center. API: [Create a rule](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/examples/#create-a-rule).
+
+### Edit a rule
+
+Select the menu next to the rule, and select **Edit**. You can change the mode and the expression of a rule. With the API, you can also change the program and program version of a rule. You cannot change the scope. To change the scope, create a new rule and delete the old one.
+
+API: [Update a rule](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/examples/#update-a-rule).
+
+### Delete a rule
+
+Select the menu next to the rule, and select **Delete**. API: [Delete a rule](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/examples/#delete-a-rule).
+
+## Deploy a new program
+
+Use [scopes](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#scope), [expressions](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#expression), and [modes](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#mode) to limit where a new program runs and what it can do:
+
+<Steps>
+1. [Test the program](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/test-programs/) locally and with packet captures.
+2. Create a rule for a single data center or region, in monitoring mode, with an expression that matches a small part of your traffic. For example, a single destination prefix or UDP port.
+3. In [Network Analytics](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/monitor/), check which packets the program would drop.
+4. Widen the expression, and switch the rule to enabled mode.
+5. Create a global rule with the same program, in monitoring mode, then switch it to enabled mode.
+6. Delete the data center or region rule, so that every location runs the global rule.
+
+</Steps>
+
+## Update a program safely
+
+Updating a program switches every rule that uses it to the new version at once. To roll out a change gradually, upload the new code as a separate program, and move rules to it one at a time.
+
+<Steps>
+1. Upload the new code as a new program. Use a name that identifies the version, for example `game-filter-v2`.
+2. Create a rule with the new program for a single data center, in monitoring mode.
+
+   :::caution
+   A data center runs only its most specific rule. While this rule is in monitoring mode, the data center does not run the global rule, so Programmable Flow Protection does not mitigate any traffic in that data center.
+   :::
+
+3. In Network Analytics, compare the verdicts of the new program with those of the old program in other locations.
+4. Switch the rule to enabled mode. If needed, create region rules with the new program to cover more data centers.
+5. Change the program of the global rule to the new program, with an [Update a rule](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/examples/#update-a-rule) request. This resets the state of the global rule in every data center that runs it. For example, a program that verifies clients with challenges challenges them again.
+6. Delete the temporary data center and region rules.
+7. When you no longer need to roll back, delete the old program.
+
+</Steps>
+
+Each account can use a limited number of distinct programs in its rules at the same time. Rules in every mode count toward this limit, including disabled rules. For details, refer to [Limits](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/reference/limits/).
+
+## Roll back a change
+
+To roll back, change the program of the affected rules back to the previous program, with an [Update a rule](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/examples/#update-a-rule) request. Changing the program of a rule resets its state.
+
+You can also pin a rule to an earlier version of the same program with the rule `program_version` field, if that version passed verification. The next successful update of the program switches the rule to the new version again.
