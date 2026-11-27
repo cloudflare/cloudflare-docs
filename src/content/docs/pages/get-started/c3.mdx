@@ -47,7 +47,6 @@ If you choose "Framework Starter" with `--platform=pages`, C3 shows the followin
 - [Nuxt](/pages/framework-guides/deploy-a-nuxt-site/)
 - [Qwik](/pages/framework-guides/deploy-a-qwik-site/)
 - [React](/pages/framework-guides/deploy-a-react-site/)
-- [SvelteKit](/pages/framework-guides/deploy-a-svelte-kit-site/)
 - [Vue](/pages/framework-guides/deploy-a-vue-site/)
 
 :::note
@@ -66,7 +65,7 @@ If you choose to deploy, you will be asked to sign into your Cloudflare account 
 
 To create a new project using `npm create cloudflare`, and then connect it to a Git repository on your Github or Gitlab account, take the following steps:
 
-1. Run `npm create cloudflare@latest -- --platform=pages`, and choose your desired options
+1. Run `npm create cloudflare@latest -- --platform=pages`. Choose **Framework Starter**, then select a framework.
 2. Select `no` to the prompt, "Do you want to deploy your application?". This is important — if you select `yes` and deploy your application from your terminal ([Direct Upload](/pages/get-started/direct-upload/)), then it will not be possible to connect this Pages project to a git repository later on. You will have to create a new Cloudflare Pages project.
 3. Create a new git repository, using the application that `npm create cloudflare@latest` just created for you.
 4. Follow the steps outlined in the [Git integration guide](/pages/get-started/git-integration/)
@@ -93,7 +92,7 @@ This is the full format of a C3 invocation alongside the possible CLI arguments:
 
 - `--category` <Type text="string" /> <MetaInfo text="optional" />
 
-  - The kind of templates that should be created. With `--platform=pages`, C3 accepts `web-framework` and `remote-template`. Remote templates use their own deployment configuration.
+  - The kind of templates that should be created. Use `web-framework` to create a Pages project. C3 also accepts `remote-template` with `--platform=pages`, but ignores the platform flag and treats remote templates as Workers templates.
 
   - The possible values for this option are:
 
@@ -130,7 +129,6 @@ This is the full format of a C3 invocation alongside the possible CLI arguments:
     - `nuxt`
     - `qwik`
     - `react`
-    - `svelte`
     - `vue`
 
   - For Workers frameworks, including `tanstack-start`, refer to the [Workers framework guides](/workers/framework-guides/web-apps/).
