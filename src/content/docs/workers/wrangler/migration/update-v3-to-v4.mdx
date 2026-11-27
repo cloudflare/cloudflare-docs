@@ -28,8 +28,11 @@ After upgrading, you can verify the installation:
 
 - **Updated Node.js support policy:**
   Node.js v16, which reached End-of-Life in 2022, is no longer supported in Wrangler v4. Wrangler now follows Node.js's [official support lifecycle](https://nodejs.org/en/about/previous-releases).
+
 - **Upgraded esbuild version**: Wrangler uses [esbuild](https://esbuild.github.io/) to bundle Worker code before deploying it, and was previously pinned to esbuild v0.17.19. Wrangler v4 uses esbuild v0.24, which could impact dynamic wildcard imports. Going forward, Wrangler will be periodically updating the `esbuild` version included with Wrangler, and since `esbuild` is a pre-1.0.0 tool, this may sometimes include breaking changes to how bundling works. In particular, we may bump the `esbuild` version in a Wrangler minor version.
+
 - **Commands default to local mode**: All commands that can run in either local or remote mode now default to local, requiring a `--remote` flag for API queries.
+
 - **Deprecated commands and configurations removed:** Legacy commands, flags, and configurations are removed.
 
 ## Detailed Changes
@@ -122,15 +125,15 @@ wrangler kv key get --binding MY_KV "my-key" --remote
 
 ### Deprecated commands and configurations removed
 
-All previously deprecated features in [Wrangler v2](/workers/wrangler/deprecations/#wrangler-v2) and in [Wrangler v3](/workers/wrangler/deprecations/#wrangler-v3) are now removed. Additionally, the following features that were deprecated during the Wrangler v3 release are also now removed:
+Wrangler v4 removes features deprecated in [Wrangler v2](/workers/wrangler/deprecations/#wrangler-v2) and [Wrangler v3](/workers/wrangler/deprecations/#wrangler-v3). Review these removals before upgrading:
 
 - Legacy Assets (using `wrangler dev/deploy --legacy-assets` or the `legacy_assets` config file property). Instead, we recommend you [migrate to Workers Static Assets](/workers/static-assets/).
 - Legacy Node.js compatibility (using `wrangler dev/deploy --node-compat` or the `node_compat` config file property). Instead, use the [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/). This includes the functionality from legacy `node_compat` polyfills and natively implemented Node.js APIs.
 - `wrangler version`. Instead, use `wrangler --version` to check the current version of Wrangler.
 - `getBindingsProxy()` (via `import { getBindingsProxy } from "wrangler"`). Instead, use the [`getPlatformProxy()` API](/workers/wrangler/api/#getplatformproxy), which takes exactly the same arguments.
 - `usage_model`. This no longer has any effect, after the [rollout of Workers Standard Pricing](https://blog.cloudflare.com/workers-pricing-scale-to-zero/).
-- `type` (for example, `type = "javascript"`). Remove it and specify your entry point with [`main`](/workers/wrangler/configuration/#inheritable-keys).
-- Top-level `zone_id` (and `env.<name>.zone_id`). Wrangler v4 ignores top-level `zone_id`, which can break deploys that use string `routes` when the API token lacks `Zone:Read` or the route pattern cannot be resolved automatically. Convert string routes to object-form [`routes`](/workers/wrangler/configuration/#routes) containing `pattern` and `zone_id`.
+- Top-level `type` (for example, `type = "javascript"`). Wrangler v3 already ignored this key. Remove it. The [`main`](/workers/wrangler/configuration/#inheritable-keys) key specifies the entry point, and Wrangler infers the Worker format from your code.
+- Top-level `zone_id` and `env.<name>.zone_id`. Wrangler v3 already ignored these keys when deploying string routes. Remove them and keep string routes if Cloudflare can resolve their zones automatically. To specify a zone ID explicitly, use an object with `pattern` and `zone_id` in [`route` or `routes`](/workers/wrangler/configuration/#routes).
 
 <Details header="Am I affected?">
 
@@ -138,11 +141,13 @@ All previously deprecated features in [Wrangler v2](/workers/wrangler/deprecatio
 
 ```sh
 # For TOML files
-grep -E "(legacy_assets|node_compat|usage_model|^type|^zone_id)\s*=" wrangler.toml
+grep -E "(legacy_assets|node_compat|usage_model)\s*=" wrangler.toml
 
 # For JSON files
-grep -E "\"(legacy_assets|node_compat|usage_model|type|zone_id)\"" wrangler.json wrangler.jsonc
+grep -E "\"(legacy_assets|node_compat|usage_model)\"" wrangler.json wrangler.jsonc
 ```
+
+Also look for `type` at the top level and `zone_id` at the top level or directly within a named environment. Do not remove `type` from module rules or `zone_id` from individual route objects.
 
 **Check your commands and scripts** for deprecated flags:
 
@@ -158,17 +163,17 @@ grep -rE "getBindingsProxy" --include="*.js" --include="*.ts" --include="*.mjs" 
 
 **You need to take action if you find any of the following:**
 
-| Deprecated                                         | Replacement                                                                                                                 |
-| -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `legacy_assets` config or `--legacy-assets` flag   | [Migrate to Workers Static Assets](/workers/static-assets/)                                                                 |
-| `node_compat` config or `--node-compat` flag       | Use the [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/)                                                 |
-| `usage_model` config                               | Remove it (no longer has any effect)                                                                                        |
-| `type` config (for example, `type = "javascript"`) | Remove it and configure [`main`](/workers/wrangler/configuration/#inheritable-keys)                                         |
-| Top-level `zone_id` with string `routes`           | Remove top-level `zone_id` and use object-form [`routes`](/workers/wrangler/configuration/#routes) (`{ pattern, zone_id }`) |
-| `wrangler version` command                         | Use `wrangler --version`                                                                                                    |
-| `getBindingsProxy()` import                        | Use [`getPlatformProxy()`](/workers/wrangler/api/#getplatformproxy) (same arguments)                                        |
-| `wrangler publish` command                         | Use `wrangler deploy`                                                                                                       |
-| `wrangler generate` command                        | Use `npm create cloudflare@latest`                                                                                          |
-| `wrangler pages publish` command                   | Use `wrangler pages deploy`                                                                                                 |
+| Deprecated                                       | Replacement                                                                                                        |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| `legacy_assets` config or `--legacy-assets` flag | [Migrate to Workers Static Assets](/workers/static-assets/)                                                        |
+| `node_compat` config or `--node-compat` flag     | Use the [`nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/)                                        |
+| `usage_model` config                             | Remove it (no longer has any effect)                                                                               |
+| Top-level `type`                                 | Remove it. Wrangler infers the format from your code.                                                              |
+| Top-level `zone_id` or `env.<name>.zone_id`      | Remove it. If you need an explicit zone ID, set it on the [route object](/workers/wrangler/configuration/#routes). |
+| `wrangler version` command                       | Use `wrangler --version`                                                                                           |
+| `getBindingsProxy()` import                      | Use [`getPlatformProxy()`](/workers/wrangler/api/#getplatformproxy) (same arguments)                               |
+| `wrangler publish` command                       | Use `wrangler deploy`                                                                                              |
+| `wrangler generate` command                      | Use `npm create cloudflare@latest`                                                                                 |
+| `wrangler pages publish` command                 | Use `wrangler pages deploy`                                                                                        |
 
 </Details>
