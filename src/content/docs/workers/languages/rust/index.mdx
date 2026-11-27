@@ -229,16 +229,16 @@ lto = true
 codegen-units = 1
 ```
 
-Do not set `strip = true`. It makes the linker drop custom sections of the Wasm binary that `wasm-bindgen` and later build steps rely on, and it can make `worker-build` fail with `externref table required for catch wrappers`.
+Do not set `strip = true`. The linker removes the `target_features` custom section, which `wasm-bindgen` uses to detect enabled Wasm features. For example, `wasm-bindgen` 0.2.125 could fail with `externref table required for catch wrappers` when this section was missing.
 
-For release builds, `worker-build` also runs Binaryen's [`wasm-opt`](https://github.com/WebAssembly/binaryen) to further optimize the binary. By default it keeps Wasm function names, so CPU profiles and stack traces stay readable. To drop the names for a smaller binary, or to choose your own `wasm-opt` arguments, set them in your `Cargo.toml` file:
+For release builds targeting `wasm32-unknown-unknown`, `worker-build` runs Binaryen's [`wasm-opt`](https://github.com/WebAssembly/binaryen) to optimize the binary. By default, it keeps Wasm function names so CPU profiles and stack traces stay readable. With `worker-build` 0.9.0 or later, use `wasm-opt = ["-O"]` to remove function names, or specify your own `wasm-opt` arguments in `Cargo.toml`:
 
 ```toml
 [package.metadata.wasm-pack.profile.release]
 wasm-opt = ["-O"]
 ```
 
-To skip `wasm-opt`, set `wasm-opt = false` in the same section, or pass `--no-opt` to `worker-build`.
+To skip this optimization step, set `wasm-opt = false` in the same section or pass `--no-opt` to `worker-build`. Neither option controls the optimizer that Emscripten runs during linking.
 
 ## Related resources
 
