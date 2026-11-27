@@ -133,7 +133,9 @@ export default {
 
 With default routing, a global `fetch()` request to a hostname in the Worker's own [Partial (CNAME) zone](/dns/zone-setups/partial-setup/) can return HTTP `530` with [Cloudflare error `1016`](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1016/#workers). This can happen when the hostname resolves publicly through your authoritative DNS provider but has no matching record in Cloudflare DNS.
 
-[Add a matching DNS record in Cloudflare](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) and set its proxy status to **DNS only**. Leave the record at your authoritative DNS provider unchanged. If the authoritative record's target changes, update the Cloudflare record to match.
+If you are calling another Worker in the same Cloudflare account, use an [HTTP service binding](/workers/runtime-apis/bindings/service-bindings/http/) and call `env.BACKEND.fetch(request)`. The binding selects the target Worker, so the call does not require a DNS record or the `global_fetch_strictly_public` flag.
+
+To keep using global `fetch()`, [add a matching DNS record in Cloudflare](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) and set its proxy status to **DNS only**. Leave the record at your authoritative DNS provider unchanged. If the authoritative record's target changes, update the Cloudflare record to match.
 
 If you cannot add the record and the hostname resolves publicly, enable [`global_fetch_strictly_public`](/workers/configuration/compatibility-flags/#global-fetch-strictly-public) on the Worker that makes the network request. For Workers for Platforms, set the flag on the user Worker, or on the [Outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) if it forwards the request using its own global `fetch()`.
 
