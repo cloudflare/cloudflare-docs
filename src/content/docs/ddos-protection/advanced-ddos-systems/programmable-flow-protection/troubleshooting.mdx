@@ -1,0 +1,95 @@
+---
+title: Troubleshooting
+pcx_content_type: troubleshooting
+description: Fix compiler and verifier errors, and find out why a Programmable Flow Protection program does not run or does not behave as expected.
+products:
+  - ddos-protection
+sidebar:
+  order: 9
+---
+
+## Upload errors
+
+When you upload a program, Cloudflare stores it even if it does not compile or verify. Check the `state` and `err_msg` fields of the program:
+
+- `failed_compiler`: `err_msg` contains the `clang` output, with the line numbers of the errors in your source code. Refer to [Compiler errors](#compiler-errors).
+- `failed_verifier`: `err_msg` contains the verifier output. The verifier refers to eBPF instructions, not to lines of source code. Refer to [Verifier errors](#verifier-errors).
+
+To get the same errors locally, compile and verify the program with the steps in [Test programs](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/test-programs/#compile-and-verify-locally).
+
+If the program exceeds a [limit](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/reference/limits/), the state is `failed_verifier` and `err_msg` contains one of these errors:
+
+```txt
+eBPF verification failed: instruction count (12345) is greater than permitted limit (10000)
+eBPF verification failed: program size (123456B) is greater than permitted limit (100000B)
+```
+
+To reduce the size of a program, remove unused code and avoid large unrolled loops. Verification can also fail if it takes too long. In that case, simplify the program, for example by reducing loop bounds.
+
+## Compiler errors
+
+Cloudflare compiles programs with `-Wall -Werror`, so every warning is an error.
+
+| Error | Cause and fix |
+| --- | --- |
+| `implicit conversion loses integer precision` or `implicit conversion changes signedness`, with `-Wimplicit-int-conversion`, `-Wshorten-64-to-32`, or `-Wsign-conversion` | `-Wconversion` rejects implicit conversions that can lose data. Cast the value explicitly, for example `(uint32_t)timestamp()` or `(uint8_t)(value & 0xff)`. |
+| `'stdlib.h' file not found` or another missing C library header | There is no C library. Remove the include. `stdint.h` and `stddef.h` are available. |
+| `A call to built-in function 'memset' is not supported.` (or `memcpy`) when you compile, or `Unresolved external symbol memset` when you verify | `__builtin_memset` or `__builtin_memcpy` with a large size, or with a size that is not a constant. Use smaller constant sizes, or initialize the buffer with `= {0}`. |
+| `call to undeclared function 'get_src_ip_status'` or another helper function | `CF_EBPF_HELPER_V0` is not defined before `#include <cf_ebpf_helper.h>`. |
+| `Unknown command line argument '-bpf-stack-size=8192'` | The compiler does not support the BPF target. On macOS, Apple clang does not include it. Install LLVM, for example with `brew install llvm@19`, and use `"$(brew --prefix llvm@19)/bin/clang"`. |
+| `'cf_ebpf_defs.h' file not found` | When you compile locally, pass the path to the `pfp-headers/include` directory with `-I`. |
+| `GNU-style inline assembly is disabled` | Inline assembly is not supported. Remove `asm` statements. |
+
+## Verifier errors
+
+The verifier proves that the program is safe for every possible input. If it cannot prove that an instruction is safe, it rejects the program, even if the instruction never runs with real traffic.
+
+| Error | Cause and fix |
+| --- | --- |
+| ``elf file does not contain `cf_ebpf_main` function`` | The entry function is missing, or has a different name. Name it `cf_ebpf_main`. |
+| `program return value could not be verified` | A path can return a value other than `CF_EBPF_PASS` or `CF_EBPF_DROP`. Return one of the two constants on every path. |
+| `Upper bound must be at most packet_size (valid_access(...))` | The program can read past the end of the 1,500-byte packet buffer, usually because a read at a variable offset is not checked. Before each read, compare the end of the data with `headers.data_end`. If you compute a pointer with a variable offset, check it again after each change. |
+| `Lower bound must be at least meta_offset (valid_access(...) for comparison/subtraction)` | The verifier cannot track a comparison or subtraction of packet pointers with a variable offset. Compare lengths as integers instead. For example, compute the payload length from `p->total_packet_length` and `p->ip_header_length`. |
+| `Invalid type (r1.type in {ctx, stack, packet, shared, socket, alloc_mem})` | The program dereferences a pointer that can be `NULL`, for example `headers.ipv4` for an IPv6 packet. Check the pointer before you use it. |
+| `Invalid type (r3.type in {stack, packet, shared})` (or another register) | The program passes `NULL`, or another invalid pointer, to a helper function. Pass a pointer to an initialized variable. |
+| `Lower bound must be at least r10.stack_offset - subprogram_stack_size` | A function uses more than 2,048 bytes of stack. Reduce the size of local arrays and structures. |
+| `Upper bound must be at most total_stack_size` | The program accesses a stack buffer at an index that the verifier cannot bound, often in a loop. Read data directly from the packet, use a constant index, or use a loop with a small constant number of iterations. This error also occurs when the compiler merges calls to the same helper function that pass stack buffers of different sizes. Use one buffer size for every call. |
+| `Invalid size (r2.value > 0)` (or another register) | A length argument of a helper function can be `0`, for example `src_len` of a hash function. Check that the length is greater than `0` before the call. |
+| `Stack content is not numeric` | The program passes uninitialized stack memory to a helper function. Initialize buffers with `= {0}`. |
+
+The verifier output starts with the number of the instruction that failed, for example:
+
+```txt
+error: program failed verification: 41: Upper bound must be at most packet_size (valid_access(r1.offset-1, width=1) for read)
+```
+
+To find the source code for the instruction, compile the program locally with the additional `-g` flag, and disassemble the object. The disassembly shows each instruction number with the source line that produced it:
+
+```sh
+llvm-objdump -d -l -S program.o
+```
+
+On macOS, use `"$(brew --prefix llvm@19)/bin/llvm-objdump"`.
+
+## The program does not run
+
+If Network Analytics shows no traffic for your rule, or the program does not affect traffic, check the following:
+
+- **The traffic is inspected.** Programmable Flow Protection only inspects ingress UDP traffic to prefixes in Advanced DDoS Protection. It does not inspect fragmented packets, or traffic from source IPs in the Advanced DDoS Protection allowlist. For details, refer to [Inspected traffic](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#inspected-traffic).
+- **The rule expression matches the traffic.** If a packet does not match the expression, Cloudflare passes it without running the program. Test with the expression `true`.
+- **No more specific rule applies.** Each data center runs only its most specific rule. If a data center or region rule exists, the global rule does not run in those data centers, even for packets that the more specific rule does not match.
+- **The rule is not disabled.** In disabled mode, the program does not run.
+- **The rule is not in monitoring mode.** In monitoring mode, the program runs but Cloudflare passes every packet and does not send challenges.
+- **The program uses features that are enabled for your account.** Helper functions return `-5` when a feature is not enabled. Check how your program handles `-5`. For details, refer to [Features that require enablement](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#features-that-require-enablement).
+- **The program does not fail open by mistake.** If the program passes packets when a helper function fails, it can pass all traffic when a feature is not enabled.
+
+Network Analytics shows samples of 1 in 1,000 packets. Low-rate traffic can take some time to appear.
+
+## The program behaves differently than expected
+
+- **State is lost.** Cloudflare resets state in several situations, including program updates, and evicts entries when a table is full. For details, refer to [State](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#state).
+- **State differs between servers.** Each Cloudflare server keeps its own state. Packets from the same client can reach different servers.
+- **Results differ from the PCAP debug endpoint.** Some helper functions behave differently in the debug endpoint. For details, refer to [Differences from Cloudflare's network](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/test-programs/#differences-from-cloudflares-network).
+- **Packets from a source IP are dropped without running the program.** The source IP has a blocklisted status that has not expired. Cloudflare drops its packets before the program runs.
+- **Challenges are not sent.** Cloudflare sends a challenge only when the rule is in enabled mode and the program returns `CF_EBPF_DROP`. Check the return value of `set_challenge`: `-6` means that a challenge limit applies, and `-4` means that the payload is too large.
+- **The program changed without a deployment.** Updating a program switches every rule that uses it to the new version. For details, refer to [Program versions](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#program-versions).
