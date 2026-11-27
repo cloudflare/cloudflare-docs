@@ -62,3 +62,19 @@ To prevent indefinite blocking, there is a limit on how much time storage operat
 ### Your account is doing too many concurrent storage operations. Please back off and try again later.
 
 Besides the suggested approach of backing off, also consider changing your code to use `state.storage.get(keys Array<string>)` rather than multiple individual `state.storage.get(key)` calls where possible.
+
+## Latency and performance
+
+### High wall time with near-zero CPU time
+
+If logs or metrics show a Durable Object request with high wall time (sometimes hundreds of milliseconds or more) while CPU time stays near zero, the request is waiting on non-JavaScript work rather than executing code. Common causes include:
+
+- **Cold activation from inactive**: When an **inactive** SQLite-backed Durable Object receives a request, the runtime must place the object and attach its SQLite database — restoring it from durable storage if it is not cached on the host — before running `constructor()`. This initialization time counts toward wall time, not CPU time, and is expected behavior. Refer to [Activation and cold starts](/durable-objects/concepts/durable-object-lifecycle/#activation-and-cold-starts).
+- **Cross-region routing**: Each Durable Object runs in a single location. Requests from a Worker running far from the Durable Object incur round-trip network latency before the object runs. Refer to [Data location](/durable-objects/reference/data-location/).
+- **Pending I/O, input gates, or request queuing**: Waiting on external `fetch()` calls, slow [`blockConcurrencyWhile()`](/durable-objects/best-practices/rules-of-durable-objects/#use-blockconcurrencywhile-sparingly) initialization, or queued requests on a busy single-threaded object adds wall time without consuming CPU time.
+
+To diagnose and reduce these spikes:
+
+- Check whether the slow request ran your `constructor()`, which indicates activation from **inactive** or **hibernated**.
+- Review `constructor()` and `blockConcurrencyWhile()` to make sure initialization does minimal work.
+- Check whether a [location hint](/durable-objects/reference/data-location/) is appropriate for your traffic pattern, and avoid [pinning Durable Objects in memory with timers or `waitUntil()`](/durable-objects/best-practices/rules-of-durable-objects/#do-not-pin-durable-objects-in-memory-with-timers-or-waituntil).

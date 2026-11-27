@@ -1479,6 +1479,19 @@ export default {
 
 This pattern does not scale. As traffic increases, the single Durable Object becomes a chokepoint. Instead, identify natural coordination boundaries in your application (per user, per room, per document) and create separate Durable Objects for each.
 
+### Do not pin Durable Objects in memory with timers or `waitUntil()`
+
+Avoid starting `setInterval()`, recursive `setTimeout()`, or infinite `this.ctx.waitUntil()` loops (especially in `constructor()`) to keep a Durable Object warm and avoid cold starts.
+
+Pinning a Durable Object in memory with background timers or `waitUntil()` causes several problems:
+
+- **Continuous duration charges**: A Durable Object with pending timers or `waitUntil()` promises cannot hibernate and remains in the **idle, in-memory non-hibernateable** state, incurring [duration charges](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges) for the entire time it stays in memory.
+- **Compatibility-date and lifetime limits**: Pending timers and `waitUntil()` promises only prevent eviction on Workers with a compatibility date of `2026-10-01` or later (or with the [`durable_object_io_tasks_prevent_eviction`](/workers/configuration/compatibility-flags/#durable-object-io-tasks-prevent-eviction) flag), and each operation is capped at 15 minutes. Background storage reads such as `this.ctx.storage.get()` do not reset the inactivity timer.
+- **Unrefreshed CPU budget**: Each incoming network request or WebSocket message resets the Durable Object's [CPU time budget](/durable-objects/platform/limits/), but background timers and `waitUntil()` tasks do not. Repeated timer wake-ups without incoming traffic eventually exhaust the CPU limit and reset the object.
+- **Blocked `deferred` code updates and unavoidable resets**: Preventing hibernation delays [`deferred` code updates](/durable-objects/deployments/durable-objects-code-updates/) until `max_delay` forces a reset, and deployments or runtime updates can still restart the object at any time.
+
+Instead of fighting eviction, design your Durable Object for fast [activation and cold starts](/durable-objects/concepts/durable-object-lifecycle/#activation-and-cold-starts) by keeping `constructor()` and `blockConcurrencyWhile()` minimal, using [location hints](/durable-objects/reference/data-location/) when appropriate, and using [Alarms](/durable-objects/api/alarms/) for scheduled work.
+
 ## Testing and class lifecycle
 
 ### Test with Vitest and plan for class lifecycle changes
