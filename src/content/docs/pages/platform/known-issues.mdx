@@ -122,15 +122,23 @@ If you have an issue that you do not see listed, let the team know in the Cloudf
 
 You may not be able to delete your Pages project if it has a high number (over 100) of deployments. The Cloudflare team is tracking this issue.
 
-As a workaround, you can use [`wrangler pages deployment delete`](/workers/wrangler/commands/pages/#pages-deployment-delete) to delete deployments individually. After you delete your deployments, you will be able to delete your Pages project.
+As a workaround, [set up the Cloudflare CLI](/cf/get-started/) (`cf`) and use it to delete deployments individually. Once your project has 100 or fewer deployments, you can delete it.
 
 ```sh
-npx wrangler pages deployment delete <DEPLOYMENT_ID> --project-name <PROJECT_NAME>
+cf pages deployments delete <DEPLOYMENT_ID> --project-name <PROJECT_NAME>
 ```
 
-Use the `--force` flag to skip the confirmation prompt and to force deletion of aliased deployments.
+Use `--force` to skip confirmation and `--allow-aliased` to allow deletion of deployments with aliases.
 
-To delete all deployments except your active production deployment (both preview deployments and older production deployments), save and run one of the following scripts, passing your project name as the first argument. Each script identifies your latest production deployment, keeps it, and deletes remaining deployments in paginated batches in parallel until only that production deployment remains (or aborts if any deletion fails). You can optionally pass a second argument to control how many deletions run at once (the default is `5`):
+To delete deployments in bulk, save and run the script for your shell with your project name. The Bash script also requires `jq`. To set how many deletions run at once, pass a second argument in Bash or use `-Throttle` in PowerShell (default: `5`).
+
+Both scripts keep the active production deployment, including one restored by a rollback. They delete preview and older production deployments in batches. If a script cannot identify the active deployment, it stops before deleting anything. If a deletion fails, it stops after the current batch.
+
+:::caution
+
+These scripts permanently delete deployments, including potential rollback targets. Pause automatic deployments and avoid manual deployments or rollbacks while the script runs.
+
+:::
 
 <Tabs>
 	<TabItem label="macOS and Linux">
@@ -142,14 +150,10 @@ set -euo pipefail
 project="${1:?usage: $0 <project-name> [parallelism]}"
 parallel="${2:-5}"
 
-prod_deployments=$(npx --no-install wrangler pages deployment list \
-    --project-name "$project" --environment production --json)
-
-prod_id=$(jq -r '.[0].Id // empty' <<<"$prod_deployments")
+project_data=$(cf pages get "$project")
+prod_id=$(jq -r '.canonical_deployment.id | strings' <<<"$project_data")
 if [ -z "$prod_id" ]; then
-    echo "No production deployment found for '$project' - aborting." >&2
-    echo "This script keeps your production deployment, so it needs one to run." >&2
-    echo "Create a production deployment by deploying to your production branch (for example: npx wrangler pages deploy <output-dir> --project-name $project), then re-run this script." >&2
+    echo "Cannot identify the active production deployment for '$project'. Nothing was deleted." >&2
     exit 1
 fi
 
@@ -157,10 +161,10 @@ echo "Production: $prod_id"
 deleted=0
 
 while :; do
-    deployments=$(npx --no-install wrangler pages deployment list \
-        --project-name "$project" --json)
+    deployments=$(cf pages deployments list \
+        --project-name "$project" --page 1 --per-page 25)
 
-    to_delete=$(jq -r --arg keep "$prod_id" '.[] | select(.Id != $keep) | .Id' <<<"$deployments")
+    to_delete=$(jq -r --arg keep "$prod_id" '.[] | select(.id != $keep) | .id' <<<"$deployments")
     if [ -z "$to_delete" ]; then
         break
     fi
@@ -168,8 +172,8 @@ while :; do
     count=$(printf '%s\n' "$to_delete" | wc -l | tr -d ' ')
     echo "Deleting batch of $count deployments..."
 
-    failed=$(printf '%s\n' "$to_delete" | xargs -n1 -P "$parallel" -I{} \
-        sh -c 'npx --no-install wrangler pages deployment delete "$1" --project-name "$2" --force >/dev/null 2>&1 \
+    failed=$(printf '%s\n' "$to_delete" | xargs -P "$parallel" -I{} \
+        sh -c 'cf pages deployments delete "$1" --project-name "$2" --force --allow-aliased >/dev/null \
                || echo "$1"' _ {} "$project")
 
     if [ -n "$failed" ]; then
@@ -198,30 +202,29 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
-$env:CLOUDFLARE_ACCOUNT_ID = $env:CLOUDFLARE_ACCOUNT_ID  # ensure inherited into runspaces
 
-$prodDeployments = npx --no-install wrangler pages deployment list `
-    --project-name $ProjectName --environment production --json | ConvertFrom-Json
+$projectJson = cf pages get $ProjectName
 if ($LASTEXITCODE -ne 0) {
-    throw "Failed to list production deployments for '$ProjectName'."
+    throw "Failed to retrieve the Pages project '$ProjectName'."
 }
 
-$prod = $prodDeployments | Select-Object -First 1
-if (-not $prod) {
-    throw "No production deployment found for '$ProjectName' - aborting to avoid data loss. This script keeps your production deployment, so it needs one to run. Create a production deployment by deploying to your production branch (for example: npx wrangler pages deploy <output-dir> --project-name $ProjectName), then re-run this script."
+$prodId = ($projectJson | ConvertFrom-Json).canonical_deployment.id
+if ($prodId -isnot [string] -or [string]::IsNullOrWhiteSpace($prodId)) {
+    throw "Cannot identify the active production deployment for '$ProjectName'. Nothing was deleted."
 }
 
-Write-Output "Production: $($prod.Id)"
+Write-Output "Production: $prodId"
 $deleted = 0
 
 while ($true) {
-    $deployments = npx --no-install wrangler pages deployment list `
-        --project-name $ProjectName --json | ConvertFrom-Json
+    $deploymentsJson = cf pages deployments list `
+        --project-name $ProjectName --page 1 --per-page 25
     if ($LASTEXITCODE -ne 0) {
         throw "Failed to list deployments for '$ProjectName'."
     }
 
-    $toDelete = @($deployments | Where-Object { $_.Id -ne $prod.Id })
+    $deployments = $deploymentsJson | ConvertFrom-Json
+    $toDelete = @($deployments | Where-Object { $_.id -ne $prodId })
     if ($toDelete.Count -eq 0) {
         break
     }
@@ -229,16 +232,18 @@ while ($true) {
     Write-Output "Deleting batch of $($toDelete.Count) deployments..."
 
     $results = @($toDelete | ForEach-Object -Parallel {
-        $id = $_.Id
-        npx --no-install wrangler pages deployment delete $id `
-            --project-name $using:ProjectName --force *> $null
-        [pscustomobject]@{ Id = $id; ExitCode = $LASTEXITCODE }
+        $id = $_.id
+        $output = cf pages deployments delete $id `
+            --project-name $using:ProjectName --force --allow-aliased 2>&1
+        if ($LASTEXITCODE -ne 0) {
+            [pscustomobject]@{ Id = $id; Output = $output -join "`n" }
+        }
     } -ThrottleLimit $Throttle)
 
-    $failed = @($results | Where-Object { $_.ExitCode -ne 0 })
-    if ($failed.Count -gt 0) {
-        Write-Warning "$($failed.Count) deletions failed:"
-        $failed | Format-Table -AutoSize
+    if ($results.Count -gt 0) {
+        foreach ($failure in $results) {
+            [Console]::Error.WriteLine("Failed to delete $($failure.Id): $($failure.Output)")
+        }
         exit 1
     }
 
@@ -246,16 +251,14 @@ while ($true) {
 }
 
 if ($deleted -eq 0) {
-    Write-Output "Nothing to delete. Production: $($prod.Id)"
+    Write-Output "Nothing to delete. Production: $prodId"
 } else {
-    Write-Output "Done. Deleted $deleted deployments. Kept production: $($prod.Id)"
+    Write-Output "Done. Deleted $deleted deployments. Kept production: $prodId"
 }
 ```
 
 	</TabItem>
 </Tabs>
-
-These scripts will not delete your most recent production deployment if one exists. If you rolled back to an older production deployment, Cloudflare Pages blocks deleting the live canonical deployment, and the script exits cleanly if a deletion fails.
 
 ## Use Pages as Origin in Cloudflare Load Balancer
 
