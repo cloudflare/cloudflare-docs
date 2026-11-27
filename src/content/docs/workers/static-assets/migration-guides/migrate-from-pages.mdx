@@ -273,7 +273,7 @@ export default class extends WorkerEntrypoint {
 
 </WranglerConfig>
 
-##### Translating Pages Functions, middleware, and Pages Plugins
+##### Translate Pages Functions, middleware, and Pages Plugins
 
 When rewriting `functions/` handlers into a native Worker instead of compiling them with `wrangler pages functions build`, map the Pages `EventContext` API to the standard Workers `fetch(request, env, ctx)` handler:
 
@@ -288,7 +288,7 @@ When rewriting `functions/` handlers into a native Worker instead of compiling t
 
 For example, a Pages `_middleware.ts` file that wraps static assets with a custom response header:
 
-<TypeScriptExample filename="functions/_middleware.ts (Pages)">
+<TypeScriptExample filename="functions/_middleware.ts">
 
 ```ts
 export const onRequest: PagesFunction = async (context) => {
@@ -303,7 +303,7 @@ export const onRequest: PagesFunction = async (context) => {
 
 Becomes a Workers `fetch` handler (with `assets.binding` set to `"ASSETS"` and `assets.run_worker_first` configured for the paths you want to intercept):
 
-<TypeScriptExample filename="src/index.ts (Workers)">
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
 interface Env {
@@ -487,7 +487,7 @@ Unlike Pages, Workers does not support any domain whose nameservers are not mana
 
 :::
 
-#### Migrating a live custom domain
+#### Migrate a live custom domain
 
 Workers [Custom Domains](/workers/configuration/routing/custom-domains/) cannot be created on a hostname that already has a `CNAME` DNS record, including the record managed by your existing Pages custom domain.
 
