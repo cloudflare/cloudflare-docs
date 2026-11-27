@@ -1801,6 +1801,10 @@
 /pages/platform/redirects/ /pages/configuration/redirects/ 301
 /pages/platform/rollbacks/ /pages/configuration/rollbacks/ 301
 /pages/platform/serving-pages/ /pages/configuration/serving-pages/ 301
+/pages/migrations/migrating-from-vercel/ /workers/static-assets/migration-guides/vercel-to-workers/ 301
+/pages/migrations/migrating-from-netlify/ /workers/static-assets/migration-guides/netlify-to-workers/ 301
+/pages/migrations/migrating-from-workers/ /workers/static-assets/migration-guides/ 301
+/pages/how-to/refactor-a-worker-to-pages-functions/ /workers/static-assets/binding/ 301
 
 # partners
 /partners/ /fundamentals/reference/partners/ 301
