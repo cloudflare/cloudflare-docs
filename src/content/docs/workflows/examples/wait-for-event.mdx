@@ -92,11 +92,46 @@ export class MyWorkflow extends WorkflowEntrypoint<Env, WorkflowParams> {
 
 </TypeScriptExample>
 
-## Workflow wrangler.jsonc
+## Workflow configuration
 
-The Workflow configuration is defined in the `wrangler.jsonc` file. This file includes bindings for the R2 bucket, D1 database, Workers AI, and the Workflow itself. Ensure that all necessary bindings and environment variables are correctly set up to match your Cloudflare account and services.
+The Workflow configuration is defined in `wrangler.jsonc` (or `cloudflare.config.ts` if you use `cf`). This file includes the Workflow definition and bindings for the R2 bucket, D1 database, and Workers AI. Ensure that all necessary bindings and environment variables are correctly set up to match your Cloudflare account and services.
 
-<WranglerConfig>
+<WranglerConfig
+	cfConfig={`import { bindings, defineConfig, exports } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "workflows-waitforevent",
+		entrypoint,
+		compatibilityDate: "$today",
+		observability: {
+			enabled: true,
+			headSamplingRate: 1,
+		},
+		exports: {
+			MyWorkflow: exports.workflow({
+				name: "workflows-starter",
+			}),
+		},
+		env: {
+			MY_WORKFLOW: bindings.workflow({
+				name: "workflows-starter",
+				worker: "workflows-waitforevent",
+				exportName: "MyWorkflow",
+			}),
+			AI: bindings.ai(),
+			workflow_demo_bucket: bindings.r2({
+				name: "workflow-demo",
+			}),
+			DB: bindings.d1({
+				name: "workflows-demo-d1",
+				id: "66e4fbe9-06ac-4548-abba-2dc42088e13a",
+			}),
+		},
+	},
+});`}
+>
 
 ```json
 {
