@@ -16,9 +16,11 @@ This guide shows you how to use the [Workers Builds REST API](/api/resources/wor
 
 ### Create an API token
 
-The Builds API requires a **user-scoped** API token. Account-scoped tokens are not supported and will return "Invalid token" errors.
+The Workers Builds API requires requests to act on behalf of a Cloudflare user. An [account-owned API token](/fundamentals/api/get-started/account-owned-tokens/) does not represent a user, so the Builds API returns `Invalid token` even if the token has the required account permissions.
 
-Create your token at [dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens) with the following permissions:
+For the Builds API requests in this guide, [create a **user-owned API token**](/fundamentals/api/get-started/create-token/) from **My Profile** > **API Tokens**.
+
+Under **Permissions**, select _Account_ for each permission in the following table. Under **Account Resources**, include the account that owns your Worker.
 
 | Permission                   | Access level | Why you need it                                            |
 | ---------------------------- | ------------ | ---------------------------------------------------------- |
