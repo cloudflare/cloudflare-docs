@@ -194,7 +194,7 @@ Unified Routing is generally available and is our recommended routing mode for a
 | Routing fabric                     | Uses separate routing systems for Zero Trust and WAN routes.                                                                                              | Uses one routing fabric across all supported connection types.                                                                |
 | Route selection                    | Applies longest-prefix match within each routing system. For cross-system traffic, a Zero Trust route can take precedence over a more specific WAN route. | Applies longest-prefix match across supported connection types. When prefix lengths match, Zero Trust routes take precedence. |
 | Cloudflare service source IPs      | Uses public Cloudflare source IPs for traffic sent to private networks.                                                                                   | Uses a dedicated, non-Internet-routable private source range. You can configure the IPv4 range.                               |
-| Cloudflare Mesh and Cloudflare WAN | Does not support traffic between Mesh and WAN connections.                                                                                                | Supports Mesh and WAN connections in the same account.                                                                        |
+| Cloudflare Mesh and Cloudflare WAN | Does not support Mesh and WAN connections in the same account.                                                                                            | Supports Mesh and WAN connections in the same account.                                                                        |
 | Load Balancing with WAN origins    | Supported. Traffic uses public Cloudflare source IPs.                                                                                                     | Generally available. Traffic uses dedicated private Cloudflare source IPs.                                                    |
 | BGP over CNI                       | Closed beta and not available to new customers.                                                                                                           | Closed beta and not available to new customers.                                                                               |
 | IPv6                               | Beta for Magic Transit only.                                                                                                                              | Beta for Cloudflare WAN and Magic Transit.                                                                                    |
@@ -209,7 +209,7 @@ The following features require Unified Routing.
 | [BGP over IPsec and GRE](#release-status)                                                                                                                 | Generally available.                                                                               |
 | [Cloudflare source IPs](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-cloudflare-source-ips/)                         | Generally available.                                                                               |
 | [Custom Cloudflare One Client device subnets](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/) with Cloudflare WAN | Generally available.                                                                               |
-| [Cloudflare Mesh](/mesh/) and Cloudflare WAN interoperability                                                                                             | Generally available.                                                                               |
+| [Cloudflare Mesh](/mesh/) and Cloudflare WAN compatibility                                                                                                | Generally available.                                                                               |
 
 #### Check feature availability before upgrading
 
@@ -280,7 +280,7 @@ For scenarios with overlapping IP space across sites, [Automatic Return Routing]
 
 <AnchorHeading depth={3} title="Legacy Routing mode" />
 
-For accounts using Legacy Routing, route selection depends on the traffic source.
+For accounts using Legacy Routing, route selection depends on the traffic source. Accounts on Legacy Routing do not support Cloudflare Mesh when Cloudflare WAN is enabled.
 
 <AnchorHeading depth={4} title="Cloudflare One Client to private network" />
 
@@ -314,7 +314,7 @@ When [Gateway network policies](/cloudflare-one/traffic-controls/network-policie
 
 Legacy Routing uses two routing components:
 
-- **Zero Trust routing** (handles Cloudflare One Client, Cloudflare Tunnel, and Cloudflare Mesh)
+- **Zero Trust routing** (handles Cloudflare One Client and Cloudflare Tunnel)
 - **WAN routing** (handles IPsec, GRE, and CNI)
 
 Cross-system traffic follows the same rules as [site-to-site traffic with Gateway](#site-to-site-traffic-with-gateway). A more specific Zero Trust route works correctly; a more specific WAN route is not guaranteed to be selected.

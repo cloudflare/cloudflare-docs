@@ -115,9 +115,9 @@ The Mesh node captures outbound traffic and routes it through Cloudflare, which 
 Split Tunnels is the only supported method of running both connectors on the same machine. The Mesh node's kernel-level integration overrides manual routing configurations (`ip route add`, `iptables`).
 :::
 
-## Routing between Mesh and Cloudflare WAN
+## Using Mesh with Cloudflare WAN
 
-To route traffic between Cloudflare Mesh and [Cloudflare WAN](/cloudflare-wan/) (for example, reaching a Mesh node from a WAN-connected site or vice versa), your account must be on [Unified Routing mode](/cloudflare-wan/reference/traffic-steering/#unified-routing). Unified Routing uses a single routing fabric for all connection types (Cloudflare One Client, Cloudflare Tunnel, IPsec, GRE, CNI). Without it, Mesh and WAN connections cannot exchange traffic.
+To use Cloudflare Mesh in an account with [Cloudflare WAN](/cloudflare-wan/) enabled, your account must use [Unified Routing mode](/cloudflare-wan/reference/traffic-steering/#unified-routing). Unified Routing uses a single routing fabric for all connection types (Cloudflare One Client, Cloudflare Tunnel, Cloudflare Mesh, IPsec, GRE, CNI). Accounts on Legacy Routing mode do not support Cloudflare Mesh when Cloudflare WAN is enabled.
 
 ## Connect Workers to Mesh
 
