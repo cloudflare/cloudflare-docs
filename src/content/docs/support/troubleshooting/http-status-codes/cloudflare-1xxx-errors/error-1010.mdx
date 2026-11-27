@@ -13,12 +13,15 @@ This error indicates that access to the website is denied based on your browser'
 
 ### Common causes
 
-- A website owner blocked your request based on your client's web browser.
-- The request was sent to a `*.pages.dev` or `*.workers.dev` hostname, or to a custom domain of a Pages project, with a `User-Agent` header that Browser Integrity Check treats as a non-browser client (for example, the default Python `urllib` user agent). Refer to [Requests to Pages projects or workers.dev](#requests-to-pages-projects-or-workersdev).
+- [Browser Integrity Check](/waf/tools/browser-integrity-check/) is turned on by default for proxied zones and blocks requests whose `User-Agent` header matches known abusive or default non-browser signatures (for example, the default Python `urllib` user agent `Python-urllib/...`), even if the website owner did not configure a custom rule.
+- A website owner explicitly blocked your request based on your client's `User-Agent` header.
+- The request was sent to a `*.pages.dev` or `*.workers.dev` hostname, or to a custom domain of a Pages project, where Browser Integrity Check cannot be turned off. Refer to [Requests to Pages projects or workers.dev](#requests-to-pages-projects-or-workersdev).
 
 ### Resolution
 
-Notify the website owner of the blocking. If you cannot determine how to contact the website owner, lookup contact information for the domain via the [Whois database](https://lookup.icann.org/). Site owners can [turn off Browser Integrity Check](/waf/tools/browser-integrity-check/#disable-browser-integrity-check) in the Security **Settings** page. This does not apply to `pages.dev` and `workers.dev` hostnames, or to custom domains of Pages projects. Refer to [Requests to Pages projects or workers.dev](#requests-to-pages-projects-or-workersdev).
+- **If you control the HTTP client:** Configure your client to send a descriptive `User-Agent` header that identifies your application (for example, `my-app/1.0`) instead of an HTTP library default. The client does not need to impersonate a web browser.
+- **If you own the website:** [Turn off Browser Integrity Check](/waf/tools/browser-integrity-check/#disable-browser-integrity-check) in Security **Settings**, or skip it selectively with a [WAF custom rule](/waf/custom-rules/skip/) or [configuration rule](/rules/configuration-rules/). This does not apply to `pages.dev` and `workers.dev` hostnames, or to custom domains of Pages projects. Refer to [Requests to Pages projects or workers.dev](#requests-to-pages-projects-or-workersdev).
+- **If you are visiting someone else's website:** Notify the website owner of the blocking. If you cannot determine how to contact the website owner, look up contact information for the domain via the [Whois database](https://lookup.icann.org/).
 
 :::note
 Cloudflare support cannot override a customer's security settings. Browser Integrity Check on `pages.dev` and `workers.dev` cannot be turned off, either by the site owner or by Cloudflare support.

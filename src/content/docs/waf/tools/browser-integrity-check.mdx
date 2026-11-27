@@ -13,6 +13,10 @@ import { Render, Steps, DashButton } from "~/components";
 
 Browser Integrity Check is enabled by default.
 
+:::note
+Because Browser Integrity Check is turned on by default, it can block automated requests that send default HTTP library `User-Agent` headers (such as `Python-urllib/...`) with [Error 1010](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/) before requests reach your origin or Worker. Configure internal clients to send a descriptive `User-Agent` header (for example, `my-app/1.0`), or skip Browser Integrity Check selectively for API routes.
+:::
+
 ## Disable Browser Integrity Check
 
 ### Disable globally
