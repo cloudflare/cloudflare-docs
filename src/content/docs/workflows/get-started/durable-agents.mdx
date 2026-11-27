@@ -9,6 +9,8 @@ products:
 ---
 
 import {
+	CliVariant,
+	CliVariants,
 	Details,
 	LinkCard,
 	Render,
@@ -57,6 +59,9 @@ You will also need an [Anthropic API key](https://platform.claude.com/settings/k
 
 ## 1. Create a new Worker project
 
+<CliVariants>
+<CliVariant cli="wrangler">
+
 <Steps>
 
 1. Create a new Worker project by running the following command:
@@ -89,6 +94,36 @@ You will also need an [Anthropic API key](https://platform.claude.com/settings/k
    ```
 
 </Steps>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+If you have not used `cf` before, [install it](/cf/get-started/) first.
+
+<Steps>
+
+1. Create a new Worker project by running `cf init`:
+
+   ```sh
+   cf init durable-ai-agent
+   ```
+
+2. Move into your project:
+
+   ```sh
+   cd durable-ai-agent
+   ```
+
+3. Install dependencies:
+
+   ```sh
+   npm install agents @anthropic-ai/sdk
+   ```
+
+</Steps>
+
+</CliVariant>
+</CliVariants>
 
 ## 2. Define your tools
 
@@ -418,16 +453,50 @@ export class ResearchAgent extends Agent<Env, State> {
 
 <Steps>
 
-1. Open `wrangler.jsonc` and add the Agent and Workflow configuration:
+1. Open your configuration file (`wrangler.jsonc` or `cloudflare.config.ts`) and add the Agent and Workflow configuration:
 
-   <WranglerConfig>
+   <WranglerConfig
+   	cfConfig={[
+   		'import { bindings, defineConfig, exports } from "cf/config";',
+   		'import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };',
+   		"",
+   		"export default defineConfig({",
+   		"\tworker: {",
+   		'\t\tname: "durable-ai-agent",',
+   		"\t\tentrypoint,",
+   		'\t\tcompatibilityDate: "$today",',
+   		"\t\tobservability: {",
+   		"\t\t\tenabled: true,",
+   		"\t\t},",
+   		"\t\texports: {",
+   		'\t\t\tResearchAgent: exports.durableObject({ storage: "sqlite" }),',
+   		"\t\t\tResearchWorkflow: exports.workflow({",
+   		'\t\t\t\tname: "research-workflow",',
+   		"\t\t\t}),",
+   		"\t\t},",
+   		"\t\tenv: {",
+   		"\t\t\tANTHROPIC_API_KEY: bindings.secret(),",
+   		"\t\t\tResearchAgent: bindings.durableObject({",
+   		'\t\t\t\tworker: "durable-ai-agent",',
+   		'\t\t\t\texportName: "ResearchAgent",',
+   		"\t\t\t}),",
+   		"\t\t\tRESEARCH_WORKFLOW: bindings.workflow({",
+   		'\t\t\t\tname: "research-workflow",',
+   		'\t\t\t\tworker: "durable-ai-agent",',
+   		'\t\t\t\texportName: "ResearchWorkflow",',
+   		"\t\t\t}),",
+   		"\t\t},",
+   		"\t},",
+   		"});",
+   	].join("\n")}
+   >
 
    ```json title="wrangler.jsonc"
    {
    	"$schema": "node_modules/wrangler/config-schema.json",
    	"name": "durable-ai-agent",
    	"main": "src/index.ts",
-       "upload_source_maps": true,
+   	"upload_source_maps": true,
    	"compatibility_date": "$today",
    	"observability": {
    		"enabled": true
@@ -460,11 +529,14 @@ export class ResearchAgent extends Agent<Env, State> {
 
 2. Generate types for your bindings:
 
-   ```sh
-   npx wrangler types
-   ```
+   <PackageManagers
+   	type="exec"
+   	pkg="wrangler"
+   	args="types"
+   	cfCommand="cf workers types"
+   />
 
-   This creates a `worker-configuration.d.ts` file with the `Env` type that includes your bindings.
+   This generates the `Env` type that includes your bindings (`worker-configuration.d.ts` with Wrangler, or `.cloudflare/types/index.d.ts` with `cf`).
 
 </Steps>
 
@@ -473,6 +545,9 @@ export class ResearchAgent extends Agent<Env, State> {
 The Worker routes requests to the Agent, which manages workflow lifecycle. Use `routeAgentRequest()` for WebSocket connections and `getAgentByName()` for server-side RPC calls.
 
 Replace `src/index.ts`:
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 ```ts title="src/index.ts"
 import { getAgentByName, routeAgentRequest } from "agents";
@@ -528,7 +603,74 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
+</CliVariant>
+<CliVariant cli="cf">
+
+```ts title="src/index.ts"
+import { getAgentByName, routeAgentRequest } from "agents";
+
+export { ResearchAgent } from "./agent";
+export { ResearchWorkflow } from "./workflow";
+
+export default {
+	async fetch(
+		request: Request,
+		env: Env,
+		ctx: ExecutionContext,
+	): Promise<Response> {
+		const url = new URL(request.url);
+
+		// Route WebSocket connections to /agents/research-agent/{name}
+		const agentResponse = await routeAgentRequest(request, env);
+		if (agentResponse) return agentResponse;
+
+		// HTTP API for starting research tasks
+		if (request.method === "POST" && url.pathname === "/research") {
+			const { task, agentId } = await request.json<{
+				task: string;
+				agentId?: string;
+			}>();
+
+			// Get agent instance by name (creates if doesn't exist)
+			const agent = await getAgentByName(
+				ctx.exports.ResearchAgent,
+				agentId ?? "default",
+			);
+
+			// Start the research workflow via RPC
+			const result = await agent.startResearch(task);
+			return Response.json(result);
+		}
+
+		// Check workflow status
+		if (url.pathname === "/status") {
+			const instanceId = url.searchParams.get("instanceId");
+			const agentId = url.searchParams.get("agentId") ?? "default";
+
+			if (!instanceId) {
+				return Response.json({ error: "instanceId required" }, { status: 400 });
+			}
+
+			const agent = await getAgentByName(ctx.exports.ResearchAgent, agentId);
+			const status = await agent.getResearchStatus(instanceId);
+
+			return Response.json(status);
+		}
+
+		return new Response("POST /research with { task } to start", {
+			status: 400,
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</CliVariant>
+</CliVariants>
+
 ## 7. Develop locally
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 <Steps>
 
@@ -564,9 +706,52 @@ export default {
 
 </Steps>
 
+</CliVariant>
+<CliVariant cli="cf">
+
+<Steps>
+
+1. Create a [`.env` file](/cf/projects/#local-variables-and-secrets) for local development:
+
+   ```sh title=".env"
+   ANTHROPIC_API_KEY=your-api-key-here
+   ```
+
+2. Start the dev server:
+
+   ```sh
+   cf dev
+   ```
+
+3. Start a research task using the local URL printed by `cf dev` (by default `http://localhost:5173` in Vite projects):
+
+   ```sh
+   curl -X POST http://localhost:5173/research \
+     -H "Content-Type: application/json" \
+     -d '{"task": "Compare open-source LLM projects"}'
+   ```
+
+   ```json output
+   { "instanceId": "abc-123-def" }
+   ```
+
+4. Check progress (may take a few seconds to complete):
+
+   ```sh
+   curl "http://localhost:5173/status?instanceId=abc-123-def"
+   ```
+
+</Steps>
+
+</CliVariant>
+</CliVariants>
+
 The agent will search for repositories, fetch details, and return a comparison. Progress updates are broadcast to any connected WebSocket clients.
 
 ## 8. Deploy
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 <Steps>
 
@@ -603,6 +788,48 @@ The agent will search for repositories, fetch details, and return a comparison. 
    <DashButton url="/?to=/:account/workers/workflows" />
 
 </Steps>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+<Steps>
+
+1. Deploy the Worker (sign in first with `cf auth login` if you have not already):
+
+   ```sh
+   cf deploy
+   ```
+
+2. Add your API key as a secret:
+
+   ```sh
+   cf workers secrets update ANTHROPIC_API_KEY --worker durable-ai-agent --type secret_text --text "<YOUR_API_KEY>"
+   ```
+
+3. Start a research task on your deployed Worker and note the returned `instanceId`:
+
+   ```sh
+   curl -X POST https://durable-ai-agent.<your-subdomain>.workers.dev/research \
+     -H "Content-Type: application/json" \
+     -d '{"task": "Compare open-source LLM projects"}'
+   ```
+
+4. Inspect the workflow run with the CLI using the `instanceId` from step 3 (or list instances with `cf workflows instances list --workflow-name research-workflow`):
+
+   ```sh
+   cf workflows instances get <INSTANCE_ID> --workflow-name research-workflow
+   ```
+
+   This shows every step the agent took, including LLM calls, tool executions, timing, and any retries.
+
+   You can also view this in the Cloudflare dashboard under **research-workflow**.
+
+   <DashButton url="/?to=/:account/workers/workflows" />
+
+</Steps>
+
+</CliVariant>
+</CliVariants>
 
 ## Real-time client integration
 
