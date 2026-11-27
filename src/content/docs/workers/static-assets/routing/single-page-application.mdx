@@ -91,9 +91,11 @@ export default {
 
 </TypeScriptExample>
 
-:::note
-When `run_worker_first` is an array, a request that matches none of its patterns goes to asset serving, and in `single-page-application` mode asset serving handles every path. Asset serving only responds to `GET` and `HEAD` requests. A request with any other method, such as a `POST` from a form or an API client, to a path outside your patterns receives a `405 Method Not Allowed` response and does not invoke your Worker script. Add every path your Worker script handles to `run_worker_first`, whatever its method.
-:::
+When `run_worker_first` is an array, Workers check unmatched paths for a matching static asset or the SPA fallback (`/index.html`). If either exists, requests other than `GET` or `HEAD` return `405 Method Not Allowed` without invoking your Worker script, unless a matching [redirect](/workers/static-assets/redirects/) takes precedence.
+
+If neither asset is available, unmatched paths can fall through to your Worker script.
+
+To route a path to your Worker script regardless of the HTTP method, match it with a positive `run_worker_first` pattern and make sure no negative pattern matches it.
 
 You can also use `run_worker_first` to inject data into your SPA shell before it reaches the browser. For a full example using HTMLRewriter to prefetch API data and embed it in the HTML stream, refer to [SPA shell with bootstrap data](/workers/examples/spa-shell/).
 
@@ -103,48 +105,47 @@ If you are using a Vite-powered SPA framework, you might be interested in using 
 
 ### Reference
 
-In most cases, configuring `assets.not_found_handling` to <code>single-page-application</code> will provide the desired behavior. If you are building your own framework, or have specialized needs, the following diagram can provide insight into exactly how the routing decisions are made.
+The following diagram shows how Workers route requests in SPA mode. It does not show [redirects or rewrites](/workers/static-assets/redirects/).
 
 <details>
 <summary>Full routing decision diagram</summary>
-<pre class="mermaid">
-{`flowchart
+
+```mermaid
+flowchart
 	Request@{ shape: stadium, label: "Incoming request" }
 	Request-->RunWorkerFirst
-	RunWorkerFirst@{ shape: diamond, label: "Run Worker script first?" }
-	RunWorkerFirst-->|Request matches run_worker_first path|WorkerScriptInvoked
-	RunWorkerFirst-->|Request matches run_worker_first negative path|AssetServing
-	RunWorkerFirst-->|No matches|RequestMatchesAsset
+	RunWorkerFirst@{ shape: diamond, label: "Explicit routing decision?" }
+	RunWorkerFirst-->|All paths or a positive match with no exclusion|WorkerScriptInvoked
+	RunWorkerFirst-->|Matches a negative pattern|AssetServing
+	RunWorkerFirst-->|Otherwise|RequestMatchesAsset
 	RequestMatchesAsset@{ shape: diamond, label: "Request matches asset?" }
 	RequestMatchesAsset-->|Yes|AssetServing
 	RequestMatchesAsset-->|No|WorkerScriptPresent
 	WorkerScriptPresent@{ shape: diamond, label: "Worker script present?" }
 	WorkerScriptPresent-->|No|AssetServing
-	WorkerScriptPresent-->|Yes|RequestNavigation
-	RequestNavigation@{ shape: diamond, label: "Request is navigation request?" }
-	RequestNavigation-->|No|WorkerScriptInvoked
+	WorkerScriptPresent-->|Yes|UseSPAFallback
+	UseSPAFallback@{ shape: diamond, label: "run_worker_first array or navigation with the compatibility flag?" }
+	UseSPAFallback-->|Yes|FallbackExists
+	UseSPAFallback-->|No|WorkerScriptInvoked
+	FallbackExists@{ shape: diamond, label: "/index.html exists?" }
+	FallbackExists-->|Yes|AssetServing
+	FallbackExists-->|No|WorkerScriptInvoked
 	WorkerScriptInvoked@{ shape: rect, label: "Worker script invoked" }
 	WorkerScriptInvoked-.->|Asset binding|AssetServing
-	RequestNavigation-->|Yes|AssetServing
 
 	subgraph Asset serving
-		AssetServing@{ shape: diamond, label: "Request matches asset?" }
-		AssetServing-->|Yes|AssetServed
-		AssetServed@{ shape: stadium, label: "**200 OK**<br />asset served" }
-		AssetServing-->|No|NotFoundHandling
+		AssetServing@{ shape: diamond, label: "Matching asset or /index.html exists?" }
+		AssetServing-->|Yes|MethodAllowed
+		AssetServing-->|No|NotFound
+		MethodAllowed@{ shape: diamond, label: "GET or HEAD?" }
+		MethodAllowed-->|Yes|AssetServed
+		MethodAllowed-->|No|MethodNotAllowed
+		AssetServed@{ shape: stadium, label: "Serve the asset or /index.html" }
+		NotFound@{ shape: stadium, label: "**404 Not Found**" }
+		MethodNotAllowed@{ shape: stadium, label: "**405 Method Not Allowed**" }
+	end
+```
 
-		subgraph single-page-application
-			NotFoundHandling@{ shape: rect, label: "Request rewritten to /index.html" }
-			NotFoundHandling-->SPAExists
-			SPAExists@{ shape: diamond, label: "HTML Page exists?" }
-			SPAExists-->|Yes|SPAServed
-			SPAExists-->|No|Generic404PageServed
-			Generic404PageServed@{ shape: stadium, label: "**404 Not Found**<br />null-body response served" }
-			SPAServed@{ shape: stadium, label: "**200 OK**<br />/index.html page served" }
-		end
-
-	end`}
-</pre>
 </details>
 
 Requests are only billable if a Worker script is invoked. From there, it is possible to serve assets using the assets binding (depicted as the dotted line in the diagram above).
