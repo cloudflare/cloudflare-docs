@@ -3,7 +3,7 @@ title: Tools
 pcx_content_type: reference
 description: Connect a workspace, and use built-in workspace tools, custom tools, approvals, MCP tools, the fetch tool, code execution, and extensions in Think agents.
 sidebar:
-  order: 4
+  order: 2.5
 products:
   - agents
 ---
@@ -20,7 +20,7 @@ On every turn, Think merges tools from multiple sources. Later sources override 
 2. **`getTools()`** — your custom server-side tools
 3. **Extension tools** — tools from loaded extensions (prefixed by extension name)
 4. **Context tools** — `set_context`, `search_context` (from `configureContext()` and `configureSession()`, refer to [Context](/agents/harnesses/think/context/))
-5. **Skill tools** — `activate_skill`, `read_skill_resource`, `run_skill_script` (from `getSkills()`, refer to [Agent Skills](/agents/skills/))
+5. **Skill tools** — `activate_skill`, `read_skill_resource`, `run_skill_script` (from `getSkills()`, refer to [Skills](/agents/harnesses/think/skills/))
 6. **MCP tools** — from connected MCP servers when `includeMcpTools` is `true`
 7. **Client tools** — from the browser (refer to [Client tools](/agents/harnesses/think/client-tools/))
 

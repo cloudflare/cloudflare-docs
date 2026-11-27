@@ -18,7 +18,7 @@ Context is everything the model is told on a request besides the conversation it
 
 **Tool descriptions.** Each tool's name, description, and input schema. The model reads them to decide which tool to call, so they go in every request, and a long tool list costs tokens on every turn.
 
-**Skills.** A [skill](/agents/concepts/agent-skills/) is a set of instructions and files for one kind of task. The request carries a short catalog, one line per skill, and the model loads a skill's instructions with a tool call only when a task needs them. For most agents, skills are the way to add knowledge and procedures: they cost little until they are used, and other agents can read the same skill files.
+**Skills.** A [skill](/agents/concepts/skills/) is a set of instructions and files for one kind of task. The request carries a short catalog, one line per skill, and the model loads a skill's instructions with a tool call only when a task needs them. For most agents, skills are the way to add knowledge and procedures: they cost little until they are used, and other agents can read the same skill files.
 
 **Memory.** Facts the agent saves so they outlast the conversation that taught them, such as the user's time zone or the decision made last week. The agent writes them with a tool to storage you choose, such as SQLite in the Durable Object, and they reach the model again either in the system prompt or when the agent looks them up with a search tool. Memory is not the transcript: compaction can summarize the conversation that taught a fact, and the saved fact stays as it was.
 
@@ -58,12 +58,28 @@ To see whether you are hitting the cache, read the usage the provider returns wi
 ## How each harness builds context
 
 - **[Think](/agents/harnesses/think/context/)** builds its system prompt from context blocks that you declare: read-only instructions, memory the model can write, and knowledge it can search. It freezes the prompt after the first turn, refreshes it after compaction, and sends changes to the environment after the latest message. Its skill catalog is one of those blocks.
-- **[Pi](/agents/harnesses/pi/extensions/)** builds its system prompt from sections that extensions add. Its [skills extension](/agents/harnesses/pi/extensions/#add-skills) adds the skill catalog as a section.
+- **[Pi](/agents/harnesses/pi/extensions/)** builds its system prompt from sections that extensions add. Its [skills extension](/agents/harnesses/pi/skills/) adds the skill catalog as a section.
 - **[OpenCode](/agents/harnesses/opencode/)** builds its prompt from its own configuration and the plugins you bundle.
 - **Your own loop** builds the request itself. [`agents/skills`](/agents/skills/) returns a skill catalog to add to your system prompt, and the order rules in [Prompt caching](#prompt-caching) are yours to follow.
+
+## `agents/context` exports
+
+`agents/context` is the experimental library Think builds its context with. From `agents` v0.35.0 it exports:
+
+| Export                                                         | What it is                                                                                                                                                                                                                                                                                                                             |
+| -------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Context`                                                      | Context blocks bound to a session. It records the system prompt and each delivered change on the session, and builds each request from that record. Methods: `freezeSystemPrompt()`, `refreshSystemPrompt()`, `reminder()`, `getBlock()`, `getBlocks()`, `setBlock()`, `appendToBlock()`, `addBlock()`, `removeBlock()`, and `tools()` |
+| `ContextOptions`                                               | Options for `Context`: `blocks`, `sql`, `defaultProvider`, and `promptStore`                                                                                                                                                                                                                                                           |
+| `ContextBlocks`                                                | The blocks and their tools, with no session and no stored prompt. `renderSystemPrompt()` renders the blocks as they are now                                                                                                                                                                                                            |
+| `ContextConfig`, `ContextBlock`                                | One block's configuration, and a loaded block with its content and token count                                                                                                                                                                                                                                                         |
+| `ContextProvider`, `WritableContextProvider`, `SearchProvider` | The source of a read-only, a writable, and a searchable block                                                                                                                                                                                                                                                                          |
+| `AgentContextProvider`, `AgentSearchProvider`                  | A writable block in SQLite, and a searchable block backed by SQLite full-text search                                                                                                                                                                                                                                                   |
+| `SqlProvider`                                                  | Any object with a tagged-template `sql`, such as an `Agent` or `this.lifecycle`                                                                                                                                                                                                                                                        |
+
+To use it, refer to [Think context](/agents/harnesses/think/context/).
 
 ## Related
 
 - [Sessions](/agents/concepts/sessions/): the transcript, and how it becomes a request.
-- [Skills](/agents/concepts/agent-skills/): instructions and files the model loads on demand.
+- [Skills](/agents/concepts/skills/): instructions and files the model loads on demand.
 - [Think context](/agents/harnesses/think/context/): context blocks in Think.

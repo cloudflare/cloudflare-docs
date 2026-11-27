@@ -1,7 +1,7 @@
 ---
 title: Execution
 pcx_content_type: reference
-description: Run Agent Skills scripts with a Computer Workspace backend, or with the experimental skill script runner.
+description: Run skill scripts with a Computer Workspace backend, or with the experimental skill script runner.
 sidebar:
   order: 3
 products:
@@ -10,16 +10,65 @@ products:
 
 import { TypeScriptExample, WranglerConfig } from "~/components";
 
-[Agent Skills](/agents/skills/) can bundle scripts under `scripts/`. An agent runs them in one of two ways:
+[Skills](/agents/skills/) can bundle scripts under `scripts/`. An agent runs them in one of two ways:
 
-| Where the skill lives                                  | How scripts run                                               |
-| ------------------------------------------------------ | ------------------------------------------------------------- |
-| [Computer Workspace](/agents/skills/sources/computer/)    | The model runs the file with the Workspace `exec` tool        |
-| [R2](/agents/skills/sources/r2/) or a [manifest](/agents/skills/sources/code/) | The experimental script runner, through `run_skill_script` |
+| Where the skill lives                                                          | How scripts run                                            |
+| ------------------------------------------------------------------------------ | ---------------------------------------------------------- |
+| [Computer Workspace](/agents/skills/sources/#workspace)                        | The model runs the file with the Workspace `exec` tool     |
+| [R2](/agents/skills/sources/#r2) or a [manifest](/agents/skills/sources/#code) | The experimental script runner, through `run_skill_script` |
 
 ## Run scripts in the Workspace
 
-When skills are files in a Workspace, a script is a file the agent can run like any other. Give the Workspace a backend, and Think adds the `exec` tool. Refer to [Computer](/agents/skills/sources/computer/#run-skill-scripts) for the setup.
+When skills are files in a Workspace, a script is a file the agent can run like any other. Give the Workspace a backend, and add the Workspace tools from `@cloudflare/computer/tools/ai-sdk` next to the skill tools. The `exec` tool runs code with the Workspace's backends:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Workspace } from "@cloudflare/computer";
+import { CodemodeBackend } from "@cloudflare/computer/backends/codemode";
+import { createAITools } from "@cloudflare/computer/tools/ai-sdk";
+import { Lifecycle } from "agents/lifecycle";
+import { loadSkillCatalog, workspace } from "agents/skills";
+import { createSkillTools } from "agents/skills/tools/ai-sdk";
+
+export class Assistant extends DurableObject<Env> {
+	readonly lifecycle = Lifecycle.install(this);
+	readonly workspace = new Workspace({
+		storage: this.ctx.storage,
+		backends: [
+			new CodemodeBackend({
+				id: "js",
+				loader: this.env.LOADER,
+				access: "read-write",
+			}),
+		],
+	});
+
+	async tools() {
+		const catalog = await loadSkillCatalog([workspace(this.workspace)]);
+		return {
+			// read, write, edit, exec, and the other Workspace tools
+			...createAITools({ workspace: this.workspace }),
+			...createSkillTools(catalog),
+		};
+	}
+}
+```
+
+</TypeScriptExample>
+
+<WranglerConfig>
+
+```jsonc
+{
+	"worker_loaders": [{ "binding": "LOADER" }],
+}
+```
+
+</WranglerConfig>
+
+Pass the result of `tools()` to `streamText()`, as in the [overview](/agents/skills/#load-skills-into-an-agent).
 
 Activating a skill returns its folder as `location`, for example `/workspace/.agents/skills/release-notes`. With the JavaScript backend, the skill's instructions can tell the model to run a script from that folder:
 
@@ -44,7 +93,7 @@ export default async function (input) {
 The script runner is experimental, and its options may change. Prefer storing skills in a Computer Workspace and running scripts with `exec`.
 :::
 
-For skills that do not live in a Workspace, `skills.runner()` runs bundled scripts in a Dynamic Worker and adds the `run_skill_script` tool. It needs a Worker Loader binding:
+For skills that do not live in a Workspace, `runner()` from `agents/skills/runner` runs bundled scripts in a Dynamic Worker. Pass it to `createSkillTools()` and the model gets the `run_skill_script` tool. The runner needs a Worker Loader binding:
 
 <WranglerConfig>
 
@@ -56,37 +105,26 @@ For skills that do not live in a Workspace, `skills.runner()` runs bundled scrip
 
 </WranglerConfig>
 
-Return the runner from `getSkillScriptRunner()`:
-
-<TypeScriptExample filename="src/server.ts">
+<TypeScriptExample>
 
 ```ts
-import { Think, skills } from "@cloudflare/think";
+import { loadSkillCatalog, r2 } from "agents/skills";
+import { runner } from "agents/skills/runner";
+import { createSkillTools } from "agents/skills/tools/ai-sdk";
 
-export class MyAgent extends Think<Env> {
-	getSkills() {
-		return [skills.r2(this.env.SKILLS_BUCKET, { prefix: "skills/" })];
-	}
-
-	getSkillScriptRunner() {
-		return skills.runner({ loader: this.env.LOADER });
-	}
+export async function skillTools(env: Env) {
+	const catalog = await loadSkillCatalog([
+		r2(env.SKILLS_BUCKET, { prefix: "skills/" }),
+	]);
+	return createSkillTools(catalog, {
+		scriptRunner: runner({ loader: env.LOADER }),
+	});
 }
 ```
 
 </TypeScriptExample>
 
-Outside Think, import the runner from `agents/skills/runner`. It is a separate entry point because it loads `just-bash` and Code Mode:
-
-<TypeScriptExample>
-
-```ts
-import { runner } from "agents/skills/runner";
-
-const scriptRunner = runner({ loader: env.LOADER });
-```
-
-</TypeScriptExample>
+`agents/skills/runner` is a separate entry point because it loads `just-bash` and Code Mode.
 
 The runner runs JavaScript, Python, and Bash scripts under `scripts/`. Python runs as a Python Dynamic Worker, and Bash runs through `just-bash`. There is no bundler at runtime: a JavaScript script must be one self-contained module. Compile TypeScript and multi-file scripts, for example with esbuild, before you store the skill.
 
@@ -106,12 +144,12 @@ export default async function run(input, ctx) {
 
 `ctx` is typed as `SkillRunContext` and contains:
 
-| Field       | Description                                                                       |
-| ----------- | --------------------------------------------------------------------------------- |
-| `skill`     | The skill's name, description, and metadata                                       |
-| `files`     | The skill's text resources, by relative path                                      |
-| `workspace` | Workspace reads and writes, gated by the `workspace` option                       |
-| `tools`     | Only the tools passed to the runner, as `tools.call(name, input)` or `tools.name(input)` |
+| Field       | Description                                                                                  |
+| ----------- | -------------------------------------------------------------------------------------------- |
+| `skill`     | The skill's name, description, and metadata                                                  |
+| `files`     | The skill's text resources, by relative path                                                 |
+| `workspace` | Workspace reads and writes, gated by the `workspace` option                                  |
+| `tools`     | Only the tools passed to the runner, as `tools.call(name, input)` or `tools.name(input)`     |
 | `output`    | `writeFile(name, content)` returns scratch files to the model without changing the Workspace |
 
 ### Python and Bash scripts
@@ -127,18 +165,18 @@ Python scripts can also define `def run(input, ctx)`.
 
 ### Runner options
 
-| Option              | Default                                  | Description                                          |
-| ------------------- | ---------------------------------------- | ---------------------------------------------------- |
-| `loader`            | Required                                 | Worker Loader binding                                |
-| `workspaceInstance` | None                                     | A Computer Workspace that scripts can access         |
+| Option              | Default                                          | Description                                  |
+| ------------------- | ------------------------------------------------ | -------------------------------------------- |
+| `loader`            | Required                                         | Worker Loader binding                        |
+| `workspaceInstance` | None                                             | A Computer Workspace that scripts can access |
 | `workspace`         | `"read"` with `workspaceInstance`, else `"none"` | `"none"`, `"read"`, or `"read-write"`        |
-| `tools`             | None                                     | Tools scripts can call                               |
-| `network`           | `false`                                  | Allow outbound network access                        |
-| `timeout`           | `30000`                                  | Timeout in milliseconds                              |
+| `tools`             | None                                             | Tools scripts can call                       |
+| `network`           | `false`                                          | Allow outbound network access                |
+| `timeout`           | `30000`                                          | Timeout in milliseconds                      |
 
 Scripts get no network access and no tools unless you grant them. Relative paths in `ctx.workspace` resolve against `/workspace`.
 
 ## Related
 
-- [Think tools](/agents/harnesses/think/tools/): how skill tools merge with workspace, custom, MCP, and client tools
+- [File system](/agents/tools/filesystem/): the Workspace tools, including `exec`
 - [Sandbox](/agents/tools/sandbox/): run code in a container
