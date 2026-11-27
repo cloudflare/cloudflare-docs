@@ -1786,6 +1786,8 @@
 /pages/platform/functions/debugging-and-logging/ /pages/functions/debugging-and-logging/ 301
 /pages/platform/functions/module-support/ /pages/functions/module-support/ 301
 /pages/platform/functions/smart-placement/ /pages/functions/smart-placement/ 301
+/pages/migrations/migrating-from-firebase/ /workers/static-assets/migration-guides/firebase-to-workers/ 301
+/pages/migrations/migrating-jekyll-from-github-pages/ /workers/static-assets/migration-guides/github-pages-to-workers/ 301
 /pages/platform/api/ /pages/configuration/api/ 301
 /pages/platform/branch-build-controls/ /pages/configuration/branch-build-controls/ 301
 /pages/platform/build-caching/ /pages/configuration/build-caching/ 301

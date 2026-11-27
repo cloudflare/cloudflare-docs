@@ -1,0 +1,106 @@
+---
+difficulty: Beginner
+pcx_content_type: tutorial
+title: Migrate from Firebase Hosting to Workers
+description: Migrate a static site or single-page application from Firebase Hosting to Cloudflare Workers with Static Assets.
+products:
+  - workers
+---
+
+import { Steps, WranglerConfig } from "~/components";
+
+This guide walks you through migrating an existing static site or single-page application (SPA) from Firebase Hosting to Cloudflare Workers with [Workers Static Assets](/workers/static-assets/).
+
+## Frameworks
+
+If your Firebase Hosting project uses a supported web framework, review the [Workers framework guides](/workers/framework-guides/) or run [`wrangler deploy`](/workers/framework-guides/automatic-configuration/) to automatically detect your framework and generate a Workers configuration. Otherwise, continue with the steps below.
+
+## 1. Find your build command and output directory
+
+Check your `firebase.json` file for the `hosting.public` field, which specifies the build output directory Firebase deploys:
+
+```json title="firebase.json"
+{
+	"hosting": {
+		"public": "dist",
+		"rewrites": [
+			{
+				"source": "**",
+				"destination": "/index.html"
+			}
+		]
+	}
+}
+```
+
+Identify your project's build command in `package.json` (typically `npm run build` or a framework-specific command such as `ng build`). If `firebase.json` includes a catch-all rewrite to `/index.html`, your app is configured as a Single Page Application (SPA).
+
+## 2. Create a Wrangler configuration file
+
+In the root of your project, create a `wrangler.jsonc` file. Replace `<your-project-name>` with your Worker name and `<your-build-directory>` with the `public` directory from `firebase.json`.
+
+For a static site ([Static Site Generation](/workers/static-assets/routing/static-site-generation/)):
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "<your-project-name>",
+	"compatibility_date": "$today",
+	"assets": {
+		"directory": "<your-build-directory>"
+	}
+}
+```
+
+</WranglerConfig>
+
+For a [Single Page Application](/workers/static-assets/routing/single-page-application/) (matching a Firebase `**` → `/index.html` rewrite):
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "<your-project-name>",
+	"compatibility_date": "$today",
+	"assets": {
+		"directory": "<your-build-directory>",
+		"not_found_handling": "single-page-application"
+	}
+}
+```
+
+</WranglerConfig>
+
+If your `firebase.json` defines custom HTTP headers or URL redirects, move them into [`_headers`](/workers/static-assets/headers/) and [`_redirects`](/workers/static-assets/redirects/) files inside your static asset output directory.
+
+## 3. Connect and deploy with Workers Builds
+
+<Steps>
+
+1. Push your updated repository (including `wrangler.jsonc`) to GitHub or GitLab.
+2. Follow [Connect a new Worker](/workers/ci-cd/builds/#connect-a-new-worker) to link your repository to Workers Builds.
+3. Set your **Build command** (for example, `npm run build`) and keep the default **Deploy command** (`npx wrangler deploy`).
+
+</Steps>
+
+Alternatively, deploy directly from your terminal with `npx wrangler deploy`.
+
+## 4. Switch your custom domain
+
+Workers [Custom Domains](/workers/configuration/routing/custom-domains/) support domains whose DNS is managed by Cloudflare.
+
+<Steps>
+
+1. Verify your deployed Worker on its `*.workers.dev` subdomain.
+2. In your domain's **DNS** > **Records** page, remove any Firebase Hosting `A`, `AAAA`, or `CNAME` records for the hostname you are migrating.
+3. Follow [Add a Custom Domain](/workers/configuration/routing/custom-domains/#add-a-custom-domain) to attach the domain to your Worker.
+4. Once traffic is serving from Workers, remove the old site from Firebase Hosting.
+
+</Steps>
+
+## Related resources
+
+- [Workers Static Assets](/workers/static-assets/)
+- [Workers Builds](/workers/ci-cd/builds/)
+- [Migrate from Pages to Workers](/workers/static-assets/migration-guides/migrate-from-pages/)
