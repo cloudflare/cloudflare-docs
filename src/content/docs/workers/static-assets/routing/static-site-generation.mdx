@@ -8,7 +8,13 @@ products:
   - workers
 ---
 
-import { WranglerConfig, Render } from "~/components";
+import {
+	WranglerConfig,
+	Render,
+	Details,
+	Tabs,
+	TabItem,
+} from "~/components";
 
 Static Site Generation (SSG) applications are web applications which are predominantly built or "prerendered" ahead-of-time. They are often built with a framework such as [Gatsby](/workers/framework-guides/web-apps/more-web-frameworks/gatsby/) or [Docusaurus](/workers/framework-guides/web-apps/more-web-frameworks/docusaurus/). The build process of these frameworks will produce many HTML files and accompanying client-side resources (e.g. JavaScript bundles, CSS stylesheets, images, fonts, etc.). Data is either static, fetched and compiled into the HTML at build-time, or fetched by the client from an API with client-side requests.
 
@@ -48,53 +54,96 @@ If you are using a Vite-powered SPA framework, you might be interested in using 
 
 ### Reference
 
-In most cases, configuring `assets.not_found_handling` to <code>404-page</code> will provide the desired behavior. If you are building your own framework, or have specialized needs, the following diagram can provide insight into exactly how the routing decisions are made.
+The following diagrams show how Workers route requests in `404-page` mode. They do not show [redirects or rewrites](/workers/static-assets/redirects/).
 
-<details>
-<summary>Full routing decision diagram</summary>
-<pre class="mermaid">
-{`flowchart
+<Details header="Full routing decision diagrams">
+<Tabs>
+<TabItem label="Default routing">
+
+```mermaid
+flowchart TD
 	Request@{ shape: stadium, label: "Incoming request" }
-	Request-->RunWorkerFirst
-	RunWorkerFirst@{ shape: diamond, label: "Run Worker script first?" }
-	RunWorkerFirst-->|Request matches run_worker_first path|WorkerScriptInvoked
-	RunWorkerFirst-->|Request matches run_worker_first negative path|AssetServing
-	RunWorkerFirst-->|No matches|RequestMatchesAsset
-	RequestMatchesAsset@{ shape: diamond, label: "Request matches asset?" }
-	RequestMatchesAsset-->|Yes|AssetServing
-	RequestMatchesAsset-->|No|WorkerScriptPresent
-	WorkerScriptPresent@{ shape: diamond, label: "Worker script present?" }
-	WorkerScriptPresent-->|No|AssetServing
-	WorkerScriptPresent-->|Yes|RequestNavigation
-	RequestNavigation@{ shape: diamond, label: "Request is navigation request?" }
-	RequestNavigation-->|No|WorkerScriptInvoked
-	WorkerScriptInvoked@{ shape: rect, label: "Worker script invoked" }
-	WorkerScriptInvoked-.->|Asset binding|AssetServing
-	RequestNavigation-->|Yes|AssetServing
+	Request --> HasWorker
+
+	HasWorker@{ shape: diamond, label: "Worker script<br />configured?" }
+	HasWorker -->|No| AssetLookup
+	HasWorker -->|Yes| RunWorkerFirst
+
+	RunWorkerFirst@{ shape: diamond, label: "run_worker_first<br />is true?" }
+	RunWorkerFirst -->|Yes| WorkerScript
+	RunWorkerFirst -->|No| MatchesAsset
+
+	MatchesAsset@{ shape: diamond, label: "Matches a<br />static asset?" }
+	MatchesAsset -->|No| NavRequest
+	MatchesAsset -->|Yes| MethodAllowed
+
+	NavRequest@{ shape: diamond, label: "Navigation request?*" }
+	NavRequest -->|No| WorkerScript
+	NavRequest -->|Yes| FallbackExists
+
+	FallbackExists@{ shape: diamond, label: "Nearest 404.html<br />exists?" }
+	FallbackExists -->|No| WorkerScript
+	FallbackExists -->|Yes| MethodAllowed
+
+	WorkerScript@{ shape: rect, label: "Worker script invoked<br />(billable)" }
+	WorkerScript -.->|Optional: ASSETS binding| AssetLookup
 
 	subgraph Asset serving
-		AssetServing@{ shape: diamond, label: "Request matches asset?" }
-		AssetServing-->|Yes|AssetServed
-		AssetServed@{ shape: stadium, label: "**200 OK**<br />asset served" }
-		AssetServing-->|No|NotFoundHandling
+		AssetLookup@{ shape: diamond, label: "Matching asset or<br />nearest 404.html exists?" }
+		AssetLookup -->|No| NotFound
+		AssetLookup -->|Yes| MethodAllowed
 
-		subgraph 404-page
-			NotFoundHandling@{ shape: rect, label: "Request rewritten to ../404.html" }
-			NotFoundHandling-->404PageExists
-			404PageExists@{ shape: diamond, label: "HTML Page exists?" }
-			404PageExists-->|Yes|404PageServed
-			404PageExists-->|No|404PageAtIndex
-			404PageAtIndex@{ shape: diamond, label: "Request is for root /404.html?" }
-			404PageAtIndex-->|Yes|Generic404PageServed
-			404PageAtIndex-->|No|NotFoundHandling
-			Generic404PageServed@{ shape: stadium, label: "**404 Not Found**<br />null-body response served" }
-			404PageServed@{ shape: stadium, label: "**404 Not Found**<br />404.html page served" }
-		end
+		MethodAllowed@{ shape: diamond, label: "GET or HEAD?" }
+		MethodAllowed -->|Yes| AssetServed
+		MethodAllowed -->|No| MethodNotAllowed
 
-	end`}
-</pre>
-</details>
+		AssetServed@{ shape: stadium, label: "<b>200 OK</b> (asset) or<br /><b>404 Not Found</b> (nearest 404.html)" }
+		NotFound@{ shape: stadium, label: "<b>404 Not Found</b><br />Empty body" }
+		MethodNotAllowed@{ shape: stadium, label: "<b>405 Method Not Allowed</b>" }
+	end
+```
 
-Requests are only billable if a Worker script is invoked. From there, it is possible to serve assets using the assets binding (depicted as the dotted line in the diagram above).
+\* Navigation requests (`Sec-Fetch-Mode: navigate`) use the `404.html` fallback when [`assets_navigation_prefers_asset_serving`](/workers/configuration/compatibility-flags/#navigation-requests-prefer-asset-serving) is active (default for compatibility dates on or after `2025-04-01`, unless disabled with `assets_navigation_has_no_effect`).
+
+</TabItem>
+<TabItem label="With run_worker_first array">
+
+```mermaid
+flowchart TD
+	Request@{ shape: stadium, label: "Incoming request" }
+	Request --> RunWorkerFirst
+
+	RunWorkerFirst@{ shape: diamond, label: "run_worker_first<br />pattern match?" }
+	RunWorkerFirst -->|"Negative (!/...)<br />checked first"| AssetLookup
+	RunWorkerFirst -->|"Positive (/...)"| WorkerScript
+	RunWorkerFirst -->|No match| CanFetch
+
+	CanFetch@{ shape: diamond, label: "Matching asset or<br />nearest 404.html exists?" }
+	CanFetch -->|No| WorkerScript
+	CanFetch -->|Yes| MethodAllowed
+
+	WorkerScript@{ shape: rect, label: "Worker script invoked<br />(billable)" }
+	WorkerScript -.->|Optional: ASSETS binding| AssetLookup
+
+	subgraph Asset serving
+		AssetLookup@{ shape: diamond, label: "Matching asset or<br />nearest 404.html exists?" }
+		AssetLookup -->|No| NotFound
+		AssetLookup -->|Yes| MethodAllowed
+
+		MethodAllowed@{ shape: diamond, label: "GET or HEAD?" }
+		MethodAllowed -->|Yes| AssetServed
+		MethodAllowed -->|No| MethodNotAllowed
+
+		AssetServed@{ shape: stadium, label: "<b>200 OK</b> (asset) or<br /><b>404 Not Found</b> (nearest 404.html)" }
+		NotFound@{ shape: stadium, label: "<b>404 Not Found</b><br />Empty body" }
+		MethodNotAllowed@{ shape: stadium, label: "<b>405 Method Not Allowed</b>" }
+	end
+```
+
+</TabItem>
+</Tabs>
+</Details>
+
+Requests are only billable if a Worker script is invoked. From there, it is possible to serve assets using the assets binding (depicted as the dotted line in the routing diagrams).
 
 You can read more about how we match assets in the [HTML handling docs](/workers/static-assets/routing/advanced/html-handling/).

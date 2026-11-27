@@ -8,6 +8,7 @@ let themeObserver: MutationObserver | null = null;
 const diagramPadding = 8;
 // Per-<pre> guard: capture source text once, before mermaid replaces innerHTML.
 const captured = new WeakSet<HTMLPreElement>();
+const hiddenObservers = new WeakMap<HTMLPreElement, ResizeObserver>();
 
 function uniqueMermaidId(): string {
 	const random =
@@ -184,12 +185,12 @@ function wrapDiagram(diagram: HTMLPreElement, title: string | null) {
 	}
 }
 
-export function fitSvgToContents(svg: SVGSVGElement): void {
+export function fitSvgToContents(svg: SVGSVGElement): boolean {
 	let bounds: DOMRect;
 	try {
 		bounds = svg.getBBox();
 	} catch {
-		return;
+		return false;
 	}
 
 	if (
@@ -197,7 +198,7 @@ export function fitSvgToContents(svg: SVGSVGElement): void {
 		bounds.width <= 0 ||
 		bounds.height <= 0
 	) {
-		return;
+		return false;
 	}
 
 	const width = bounds.width + diagramPadding * 2;
@@ -215,7 +216,7 @@ export function fitSvgToContents(svg: SVGSVGElement): void {
 		viewBox[2] <= width * 2 &&
 		viewBox[3] <= height * 2
 	) {
-		return;
+		return true;
 	}
 
 	svg.setAttribute(
@@ -223,6 +224,28 @@ export function fitSvgToContents(svg: SVGSVGElement): void {
 		`${bounds.x - diagramPadding} ${bounds.y - diagramPadding} ${width} ${height}`,
 	);
 	svg.style.maxWidth = `${width}px`;
+	return true;
+}
+
+export function fitSvgWhenVisible(
+	diagram: HTMLPreElement,
+	svg: SVGSVGElement,
+): void {
+	hiddenObservers.get(diagram)?.disconnect();
+	hiddenObservers.delete(diagram);
+
+	if (fitSvgToContents(svg) || typeof ResizeObserver === "undefined") {
+		return;
+	}
+
+	const observer = new ResizeObserver(() => {
+		if (fitSvgToContents(svg)) {
+			observer.disconnect();
+			hiddenObservers.delete(diagram);
+		}
+	});
+	hiddenObservers.set(diagram, observer);
+	observer.observe(diagram);
 }
 
 async function render() {
@@ -319,7 +342,7 @@ async function render() {
 			const title = titleElement?.textContent?.trim() || null;
 
 			wrapDiagram(diagram, title);
-			if (svgElement) fitSvgToContents(svgElement);
+			if (svgElement) fitSvgWhenVisible(diagram, svgElement);
 			diagram.setAttribute("data-processed", "true");
 		} catch (e) {
 			showRenderError(diagram);
