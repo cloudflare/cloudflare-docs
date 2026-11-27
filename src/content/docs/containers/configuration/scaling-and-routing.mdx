@@ -1,0 +1,56 @@
+---
+pcx_content_type: reference
+title: Scaling and Routing
+description: Scale Container instances with named Durable Objects and route stateless requests across a fixed pool.
+sidebar:
+  order: 4
+products:
+  - containers
+---
+
+import { TypeScriptExample } from "~/components";
+
+## Scale container instances with explicit names
+
+Each container instance belongs to one Durable Object. To run more container instances, address more Durable Objects by name with [`getByName()`](/durable-objects/api/namespace/#getbyname). Getting a Durable Object does not start its container. The container starts when the Durable Object calls [`ctx.container.start()`](/containers/api/durable-object-container/#start).
+
+```ts
+// Get two Durable Objects. Each one starts its own container instance.
+const containerOne = env.MY_CONTAINER.getByName(nameOne);
+const containerTwo = env.MY_CONTAINER.getByName(nameTwo);
+
+// The Durable Object starts its container when it handles a request.
+const response = await containerOne.fetch(request);
+```
+
+Each instance runs until the Durable Object stops it, or until the [inactivity timeout](/containers/api/durable-object-container/#setinactivitytimeout) that the Durable Object sets elapses. Without a timeout, Cloudflare stops the container shortly after the Durable Object becomes inactive.
+
+This behavior is very useful when you want explicit control over the lifecycle of container instances.
+For instance, you may want to spin up a container backend instance for a specific user, or you may briefly
+run a code sandbox to isolate AI-generated code, or you may want to run a short-lived batch job.
+
+### Route across a fixed pool of instances
+
+To run multiple instances of a container and route requests between them, choose a name at random from a fixed pool:
+
+<TypeScriptExample>
+
+```ts
+const INSTANCE_COUNT = 3;
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const index = Math.floor(Math.random() * INSTANCE_COUNT);
+		return env.BACKEND.getByName(`instance-${index}`).fetch(request);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+Random selection from a fixed pool means:
+
+- You set a fixed number of instances to route to.
+- Each request goes to a random instance, regardless of location.
+
+For the Durable Object that starts the container, waits for its port, and forwards the request, refer to [Stateless instances](/containers/examples/stateless/).

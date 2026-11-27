@@ -3,7 +3,7 @@ title: Use WebSockets
 description: Serve WebSocket connections from Durable Objects, including the standard and Hibernation APIs.
 pcx_content_type: concept
 sidebar:
-  order: 5
+  order: 6
 products:
   - durable-objects
 ---
@@ -47,6 +47,12 @@ The Hibernation WebSocket API reduces costs by allowing Durable Objects to sleep
 ## Durable Objects Hibernation WebSocket API
 
 The Hibernation WebSocket API extends the [Web Standard WebSocket API](/workers/runtime-apis/websockets/) to reduce costs during periods of inactivity.
+
+When a hibernatable WebSocket receives a Close frame, reply with `close()` in `webSocketClose()`, unless you have already closed the outgoing side. An abnormal disconnection reported as `1006` has no Close frame to acknowledge.
+
+For method errors, refer to [State and error behavior](/workers/runtime-apis/websockets/#state-and-error-behavior).
+
+The examples [preserve sendable peer close codes and reasons](/workers/runtime-apis/websockets/#half-open-mode-for-proxying), and otherwise reply without a status code. They assume the `pedantic_wpt` compatibility flag is disabled; refer to [`close()` argument restrictions](/workers/runtime-apis/websockets/#close) for the narrower range with that flag enabled.
 
 ### How hibernation works
 
@@ -103,9 +109,12 @@ export class WebSocketHibernationServer extends DurableObject {
 	}
 
 	async webSocketClose(ws, code, reason, wasClean) {
-		// With web_socket_auto_reply_to_close (compat date >= 2026-04-07), the runtime
-		// auto-replies to Close frames. Calling close() is safe but no longer required.
-		ws.close(code, reason);
+		// Reply to complete the closing handshake.
+		if (code >= 1000 && code < 5000 && ![1004, 1005, 1006, 1015].includes(code)) {
+			ws.close(code, reason);
+		} else {
+			ws.close();
+		}
 	}
 }
 ```
@@ -152,9 +161,12 @@ export class WebSocketHibernationServer extends DurableObject {
 		reason: string,
 		wasClean: boolean,
 	) {
-		// With web_socket_auto_reply_to_close (compat date >= 2026-04-07), the runtime
-		// auto-replies to Close frames. Calling close() is safe but no longer required.
-		ws.close(code, reason);
+		// Reply to complete the closing handshake.
+		if (code >= 1000 && code < 5000 && ![1004, 1005, 1006, 1015].includes(code)) {
+			ws.close(code, reason);
+		} else {
+			ws.close();
+		}
 	}
 }
 ```
@@ -195,9 +207,11 @@ self.ctx = state
         )
 
     async def webSocketClose(self, ws, code, reason, was_clean):
-        # With web_socket_auto_reply_to_close (compat date >= 2026-04-07), the runtime
-        # auto-replies to Close frames. Calling close() is safe but no longer required.
-        ws.close(code, reason)
+        # Reply to complete the closing handshake.
+        if 1000 <= code < 5000 and code not in (1004, 1005, 1006, 1015):
+            ws.close(code, reason)
+        else:
+            ws.close()
 
 ````
 </TabItem>
@@ -314,7 +328,7 @@ For high-frequency data like sensor readings or game state updates, use time-bas
 
 Hibernation is only supported when a Durable Object acts as a WebSocket server. Outgoing WebSockets do not hibernate.
 
-However, an active outbound WebSocket connection keeps the Durable Object alive and prevents eviction for up to 15 minutes per connection. Refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/) for more information.
+However, an open outbound WebSocket connection prevents eviction for up to 15 minutes. The connection itself may remain open after that. Starting another I/O operation later can extend the Durable Object's time in memory. For more information, refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/).
 
 Events such as [alarms](/durable-objects/api/alarms/), incoming requests, and scheduled callbacks prevent hibernation. This includes `setTimeout` and `setInterval` usage. Read more about [when a Durable Object incurs duration charges](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges).
 
@@ -389,9 +403,12 @@ export class WebSocketServer extends DurableObject<Env> {
     async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {
     	const state = ws.deserializeAttachment() as ConnectionState;
     	console.log(`${state.orderId} disconnected`);
-    	// With web_socket_auto_reply_to_close (compat date >= 2026-04-07), the runtime
-    	// auto-replies to Close frames. Calling close() is safe but no longer required.
-    	ws.close(code, reason);
+        // Reply to complete the closing handshake.
+        if (code >= 1000 && code < 5000 && ![1004, 1005, 1006, 1015].includes(code)) {
+            ws.close(code, reason);
+        } else {
+            ws.close();
+        }
     }
 
 }
@@ -578,10 +595,14 @@ export class WebSocketServer extends DurableObject {
 
 		// When the client closes the connection, clean up the server side.
 		// With web_socket_auto_reply_to_close (compat date >= 2026-04-07), the runtime
-		// auto-replies to Close frames. Calling close() is safe but no longer required.
+		// auto-replies to Close frames. Calling close() with valid arguments is optional.
 		server.addEventListener("close", (cls) => {
 			this.currentlyConnectedWebSockets -= 1;
-			server.close(cls.code, "Durable Object is closing WebSocket");
+			if (cls.code >= 1000 && cls.code < 5000 && ![1004, 1005, 1006, 1015].includes(cls.code)) {
+				server.close(cls.code, cls.reason);
+			} else {
+				server.close();
+			}
 		});
 
 		return new Response(null, {
@@ -624,10 +645,14 @@ export class WebSocketServer extends DurableObject {
 
 		// When the client closes the connection, clean up the server side.
 		// With web_socket_auto_reply_to_close (compat date >= 2026-04-07), the runtime
-		// auto-replies to Close frames. Calling close() is safe but no longer required.
+		// auto-replies to Close frames. Calling close() with valid arguments is optional.
 		server.addEventListener("close", (cls: CloseEvent) => {
 			this.currentlyConnectedWebSockets -= 1;
-			server.close(cls.code, "Durable Object is closing WebSocket");
+			if (cls.code >= 1000 && cls.code < 5000 && ![1004, 1005, 1006, 1015].includes(cls.code)) {
+				server.close(cls.code, cls.reason);
+			} else {
+				server.close();
+			}
 		});
 
 		return new Response(null, {
@@ -671,10 +696,13 @@ self.currently_connected_websockets = 0
 
         # When the client closes the connection, clean up the server side.
         # With web_socket_auto_reply_to_close (compat date >= 2026-04-07), the runtime
-        # auto-replies to Close frames. Calling close() is safe but no longer required.
+        # auto-replies to Close frames. Calling close() with valid arguments is optional.
         def on_close(event):
             self.currently_connected_websockets -= 1
-            server.close(event.code, "Durable Object is closing WebSocket")
+            if 1000 <= event.code < 5000 and event.code not in (1004, 1005, 1006, 1015):
+                server.close(event.code, event.reason)
+            else:
+                server.close()
 
         server.addEventListener("close", create_proxy(on_close))
 
@@ -715,9 +743,13 @@ Configure your Wrangler file with a Durable Object [binding](/durable-objects/ge
 
 A full example is available in [Build a WebSocket server](/durable-objects/examples/websocket-server/).
 
-:::caution[WebSocket disconnection on deploy]
+:::caution[WebSocket disconnection during code updates]
 
-Code updates disconnect all WebSockets. Deploying a new version restarts every Durable Object, which disconnects any existing connections.
+Connections accepted with the WebSocket Hibernation API remain connected when a Durable Object adopts new code after hibernating.
+
+A forced code update disconnects WebSockets attached to the running instance. This happens when a `deferred` code update's `max_delay` is reached before hibernation, or when the code update strategy is set to `immediate`. The Web Standard WebSocket API prevents hibernation, so its connections are disconnected when the code update is applied.
+
+Refer to [Durable Objects code updates](/durable-objects/deployments/durable-objects-code-updates/) for more information.
 
 :::
 

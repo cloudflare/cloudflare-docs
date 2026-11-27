@@ -1,0 +1,63 @@
+---
+title: "WAF Release - 2026-10-25 - Emergency - Cloudflare Managed Ruleset"
+description: Cloudflare Managed Ruleset emergency release introducing rules for Brotli-encoded request bodies and the Next.js image optimization endpoint
+date: 2026-10-25
+---
+
+This emergency release will add two rules related to the Brotli vulnerability **CVE-2026-111497** to the Cloudflare Managed Ruleset. Both rules will be **enabled by default** with their action set to **Log**, providing visibility into matching requests so customers can evaluate the impact before choosing to block them.
+
+**Rule behavior**
+
+- **Brotli rule:** Matches incoming requests that declare Brotli request-body encoding (`Content-Encoding: br`), including legitimate clients submitting Brotli-encoded request bodies. It does not match `Accept-Encoding: br` or affect Cloudflare's Brotli response-compression settings. The rule's default action is **Log**.
+- **Next.js rule:** Matches requests to the Next.js image optimization endpoint (`/_next/image`), including legitimate image optimization traffic. The default action is **Log** and does not block requests. Changing the action to **Block** may prevent optimized images from loading and disrupt image delivery for applications using this endpoint.
+
+**Default behavior**
+
+- Both rules will log matching requests without blocking them when the ruleset defaults are used.
+- Customers will be able to review matches in analytics and configure a blocking action for either rule if desired.
+- Enabling these rules in **Log** mode provides visibility only; it does not block requests matching these rules.
+
+**Important: Check existing action overrides**
+
+If you have configured a ruleset-level action override that applies **Block** to these rules, matching requests may be blocked as soon as the rules are deployed, despite their default **Log** action. This may result in false positives and block legitimate traffic.
+
+Review your existing ruleset overrides before deployment. If you want to evaluate these rules without blocking traffic, configure rule-specific overrides to use **Log** and review matching requests before switching to **Block**.
+
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="8f252673b69d47afb21f88acca706f3c" />
+			</td>
+			<td>N/A</td>
+			<td>Brotli - Request Content-Encoding - CVE:CVE-2026-111497</td>
+			<td>N/A</td>
+			<td>Log</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="33dc63d3171649ed8f267455402fe5bb" />
+			</td>
+			<td>N/A</td>
+			<td>Next.js - Image Optimizer Path - CVE:CVE-2026-111497</td>
+			<td>N/A</td>
+			<td>Log</td>
+			<td>This is a new detection.</td>
+		</tr>        
+    </tbody>
+</table>

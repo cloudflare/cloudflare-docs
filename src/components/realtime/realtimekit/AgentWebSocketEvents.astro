@@ -1,0 +1,28 @@
+---
+import RealtimeSequenceDiagram from "../sfu/RealtimeSequenceDiagram.astro";
+
+const participants = [
+	{ id: "meeting", label: "Meeting" },
+	{ id: "agent", label: "Agent Participant", tone: "accent" as const },
+	{ id: "do", label: "Agent Durable Object", tone: "blue" as const },
+];
+
+const events = [
+	{ from: "agent", to: "do", label: "session.started" },
+	{ from: "meeting", to: "agent", label: "Alice joins", dashed: true },
+	{ from: "agent", to: "do", label: "participant.join" },
+	{ from: "meeting", to: "agent", label: "Alice speaks", dashed: true },
+	{ from: "agent", to: "do", label: "transcript.received (partial)" },
+	{ from: "agent", to: "do", label: "transcript.received (final)" },
+	{ from: "meeting", to: "agent", label: "Bob sends a reaction", dashed: true },
+	{ from: "agent", to: "do", label: "broadcast.received" },
+	{ from: "meeting", to: "agent", label: "Host ends meeting", dashed: true },
+	{ from: "agent", to: "do", label: "participant.kick_all" },
+];
+---
+
+<RealtimeSequenceDiagram
+	ariaLabel="Timeline of one session. The agent sends session.started. When Alice joins, participant.join. When she speaks, a partial then a final transcript.received. When Bob sends a reaction, broadcast.received. When the host ends the meeting, participant.kick_all, then session.ended and close 1000."
+	participants={participants}
+	events={events}
+/>

@@ -8,6 +8,8 @@ products:
   - d1
 ---
 
+import { TypeScriptExample } from "~/components";
+
 D1 allows you to import existing SQLite tables and their data directly, enabling you to migrate existing data into D1 quickly and easily. This can be useful when migrating applications to use Workers and D1, or when you want to prototype a schema locally before importing it to your D1 database(s).
 
 D1 also allows you to export a database. This can be useful for [local development](/d1/best-practices/local-development/) or testing.
@@ -195,6 +197,22 @@ VALUES
   ...
   ('1000', 'Boris Pewter', '2022-12-15 22:16:15');
 ```
+
+If one large value makes an `INSERT` exceed the [100,000-byte SQL statement limit](/d1/platform/limits/), splitting rows cannot help. This can also affect D1 exports. In a restore script, bind the values instead of including them as SQL literals:
+
+<TypeScriptExample>
+
+```ts
+await env.DB.prepare(
+  "INSERT INTO users (id, full_name, created_on) VALUES (?, ?, ?)",
+)
+  .bind(id, fullName, createdOn)
+  .run();
+```
+
+</TypeScriptExample>
+
+The value and row size limits still apply. Verify restored data in a separate database.
 
 ## Foreign key constraints
 

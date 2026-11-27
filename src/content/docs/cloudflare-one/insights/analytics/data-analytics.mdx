@@ -10,7 +10,7 @@ tags:
 
 import { Render } from "~/components";
 
-The Data security analytics dashboard reports security issues and sensitive data found within your SaaS applications, cloud environments, and HTTP traffic. It visualizes security findings and sensitive data detections collected from your Data Loss Prevention (DLP) and Cloud Access Security Broker (CASB) policies. If neither DLP nor CASB is configured in your account, the dashboard appears empty.
+The Data security analytics dashboard reports security issues and sensitive data found within your SaaS applications, cloud environments, and HTTP traffic. It combines Cloud Access Security Broker (CASB) findings with activity from Data Loss Prevention (DLP) policies. If neither DLP policies nor CASB integrations are configured in your account, the dashboard appears empty.
 
 To view the Data security analytics dashboard:
 
@@ -28,6 +28,8 @@ To populate this dashboard with partial data, you need at least one of the follo
 - At least one SaaS integration enrolled in [CASB](/cloudflare-one/integrations/cloud-and-saas/).
 - At least one Cloud integration enrolled in [CASB](/cloudflare-one/integrations/cloud-and-saas/).
 - At least one SaaS or Cloud integration enrolled in [CASB](/cloudflare-one/integrations/cloud-and-saas/) and a DLP profile applied to it.
+
+To learn which sensitive data types appear in your Gateway traffic before creating a DLP policy, use [Passive Detection](/cloudflare-one/data-loss-prevention/passive-detection/). It shows sampled detections separately from the policy activity on this dashboard.
 
 ## Available insights
 

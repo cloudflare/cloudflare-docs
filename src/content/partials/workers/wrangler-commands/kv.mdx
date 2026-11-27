@@ -2,21 +2,104 @@
 {}
 ---
 
-import { Type, MetaInfo, Render, WranglerCommand } from "~/components";
+import {
+	CfCommand,
+	PackageManagers,
+	Render,
+	TabItem,
+	Tabs,
+	WranglerCommand,
+} from "~/components";
+
+<Tabs syncKey="cli">
+<TabItem label="Cloudflare CLI (cf)">
+
+:::note
+In `cf`, `cf kv` commands act on your remote Cloudflare KV namespaces by default and identify namespaces by `--namespace-id` (there is no `--binding` shortcut). Pass `--local` on key and metadata commands to target local development state instead. Refer to the [Workers KV guide](/kv/get-started/) to get started.
+:::
+
+## `kv namespaces`
+
+Manage Workers KV namespaces.
+
+<CfCommand command="kv namespaces create" headingLevel={3} />
+
+To restrict where a namespace durably stores data, specify `--jurisdiction` when creating it. Refer to [Data location](/kv/reference/data-location/) for supported jurisdictions.
+
+#### KV Instant namespaces
+
+<Render file="kv-instant-beta" product="kv" />
+
+To create a Workers KV Instant namespace with `cf`, pass `--namespace-mode instant`. This example creates a namespace named `APP_CONFIG` for small, infrequently updated configuration:
+
+```sh
+cf kv namespaces create --title APP_CONFIG --namespace-mode instant
+```
+
+<CfCommand command="kv namespaces list" headingLevel={3} />
+
+<CfCommand command="kv namespaces get" headingLevel={3} />
+
+<CfCommand command="kv namespaces update" headingLevel={3} />
+
+<CfCommand command="kv namespaces delete" headingLevel={3} />
+
+## `kv keys`
+
+Manage single and bulk key-value pairs within a Workers KV namespace. Pass `--local` to target local development state, or pass `@<FILE_PATH>` to `--body` to read a JSON file for bulk operations.
+
+<CfCommand command="kv keys put" headingLevel={3} />
+
+<CfCommand command="kv keys list" headingLevel={3} />
+
+<CfCommand command="kv keys get" headingLevel={3} />
+
+<CfCommand command="kv keys delete" headingLevel={3} />
+
+<CfCommand command="kv keys bulk-get" headingLevel={3} />
+
+<CfCommand command="kv keys bulk-put" headingLevel={3} />
+
+<CfCommand command="kv keys bulk-delete" headingLevel={3} />
+
+## `kv metadata`
+
+Read key metadata without fetching the key's value.
+
+<CfCommand command="kv metadata get" headingLevel={3} />
+
+</TabItem>
+<TabItem label="Wrangler">
 
 ## `kv namespace`
 
 Manage Workers KV namespaces.
 
 :::note
-The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
+The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. For more information, refer to the [Workers KV guide](/kv/get-started/).
 :::
 
 :::caution
-Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/#deprecations) for KV page.
+Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. For more information on the `kv:...` syntax deprecation, refer to [KV CLI commands](/kv/reference/kv-commands/#deprecations).
 :::
 
 <WranglerCommand command="kv namespace create" headingLevel={3} />
+
+To restrict where a namespace durably stores data, specify `--jurisdiction` when creating it. Refer to [Data location](/kv/reference/data-location/) for supported jurisdictions.
+
+#### KV Instant namespaces
+
+<Render file="kv-instant-beta" product="kv" />
+
+To create a Workers KV Instant namespace, pass `--experimental-mode instant`. This example creates a namespace named `APP_CONFIG` for small, infrequently updated configuration:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler@latest"
+	args="kv namespace create APP_CONFIG --experimental-mode instant"
+/>
+
+You can also use the `--x-mode instant` alias.
 
 <WranglerCommand command="kv namespace list" headingLevel={3} />
 
@@ -29,11 +112,11 @@ Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using ve
 Manage key-value pairs within a Workers KV namespace.
 
 :::note
-The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
+The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. For more information, refer to the [Workers KV guide](/kv/get-started/).
 :::
 
 :::caution
-Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page.
+Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. For more information on the `kv:...` syntax deprecation, refer to [KV CLI commands](/kv/reference/kv-commands/#deprecations).
 :::
 
 <WranglerCommand command="kv key put" headingLevel={3} />
@@ -49,13 +132,11 @@ Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using ve
 Manage multiple key-value pairs within a Workers KV namespace in batches.
 
 :::note
-
-The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. Learn more about using Workers KV with Wrangler in the [Workers KV guide](/kv/get-started/).
+The `kv ...` commands allow you to manage your Workers KV resources in the Cloudflare network. For more information, refer to the [Workers KV guide](/kv/get-started/).
 :::
 
 :::caution
-
-Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax in the [Wrangler commands](/kv/reference/kv-commands/) for KV page.
+Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. For more information on the `kv:...` syntax deprecation, refer to [KV CLI commands](/kv/reference/kv-commands/#deprecations).
 :::
 
 <WranglerCommand command="kv bulk get" headingLevel={3} />
@@ -63,3 +144,32 @@ Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using ve
 <WranglerCommand command="kv bulk put" headingLevel={3} />
 
 <WranglerCommand command="kv bulk delete" headingLevel={3} />
+
+## Deprecations
+
+The following deprecations apply to Wrangler commands for Workers KV.
+
+### `kv:...` syntax deprecation
+
+Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax.
+
+The `kv:...` syntax is deprecated in versions 3.60.0 and beyond and will be removed in a future major version.
+
+For example, commands using the `kv ...` syntax look as such:
+
+```sh
+wrangler kv namespace list
+wrangler kv key get <KEY>
+wrangler kv bulk put <FILENAME>
+```
+
+The same commands using the `kv:...` syntax look as such:
+
+```sh
+wrangler kv:namespace list
+wrangler kv:key get <KEY>
+wrangler kv:bulk put <FILENAME>
+```
+
+</TabItem>
+</Tabs>

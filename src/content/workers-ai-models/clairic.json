@@ -1,0 +1,572 @@
+{
+    "name": "@cf/cloudflare/clairic",
+    "properties": [
+        {
+            "property_id": "context_window",
+            "value": "65536"
+        },
+        {
+            "property_id": "vision",
+            "value": "true"
+        },
+        {
+            "property_id": "terms",
+            "value": "#terms"
+        },
+        {
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per M input tokens",
+                    "price": 0.1,
+                    "currency": "USD"
+                }
+            ]
+        }
+    ],
+    "id": "6b0b79c1-25e6-4498-bb62-5161df39f0ef",
+    "source": 1,
+    "description": "Clairic is a System One-style model that can extract, compute, estimate, and forecast values from inputs. It is strongly typed and outputs confidence scores and probabilities against its outputs. This model is in preview from the Cloudflare Workers AI team.",
+    "task": {
+        "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
+        "name": "Text Generation",
+        "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
+    },
+    "created_at": "2026-10-14 05:34:04.680",
+    "tags": [],
+    "schema": {
+        "input": {
+            "type": "object",
+            "properties": {
+                "model": {
+                    "type": "string",
+                    "pattern": "^(clairic|@cf/cloudflare/clairic)$",
+                    "default": "clairic",
+                    "description": "Required. The model selector: \"clairic\""
+                },
+                "state": {
+                    "type": "string",
+                    "default": "",
+                    "description": "The text to read and predict from. Must be non-empty unless images or documents are sent. Text answers are spans of this string."
+                },
+                "fields": {
+                    "type": "object",
+                    "description": "Required. Map of field name to a typed field spec. At least one field; no upper limit. Each prompt (state plus fields) must fit in 65,273 input tokens; input is never truncated and oversized requests are rejected. Unknown keys for a field's type are rejected.",
+                    "minProperties": 1,
+                    "propertyNames": {
+                        "pattern": "^[A-Za-z_][A-Za-z0-9_.\\-]{0,63}$"
+                    },
+                    "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "enum": [
+                                    "text",
+                                    "number",
+                                    "compute",
+                                    "date",
+                                    "time",
+                                    "datetime",
+                                    "duration",
+                                    "boolean",
+                                    "enum",
+                                    "object",
+                                    "list",
+                                    "estimate",
+                                    "forecast"
+                                ],
+                                "description": "compute: a number derived from the input. boolean, enum, object: generated answers constrained to that shape."
+                            },
+                            "instructions": {
+                                "type": "string",
+                                "description": "What the field should contain."
+                            },
+                            "nullable": {
+                                "type": "boolean",
+                                "default": true,
+                                "description": "When false, text, number, boolean, enum and object answers cannot be null. compute requires true."
+                            },
+                            "unit": {
+                                "type": "string",
+                                "description": "number, compute, duration, list, estimate, forecast. For durations, one of seconds, minutes, hours, days, weeks, months, years (default seconds)."
+                            },
+                            "integer": {
+                                "type": "boolean",
+                                "description": "number, compute, duration and number lists only."
+                            },
+                            "decimals": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 6,
+                                "description": "number, compute, duration and number lists only. Values are rounded half-up."
+                            },
+                            "knowledge": {
+                                "type": "boolean",
+                                "default": false,
+                                "description": "text, number, and text/number lists only. Allows answers from prior knowledge that do not appear in the input. Not combinable with source_only."
+                            },
+                            "source_only": {
+                                "type": "boolean",
+                                "description": "number, date, time, datetime, and number/date lists only. The answer must be printed in the input and is normalized from the printed text. Not combinable with null_threshold or knowledge."
+                            },
+                            "minLength": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "description": "text only."
+                            },
+                            "maxLength": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "description": "text only."
+                            },
+                            "pattern": {
+                                "type": "string",
+                                "description": "text only. Regular expression the answer must match."
+                            },
+                            "minimum": {
+                                "type": "number",
+                                "description": "number only."
+                            },
+                            "maximum": {
+                                "type": "number",
+                                "description": "number only."
+                            },
+                            "exclusiveMinimum": {
+                                "type": "number",
+                                "description": "number only."
+                            },
+                            "exclusiveMaximum": {
+                                "type": "number",
+                                "description": "number only."
+                            },
+                            "enum": {
+                                "type": "array",
+                                "minItems": 1,
+                                "description": "Allowed values. Required for enum fields; optional for text, number and list fields."
+                            },
+                            "properties": {
+                                "type": "object",
+                                "minProperties": 1,
+                                "description": "Required for object fields and object list items. Map of property name to a spec whose type is text, number, boolean or enum.",
+                                "propertyNames": {
+                                    "pattern": "^[A-Za-z_][A-Za-z0-9_.\\-]{0,63}$"
+                                },
+                                "additionalProperties": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "enum": [
+                                                "text",
+                                                "number",
+                                                "boolean",
+                                                "enum"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "type"
+                                    ]
+                                }
+                            },
+                            "items": {
+                                "description": "Required for list fields: \"text\", \"number\", \"date\", or an object item spec.",
+                                "anyOf": [
+                                    {
+                                        "type": "string",
+                                        "enum": [
+                                            "text",
+                                            "number",
+                                            "date"
+                                        ]
+                                    },
+                                    {
+                                        "type": "object",
+                                        "title": "Object item",
+                                        "properties": {
+                                            "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "object"
+                                                ]
+                                            },
+                                            "properties": {
+                                                "type": "object",
+                                                "minProperties": 1
+                                            }
+                                        },
+                                        "required": [
+                                            "type",
+                                            "properties"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "max_items": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "description": "List only. Maximum number of items to return."
+                            },
+                            "min": {
+                                "description": "Required for estimate/forecast: a number, or an ISO date for date estimates."
+                            },
+                            "max": {
+                                "description": "Required for estimate/forecast: a number, or an ISO date for date estimates."
+                            },
+                            "step": {
+                                "description": "Estimate grid: a positive number (days for date estimates), or \"month\" / \"year\"."
+                            },
+                            "scale": {
+                                "type": "string",
+                                "enum": [
+                                    "linear",
+                                    "log"
+                                ]
+                            },
+                            "null_threshold": {
+                                "type": "number",
+                                "exclusiveMinimum": 0,
+                                "maximum": 1,
+                                "description": "compute, date, time, datetime and duration only. Probability of null above which the value is null (default 0.5)."
+                            },
+                            "horizon": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 64,
+                                "description": "Forecast only: number of steps."
+                            },
+                            "interval": {
+                                "type": "string",
+                                "enum": [
+                                    "step",
+                                    "minute",
+                                    "hour",
+                                    "day",
+                                    "week",
+                                    "month",
+                                    "quarter",
+                                    "year"
+                                ],
+                                "description": "Forecast only."
+                            }
+                        },
+                        "required": [
+                            "type"
+                        ]
+                    }
+                },
+                "images": {
+                    "type": "array",
+                    "description": "Optional embedded PNG, JPEG or WebP images placed before the state (max 4; 4 MiB each, 8 MiB total decoded across images and documents; request body max 16 MiB). Remote URLs are not accepted.",
+                    "maxItems": 4,
+                    "items": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "title": "Data URL",
+                                "pattern": "^[Dd][Aa][Tt][Aa]:"
+                            },
+                            {
+                                "type": "object",
+                                "title": "Base64 image",
+                                "properties": {
+                                    "content_type": {
+                                        "type": "string"
+                                    },
+                                    "base64": {
+                                        "type": "string"
+                                    },
+                                    "rotation": {
+                                        "type": "integer",
+                                        "enum": [
+                                            0,
+                                            90,
+                                            180,
+                                            270
+                                        ],
+                                        "description": "Clockwise rotation to apply. Orientation is detected automatically when omitted."
+                                    }
+                                },
+                                "required": [
+                                    "content_type",
+                                    "base64"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "documents": {
+                    "type": "array",
+                    "description": "Optional embedded PDFs (4 MiB each). Rendered pages plus images must total at most 4. Encrypted PDFs are rejected.",
+                    "maxItems": 4,
+                    "items": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "title": "Data URL",
+                                "pattern": "^[Dd][Aa][Tt][Aa]:[Aa][Pp][Pp][Ll][Ii][Cc][Aa][Tt][Ii][Oo][Nn]/[Pp][Dd][Ff];[Bb][Aa][Ss][Ee]64,"
+                            },
+                            {
+                                "type": "object",
+                                "title": "Base64 PDF",
+                                "properties": {
+                                    "content_type": {
+                                        "type": "string",
+                                        "enum": [
+                                            "application/pdf"
+                                        ]
+                                    },
+                                    "base64": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "content_type",
+                                    "base64"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "reference_date": {
+                    "type": "string",
+                    "description": "ISO date that anchors dates written without a year."
+                },
+                "options": {
+                    "type": "object",
+                    "properties": {
+                        "include_quantiles": {
+                            "type": "boolean",
+                            "default": false,
+                            "description": "Add 99 percentiles to estimates."
+                        },
+                        "return_state_text": {
+                            "type": "boolean",
+                            "default": false,
+                            "description": "Return the text that spans index into."
+                        }
+                    }
+                }
+            },
+            "required": [
+                "model",
+                "fields"
+            ]
+        },
+        "output": {
+            "type": "object",
+            "contentType": "application/json",
+            "properties": {
+                "model": {
+                    "type": "string",
+                    "description": "Always \"clairic-27b\", whichever selector was sent."
+                },
+                "answers": {
+                    "type": "object",
+                    "description": "One answer per field, keyed by field name. value is null when the input does not determine it. Generated answers (text, number, boolean, enum, object, source_only fields, lists) carry valid/complete/decoder metadata; typed answers (date, time, datetime, duration, compute) carry guess instead.",
+                    "additionalProperties": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "value": {},
+                            "guess": {
+                                "description": "Typed answers only: the best non-null candidate, returned even when value is null."
+                            },
+                            "valid": {
+                                "type": "boolean",
+                                "description": "Generated answers: whether the output satisfied the field's schema. value is null when false."
+                            },
+                            "complete": {
+                                "type": "boolean",
+                                "description": "Generated answers: whether generation terminated normally."
+                            },
+                            "decoder": {
+                                "type": "string",
+                                "description": "Generated answers: decoder that produced the value, e.g. parallel-ar-json-scalar-v1 or native_source_scalar_v1."
+                            },
+                            "tokens": {
+                                "type": "integer",
+                                "description": "Generated answers: completion tokens, including retries."
+                            },
+                            "raw": {
+                                "type": "string",
+                                "description": "Generated answers: the raw generated JSON."
+                            },
+                            "p_null": {
+                                "type": "number"
+                            },
+                            "p_null_method": {
+                                "type": "string"
+                            },
+                            "p_nulls": {
+                                "type": "array",
+                                "items": {
+                                    "type": "number"
+                                },
+                                "description": "Lists: null probability per item."
+                            },
+                            "confidence": {
+                                "type": "number",
+                                "description": "Generated answers: probability of the returned value (including a null value); 0 when invalid. Typed answers: probability of guess."
+                            },
+                            "confidences": {
+                                "type": "array",
+                                "items": {
+                                    "type": "number"
+                                },
+                                "description": "Lists: confidence per item."
+                            },
+                            "confidence_method": {
+                                "type": "string"
+                            },
+                            "log_probability": {
+                                "type": "number",
+                                "description": "Generated answers: log probability of the generated sequence. Present only when valid."
+                            },
+                            "span": {
+                                "type": [
+                                    "array",
+                                    "null"
+                                ],
+                                "items": {
+                                    "type": "integer"
+                                },
+                                "minItems": 2,
+                                "maxItems": 2,
+                                "description": "[start, end] character offsets into state, or null when the value has no unique match in the input."
+                            },
+                            "spans": {
+                                "type": "array",
+                                "items": {
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "description": "Lists: one span or null per item."
+                            },
+                            "property_spans": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object"
+                                },
+                                "description": "Object lists read from tables: per row, a map of property name to span or null."
+                            },
+                            "span_method": {
+                                "type": "string"
+                            },
+                            "grounding_method": {
+                                "type": "string"
+                            },
+                            "printed_value": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ],
+                                "description": "source_only fields: the text as printed in the input."
+                            },
+                            "normalization_method": {
+                                "type": "string"
+                            },
+                            "failure_reason": {
+                                "type": "string",
+                                "description": "Why an answer is invalid, e.g. not_in_source."
+                            },
+                            "null_recovered": {
+                                "type": "boolean"
+                            },
+                            "retry_input_tokens": {
+                                "type": "integer",
+                                "description": "Input tokens spent on retries for this field."
+                            },
+                            "source": {
+                                "type": "string",
+                                "enum": [
+                                    "input",
+                                    "image",
+                                    "readout"
+                                ]
+                            },
+                            "unit": {
+                                "type": "string",
+                                "description": "Duration only."
+                            },
+                            "mean": {},
+                            "median": {},
+                            "p10": {},
+                            "p90": {},
+                            "p_below": {
+                                "type": "number"
+                            },
+                            "p_above": {
+                                "type": "number"
+                            },
+                            "quantiles": {
+                                "type": "array"
+                            },
+                            "steps": {
+                                "type": "array",
+                                "description": "Forecast only: one estimate per step."
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "value"
+                        ]
+                    }
+                },
+                "truncated": {
+                    "type": "boolean",
+                    "description": "True when any generated answer or list is invalid or incomplete. Input is never truncated."
+                },
+                "state_text": {
+                    "type": "string"
+                },
+                "usage": {
+                    "type": "object",
+                    "properties": {
+                        "state_tokens": {
+                            "type": "integer"
+                        },
+                        "image_tokens": {
+                            "type": "integer"
+                        },
+                        "schema_tokens": {
+                            "type": "integer"
+                        },
+                        "input_tokens": {
+                            "type": "integer",
+                            "description": "All prompt tokens, including retries."
+                        },
+                        "output_tokens": {
+                            "type": "integer",
+                            "description": "All generated tokens."
+                        },
+                        "passes": {
+                            "type": "integer",
+                            "description": "Sequential decode steps."
+                        }
+                    },
+                    "required": [
+                        "input_tokens",
+                        "output_tokens"
+                    ]
+                }
+            },
+            "required": [
+                "model",
+                "answers",
+                "truncated",
+                "usage"
+            ]
+        }
+    },
+    "deprecated": false
+}

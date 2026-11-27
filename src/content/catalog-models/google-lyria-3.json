@@ -1,0 +1,134 @@
+{
+	"model_id": "google/lyria-3",
+	"name": "Lyria 3",
+	"description": "Google's Lyria 3 model generates 30-second MP3 music clips from text and optional image prompts.",
+	"task": "Music Generation",
+	"tags": [
+		"Music",
+		"Audio Generation",
+		"Text to Music",
+		"Image to Music"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Per track": 0.04
+	},
+	"examples": [
+		{
+			"name": "Indie Pop Clip",
+			"description": "Generate a short music clip from a text prompt",
+			"input": {
+				"prompt": "An indie pop song with bright guitars, crisp drums, and an optimistic summer chorus"
+			},
+			"output": {
+				"audio": "https://examples.aig.cloudflare.com/google/lyria-3/indie-pop-clip.mp3"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"audio": "https://examples.aig.cloudflare.com/google/lyria-3/indie-pop-clip.mp3"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/lyria-3',\n  { prompt: 'An indie pop song with bright guitars, crisp drums, and an optimistic summer chorus' },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/lyria-3\",\n  \"input\": {\n    \"prompt\": \"An indie pop song with bright guitars, crisp drums, and an optimistic summer chorus\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": true,
+	"zdr_comment": null,
+	"external_info": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/lyria/lyria-3",
+	"terms": null,
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/lyria-3.png",
+	"metadata": {
+		"Audio Format": "MP3",
+		"Clip Duration": "Up to 30 seconds",
+		"Sample Rate": "44.1 kHz"
+	},
+	"request_formats": null,
+	"provider_id": "google",
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "google-vertex-ai",
+			"pricing": {
+				"output_tracks": 0.04
+			}
+		}
+	],
+	"model_providers": [
+		{
+			"provider": "google-vertex-ai",
+			"pricing": {
+				"output_tracks": 0.04
+			},
+			"rates": [
+				{
+					"key": null,
+					"label": null,
+					"description": null,
+					"rates": [
+						{
+							"key": "output_tracks",
+							"label": "Per track",
+							"unit": null,
+							"value": 0.04
+						}
+					]
+				}
+			]
+		}
+	],
+	"banner": null,
+	"pinned": false,
+	"created_at": "2026-11-18 15:39:53",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string",
+					"minLength": 1,
+					"maxLength": 5000
+				},
+				"image": {
+					"type": "string",
+					"minLength": 1,
+					"description": "Base64-encoded image used as visual inspiration"
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"audio": {
+					"type": "string",
+					"description": "Generated music as an audio URL"
+				}
+			},
+			"required": [
+				"audio"
+			],
+			"additionalProperties": false
+		}
+	}
+}

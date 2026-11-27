@@ -1,9 +1,9 @@
 ---
-title: Subdomains
+title: Configure subdomains
 description: Configure Email Sending and Email Routing on subdomains within your zone.
 pcx_content_type: how-to
 sidebar:
-  order: 3
+  order: 4
 products:
   - email-service
 ---
@@ -24,7 +24,7 @@ A zone can have up to 30 domains configured for Email Routing or Email Sending c
 3. Select the apex domain, then open **Settings**.
 4. Under **Subdomains**, enter the subdomain you want to enable in the inline form and submit it.
 
-Cloudflare adds the required DNS records to the subdomain. Once the records propagate, you can create [routing rules](/email-service/configuration/email-routing-addresses/) on the subdomain in the same way as on the apex domain.
+Cloudflare adds the required DNS records to the subdomain. Once the records propagate, you can create [literal routing rules](/email-service/configuration/email-routing-addresses/) for addresses on the subdomain. Catch-all rules are only available for the apex domain.
 
 ## Add a subdomain to Email Sending
 
@@ -43,5 +43,5 @@ Once verified, you can send emails from addresses on the subdomain (for example,
 ## Next steps
 
 - [Domain configuration](/email-service/configuration/domains/) — manage DNS records for sending and routing.
-- [Routing rules and addresses](/email-service/configuration/email-routing-addresses/) — create routing rules on subdomains.
+- [Routing rules](/email-service/configuration/email-routing-addresses/) — create routing rules on subdomains.
 - [Deliverability](/email-service/concepts/deliverability/) — separate subdomains for different email types.

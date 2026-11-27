@@ -33,7 +33,7 @@ Single-file purge works for most resources, but there are situations where it ca
 
 ### Custom cache keys
 
-If you use [Cache Rules](/cache/how-to/cache-rules/) to set a [custom cache key](/cache/how-to/cache-keys/) that includes headers, cookies, or other request properties, single-file purge via the dashboard will not invalidate the cached resource. This is because the dashboard cannot send those values in a purge request. Custom cache keys that only change how the query string is handled (for example, ignoring the query string) generally work with dashboard single-file purge.
+If you use [Cache Rules](/cache/how-to/cache-rules/) to set a [custom cache key](/cache/how-to/cache-keys/) that includes headers, cookies, or other request properties, single-file purge via the dashboard will not remove the cached resource. This is because the dashboard cannot send those values in a purge request. The exception is device type and country, which Enterprise zones can set under **Advanced (Purging with custom cache keys)** when purging by URL. Custom cache keys that only change how the query string is handled (for example, ignoring the query string) generally work with dashboard single-file purge.
 
 **What to do instead:**
 
@@ -51,6 +51,19 @@ Single-file purge may also not work as expected if your Cache Rules match only o
 Update your Cache Rule expression to also match on the `PURGE` method, for example `(http.host eq "example.com" and (http.request.method eq "GET" or http.request.method eq "PURGE"))`. This allows the rule to apply to both client requests and purge requests.
 
 For rules that match on fields which cannot be evaluated during purge (such as `cf.bot_management.score`), use [purge by prefix](/cache/how-to/purge-cache/purge_by_prefix/), [purge by tag](/cache/how-to/purge-cache/purge-by-tags/), or [purge everything](/cache/how-to/purge-cache/purge-everything/).
+
+### Redirect responses
+
+If the URL you want to purge returns a redirect (`301` or `302`), single-file purge removes the cached redirect response — not the content at the redirect destination. The resource at the destination URL remains cached.
+
+To clear the destination content, purge the final destination URL directly. You can find it by following the redirect chain to its end:
+
+```bash
+curl -Ls -o /dev/null -w "%{url_effective}
+" https://example.com/redirecting-path
+```
+
+This outputs the final URL after following all redirects. Use that URL for your purge request.
 
 ### Resources with special headers
 

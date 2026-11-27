@@ -168,24 +168,22 @@ if (typeof roles === "string") {
 }
 ---
 
-{
-	tokenGroups && roles && (
-		<Details header="Required API token permissions">
-			<span>
-				At least one of the following{" "}
-				<a href="/fundamentals/api/reference/permissions/">token permissions</a>{" "}
-				is required:
-			</span>
-			<ul>
-				{tokenGroups.map((group) => (
-					<li>
-						<code>{group}</code>
-					</li>
-				))}
-			</ul>
-		</Details>
-	)
-}
+{tokenGroups && roles && (
+	<Details header="Required API token permissions">
+		<span>
+			At least one of the following{" "}
+			<a href="/fundamentals/api/reference/permissions/">token permissions</a>{" "}
+			is required:
+		</span>
+		<ul>
+			{tokenGroups.map((group) => (
+				<li>
+					<code>{group}</code>
+				</li>
+			))}
+		</ul>
+	</Details>
+)}
 
 <CURL
 	url={url.toString()}

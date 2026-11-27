@@ -23,7 +23,7 @@ A Tail Worker is automatically invoked after the invocation of a producer Worker
 :::note[Export batches of logs and traces to Sentry, Grafana, Honeycomb and more]
 If you are using Tail Workers to export logs and errors to observability tools like Sentry, Grafana, Honeycomb and more — you may not need to use Tail Workers.
 
-Instead, you can configure your Worker to [export OpenTelemetry (OTEL) format logs and traces](/workers/observability/exporting-opentelemetry-data/) to these tools. Unlike Tail Workers, when you configure an OTEL destination, logs and traces are sent in batches to your destination, rather than sent after each invocation of the Worker.
+Instead, you can configure your Worker to [export OpenTelemetry logs and traces](/workers/observability/opentelemetry-export/) to these tools. Unlike Tail Workers, an OpenTelemetry destination receives logs and traces in batches rather than after each Worker invocation.
 
 You should think of Tail Workers as the advanced-mode option, for when you need to do something custom that is not built into the Workers observability platform.
 :::

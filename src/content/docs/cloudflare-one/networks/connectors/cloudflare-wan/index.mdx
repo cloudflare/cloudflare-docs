@@ -11,16 +11,7 @@ head:
     content: Overview
 ---
 
-import {
-	CardGrid,
-	Description,
-	Feature,
-	GlossaryTooltip,
-	LinkTitleCard,
-	Plan,
-	RelatedProduct,
-	Stream,
-} from "~/components";
+import { CardGrid, Description, Feature, GlossaryTooltip, LinkTitleCard, Plan, RelatedProduct, Render, Stream } from "~/components";
 
 <Description>
 	Connect and secure your entire corporate network through Cloudflare, replacing
@@ -44,6 +35,8 @@ Refer to [WAN transformation](/cloudflare-one/networks/connectors/cloudflare-wan
 />
 
 ---
+
+<Render file="choose-a-connector-tip" product="networking-services" />
 
 ## Features
 
@@ -75,7 +68,7 @@ Refer to [WAN transformation](/cloudflare-one/networks/connectors/cloudflare-wan
 	products.
 </Feature>
 
-<Feature header="BGP peering (beta)" href="/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-routes/#configure-bgp-routes">
+<Feature header="BGP peering" href="/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-routes/#configure-bgp-routes">
 	Use Border Gateway Protocol (BGP) peering between your networks and Cloudflare
 	to automatically announce and withdraw routes as your network changes,
 	rather than managing static routes manually.

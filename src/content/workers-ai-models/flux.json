@@ -1,15 +1,5 @@
 {
-    "id": "a2a2afba-b609-4325-8c41-5791ce962239",
-    "source": 1,
     "name": "@cf/deepgram/flux",
-    "description": "Flux is the first conversational speech recognition model built specifically for voice agents.",
-    "task": {
-        "id": "dfce1c48-2a81-462e-a7fd-de97ce985207",
-        "name": "Automatic Speech Recognition",
-        "description": "Automatic speech recognition (ASR) models convert a speech signal, typically an audio input, to text."
-    },
-    "created_at": "2025-09-29 21:07:55.114",
-    "tags": [],
     "properties": [
         {
             "property_id": "price",
@@ -34,6 +24,16 @@
             "value": "true"
         }
     ],
+    "id": "a2a2afba-b609-4325-8c41-5791ce962239",
+    "source": 1,
+    "description": "Flux is the first conversational speech recognition model built specifically for voice agents.",
+    "task": {
+        "id": "dfce1c48-2a81-462e-a7fd-de97ce985207",
+        "name": "Automatic Speech Recognition",
+        "description": "Automatic speech recognition (ASR) models convert a speech signal, typically an audio input, to text."
+    },
+    "created_at": "2025-09-29 21:07:55.114",
+    "tags": [],
     "schema": {
         "input": {
             "type": "object",
@@ -82,11 +82,7 @@
                     "type": "string",
                     "description": "Label your requests for the purpose of identification during usage reporting"
                 }
-            },
-            "required": [
-                "sample_rate",
-                "encoding"
-            ]
+            }
         },
         "output": {
             "type": "object",
@@ -156,5 +152,6 @@
                 }
             }
         }
-    }
+    },
+    "deprecated": false
 }

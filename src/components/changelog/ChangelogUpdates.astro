@@ -1,0 +1,72 @@
+---
+/**
+ * ChangelogUpdates — the `updates` entries of a changelog post (material
+ * changes made after publishing), newest first.
+ *
+ * On the post page, each entry carries the anchor used in its RSS GUID. In
+ * the feed list, where several posts can share an update time, entries link
+ * to that anchor on the post page instead of repeating the IDs.
+ */
+import { liveUpdates } from "~/util/changelog-git";
+import {
+	formatUpdateDate,
+	type ChangelogUpdate,
+} from "~/util/changelog-updates";
+import { renderMarkdownInline } from "~/util/markdown";
+
+interface Props {
+	updates: ChangelogUpdate[];
+	/** The post's source file, used to find when each update went live. */
+	filePath?: string;
+	/** Set in the feed list: link each entry to the post page. */
+	postHref?: string;
+	class?: string;
+}
+
+const { updates, filePath, postHref, class: className } = Astro.props;
+
+// Dated when each update went live, matching the RSS feeds.
+const items = liveUpdates(updates, filePath).map((update) => {
+	const { anchor } = update;
+	return {
+		anchor,
+		href: postHref ? `${postHref}#${anchor}` : undefined,
+		iso: update.liveAt.toISOString(),
+		// The colon is part of the label: on its own line it would render with
+		// a leading space.
+		label: `${formatUpdateDate(update.liveAt)}:`,
+		html: renderMarkdownInline(update.summary),
+	};
+});
+---
+
+{items.length > 0 && (
+	<section
+		aria-label="Updates"
+		class:list={[
+			"border-border rounded-md border px-4 py-3 text-[0.875rem]",
+			className,
+		]}
+	>
+		<p class="text-foreground m-0 font-semibold">Updates</p>
+		<ul class="m-0 mt-2 list-none space-y-1.5 p-0">
+			{items.map((item) => (
+				<li id={item.href ? undefined : item.anchor} class="scroll-mt-24">
+					<time
+						datetime={item.iso}
+						class="text-muted-foreground font-medium tabular-nums"
+					>
+						{item.href ? (
+							<a href={item.href} class="text-inherit">
+								{item.label}
+							</a>
+						) : (
+							item.label
+						)}
+					</time>{" "}
+					<span set:html={item.html} />
+				</li>
+			))}
+		</ul>
+	</section>
+)}

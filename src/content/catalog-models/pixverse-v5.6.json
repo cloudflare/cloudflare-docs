@@ -12,6 +12,31 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Default (per second)": 0.08,
+		"5s @360p": 0.175,
+		"5s @360p w/ audio": 0.4,
+		"8s @360p": 0.35,
+		"8s @360p w/ audio": 0.575,
+		"10s @360p": 0.385,
+		"10s @360p w/ audio": 0.61,
+		"5s @540p": 0.175,
+		"5s @540p w/ audio": 0.45,
+		"8s @540p": 0.35,
+		"8s @540p w/ audio": 0.575,
+		"10s @540p": 0.385,
+		"10s @540p w/ audio": 0.61,
+		"5s @720p": 0.225,
+		"5s @720p w/ audio": 0.4,
+		"8s @720p": 0.45,
+		"8s @720p w/ audio": 0.675,
+		"10s @720p": 0.495,
+		"10s @720p w/ audio": 0.72,
+		"5s @1080p": 0.375,
+		"5s @1080p w/ audio": 0.75,
+		"8s @1080p": 0.75,
+		"8s @1080p w/ audio": 0.975
+	},
 	"examples": [
 		{
 			"name": "Simple Video",
@@ -173,6 +198,36 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "pixverse",
+			"pricing": {
+				"default": 0.08,
+				"360p_5s": 0.175,
+				"360p_5s_audio": 0.4,
+				"360p_8s": 0.35,
+				"360p_8s_audio": 0.575,
+				"360p_10s": 0.385,
+				"360p_10s_audio": 0.61,
+				"540p_5s": 0.175,
+				"540p_5s_audio": 0.45,
+				"540p_8s": 0.35,
+				"540p_8s_audio": 0.575,
+				"540p_10s": 0.385,
+				"540p_10s_audio": 0.61,
+				"720p_5s": 0.225,
+				"720p_5s_audio": 0.4,
+				"720p_8s": 0.45,
+				"720p_8s_audio": 0.675,
+				"720p_10s": 0.495,
+				"720p_10s_audio": 0.72,
+				"1080p_5s": 0.375,
+				"1080p_5s_audio": 0.75,
+				"1080p_8s": 0.75,
+				"1080p_8s_audio": 0.975
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:53:45",
 	"schema": {
@@ -181,9 +236,9 @@
 			"type": "object",
 			"properties": {
 				"prompt": {
-					"description": "Text prompt describing the video to generate",
 					"type": "string",
-					"maxLength": 2048
+					"maxLength": 2048,
+					"description": "Text prompt describing the video to generate"
 				},
 				"negative_prompt": {
 					"description": "Negative text prompt",
@@ -195,8 +250,8 @@
 					"type": "string"
 				},
 				"duration": {
-					"description": "Video duration in seconds",
 					"default": 5,
+					"description": "Video duration in seconds",
 					"anyOf": [
 						{
 							"type": "number",
@@ -213,8 +268,8 @@
 					]
 				},
 				"aspect_ratio": {
-					"description": "Video aspect ratio",
 					"default": "16:9",
+					"description": "Video aspect ratio",
 					"type": "string",
 					"enum": [
 						"16:9",
@@ -228,8 +283,8 @@
 					]
 				},
 				"quality": {
-					"description": "Video quality",
 					"default": "720p",
+					"description": "Video quality",
 					"type": "string",
 					"enum": [
 						"360p",
@@ -253,8 +308,8 @@
 					]
 				},
 				"generate_audio": {
-					"description": "Whether to generate audio with the video",
 					"default": true,
+					"description": "Whether to generate audio with the video",
 					"type": "boolean"
 				}
 			},
@@ -272,9 +327,9 @@
 			"type": "object",
 			"properties": {
 				"video": {
-					"description": "URL to the generated video",
 					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"description": "URL to the generated video"
 				}
 			},
 			"required": [

@@ -31,7 +31,7 @@ import {
 
 <Plan type="enterprise" />
 
-Manage DNS records that should only be accessible within your private network—useful when you need internal systems (like `database.internal` or `api.corp`) to resolve differently for employees versus the public internet. Internal DNS [zones](/dns/internal-dns/internal-zones/) and [views](/dns/internal-dns/dns-views/) pair up with [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) so that you can control how a DNS query should be responded to according to query context, such as query source IP.
+Manage DNS records that should only be accessible within your private network—useful when you need internal systems (like `database.internal` or `api.corp`) to resolve differently for employees versus the public internet. Internal DNS [zones](/dns/internal-dns/internal-zones/) and [views](/dns/internal-dns/dns-views/) pair up with [Gateway resolver policies](/cloudflare-one/traffic-controls/resolver-policies/) so that you can control how a DNS query should be responded to according to query context, such as query source IP.
 
 **When you'd use this:** Organizations with multiple offices or regions often need the same hostname to resolve to different IP addresses depending on where the query originates—for example, `intranet.company.com` pointing to London servers for London users and San Francisco servers for SF users.
 
@@ -171,7 +171,7 @@ For detailed step-by-step setup instructions, see the [Get started guide](/dns/i
 
 <RelatedProduct
 	header="Cloudflare Gateway"
-	href="/cloudflare-one/traffic-policies/"
+	href="/cloudflare-one/traffic-controls/"
 	product="privacy-gateway"
 >
 	Set up policies to inspect DNS, Network, HTTP, and Egress traffic.

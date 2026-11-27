@@ -1,7 +1,7 @@
 ---
 import { z } from "astro/zod";
 import { baseSchema } from "~/schemas";
-import { marked } from "marked";
+import { renderMarkdownInline } from "~/util/markdown";
 
 import Type from "./cf/Type.astro";
 import MetaInfo from "./cf/MetaInfo.astro";
@@ -121,48 +121,46 @@ const properties =
 const required = isObject(jsonSchema) ? jsonSchema.required : [];
 ---
 
-{
-	Object.entries(properties)
-		.sort()
-		.map(([key, property]) => {
-			const propertyType = getPropertyType(property);
-			const optional = isOptional(key, required);
-			const description = getDescription(property);
-			const enumValues = getEnumValues(property);
+{Object.entries(properties)
+	.sort()
+	.map(([key, property]) => {
+		const propertyType = getPropertyType(property);
+		const optional = isOptional(key, required);
+		const description = getDescription(property);
+		const enumValues = getEnumValues(property);
 
-			return (
-				<>
-					<AnchorHeading depth={3} title={key} />
+		return (
+			<>
+				<AnchorHeading depth={3} title={key} />
+				<p>
+					<strong>Type: </strong>
+					<Type text={propertyType} />
+					{optional && (
+						<>
+							{" "}
+							<MetaInfo text="optional" />
+						</>
+					)}
+				</p>
+				{description && (
 					<p>
-						<strong>Type: </strong>
-						<Type text={propertyType} />
-						{optional && (
-							<>
-								{" "}
-								<MetaInfo text="optional" />
-							</>
-						)}
+						<strong>Description: </strong>
+						<Fragment set:html={renderMarkdownInline(description)} />
 					</p>
-					{description && (
-						<p>
-							<strong>Description: </strong>
-							<Fragment set:html={marked.parseInline(description)} />
-						</p>
-					)}
-					{enumValues && enumValues.length > 0 && (
-						<p>
-							<Details header="Allowed values">
-								<ul>
-									{enumValues.map((value) => (
-										<li>
-											<code>{value}</code>
-										</li>
-									))}
-								</ul>
-							</Details>
-						</p>
-					)}
-				</>
-			);
-		})
-}
+				)}
+				{enumValues && enumValues.length > 0 && (
+					<p>
+						<Details header="Allowed values">
+							<ul>
+								{enumValues.map((value) => (
+									<li>
+										<code>{value}</code>
+									</li>
+								))}
+							</ul>
+						</Details>
+					</p>
+				)}
+			</>
+		);
+	})}

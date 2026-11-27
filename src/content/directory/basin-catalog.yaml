@@ -1,0 +1,14 @@
+id: yWaDMQ
+name: Basin Catalog
+
+entry:
+  title: Basin Catalog
+  url: /basin-catalog/
+  group: Developer platform
+  additional_groups: [Storage]
+  tags: [Storage]
+
+meta:
+  title: Cloudflare Basin Catalog docs
+  description: Create, manage, and query Iceberg tables stored in R2
+  author: "@cloudflare"

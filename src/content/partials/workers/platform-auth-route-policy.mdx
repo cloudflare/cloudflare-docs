@@ -1,0 +1,43 @@
+---
+{}
+---
+
+import { TypeScriptExample } from "~/components";
+
+<TypeScriptExample filename="policy.ts">
+```ts
+export type Identity = {
+	userId: string;
+	tenant: string;
+	permissions: string[];
+};
+
+export type Route = {
+	method: string;
+	path: string;
+	access: "public" | "member" | "reports:admin";
+};
+
+export function checkRoute(
+	request: Request,
+	routes: Route[],
+	tenant: string,
+	identity: Identity | null,
+): Response | null {
+	const path = new URL(request.url).pathname;
+	const route = routes.find(
+		(route) => route.method === request.method && route.path === path,
+	);
+	if (!route) return new Response("Route not published", { status: 404 });
+	if (route.access === "public") return null;
+	if (!identity) return new Response("Sign in", { status: 401 });
+	if (
+		identity.tenant !== tenant ||
+		(route.access !== "member" && !identity.permissions.includes(route.access))
+	) {
+		return new Response("Forbidden", { status: 403 });
+	}
+	return null;
+}
+```
+</TypeScriptExample>

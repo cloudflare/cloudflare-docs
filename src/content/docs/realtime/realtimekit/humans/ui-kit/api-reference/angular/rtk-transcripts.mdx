@@ -1,0 +1,49 @@
+---
+pcx_content_type: navigation
+title: rtk-transcripts
+description: API reference for rtk-transcripts component (Angular Library)
+products:
+  - realtime
+---
+
+{/*
+  AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.
+  Any manual changes will be overwritten the next time the docs are generated.
+
+  Source: https://github.com/cloudflare/realtimekit-ui/blob/main/packages/core/src/components/rtk-transcripts/rtk-transcripts.tsx
+  Generator: https://github.com/cloudflare/realtimekit-ui/blob/main/scripts/generate-stencil-docs.js
+
+  To update this page, edit the component source in the realtimekit-ui repository and submit a pull request against the staging branch; the changes will automatically sync here upon the next release.
+*/}
+
+A component which handles transcripts.
+ You can configure which transcripts you want to see and which ones you want to hear.
+ There are also certain limits which you can set as well.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config object |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-transcripts></rtk-transcripts>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-transcripts
+ [meeting]="meeting">
+</rtk-transcripts>
+```
+

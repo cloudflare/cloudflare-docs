@@ -28,23 +28,14 @@ Some SaaS applications provide the Redirect URL after you [configure the SSO pro
 ## 2. Add your application to Access
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
-
 2. Select **Create new application**.
-
 3. Select **SaaS application**.
-
 4. Select your **Application** from the drop-down menu. If your application is not listed, enter a custom name in the **Application** field and select the textbox that appears below.
-
 5. Select **OIDC**.
-
 6. Select **Add application**.
-
 7. In **Scopes**, select the user attributes that you want Access to send in the ID token. For more information about configuring OIDC scopes and claims, refer to [OIDC claims](#oidc-claims).
-
 8. In **Redirect URLs**, enter the callback URL obtained from the SaaS application.
-
-9. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if the protocol is supported by your IdP. PKCE will be performed on all login attempts.
-
+9. (Optional) Enable [Proof Key for Code Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if your SaaS application supports it. Configure the SaaS application to use PKCE as well.
 10. Copy the following values to input into your SaaS application. Different SaaS applications may require different sets of input values.
     | Field | Description |
     | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -56,15 +47,12 @@ Some SaaS applications provide the Redirect URL after you [configure the SSO pro
     | Authorization endpoint | URL where users authenticate with Access <br/> `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<client-id>/authorization` |
     | Key endpoint | Returns the current public keys used to [verify the Access JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/) <br/> `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<client-id>/jwks` |
     | User info endpoint | Returns all user claims in JSON format <br/> `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<client-id>/userinfo` |
-
 11. <Render file="access/add-access-policies" product="cloudflare-one" />
-
 12. <Render file="access/access-choose-idps-default" product="cloudflare-one" />
-
 13. (Optional) Go to **Additional settings** to customize the application experience:
 
-	- **App Launcher customization**: Configure how this application appears to users in the [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/). If **Show application in App Launcher** is enabled, then you must enter an **App Launcher URL**. The App Launcher URL is provided by the SaaS application. It may match the base URL portion of **Redirect URL** (`https://<INSTANCE-NAME>.example-app.com`) but could be a different value.
-	- <Render file="access/access-block-page" product="cloudflare-one" />
+    - **App Launcher customization**: Configure how this application appears to users in the [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/). If **Show application in App Launcher** is enabled, then you must enter an **App Launcher URL**. Use the SaaS application's login URL, where users start authentication. This may be the application's base URL (`https://<INSTANCE-NAME>.example-app.com`) or a dedicated SSO login endpoint. It can differ from **Redirect URL**, which receives the authentication response after sign-in.
+    - <Render file="access/access-block-page" product="cloudflare-one" />
 
 14. Select **Create**.
 
@@ -107,7 +95,11 @@ To add additional OIDC claims onto the ID token sent to your SaaS application, c
 
 ### Access token lifetime
 
-The OIDC Access token authorizes users to connect to the SaaS application through Cloudflare Access. You can set an **Access token lifetime** to determine the window in which the token can be used to establish authentication with the SaaS application — if it expires, the user must re-authenticate through Cloudflare Access. To balance security and user convenience, Cloudflare recommends configuring a short Access token lifetime in conjunction with a longer **Refresh token lifetime** (if supported by your application). When the access token expires, Cloudflare will use the refresh token to obtain a new access token after checking the user's identity against your Access policies. When the refresh token expires, the user will need to log back in to the identity provider. The refresh token lifetime should be less than your [global session duration](/cloudflare-one/access-controls/access-settings/session-management/), otherwise the global session would take precedence.
+The **Access token lifetime** controls how long the OIDC access token is valid. If your SaaS application supports refresh tokens, you can configure a longer **Refresh token lifetime** so it can request new access tokens without another browser login.
+
+The SaaS application sends its refresh token to the Access token endpoint. Access checks the user's stored identity against your Access policies and verifies that the session has not been revoked before issuing new tokens. This exchange does not require the browser's [global session cookie](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/#access-jwts).
+
+If the refresh token expires or the refresh request fails, the SaaS application must restart authorization. Whether the user must log in again depends on their Access and identity provider sessions. The SaaS application's own session duration is separate from these token lifetimes.
 
 :::note
 

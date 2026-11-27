@@ -1,15 +1,5 @@
 {
-    "id": "eed32bc1-8775-4985-89ce-dd1405508ad8",
-    "source": 1,
     "name": "@cf/baai/bge-m3",
-    "description": "Multi-Functionality, Multi-Linguality, and Multi-Granularity embeddings model.",
-    "task": {
-        "id": "0137cdcf-162a-4108-94f2-1ca59e8c65ee",
-        "name": "Text Embeddings",
-        "description": "Feature extraction models transform raw data into numerical features that can be processed while preserving the information in the original dataset. These models are ideal as part of building vector search applications or Retrieval Augmented Generation workflows with Large Language Models (LLM)."
-    },
-    "created_at": "2024-05-22 19:27:09.781",
-    "tags": [],
     "properties": [
         {
             "property_id": "context_window",
@@ -20,12 +10,22 @@
             "value": [
                 {
                     "unit": "per M input tokens",
-                    "price": 0.012,
+                    "price": 0.0118,
                     "currency": "USD"
                 }
             ]
         }
     ],
+    "id": "eed32bc1-8775-4985-89ce-dd1405508ad8",
+    "source": 1,
+    "description": "Multi-Functionality, Multi-Linguality, and Multi-Granularity embeddings model.",
+    "task": {
+        "id": "0137cdcf-162a-4108-94f2-1ca59e8c65ee",
+        "name": "Text Embeddings",
+        "description": "Feature extraction models transform raw data into numerical features that can be processed while preserving the information in the original dataset. These models are ideal as part of building vector search applications or Retrieval Augmented Generation workflows with Large Language Models (LLM)."
+    },
+    "created_at": "2024-05-22 19:27:09.781",
+    "tags": [],
     "schema": {
         "input": {
             "type": "object",
@@ -272,5 +272,6 @@
                 }
             ]
         }
-    }
+    },
+    "deprecated": false
 }

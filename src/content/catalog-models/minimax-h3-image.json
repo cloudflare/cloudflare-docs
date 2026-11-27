@@ -1,0 +1,292 @@
+{
+	"model_id": "minimax/h3-image",
+	"name": "MiniMax H3 Image",
+	"description": "MiniMax's open-weight image model built on H3 for text-to-image, multi-reference generation and image editing, producing realistic detail and strong prompt adherence at up to 4K with up to 16 reference images.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"Image Editing",
+		"Photorealistic",
+		"4K"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Input text tokens (per 1M)": 2.3,
+		"Input image tokens (per 1M)": 1.5,
+		"Output image tokens (per 1M)": 3.8
+	},
+	"examples": [
+		{
+			"name": "4K Photorealism",
+			"description": "A full 4K (16 MP) photoreal macro shot with fine natural detail.",
+			"input": {
+				"prompt": "Macro photograph of a ruby-throated hummingbird hovering beside a dew-covered fuchsia blossom at sunrise, iridescent feathers in sharp detail, water droplets catching the light, creamy bokeh background, shot on a 100mm macro lens",
+				"aspect_ratio": "16:9",
+				"area": "4K"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/minimax/h3-image/4k-photorealism.jpeg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/minimax/h3-image/4k-photorealism.jpeg",
+					"images": [
+						"https://examples.aig.cloudflare.com/minimax/h3-image/4k-photorealism.jpeg"
+					],
+					"revised_prompt": "The image is a highly detailed macro photograph of a ruby-throated hummingbird hovering beside a dew-covered fuchsia blossom at sunrise, shot on a 100mm macro lens with a shallow depth of field. On the left side of the composition, the hummingbird is captured in a right-facing three-quarter profile, its long dark beak extending toward the open bell of a deep magenta fuchsia blossom positioned on the right. The bird's wings are frozen mid-flap, rendered as translucent, blurred arcs of brown and black above its back, capturing the active hover. Its plumage is in sharp focus, featuring metallic emerald green feathers on the crown and back, a brilliant ruby-red gorget on the throat, and a crisp white underside. On the right, the fuchsia blossom hangs from a fine green stem extending from the upper right corner, featuring layered petals with curled edges and a visible tubular throat. The blossoms and stem are dotted with numerous spherical water droplets that catch the warm golden light. The scene is bathed in soft sunrise lighting originating from the upper left, creating a warm rim light along the bird's feathers and bright reflections on the dew drops. The background is a creamy, smooth out-of-focus bokeh consisting of overlapping muted green leaves and warm orange and yellow light spots from the early morning sun. The composition balances the bird and the flower on the left and right with a small gap between the beak and the flower's opening. The overall tone is natural and peaceful, emphasizing the crisp macro details against the soft background."
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/h3-image',\n  {\n    prompt:\n      'Macro photograph of a ruby-throated hummingbird hovering beside a dew-covered fuchsia blossom at sunrise, iridescent feathers in sharp detail, water droplets catching the light, creamy bokeh background, shot on a 100mm macro lens',\n    aspect_ratio: '16:9',\n    area: '4K',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/h3-image\",\n  \"input\": {\n    \"prompt\": \"Macro photograph of a ruby-throated hummingbird hovering beside a dew-covered fuchsia blossom at sunrise, iridescent feathers in sharp detail, water droplets catching the light, creamy bokeh background, shot on a 100mm macro lens\",\n    \"aspect_ratio\": \"16:9\",\n    \"area\": \"4K\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Dense Prompt Adherence",
+			"description": "A busy scene where every object, position and the sign text follow the prompt.",
+			"input": {
+				"prompt": "A cozy bookshop window at dusk. On the left, a stack of three green books; in the center, a black cat asleep on a red velvet cushion; on the right, a brass telescope pointing up. Above the window, a hand-painted sign reads \"THE MIDNIGHT READER\". Warm string lights, rain droplets on the glass, a reflection of a passing yellow umbrella",
+				"aspect_ratio": "4:3",
+				"area": "2K"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/minimax/h3-image/dense-prompt-adherence.jpeg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/minimax/h3-image/dense-prompt-adherence.jpeg",
+					"images": [
+						"https://examples.aig.cloudflare.com/minimax/h3-image/dense-prompt-adherence.jpeg"
+					],
+					"revised_prompt": "The image is a cozy cinematic photograph taken from the street, looking into a bookshop window at dusk. At the top of the window frame sits a hand-painted wooden plaque reading \"THE MIDNIGHT READER\" in elegant gold lettering. Inside the window, a warmly lit display shelf showcases a peaceful scene. On the left side of the shelf, there is a stack of three dark green hardcover books with gold-embossed title bands and a worn leather texture, neatly piled on top of one another. In the center, a small black cat sleeps curled up on a plush red velvet cushion with a soft tufted center. On the right side, a vintage brass telescope rests on a small wooden tripod stand, pointing diagonally upward toward the upper right corner. A garland of warm string lights with glowing amber bulbs hangs across the upper interior of the window, illuminating the scene. The outside environment is captured on the window glass, which is covered in numerous rain droplets. On the lower right side of the glass, the clear reflection of a passing person holding a bright yellow umbrella is visible, overlapping with subtle reflections of wet cobblestones and a softly lit streetlamp. The lighting creates a warm contrast between the inviting bookshop interior and the cool, rain-kissed twilight outside."
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/h3-image',\n  {\n    prompt:\n      'A cozy bookshop window at dusk. On the left, a stack of three green books; in the center, a black cat asleep on a red velvet cushion; on the right, a brass telescope pointing up. Above the window, a hand-painted sign reads \"THE MIDNIGHT READER\". Warm string lights, rain droplets on the glass, a reflection of a passing yellow umbrella',\n    aspect_ratio: '4:3',\n    area: '2K',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/h3-image\",\n  \"input\": {\n    \"prompt\": \"A cozy bookshop window at dusk. On the left, a stack of three green books; in the center, a black cat asleep on a red velvet cushion; on the right, a brass telescope pointing up. Above the window, a hand-painted sign reads \\\"THE MIDNIGHT READER\\\". Warm string lights, rain droplets on the glass, a reflection of a passing yellow umbrella\",\n    \"aspect_ratio\": \"4:3\",\n    \"area\": \"2K\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Multi-Reference Edit",
+			"description": "Combine two reference photos into one new, consistently lit scene.",
+			"input": {
+				"prompt": "Overhead editorial photo for a cafe menu: place the tea cup from image 2 beside the scones from image 1 on a rustic oak table, matching the soft morning window light, with a folded linen napkin and a few scattered blueberries",
+				"images": [
+					"https://storage.googleapis.com/cloud-samples-data/generative-ai/image/scones.jpg",
+					"https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg"
+				],
+				"aspect_ratio": "4:3",
+				"area": "2K"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/minimax/h3-image/multi-reference-edit.jpeg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/minimax/h3-image/multi-reference-edit.jpeg",
+					"images": [
+						"https://examples.aig.cloudflare.com/minimax/h3-image/multi-reference-edit.jpeg"
+					],
+					"revised_prompt": "The five crumbly blueberry scones in <Picture 1> are <Subject 1>. The fresh loose blueberries scattered across the parchment paper and inside the small bowl in <Picture 1> are <Subject 2>. The soft morning window light in <Picture 1> is <Subject 3>. The red apple held by a hand in <Picture 2> is <Subject 4>. The target image is an overhead editorial cafe-menu photograph showing <Subject 1>, <Subject 4> transformed into a teacup, and <Subject 2> arranged on a rustic oak table alongside a folded linen napkin under <Subject 3>, replacing the dark surface, serrated parchment paper, coffee cups, silver spoon, and pink peonies from <Picture 1>. <Subject 1> is partially preserved; its crumbly baked texture, golden-brown crust, and dark purple-blue berry pockets remain, while the scones are rearranged directly onto the wooden tabletop without the stained parchment paper. <Subject 2> is partially preserved; the individual dusty-blue berries with pale crowns remain, while their arrangement changes to a few loose berries scattered directly on the oak planks near <Subject 1>. <Subject 3> supplies the lighting setup transferred to the entire target scene. <Subject 4> serves as a weak reference for the new teacup; its warm sunlit crimson-red hue guides the exterior ceramic glaze of the cup while its shape becomes a round porcelain teacup viewed from above. Viewed from directly overhead in a 4:3 frame, wide weathered oak boards with visible grain, knots, and matte finish form the tabletop. Three scones from <Subject 1> rest clustered near the center-left, with two more positioned toward the lower right. Beside <Subject 1> sits the newly introduced round white-porcelain teacup inspired by <Subject 4>, featuring a glossy crimson-red outer rim and handle, filled with clear amber tea that catches bright specular highlights. A neatly folded natural oatmeal-colored linen napkin with subtle woven texture lies beneath the lower-right scones, and a few berries from <Subject 2> rest beside the cup and napkin. Soft directional daylight from <Subject 3> enters from the side, casting gentle diffused shadows across the oak grain and highlighting the flaky crumbs of <Subject 1>."
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/h3-image',\n  {\n    prompt:\n      'Overhead editorial photo for a cafe menu: place the tea cup from image 2 beside the scones from image 1 on a rustic oak table, matching the soft morning window light, with a folded linen napkin and a few scattered blueberries',\n    images: [\n      'https://storage.googleapis.com/cloud-samples-data/generative-ai/image/scones.jpg',\n      'https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg',\n    ],\n    aspect_ratio: '4:3',\n    area: '2K',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/h3-image\",\n  \"input\": {\n    \"prompt\": \"Overhead editorial photo for a cafe menu: place the tea cup from image 2 beside the scones from image 1 on a rustic oak table, matching the soft morning window light, with a folded linen napkin and a few scattered blueberries\",\n    \"images\": [\n      \"https://storage.googleapis.com/cloud-samples-data/generative-ai/image/scones.jpg\",\n      \"https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg\"\n    ],\n    \"aspect_ratio\": \"4:3\",\n    \"area\": \"2K\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://platform.minimax.io/docs/guides/image-generation.md",
+	"terms": "https://platform.minimax.io/docs/guides/terms-of-service.md",
+	"cover_image_url": null,
+	"metadata": {
+		"Billing": "Pay-as-you-go, per token (input text, reference images, output images)",
+		"Images per Request": "1-10",
+		"Output Size": "1K, 2K, 4K or custom up to 20 MP",
+		"Reference Images": "Up to 16"
+	},
+	"request_formats": null,
+	"provider_id": "minimax",
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "minimax",
+			"pricing": {
+				"input_text_tokens": 2.3,
+				"input_image_tokens": 1.5,
+				"output_image_tokens": 3.8
+			}
+		}
+	],
+	"model_providers": [
+		{
+			"provider": "minimax",
+			"pricing": {
+				"input_text_tokens": 2.3,
+				"input_image_tokens": 1.5,
+				"output_image_tokens": 3.8
+			},
+			"rates": [
+				{
+					"key": null,
+					"label": null,
+					"description": null,
+					"rates": [
+						{
+							"key": "input_image_tokens",
+							"label": "Input image",
+							"unit": "per_1m_tokens",
+							"value": 1.5
+						},
+						{
+							"key": "input_text_tokens",
+							"label": "Input text",
+							"unit": "per_1m_tokens",
+							"value": 2.3
+						},
+						{
+							"key": "output_image_tokens",
+							"label": "Output image",
+							"unit": "per_1m_tokens",
+							"value": 3.8
+						}
+					]
+				}
+			]
+		}
+	],
+	"banner": null,
+	"pinned": false,
+	"created_at": "2026-11-18 15:08:09",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string",
+					"maxLength": 32000,
+					"description": "Text description of the image, or of the edit when images are given, up to 32,000 characters. Refer to reference images by their order, e.g. \"image 1\"."
+				},
+				"images": {
+					"description": "Reference images for image editing and multi-reference generation, 1 to 16: https URLs or data:image/<format>;base64 URIs (JPG, PNG, WEBP, HEIC or HEIF; 128 to 8192 px per side; long side at most 4x the short side). When set, the request is an image edit.",
+					"minItems": 1,
+					"maxItems": 16,
+					"type": "array",
+					"items": {
+						"type": "string",
+						"minLength": 1
+					}
+				},
+				"n": {
+					"default": 1,
+					"description": "Number of images to generate, 1 to 10",
+					"type": "integer",
+					"minimum": 1,
+					"maximum": 10
+				},
+				"size": {
+					"description": "Exact output size as WIDTHxHEIGHT, e.g. 2720x1536: area 655,360 to 20,000,000 pixels, aspect ratio between 1:3 and 3:1. Cannot be combined with aspect_ratio or area.",
+					"type": "string"
+				},
+				"aspect_ratio": {
+					"description": "Output aspect ratio when size is not set: auto (default, chosen from the prompt) or X:Y with X and Y from 1 to 300, between 1:3 and 3:1, e.g. 16:9 or 21:9",
+					"type": "string"
+				},
+				"area": {
+					"description": "Output area level when size is not set, targeting 1024x1024, 2048x2048 or 4096x4096 pixels at the chosen aspect ratio. Defaults to 4K.",
+					"type": "string",
+					"enum": [
+						"1K",
+						"2K",
+						"4K"
+					]
+				},
+				"disable_prompt_enhanced": {
+					"description": "Text-to-image only: use the prompt as written instead of the enhanced prompt. Requires size or an X:Y aspect_ratio.",
+					"type": "boolean"
+				},
+				"output_format": {
+					"description": "Output image format. Defaults to jpeg.",
+					"type": "string",
+					"enum": [
+						"jpeg",
+						"png",
+						"webp"
+					]
+				},
+				"output_compression": {
+					"description": "JPEG or WEBP quality, 0 to 100 (default 95); ignored for png",
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 100
+				}
+			},
+			"required": [
+				"prompt",
+				"n"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"description": "URL of the first generated image, hosted by MiniMax"
+				},
+				"images": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"description": "URLs of all generated images, hosted by MiniMax; images withheld by the content safety check are left out"
+				},
+				"revised_prompt": {
+					"description": "The prompt used for the first image, after prompt enhancement",
+					"type": "string"
+				}
+			},
+			"required": [
+				"image",
+				"images"
+			],
+			"additionalProperties": false
+		}
+	}
+}

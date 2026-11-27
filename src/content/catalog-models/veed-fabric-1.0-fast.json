@@ -1,0 +1,165 @@
+{
+	"model_id": "veed/fabric-1.0-fast",
+	"provider_id": "veed",
+	"name": "VEED Fabric 1.0 Fast",
+	"description": "A faster variant of VEED Fabric 1.0 optimized for lower-latency lipsync video generation.",
+	"task": "Image-to-Video",
+	"tags": [
+		"Video Generation",
+		"Lipsync",
+		"Audio",
+		"Fast"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"@480p (per second)": 0.1,
+		"@720p (per second)": 0.2,
+		"Default (per second)": 0.2
+	},
+	"examples": [
+		{
+			"name": "Quick Lipsync",
+			"description": "Fast lip-sync of a portrait photo to a short audio clip at 720p.",
+			"input": {
+				"image_url": "https://v3.fal.media/files/koala/NLVPfOI4XL1cWT2PmmqT3_Hope.png",
+				"audio_url": "https://v3.fal.media/files/elephant/Oz_g4AwQvXtXpUHL3Pa7u_Hope.mp3",
+				"resolution": "720p"
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/veed__fabric-1.0-fast/quick-lipsync.mp4"
+			},
+			"raw_response": {
+				"gatewayMetadata": {
+					"keySource": "BYOK"
+				},
+				"result": {
+					"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/veed__fabric-1.0-fast/quick-lipsync.mp4"
+				},
+				"state": "Completed"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'veed/fabric-1.0-fast',\n  {\n    image_url: 'https://v3.fal.media/files/koala/NLVPfOI4XL1cWT2PmmqT3_Hope.png',\n    audio_url: 'https://v3.fal.media/files/elephant/Oz_g4AwQvXtXpUHL3Pa7u_Hope.mp3',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"veed/fabric-1.0-fast\",\n  \"input\": {\n    \"image_url\": \"https://v3.fal.media/files/koala/NLVPfOI4XL1cWT2PmmqT3_Hope.png\",\n    \"audio_url\": \"https://v3.fal.media/files/elephant/Oz_g4AwQvXtXpUHL3Pa7u_Hope.mp3\",\n    \"resolution\": \"720p\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Preview at 480p",
+			"description": "Faster, cheaper preview at 480p.",
+			"input": {
+				"image_url": "https://v3.fal.media/files/koala/NLVPfOI4XL1cWT2PmmqT3_Hope.png",
+				"audio_url": "https://v3.fal.media/files/elephant/Oz_g4AwQvXtXpUHL3Pa7u_Hope.mp3",
+				"resolution": "480p"
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/veed__fabric-1.0-fast/preview-at-480p.mp4"
+			},
+			"raw_response": {
+				"gatewayMetadata": {
+					"keySource": "BYOK"
+				},
+				"result": {
+					"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/veed__fabric-1.0-fast/preview-at-480p.mp4"
+				},
+				"state": "Completed"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'veed/fabric-1.0-fast',\n  {\n    image_url: 'https://v3.fal.media/files/koala/NLVPfOI4XL1cWT2PmmqT3_Hope.png',\n    audio_url: 'https://v3.fal.media/files/elephant/Oz_g4AwQvXtXpUHL3Pa7u_Hope.mp3',\n    resolution: '480p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"veed/fabric-1.0-fast\",\n  \"input\": {\n    \"image_url\": \"https://v3.fal.media/files/koala/NLVPfOI4XL1cWT2PmmqT3_Hope.png\",\n    \"audio_url\": \"https://v3.fal.media/files/elephant/Oz_g4AwQvXtXpUHL3Pa7u_Hope.mp3\",\n    \"resolution\": \"480p\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://fal.ai/models/veed/fabric-1.0/fast",
+	"terms": null,
+	"cover_image_url": null,
+	"metadata": {
+		"Input Modalities": "Image + Audio",
+		"Resolutions": "480p, 720p"
+	},
+	"request_formats": null,
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "fal",
+			"pricing": {
+				"480p": 0.1,
+				"720p": 0.2,
+				"default": 0.2
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-05-22 17:53:59",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image_url": {
+					"type": "string",
+					"description": "URL of the source image. Accepts a publicly reachable HTTP(S) URL or a base64 data URI (data:image/...;base64,...)."
+				},
+				"audio_url": {
+					"type": "string",
+					"description": "URL of the driving audio. Accepts a publicly reachable HTTP(S) URL or a base64 data URI (data:audio/...;base64,...)."
+				},
+				"resolution": {
+					"default": "720p",
+					"description": "Resolution of the generated video.",
+					"type": "string",
+					"enum": [
+						"480p",
+						"720p"
+					]
+				}
+			},
+			"required": [
+				"image_url",
+				"audio_url",
+				"resolution"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"type": "string",
+					"format": "uri",
+					"description": "Presigned URL for the generated lipsync video."
+				},
+				"duration": {
+					"description": "Duration of the generated video in seconds, when reported by the provider.",
+					"type": "number"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}

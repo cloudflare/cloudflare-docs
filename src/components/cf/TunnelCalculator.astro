@@ -39,47 +39,43 @@ const metrics = Object.entries({
 ---
 
 <Card title="System configuration">
-	{
-		configuration.map(([key, value]) => (
-			<div>
-				<label for={key}>{value.title}</label>
-				<br />
-				<input
-					type="number"
-					id={key}
-					name={key}
-					value={value.default}
-					readonly={value.readonly}
-					data-tunnel-calculator
-				/>
-			</div>
-		))
-	}
+	{configuration.map(([key, value]) => (
+		<div>
+			<label for={key}>{value.title}</label>
+			<br />
+			<input
+				type="number"
+				id={key}
+				name={key}
+				value={value.default}
+				readonly={value.readonly}
+				data-tunnel-calculator
+			/>
+		</div>
+	))}
 </Card>
 
 <Card title="Metrics">
-	{
-		metrics.map(([key, value]) => (
-			<div>
-				<label for={key}>{value.title}</label>
-				<br />
-				<input
-					type="number"
-					id={key}
-					name={key}
-					value={value.default}
-					data-tunnel-calculator
-				/>
-			</div>
-		))
-	}
+	{metrics.map(([key, value]) => (
+		<div>
+			<label for={key}>{value.title}</label>
+			<br />
+			<input
+				type="number"
+				id={key}
+				name={key}
+				value={value.default}
+				data-tunnel-calculator
+			/>
+		</div>
+	))}
 </Card>
 
 <Card title="Result">
 	<div>
-		<label for="percent_capacity_per_replica"
-			>Percent capacity per replica</label
-		>
+		<label for="percent_capacity_per_replica">
+			Percent capacity per replica
+		</label>
 		<br />
 		<input
 			type="number"
@@ -90,9 +86,9 @@ const metrics = Object.entries({
 		/>
 	</div>
 	<div>
-		<label for="percent_capacity_across_all_replicas"
-			>Percent capacity across all replicas</label
-		>
+		<label for="percent_capacity_across_all_replicas">
+			Percent capacity across all replicas
+		</label>
 		<br />
 		<input
 			type="number"
@@ -103,9 +99,9 @@ const metrics = Object.entries({
 		/>
 	</div>
 	<div>
-		<label for="max_dns_request_per_min"
-			>Maximum DNS requests per minute across all replicas</label
-		>
+		<label for="max_dns_request_per_min">
+			Maximum DNS requests per minute across all replicas
+		</label>
 		<br />
 		<input
 			type="number"

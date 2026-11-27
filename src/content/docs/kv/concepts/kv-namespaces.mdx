@@ -7,11 +7,18 @@ sidebar:
 products:
   - kv
 ---
-import { Type, MetaInfo, WranglerConfig, DashButton } from "~/components";
+import {
+	CliVariant,
+	CliVariants,
+	DashButton,
+	MetaInfo,
+	Type,
+	WranglerConfig,
+} from "~/components";
 
 A KV namespace is a key-value database replicated to Cloudflare’s global network.
 
-Bind your KV namespaces through Wrangler or via the Cloudflare dashboard.
+Bind your KV namespaces in your Worker configuration file or via the Cloudflare dashboard.
 
 :::note
 
@@ -21,11 +28,14 @@ KV namespace IDs are public and bound to your account.
 
 ## Jurisdictions
 
-Namespaces can optionally be restricted to a jurisdiction to durably store data only within a specific region. This feature is currently in private beta. Refer to [Data location](/kv/reference/data-location/) for more information.
+Namespaces can optionally be restricted to a jurisdiction to durably store data only within a specific region. Refer to [Data location](/kv/reference/data-location/) for more information.
 
-## Bind your KV namespace through Wrangler
+## Bind your KV namespace in configuration
 
-To bind KV namespaces to your Worker, assign an array of the below object to the `kv_namespaces` key.
+<CliVariants>
+<CliVariant cli="wrangler">
+
+To bind KV namespaces to your Worker in your [Wrangler configuration file](/workers/wrangler/configuration/), assign an array of objects with the following properties to the `kv_namespaces` key:
 
 * `binding` <Type text="string" /> <MetaInfo text="required" />
 
@@ -55,6 +65,42 @@ Example:
 ```
 
 </WranglerConfig>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+To bind KV namespaces to your Worker in [`cloudflare.config.ts`](/cf/projects/cloudflare-config/), add a property to `worker.env` using `bindings.kv()`. The property key is the binding name used to refer to the KV namespace in your Worker:
+
+* `id` <Type text="string" /> <MetaInfo text="required" />
+
+  * The ID of the KV namespace.
+
+* `dev` <Type text="object" /> <MetaInfo text="optional" />
+
+  * Local development options. Set `dev: { remote: true }` to connect to the remote KV namespace during `cf dev`.
+
+`cloudflare.config.ts` does not have a `preview_id` field. During `cf dev`, bindings use local storage by default unless you set `dev: { remote: true }`. To use a different namespace `id` for [Worker Previews](/cf/projects/#deploy-a-preview) or modes, pass a function to `defineConfig(({ mode, isPreview }) => ...)`.
+
+Example:
+
+```ts title="cloudflare.config.ts"
+import { bindings, defineConfig } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "my-worker",
+		entrypoint,
+		compatibilityDate: "<COMPATIBILITY_DATE>",
+		env: {
+			TEST_NAMESPACE: bindings.kv({ id: "<TEST_ID>" }),
+		},
+	},
+});
+```
+
+</CliVariant>
+</CliVariants>
 
 ## Bind your KV namespace via the dashboard
 

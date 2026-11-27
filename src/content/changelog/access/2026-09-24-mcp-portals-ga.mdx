@@ -1,0 +1,21 @@
+---
+title: MCP server portals are now generally available
+description: MCP server portals are now generally available to connect, secure, and monitor approved MCP servers through one endpoint.
+date: 2026-09-24
+products:
+  - access
+  - cloudflare-one
+---
+
+[MCP server portals](/cloudflare-one/access-controls/ai-controls/mcp-portals/) are now generally available to all Cloudflare customers. A portal gives users one endpoint for approved Model Context Protocol (MCP) servers. Cloudflare Access logs tool, prompt, and resource activity.
+
+Since the open beta, MCP server portals have added:
+
+- [Gateway routing](/cloudflare-one/access-controls/ai-controls/mcp-portals/#route-portal-traffic-through-gateway) for HTTP logging and data loss prevention (DLP) scanning
+- [Code Mode policies](/cloudflare-one/access-controls/ai-controls/mcp-portals/#code-mode-policies) that control how portals reduce tool definitions and token use
+- [Static OAuth client credentials](/cloudflare-one/access-controls/ai-controls/mcp-portals/#configure-manual-oauth-credentials) for providers that do not support Dynamic Client Registration
+- [Session management](/cloudflare-one/access-controls/ai-controls/mcp-portals/#manage-portal-sessions) for reconnecting servers and changing authorizations from the portal
+- [Service token authentication](/cloudflare-one/access-controls/ai-controls/mcp-portals/#connect-with-a-service-token) for autonomous agents and machine-to-machine access
+- [Logpush support](/cloudflare-one/insights/logs/logpush/) for exporting portal activity to external storage or a security information and event management (SIEM) system
+
+To create a portal and connect an MCP client, refer to [MCP server portals](/cloudflare-one/access-controls/ai-controls/mcp-portals/).

@@ -68,6 +68,10 @@ Cloudflare defines managed labels. Some managed labels can be discovered automat
 
 Custom labels let you organize operations for your own workflows. They do not replace managed labels for Cloudflare security detections.
 
+## Configure field extraction
+
+[Field extraction](/security/web-assets/field-extraction/) tells Cloudflare where to find application data that security products should inspect. Currently, you can define custom LLM prompt locations for [AI Security for Apps](/waf/detections/ai-security-for-apps/).
+
 ## Define security protections
 
 Security detections can use Web Assets to focus on the operations where their signals matter. For example, [AI Security for Apps](/waf/detections/ai-security-for-apps/) uses the `cf-llm` managed label to scan requests to AI-powered operations. For more information, refer to [Define security protections](/security/web-assets/define-security-protections/).

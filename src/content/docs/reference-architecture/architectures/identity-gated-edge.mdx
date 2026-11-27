@@ -1,0 +1,201 @@
+---
+title: Identity-gated edge architecture
+pcx_content_type: reference-architecture
+description: Protect application login surfaces with Cloudflare Access, close alternate origin paths, and validate identity before forwarding requests.
+products:
+  - access
+  - tunnel
+  - waf
+sidebar:
+  label: Identity-gated edge
+---
+
+An identity-gated edge authenticates and authorizes callers before their requests reach an application's HTTP interface. Cloudflare Access provides the identity gate. Cloudflare Tunnel or a restricted origin connection prevents callers from going around it. A connector, reverse proxy, or application can validate the Access assertion. Applications can also retain their own identity provider (IdP) sign-in.
+
+Use this architecture for self-hosted administration consoles, partner portals, file-transfer web interfaces, and remote-access web portals. It supports people, services, and compatible AI agents, with different credentials for each caller type.
+
+This reference architecture explains the problem, trust boundaries, and product choices. The companion [identity-gated edge design guide](/reference-architecture/design-guides/identity-gated-edge/) provides configuration recommendations, deployment stages, and acceptance tests.
+
+## Architecture at a glance
+
+Start with an Access-protected hostname connected through [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) (or use one of the [other origin connection options](#choose-the-origin-connection) if you cannot run the `cloudflared` daemon in your environment).
+
+## The problem: authentication code is still application code
+
+A login page can expose more than a password prompt. The server may parse headers, process redirects, deserialize messages, or load session data before authenticating the caller. A vulnerability in that processing can be reachable without an account.
+
+Application MFA protects the sign-in decision. It does not prevent anonymous requests from reaching the application's pre-authentication code. Patching remains necessary, but cannot protect against every undisclosed vulnerability. WAF rules can block recognized attacks, but should not be treated as complete coverage for unknown flaws.
+
+Without an independent gate, anonymous callers can reach the application's HTTP stack:
+
+```mermaid
+flowchart LR
+    accTitle: Application login processing without an independent identity gate
+    accDescr: An anonymous Internet caller reaches application HTTP and login processing before the application's authentication and MFA checks. Only subsequent application functions require authorization.
+    caller[Anonymous Internet caller] --> parser[Application HTTP and login processing]
+    parser --> login[Application authentication and MFA]
+    login --> data[Authorized application functions]
+```
+
+The identity-gated design moves the first authentication decision outside that stack. Anonymous callers can still reach Cloudflare's entry point and the IdP's sign-in interface. They should not reach the protected application's login handler.
+
+This design reduces the application's anonymous attack surface. It does not make the application invisible, repair vulnerable software, or stop an attacker who already has an authorized identity.
+
+## Four design requirements
+
+Configure and test each requirement:
+
+| Requirement                                                | Enforcement                                                                                                                  | Evidence                                                                                            |
+| ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| Only authorized callers reach the protected HTTP interface | Access policies cover the complete hostname and required paths                                                               | Anonymous, unauthorized, and revoked callers do not reach application code                          |
+| There is no unprotected alternate origin path              | Remove public inbound access, or require a restricted and authenticated connection                                           | Direct IPs, alternate hostnames, IPv6, and failover endpoints cannot bypass the gate                |
+| Identity is checked at the application boundary            | Validate Access JWTs in a connector, proxy, or supported application. Retain the application's own IdP sign-in where needed. | Each JWT validator rejects invalid assertions. Test application sign-in and permissions separately. |
+| Configuration changes do not expose the application        | Review changes, restrict administrator access, and rerun access and origin-bypass tests                                      | The deployed configuration matches the reviewed change, and unauthorized requests remain blocked    |
+
+Independent Access JWT validation adds a check at the origin, but many applications cannot validate Access JWTs themselves. With Tunnel, `cloudflared` can validate them before forwarding requests. A reverse proxy with JWT support can also perform validation.
+
+If the application uses its own Security Assertion Markup Language (SAML) or OpenID Connect (OIDC) sign-in, keep that flow. The application redirects the browser to its IdP and validates the returned SAML response or OIDC tokens to create its own session. An Access JWT is signed by Cloudflare and does not replace that exchange.
+
+## Reference topology
+
+The following topology uses Tunnel. Solid arrows show application requests. Dashed arrows show authentication exchanges or connector establishment, not an alternate application route:
+
+```mermaid
+flowchart TB
+    accTitle: Identity-gated HTTP application connected through Cloudflare Tunnel
+    accDescr: Human browsers and machine callers connect to Access and WAF in the Cloudflare network. The identity provider supplies human authentication. In the customer network, cloudflared establishes an outbound tunnel, validates Access JWTs on permitted incoming requests, and forwards validated requests to the application for authorization.
+    browser[Human browser]
+    machine[Service or AI agent]
+    idp[Organization identity provider]
+    subgraph edge[Cloudflare network]
+        controls[Cloudflare edge: proxied HTTPS with Access, WAF, and rate limits]
+        tunnel[Cloudflare Tunnel service]
+    end
+    subgraph origin[Customer network]
+        connector[Customer network: cloudflared validates Access JWT]
+        app[Application: authorization and optional existing sign-in]
+    end
+    browser -->|HTTPS and Access session| controls
+    machine -->|HTTPS and caller credential| controls
+    controls -.->|Redirect browser to IdP for sign-in| idp
+    browser -.->|Sign in| idp
+    idp -.->|Authentication result| controls
+    controls -->|Permitted request with Access JWT| tunnel
+    connector -.->|Establish outbound tunnel| tunnel
+    tunnel -->|Request over established tunnel| connector
+    connector -->|Validated request| app
+```
+
+The controls box represents required checks, not a fixed execution order. Blocking or redirecting a request may terminate processing before another control runs. Refer to [security feature interoperability](/waf/feature-interoperability/) when designing rules and interpreting logs.
+
+### Dedicated CDN Egress IPs and CNI topology
+
+If you cannot run `cloudflared`, use [Dedicated CDN Egress IPs with Cloudflare Network Interconnect (CNI)](/smart-shield/configuration/dedicated-egress-ips/other-products/#access-and-cni). Dedicated addresses let your firewall restrict which sources can reach the origin. CNI provides a private path between Cloudflare and your network, without sending origin traffic over the public Internet.
+
+```mermaid
+flowchart LR
+    accTitle: Identity-gated application using Dedicated CDN Egress IPs and CNI
+    accDescr: Callers connect to Access and WAF at Cloudflare. Authorized requests leave through Dedicated CDN Egress IPs and cross a private Cloudflare Network Interconnect connection. The customer firewall admits only the assigned source addresses to the origin. The application retains its own sign-in and authorization.
+    caller[Browser, service, or AI agent]
+    subgraph edge[Cloudflare network]
+        direction TB
+        controls[Access, WAF, and rate limits]
+        egress[Dedicated CDN Egress IPs]
+        controls -->|Authorized request| egress
+    end
+    subgraph origin[Customer network]
+        direction TB
+        firewall[Firewall: assigned egress IPs only]
+        app[Application sign-in and authorization]
+        firewall --> app
+    end
+    caller -->|HTTPS| edge
+    edge -->|HTTPS over private CNI| origin
+```
+
+Remove public and alternate routes that could bypass this private connection. This pattern does not require a Tunnel connector. Confirm [Dedicated CDN Egress IP availability](/smart-shield/configuration/dedicated-egress-ips/) and arrange CNI connectivity with your account team.
+
+### Request flow
+
+1. A browser, service, or agent connects to the proxied hostname.
+2. Cloudflare applies the configured request-security and Access controls. A browser without a session starts an Access login. A service presents its machine credential.
+3. Access evaluates the selected application's policies. An authenticated user still needs authorization to that application.
+4. Permitted traffic carries an Access JWT in `Cf-Access-Jwt-Assertion` toward the origin boundary.
+5. Where configured, `cloudflared`, a reverse proxy, or the application validates that JWT. If the application uses its own IdP sign-in, the browser completes that flow too. The application enforces resource and operation permissions.
+
+A redirect to Access alone is not proof that alternate origin routes are closed.
+
+### Trust boundaries
+
+Each boundary has a separate responsibility:
+
+| Boundary                        | Trusted for                                                    | Not a substitute for                                   |
+| ------------------------------- | -------------------------------------------------------------- | ------------------------------------------------------ |
+| Caller to Cloudflare            | Presenting a valid session, service credential, or OAuth token | Origin-side token validation                           |
+| Access to IdP                   | User authentication and supported identity attributes          | Application permissions or origin isolation            |
+| Cloudflare to origin            | Delivering traffic over the protected connection               | Application-level authorization                        |
+| JWT validator to application    | Admitting requests with an expected Access assertion           | Independent verification of the user's IdP credentials |
+| Application to back-end systems | Enforcing data and operation permissions                       | Protection from an authorized but malicious caller     |
+
+Protect the validator-to-application hop too. If other machines can reach the application directly, they can bypass a validator running on a different host.
+
+## Choose the origin connection
+
+Keep Access protection and origin restrictions in every connection pattern. Configure Access JWT validation in a supported connector, proxy, or application, and retain the application's own authentication where needed:
+
+| Pattern                  | Products and settings                                                                                                                                                                     | Choose when                                                         | Remaining responsibility                                                                                      |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Outbound-only connector  | [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and **Protect with Access**                                                                                   | You can run `cloudflared` and remove public inbound access          | Restrict local access and operate redundant connectors                                                        |
+| Restricted public origin | Proxied DNS, [Full (strict)](/ssl/origin-configuration/ssl-modes/full-strict/), a firewall, and [custom Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/) | You must retain a public load balancer or inbound connection        | Require the custom client certificate at every origin site                                                    |
+| Dedicated origin egress  | Restricted public origin plus [Dedicated CDN Egress IPs](/smart-shield/configuration/dedicated-egress-ips/)                                                                               | Your firewall requires source addresses assigned to your deployment | Allow the complete assigned pool and plan failover and capacity                                               |
+| Private interconnect     | Access, [Dedicated CDN Egress IPs and CNI](/smart-shield/configuration/dedicated-egress-ips/other-products/#access-and-cni), origin TLS, and firewall restrictions                        | You need a private origin path without running `cloudflared`        | Arrange interconnect routing and redundancy, allow the assigned source pool, and close alternate origin paths |
+
+Cloudflare's published IP ranges are shared across customers. Allowlisting them does not identify your deployment. The global Authenticated Origin Pulls certificate also proves Cloudflare network origin, not your specific account. Use a custom zone-level or per-hostname certificate for the restricted-public-origin pattern.
+
+:::note[IP allowlisting for your deployment]
+Use Dedicated CDN Egress IPs if you want source-IP allowlisting to distinguish your deployment from other Cloudflare customers. Allow the complete assigned pool at every origin and failover site, then deny other source addresses. Allowlisting Cloudflare's shared ranges alone does not provide this restriction.
+:::
+
+Authenticated Origin Pulls works with proxied HTTPS origins that accept inbound TLS connections, including the restricted public-origin and Dedicated CDN Egress IP patterns. It requires **Full** or **Full (strict)** mode. Use Full (strict) here. It is not compatible with Tunnel origins, which use outbound connector connections instead. An origin server certificate, such as an Origin CA certificate, authenticates the server. It does not restrict which clients can connect.
+
+Dedicated CDN Egress IPs, with or without CNI, are an alternative to Tunnel, not a Tunnel prerequisite. A public-origin firewall also cannot prevent a direct flood from consuming upstream capacity. Consider [Magic Transit](/magic-transit/) where network-layer protection of public address space is required.
+
+## Match identity to the caller
+
+People, services, and user-authorized agents need different authentication paths:
+
+| Caller                                   | Recommended control                                                                                             | Important limitation                                                                            |
+| ---------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| Human using a browser                    | Access Allow policy with IdP groups, MFA, and device posture where appropriate                                  | IdP authentication does not automatically grant application access                              |
+| Autonomous service or agent              | Access Service Auth policy with a caller-specific credential                                                    | A shared service token identifies the credential, not each end user behind it                   |
+| CLI or agent acting for a user           | [Managed OAuth](/cloudflare-one/access-controls/applications/http-apps/managed-oauth/) with a compatible client | This Beta feature requires supported OAuth behavior and is not a general token-exchange service |
+| API client with an existing token issuer | [API Shield JWT validation](/api-shield/security/jwt-validation/) where that architecture fits                  | Another issuer's valid JWT is not an Access session or automatic Access authorization           |
+
+Managed OAuth issues an opaque client access token. Access validates that token and forwards an Access JWT to the origin. Do not assume the client's bearer token is a JWT the application can validate locally. Confirm compatibility before enabling managed OAuth on an application that serves its own OAuth discovery and challenges.
+
+For MCP registration, authorization, and tool governance, use the [MCP security documentation](/cloudflare-one/access-controls/ai-controls/). Those workflows are not prerequisites for protecting an ordinary web application.
+
+## Keep non-HTTP protocols separate
+
+An HTTP identity gate does not automatically protect a native client's TCP, UDP, or vendor-specific session protocol. Inventory the web sign-in flow and session connection separately.
+
+Use [Access for Infrastructure](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/) for supported infrastructure access, or the Cloudflare One Client with [private application access](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) for managed-device paths. [Browser-rendered connections](/cloudflare-one/access-controls/applications/non-http/browser-rendering/) provide clientless access for supported protocols.
+
+[Spectrum](/spectrum/) and Magic Transit protect network reachability and availability, but do not by themselves provide the HTTP Access identity gate. Do not assume a native remote-desktop client inherits the browser's Access session. Test every client and protocol before closing its existing path.
+
+## Scope and residual risks
+
+This design does not remove the following responsibilities:
+
+- Patch the application, connectors, and supporting systems when new security fixes are issued. Authorized callers can still reach vulnerable code.
+- Enforce application authorization. An Access policy controls entry, not every record or action.
+- Protect the IdP and Cloudflare administrators. Both remain part of the trust model.
+- Protect internal network paths and back-end credentials. Closing Internet ingress does not prevent lateral movement.
+- Treat public callbacks, webhooks, health checks, and Bypass policies as explicit exceptions. An unauthenticated interface cannot meet the no-anonymous-access requirement.
+- Plan for IdP, connector, and edge outages without exposing the origin as a fallback.
+
+## Next steps
+
+Use the [design guide](/reference-architecture/design-guides/identity-gated-edge/) to select settings and run acceptance tests. For broader policy design, refer to [designing ZTNA access policies](/reference-architecture/design-guides/designing-ztna-access-policies/).
+
+Build the [Tunnel pilot companion](/reference-architecture/implementation-guides/identity-gated-edge/) for a minimal reproducible demonstration. Its browser checks do not replace production acceptance.

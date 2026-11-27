@@ -1,0 +1,109 @@
+---
+import { getEntry } from "astro:content";
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
+import CornerMarks from "@/components/CornerMarks.astro";
+import HalftoneBackground from "./HalftoneBackground.astro";
+import SectionHeading from "./SectionHeading.astro";
+import ViewAllLink from "./ViewAllLink.astro";
+import { guides } from "./guides-data";
+
+const PLAN_SUFFIX = /\s*\([^)]*\)\s*$/;
+
+const cards = await Promise.all(
+	guides.map(async (guide) => {
+		const page = await getEntry("docs", guide.slug);
+		if (!page) {
+			throw new Error(
+				`GuidesSection: no docs page with slug "${guide.slug}". Update src/components/landing/guides-data.ts.`,
+			);
+		}
+		return {
+			eyebrow: guide.eyebrow,
+			title: guide.title ?? page.data.title.replace(PLAN_SUFFIX, ""),
+			description: page.data.description,
+			href: `/${guide.slug}/`,
+		};
+	}),
+);
+
+const [featured, ...rest] = cards;
+---
+
+{featured && (
+	<section
+		id="guides"
+		class="pt-10 pb-10 lg:pt-14 lg:pb-12"
+		aria-labelledby="guides-heading"
+	>
+		<div class="mb-6 flex items-center justify-between sm:mb-8">
+			<div>
+				<SectionHeading id="guides-heading" class="mb-2">
+					Guides
+				</SectionHeading>
+				<p class="text-muted-foreground max-w-[600px] text-sm leading-relaxed text-pretty md:text-lg">
+					Start from what you want to do. Each guide walks through the
+					Cloudflare settings that get you there.
+				</p>
+			</div>
+			<ViewAllLink href="/use-cases/solutions/">View all guides</ViewAllLink>
+		</div>
+
+		<div class="border-border bg-border relative grid grid-cols-1 gap-px overflow-visible border md:grid-cols-2 xl:grid-cols-[5fr_3fr_3fr]">
+			<CornerMarks />
+
+			<a
+				href={featured.href}
+				class="group/card bg-background relative flex flex-col overflow-hidden p-6 no-underline md:col-span-full xl:col-auto xl:row-span-2"
+			>
+				<HalftoneBackground />
+
+				<span class="text-primary relative z-10 mb-4 font-mono text-xs tracking-widest uppercase">
+					{featured.eyebrow}
+				</span>
+
+				<div class="relative z-10 mb-9 flex-1 pt-4">
+					<h3 class="text-foreground mb-2 text-xl leading-snug font-medium md:text-2xl">
+						{featured.title}
+					</h3>
+					<p class="text-muted-foreground max-w-[480px] text-sm leading-relaxed md:text-base">
+						{featured.description}
+					</p>
+				</div>
+
+				<span class="text-muted-foreground relative z-10 inline-flex w-fit items-center gap-2 text-sm font-medium underline-offset-4 group-focus-within/card:underline group-hover/card:underline">
+					Read the guide
+					<Icon
+						name="ph:arrow-right"
+						class="h-3.5 w-3.5 transition-transform duration-150 group-hover/card:translate-x-0.5"
+					/>
+				</span>
+			</a>
+
+			{rest.map((card) => (
+				<a
+					href={card.href}
+					class="group/card bg-background flex flex-col p-6 no-underline"
+				>
+					<span class="text-primary mb-4 font-mono text-xs tracking-widest uppercase">
+						{card.eyebrow}
+					</span>
+					<div class="mb-6 flex-1">
+						<h3 class="text-foreground mb-2 line-clamp-2 text-base leading-snug font-medium md:text-lg">
+							{card.title}
+						</h3>
+						<p class="text-muted-foreground line-clamp-2 text-sm leading-relaxed md:text-base">
+							{card.description}
+						</p>
+					</div>
+					<span class="text-muted-foreground inline-flex w-fit items-center gap-2 text-sm font-medium underline-offset-4 group-focus-within/card:underline group-hover/card:underline">
+						Read the guide
+						<Icon
+							name="ph:arrow-right"
+							class="h-3.5 w-3.5 transition-transform duration-150 group-hover/card:translate-x-0.5"
+						/>
+					</span>
+				</a>
+			))}
+		</div>
+	</section>
+)}

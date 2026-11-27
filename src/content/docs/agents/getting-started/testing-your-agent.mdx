@@ -3,12 +3,10 @@ title: Testing your Agents
 description: Write and run tests for Cloudflare Agents using Vitest and the Workers test pool.
 pcx_content_type: get-started
 sidebar:
-  order: 3
+  order: 4
 products:
   - agents
 ---
-
-import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 Because Agents run on Cloudflare Workers and Durable Objects, they can be tested using the same tools and techniques as Workers and Durable Objects.
 
@@ -18,7 +16,7 @@ Because Agents run on Cloudflare Workers and Durable Objects, they can be tested
 
 :::note
 
-The `agents-starter` template and new Cloudflare Workers projects already include the relevant `vitest` and `@cloudflare/vitest-plugin` packages, as well as a valid `vitest.config.js` file.
+New Cloudflare Workers projects already include the relevant `vitest` and `@cloudflare/vitest-plugin` packages, as well as a valid `vitest.config.js` file.
 
 :::
 
@@ -126,4 +124,4 @@ Your worker has access to the following bindings:
 
 This spins up a local development server that runs the same runtime as Cloudflare Workers, and allows you to iterate on your Agent's code and test it locally without deploying it.
 
-Visit the [`wrangler dev`](https://developers.cloudflare.com/workers/wrangler/commands/general/#dev) docs to review the CLI flags and configuration options.
+Visit the [`wrangler dev`](/workers/wrangler/commands/general/#dev) docs to review the CLI flags and configuration options.

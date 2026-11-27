@@ -9,7 +9,9 @@ products:
   - api
 ---
 
-Cloudflare API credentials use a prefixed, scannable format that makes them identifiable by credential scanning tools. Each credential type has a distinct prefix followed by 40 characters and a checksum.
+import { CURL } from "~/components";
+
+Cloudflare API keys and API tokens use a prefixed, scannable format that makes them identifiable by credential scanning tools. Each credential type in the following table has a distinct prefix followed by 40 characters and a checksum.
 
 | Credential type   | Description                                             | Format                           |
 | ----------------- | ------------------------------------------------------- | -------------------------------- |
@@ -39,3 +41,20 @@ Tokens created before the scannable format was introduced use unprefixed strings
 | Global API Key    | 37–45 character lowercase hex string |
 | User API Token    | 40-character alphanumeric string     |
 | Account API Token | 40-character alphanumeric string     |
+
+## Wrangler OAuth access tokens
+
+When you authenticate with [`wrangler login`](/workers/wrangler/commands/general/#login), Wrangler receives a user OAuth access token that starts with `cfoat_`. Run [`wrangler auth token`](/workers/wrangler/commands/general/#auth-token) to retrieve the current token for use with another tool or script. The command automatically refreshes the token if it has expired.
+
+Treat the returned value as a secret. Do not commit it to source control or share it.
+
+## Verify a token
+
+To check that a user API token is valid, send it to the [Verify Token](/api/resources/user/subresources/tokens/methods/verify/) endpoint:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/user/tokens/verify"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+/>
+
+If the token is valid, the response includes the token's `id` and a `status` of `active`.

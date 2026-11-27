@@ -1,0 +1,134 @@
+---
+title: Capture a downloaded file
+description: Save a bounded copy of a Gateway-proxied attachment to a private R2 bucket in the background.
+pcx_content_type: tutorial
+difficulty: Intermediate
+products:
+  - cloudflare-one
+  - workers
+  - r2
+sidebar:
+  badge:
+    text: Beta
+    variant: caution
+  order: 3
+---
+
+import { Render, TypeScriptExample, WranglerConfig } from "~/components";
+
+<Render file="gateway/forward-availability" product="cloudflare-one" />
+
+Save a copy of a downloaded attachment to R2 while returning the original response to the user. This script captures complete files up to 25 MiB and skips larger files. It detects attachments using `Content-Disposition`.
+
+## Configure the Worker
+
+<Render file="gateway/worker-types" product="cloudflare-one" />
+
+[Create a private R2 bucket](/r2/buckets/create-buckets/) named `gateway-downloads`. Add this binding to the [Worker configuration](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward):
+
+<WranglerConfig>
+
+```toml
+[[r2_buckets]]
+binding = "CAPTURES"
+bucket_name = "gateway-downloads"
+```
+
+</WranglerConfig>
+
+Use this script as `src/index.ts`:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+import type {
+	GatewayMiddlewareContext,
+	GatewayMiddlewareNext,
+} from "@cloudflare/zt-types";
+
+interface Env {
+	CAPTURES: R2Bucket;
+}
+const LIMIT = 25 * 1024 * 1024;
+
+async function readBounded(
+	body: ReadableStream<Uint8Array>,
+): Promise<ArrayBuffer | null> {
+	const reader = body.getReader();
+	const chunks: Uint8Array[] = [];
+	let size = 0;
+	try {
+		while (true) {
+			const { done, value } = await reader.read();
+			if (done) break;
+			size += value.byteLength;
+			if (size > LIMIT) {
+				void reader.cancel().catch(() => {});
+				return null;
+			}
+			chunks.push(value);
+		}
+	} finally {
+		reader.releaseLock();
+	}
+	const bytes = new Uint8Array(size);
+	let offset = 0;
+	for (const chunk of chunks) {
+		bytes.set(chunk, offset);
+		offset += chunk.byteLength;
+	}
+	return bytes.buffer;
+}
+
+export class GatewayMiddleware extends WorkerEntrypoint<Env> {
+	async handle(
+		request: Request,
+		context: GatewayMiddlewareContext,
+		next: GatewayMiddlewareNext,
+	): Promise<Response> {
+		const response = await next(request);
+		const disposition = response.headers.get("content-disposition") ?? "";
+		if (
+			request.method === "GET" &&
+			response.status === 200 &&
+			!response.headers.has("content-encoding") &&
+			/^attachment\b/i.test(disposition) &&
+			response.body
+		) {
+			const copy = response.clone();
+			this.ctx.waitUntil(
+				this.capture(copy).catch(() =>
+					console.error("Download capture failed"),
+				),
+			);
+		}
+		return response;
+	}
+
+	async capture(response: Response): Promise<void> {
+		const bytes = await readBounded(response.body!);
+		if (bytes === null) {
+			console.log("Download capture skipped: file exceeds limit");
+			return;
+		}
+		await this.env.CAPTURES.put(crypto.randomUUID(), bytes, {
+			httpMetadata: { contentType: "application/octet-stream" },
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+The reader counts actual streamed bytes instead of trusting `Content-Length`. It supplies R2 with an `ArrayBuffer` whose size is known, rather than an arbitrary stream. Random object keys avoid using untrusted filenames as storage paths.
+
+## Forward and test
+
+Deploy the Worker and [create a Forward policy](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward) for a controlled download host and path, with **HTTP Method** `GET` and a test user group.
+
+Download a small attachment through Gateway. Confirm that the browser download and the R2 object have identical contents. Download a file larger than 25 MiB and confirm that the user still receives it while the Worker logs that capture was skipped.
+
+Cloning can buffer data when the two consumers run at different speeds. Capture also allocates memory for the bounded file. Keep the policy narrow, avoid high-volume parallel downloads, and test against [Workers memory limits](/workers/platform/limits/#memory). A slow transfer or failed background write can leave no captured object. Use a dedicated capture pipeline when retention must be guaranteed.
+
+This example captures complete, uncompressed attachment responses with status `200`. It skips range responses and bodies with `Content-Encoding`. The copy is taken before Gateway's final response inspection, so a file later blocked by Gateway can still be stored in R2. Keep the bucket private, apply [retention rules](/r2/buckets/object-lifecycles/), and treat captured objects as untrusted files.

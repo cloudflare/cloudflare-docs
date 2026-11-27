@@ -1,0 +1,95 @@
+---
+title: Connect to Workers and Bindings
+pcx_content_type: concept
+sidebar:
+  order: 2
+description: Access KV, R2, Durable Objects, and other bindings from a container.
+products:
+  - containers
+---
+
+import { TypeScriptExample } from "~/components";
+
+Containers can access [Workers bindings](/workers/runtime-apis/bindings/) — KV, R2, D1, Durable Objects, and others — through [outbound intercepts](/containers/configuration/outbound-traffic/#define-outbound-handlers). An intercept sends HTTP requests from the container to a `WorkerEntrypoint` in your Worker. The entrypoint runs inside the Workers runtime, where all of your configured bindings are available.
+
+The container makes a plain HTTP request to a virtual hostname (for example, `http://my.kv/some-key`), and the entrypoint resolves it using the bound resource. No SDK or client library is required inside the container.
+
+## Use bindings in an entrypoint
+
+Define a `WorkerEntrypoint` for each virtual hostname. `this.env` gives you access to every binding declared in your Wrangler configuration. Pass per-instance values, such as the Durable Object ID, in `props`. `ctx.exports` requires a [compatibility date](/workers/configuration/compatibility-dates/) of `2025-11-17` or later, or the `enable_ctx_exports` compatibility flag.
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject, WorkerEntrypoint } from "cloudflare:workers";
+
+type Props = { containerId: string };
+
+export class KvGateway extends WorkerEntrypoint<Env, Props> {
+	async fetch(request: Request): Promise<Response> {
+		const key = new URL(request.url).pathname.slice(1);
+		const value = await this.env.KV.get(key);
+		return new Response(value);
+	}
+}
+
+export class R2Gateway extends WorkerEntrypoint<Env, Props> {
+	async fetch(request: Request): Promise<Response> {
+		const url = new URL(request.url);
+		// Scope access to this container's ID
+		const path = `${this.ctx.props.containerId}${url.pathname}`;
+		const object = await this.env.R2.get(path);
+		return new Response(object?.body ?? null, { status: object ? 200 : 404 });
+	}
+}
+
+export class MyContainer extends DurableObject<Env> {
+	async startContainer(): Promise<void> {
+		const container = this.ctx.container!;
+		if (container.running) return;
+
+		const props = { containerId: this.ctx.id.toString() };
+		await container.interceptOutboundHttp(
+			"my.kv",
+			this.ctx.exports.KvGateway({ props }),
+		);
+		await container.interceptOutboundHttp(
+			"my.r2",
+			this.ctx.exports.R2Gateway({ props }),
+		);
+
+		container.start({ image: container.images.base, enableInternet: false });
+	}
+}
+```
+
+</TypeScriptExample>
+
+The container calls `http://my.kv/some-key` and the entrypoint resolves it using the KV binding. A call to `http://my.r2/file.png` reads from R2, scoped to the current container instance.
+
+An intercept lasts until the container stops. Register intercepts each time you start the container.
+
+:::note
+Use `props` to apply different rules per container instance — for example, to look up per-instance configuration from KV.
+:::
+
+## Access Durable Object state
+
+Pass the Durable Object ID in `props` to call the container's own Durable Object from an entrypoint.
+
+```ts
+export class StateGateway extends WorkerEntrypoint<Env, Props> {
+	async fetch(request: Request): Promise<Response> {
+		const id = this.env.MY_CONTAINER.idFromString(this.ctx.props.containerId);
+		const stub = this.env.MY_CONTAINER.get(id);
+		// Assumes getStateForKey is defined on your Durable Object
+		return Response.json(await stub.getStateForKey(await request.text()));
+	}
+}
+```
+
+## Related resources
+
+- [Handle outbound traffic](/containers/configuration/outbound-traffic/) — Block, allow, and intercept outbound HTTP from a container
+- [Environment variables and secrets](/containers/configuration/environment-variables/) — Configure secrets and environment variables
+- [Durable Object Container API](/containers/api/durable-object-container/) — Full `ctx.container` API reference

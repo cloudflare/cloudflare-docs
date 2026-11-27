@@ -10,7 +10,7 @@ date: 2026-08-04
 
 ## Debug with AI agents
 
-When the tooling detects an AI agent session, it prints a terminal hint pointing to the [Local Explorer API](/workers/local-development/local-explorer/#api) at `/cdn-cgi/explorer/api`. The API serves an OpenAPI schema and exposes a read-only observability query endpoint for discovering telemetry, querying traces and logs, and inspecting binding state.
+When the tooling detects an AI agent session, it prints a terminal hint pointing to the [Local Explorer API](/workers/local-development/local-explorer/#api) at `/cdn-cgi/local/explorer/api`. The API serves an OpenAPI schema and exposes a read-only observability query endpoint for discovering telemetry, querying traces and logs, and inspecting binding state.
 
 The agent can identify the exact failing operation, fix the code, rerun the request, and verify the result. This debug loop requires no deployment or temporary logs.
 

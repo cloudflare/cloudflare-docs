@@ -4,6 +4,16 @@ import { formatContentType } from "./content-type";
 
 export type SchemaType = "BlogPosting" | "WebPage" | "TechArticle";
 
+function resolveBaseTitle({
+	title,
+	titleOverride,
+}: {
+	title: string;
+	titleOverride?: string;
+}): string {
+	return titleOverride ? titleOverride.split(" | ")[0] : title;
+}
+
 /** `<title>`: `${base} · ${suffix}` when a suffix applies, else a raw
  *  head.title override or `${title} | ${siteTitle}`. */
 export function resolvePageTitle({
@@ -17,10 +27,19 @@ export function resolvePageTitle({
 	titleSuffix?: string;
 	siteTitle: string;
 }): string {
-	const baseTitle = titleOverride ? titleOverride.split(" | ")[0] : title;
+	const baseTitle = resolveBaseTitle({ title, titleOverride });
 	return titleSuffix
 		? `${baseTitle} · ${titleSuffix}`
 		: (titleOverride ?? `${title} | ${siteTitle}`);
+}
+
+/** JSON-LD headline: the semantic page title, matching the page's visible
+ *  `<h1>`. The `<title>` override is deliberately not an input: SEO overrides
+ *  use inconsistent separators and can carry real page titles on either side
+ *  (e.g. "Get started - CLI"), so their section/product suffixes cannot be
+ *  stripped reliably. */
+export function resolvePageHeadline({ title }: { title: string }): string {
+	return title;
 }
 
 /** Favicon link: first of svg > ico > png that exists, else svg. */
@@ -104,7 +123,7 @@ export function classifyContentType(
 export interface StructuredDataInput {
 	schemaType: SchemaType;
 	canonical: string | null;
-	fullTitle: string;
+	headline: string;
 	description?: string;
 	lang: string;
 	ogImage?: string | null;
@@ -120,7 +139,7 @@ export interface StructuredDataInput {
 export function buildStructuredData({
 	schemaType,
 	canonical,
-	fullTitle,
+	headline,
 	description,
 	lang,
 	ogImage,
@@ -134,7 +153,7 @@ export function buildStructuredData({
 		"@context": "https://schema.org",
 		"@type": schemaType,
 		"@id": `${canonical}#page`,
-		headline: fullTitle,
+		headline,
 		...(description ? { description } : {}),
 		url: canonical,
 		inLanguage: lang,

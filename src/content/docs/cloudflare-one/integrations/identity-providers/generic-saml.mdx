@@ -10,7 +10,7 @@ sidebar:
   order: 2
 ---
 
-import { Tabs, TabItem, Render } from "~/components";
+import { Tabs, TabItem, Render, Steps } from "~/components";
 
 Cloudflare One integrates with any identity provider that supports SAML 2.0. If your identity provider is not listed in the integration list of login methods in Cloudflare One, it can be configured using SAML 2.0 (or OpenID if OIDC based). Generic SAML can also be used if you would like to pass additional SAML headers or claims for an IdP in the integration list.
 
@@ -19,7 +19,7 @@ Cloudflare One integrates with any identity provider that supports SAML 2.0. If 
 Minimum requirements for identity providers:
 
 - The IdP must conform to SAML 2.0.
-- The IdP must provide a **Single sign-on URL**, an **Entity ID or Issuer URL**, and a **Signing certificate**.
+- The IdP must provide a **Single sign-on URL**, an **Entity ID or Issuer URL**, and either a **Signing certificate** or an [IdP metadata URL](#discover-idp-signing-certificates).
 - The IdP must include the signing public key in the SAML response.
 
 ## 1. Create an application in your identity provider
@@ -50,13 +50,20 @@ To download the SAML metadata file, copy-paste the metadata endpoint into a web 
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
+<Steps>
+
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Integrations** > **Identity providers**.
 2. Select **Add new identity provider** and select **SAML**.
 3. Choose a descriptive name for your identity provider.
-4. Enter the **Single Sign on URL**, **IdP Entity ID or Issuer URL**, and **Signing certificate** obtained from your identity provider.
-5. (Optional) To enable SCIM, refer to [Synchronize users and groups](#synchronize-users-and-groups).
-6. (Optional) Under **Optional configurations**, configure [additional SAML options](#optional-configurations).
-7. Select **Save**.
+4. Enter the **Single Sign on URL** and **IdP Entity ID or Issuer URL** obtained from your identity provider.
+5. Under **Signing certificate source**, choose one of the following:
+   - **Enter signing certificates manually**: Enter the **Signing certificate** obtained from your identity provider.
+   - **Fetch certificates from IdP metadata**: Enter the public HTTPS endpoint in **IdP metadata URL**. Refer to [Discover IdP signing certificates](#discover-idp-signing-certificates) for endpoint requirements and rotation behavior.
+6. (Optional) To enable SCIM, refer to [Synchronize users and groups](#synchronize-users-and-groups).
+7. (Optional) Under **Optional configurations**, configure [additional SAML options](#optional-configurations).
+8. Select **Save**.
+
+</Steps>
 
 </TabItem> <TabItem label="Terraform (v5)">
 
@@ -85,13 +92,60 @@ To download the SAML metadata file, copy-paste the metadata endpoint into a web 
 
 :::caution
 
-Set a reminder for the expiry date of the signing certificate obtained from your generic SAML identity provider. After the certificate expires, you will need to generate a new signing certificate and re-add it to your Cloudflare configuration via the Cloudflare dashboard or Terraform.
+If you enter signing certificates manually, set a reminder for their expiration dates. Replace each certificate in Cloudflare before it expires. To let Access retrieve replacement certificates from your IdP, use [IdP signing certificate discovery](#discover-idp-signing-certificates).
 
 :::
 
 ## 3. Test the connection
 
 You can now [test the IdP integration](/cloudflare-one/integrations/identity-providers/#test-idps-in-cloudflare-one). A success response should return the configured SAML attributes.
+
+## Discover IdP signing certificates
+
+Access can retrieve signing certificates from your IdP's SAML 2.0 metadata endpoint. This lets your IdP rotate signing certificates without a manual certificate update in Access. Existing manually configured certificates remain supported.
+
+:::note
+The endpoint must return SAML metadata XML, not a JSON Web Key Set (JWKS). This feature retrieves your IdP's signing certificates. It does not rotate the Access certificates used to [encrypt SAML assertions](#encrypt-saml-assertions).
+:::
+
+### Metadata endpoint requirements
+
+Use a publicly reachable HTTPS endpoint that returns the metadata directly, without authentication or redirects. The URL must use a hostname, not an IP address or a single-label hostname. Embedded credentials and URL fragments are not supported.
+
+The metadata must meet these requirements:
+
+- Return HTTP `200`.
+- Use a single SAML `EntityDescriptor` as the root element. Its `entityID` must exactly match the configured **IdP Entity ID or Issuer URL**. Aggregate `EntitiesDescriptor` documents are not supported.
+- Include X.509 certificates in a SAML 2.0 `IDPSSODescriptor`, under a `KeyDescriptor` with `use="signing"` or no `use` attribute.
+- Do not include a `DOCTYPE` or entity declaration.
+
+### Configure discovery through the API
+
+To configure discovery through the [Access identity provider API](/api/resources/zero_trust/subresources/identity_providers/methods/create/), set `metadata_url` in the SAML configuration. For example:
+
+```json
+{
+	"name": "Example SAML IdP",
+	"type": "saml",
+	"config": {
+		"issuer_url": "https://idp.example.com",
+		"sso_target_url": "https://idp.example.com/sso",
+		"metadata_url": "https://idp.example.com/metadata.xml"
+	}
+}
+```
+
+Configure either `metadata_url` or manual certificates (`idp_public_certs` or the legacy `idp_public_cert`), not both. For an existing IdP, [retrieve its configuration](/api/resources/zero_trust/subresources/identity_providers/methods/get/), preserve its other settings, and [update the IdP](/api/resources/zero_trust/subresources/identity_providers/methods/update/) with the chosen certificate source.
+
+### Rotate signing certificates
+
+For a planned rotation, publish both the old and new certificates in the metadata before changing the signing key. Allow time for Access to retrieve the new certificate. Keep the old certificate available for in-flight SAML responses and rollback, then remove it when it is no longer needed.
+
+:::caution[Emergency certificate replacement]
+Removing a certificate from metadata does not immediately remove it from the Access cache. Re-saving an unchanged IdP configuration does not force a refresh. To stop using a compromised cached certificate, switch the IdP to manual certificates and configure only a trusted replacement certificate.
+
+Changing signing certificates does not revoke existing Access sessions or application tokens. Revoke those separately when responding to a compromise.
+:::
 
 ## Synchronize users and groups
 
@@ -155,10 +209,10 @@ After you turn on encryption, Access will reject any unencrypted assertions from
 
 Access supports the following encryption algorithms:
 
-| Algorithm type | Supported values |
-| --- | --- |
+| Algorithm type     | Supported values                                   |
+| ------------------ | -------------------------------------------------- |
 | Content encryption | AES-128-CBC, AES-256-CBC, AES-128-GCM, AES-256-GCM |
-| Key transport | RSA-OAEP (XML Encryption 1.0 and 1.1), RSA-1.5 |
+| Key transport      | RSA-OAEP (XML Encryption 1.0 and 1.1), RSA-1.5     |
 
 :::caution
 RSA-1.5 is supported for compatibility but is considered insecure. Use RSA-OAEP when your identity provider supports it.
@@ -185,7 +239,15 @@ If you rotate again before updating your IdP with the current certificate, the p
 
 ### Sign SAML authentication request
 
-This optional configuration signs the [Access JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/) with the Cloudflare Access public key to ensure that the JWT is coming from a legitimate source. The Cloudflare public key can be obtained at `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs`.
+This option signs the SAML authentication request that Access sends to your identity provider. Access signs the request with its private key. Your IdP verifies the signature with the corresponding public certificate. This setting does not control Access JWT signing. For setup instructions, refer to [Signed AuthN requests](/cloudflare-one/integrations/identity-providers/signed_authn/).
+
+### Require fresh authentication at the identity provider
+
+You can ask your identity provider to reauthenticate the user for every SAML authentication request. This option applies whether the request is signed or unsigned.
+
+This setting is available through the API. First, retrieve the identity provider's current configuration from the [Access identity provider endpoint](/api/resources/zero_trust/subresources/identity_providers/methods/get/). Then, send the complete configuration to the [update identity provider endpoint](/api/resources/zero_trust/subresources/identity_providers/methods/update/) with `force_authn` set to `true` in the `config` object. The default value is `false`.
+
+When this option is turned on, Access sets `ForceAuthn` to `true` in each SAML authentication request. Access may also set `ForceAuthn` to `true` when a security check requires the user to reauthenticate, even if `force_authn` is `false`.
 
 ### Email attribute name
 

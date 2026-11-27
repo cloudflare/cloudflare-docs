@@ -15,11 +15,11 @@ import { TabItem, Tabs, PackageManagers, Render } from "~/components";
 
 TypeScript is a first-class language on Cloudflare Workers. All APIs provided in Workers are fully typed, and type definitions are generated directly from [workerd](https://github.com/cloudflare/workerd), the open-source Workers runtime.
 
-We recommend you generate types for your Worker by running [`wrangler types`](/workers/wrangler/commands/general/#types). Cloudflare also publishes type definitions to [GitHub](https://github.com/cloudflare/workers-types) and [npm](https://www.npmjs.com/package/@cloudflare/workers-types) (`npm install -D @cloudflare/workers-types`).
+We recommend you generate types for your Worker by running [`wrangler types`](/workers/wrangler/commands/workers/#types). Cloudflare also publishes type definitions to [GitHub](https://github.com/cloudflare/workers-types) and [npm](https://www.npmjs.com/package/@cloudflare/workers-types) (`npm install -D @cloudflare/workers-types`).
 
 :::note[Version 5 and later]
 
-`@cloudflare/workers-types` version 5 exposes only the latest runtime types. The dated entrypoints, such as `@cloudflare/workers-types/2022-11-30`, are removed. Import from `@cloudflare/workers-types` for the latest stable types, or from `@cloudflare/workers-types/experimental` for APIs behind experimental compatibility flags. To match types to a specific compatibility date and flags, run [`wrangler types`](/workers/wrangler/commands/general/#types).
+`@cloudflare/workers-types` version 5 exposes only the latest runtime types. The dated entrypoints, such as `@cloudflare/workers-types/2022-11-30`, are removed. Import from `@cloudflare/workers-types` for the latest stable types, or from `@cloudflare/workers-types/experimental` for APIs behind experimental compatibility flags. To match types to a specific compatibility date and flags, run [`wrangler types`](/workers/wrangler/commands/workers/#types).
 
 :::
 
@@ -43,7 +43,7 @@ To ensure that your type definitions always match your Worker's configuration, y
 
 <PackageManagers type="exec" pkg="wrangler" args={"types"} />
 
-See [the `wrangler types` command docs](/workers/wrangler/commands/general/#types) for more details.
+Refer to [the `wrangler types` command docs](/workers/wrangler/commands/workers/#types) for more details.
 
 :::note
 
@@ -52,6 +52,8 @@ See [the `wrangler types` command docs](/workers/wrangler/commands/general/#type
 :::
 
 This will generate a `d.ts` file and (by default) save it to `worker-configuration.d.ts`. This will include `Env` types based on your Worker bindings _and_ runtime types based on your Worker's compatibility date and flags.
+
+`worker-configuration.d.ts` is generated and will be overwritten when you rerun `wrangler types`, so do not edit it manually. Define custom environment types in source-owned TypeScript, separate from the generated file. Use declaration merging with the public `Cloudflare.Env` interface.
 
 You should then add that file to your `tsconfig.json`'s `compilerOptions.types` array. If you have the `nodejs_compat` compatibility flag, you should also install `@types/node`.
 
@@ -133,7 +135,7 @@ Most projects will have existing build and development scripts, as well as some 
 		"dev": "existing-dev-command",
 		"build": "existing-build-command",
 		"generate-types": "wrangler types",
-		"type-check": "generate-types && tsc"
+		"type-check": "wrangler types && tsc"
 	}
 }
 ```
@@ -166,7 +168,7 @@ We recommend you commit your generated types file for use in CI. You can run `wr
 
 </TabItem> </Tabs>
 
-Alternatively, if you commit your generated types file and want to verify it stays up-to-date in CI, you can use the `--check` flag:
+Alternatively, if you commit your generated types file, use `--check` in CI:
 
 <Tabs> <TabItem label="npm">
 
@@ -194,7 +196,7 @@ Alternatively, if you commit your generated types file and want to verify it sta
 
 </TabItem> </Tabs>
 
-This fails the CI job if the committed types file is out-of-date, prompting developers to regenerate and commit the updated types.
+`--check` compares the generated file's recorded environment/configuration hash and runtime header with the current Wrangler configuration and runtime inputs. It does not compare or validate the generated file body. It fails the CI job when the recorded inputs are out of date, prompting developers to regenerate and commit the updated types.
 
 ### Resources
 

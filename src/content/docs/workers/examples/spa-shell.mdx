@@ -42,6 +42,7 @@ Set `not_found_handling` to `"single-page-application"` so that every route retu
 {
 	"name": "my-spa",
 	"main": "src/worker.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
 	"assets": {
@@ -144,6 +145,7 @@ Because the SPA is not in Workers Static Assets, you do not need an `assets` blo
 {
 	"name": "my-spa-proxy",
 	"main": "src/worker.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
 	"vars": {

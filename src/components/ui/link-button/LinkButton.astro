@@ -63,15 +63,13 @@ const resolvedSize: ButtonSize = size === "md" ? "base" : size;
 	{...attrs}
 >
 	<slot />
-	{
-		icon && (
-			<Icon
-				name="ph:caret-right"
-				class={cn(
-					"transition-transform group-hover:translate-x-0.5",
-					buttonIconSize[resolvedSize],
-				)}
-			/>
-		)
-	}
+	{icon && (
+		<Icon
+			name="ph:caret-right"
+			class={cn(
+				"transition-transform group-hover:translate-x-0.5",
+				buttonIconSize[resolvedSize],
+			)}
+		/>
+	)}
 </a>

@@ -46,6 +46,14 @@ Choose this option when you cannot set up an SSL certificate on your origin or y
 
 ## Limitations
 
+:::caution
+
+If your origin forces HTTPS by automatically redirecting HTTP requests to HTTPS, do not use Flexible mode. Because Cloudflare connects to your origin over HTTP, this creates a redirect loop that makes your site inaccessible. Use [**Full**](/ssl/origin-configuration/ssl-modes/full/) or [**Full (strict)**](/ssl/origin-configuration/ssl-modes/full-strict/) mode instead.
+
+Refer to [ERR_TOO_MANY_REDIRECTS](/ssl/troubleshooting/too-many-redirects/) for troubleshooting guidance, or [Enforce HTTPS connections](/ssl/edge-certificates/encrypt-visitor-traffic/) to redirect traffic to HTTPS at the Cloudflare edge without setting up redirects at your origin.
+
+:::
+
 Flexible mode is only supported for HTTPS connections on port 443 (default port). Other ports using HTTPS will fall back to [**Full** mode](/ssl/origin-configuration/ssl-modes/full/).
 
 If your application contains sensitive information (personalized data, user login), use [**Full**](/ssl/origin-configuration/ssl-modes/full/) or [**Full (Strict)**](/ssl/origin-configuration/ssl-modes/full-strict/) modes instead.

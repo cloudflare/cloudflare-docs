@@ -1,0 +1,14 @@
+id: JozX9Y
+name: Monetization Gateway
+
+entry:
+  title: Monetization Gateway
+  url: /monetization-gateway/
+  group: Core platform
+  additional_groups: [AI]
+  tags: [AI]
+
+meta:
+  title: Cloudflare Monetization Gateway docs
+  description: Define monetization policies to charge any visitor accessing APIs, MCP tools, web pages, or datasets.
+  author: "@cloudflare"

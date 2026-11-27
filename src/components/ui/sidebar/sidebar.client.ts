@@ -1,6 +1,7 @@
 /** Sidebar runtime: filter, persistence, "/" shortcut. */
 
 import { mount } from "@cloudflare/nimbus-docs/client";
+import { isEditableKeyboardTarget } from "~/util/keyboard";
 
 const STORAGE_KEY = "sidebar-state";
 
@@ -113,6 +114,7 @@ function applyFilter(root: HTMLElement, query: string): void {
 		if (!text.includes(query)) return;
 		group.removeAttribute("data-nb-sidebar-hidden");
 		openGroup(group);
+		revealAncestors(group, root);
 		group
 			.querySelectorAll<HTMLElement>(
 				"[data-nb-sidebar-link], [data-nb-sidebar-group]",
@@ -217,16 +219,7 @@ function initPersistence(root: HTMLElement): (() => void) | null {
 	document.documentElement.setAttribute("data-nb-sidebar-shortcut-bound", "");
 
 	document.addEventListener("keydown", (e) => {
-		if (e.key !== "/") return;
-		const active = document.activeElement as HTMLElement | null;
-		if (
-			active &&
-			(active.tagName === "INPUT" ||
-				active.tagName === "TEXTAREA" ||
-				active.isContentEditable)
-		) {
-			return;
-		}
+		if (e.key !== "/" || isEditableKeyboardTarget(e)) return;
 		// Prefer the on-screen filter (mobile drawer when open, else desktop).
 		// getClientRects is empty for display:none (closed dialog / hidden aside).
 		const inputs = Array.from(

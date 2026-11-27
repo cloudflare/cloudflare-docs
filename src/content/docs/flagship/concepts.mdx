@@ -8,6 +8,8 @@ products:
   - flagship
 ---
 
+import { TypeScriptExample } from "~/components";
+
 Flagship organizes feature flags into apps. You define flags with variants and targeting rules, then evaluate them within Cloudflare's global network.
 
 ## Overview
@@ -65,20 +67,29 @@ Refer to [Targeting rules](/flagship/targeting/) and [Operators](/flagship/targe
 
 ## Evaluation context
 
-The evaluation context is a set of key-value attributes that describe the current user or request (for example, `userId`, `country`, `plan`).
+The evaluation context describes the current user or request. It is an object whose top-level keys are attribute names.
+
+Each value can be a string, finite number, boolean, `null`, array, or nested object. Arrays and objects can recursively contain the same value types.
 
 You pass the context as the third argument to evaluation methods on the binding:
+
+<TypeScriptExample>
 
 ```ts
 const value = await env.FLAGS.getBooleanValue("new-checkout", false, {
 	userId: "user-42",
-	country: "US",
+	profile: { plan: "enterprise" },
+	tags: ["beta"],
 });
 ```
+
+</TypeScriptExample>
 
 When using the [OpenFeature SDK](/flagship/sdk/), you pass context through the OpenFeature evaluation context object.
 
 Flagship uses context attributes to match targeting rules and to determine percentage rollout bucketing. A consistent context (for example, the same `userId`) produces the same rollout result on every evaluation.
+
+Evaluation context is input to an evaluation. It is separate from [JSON flag variants](#variants), which are values returned by an evaluation.
 
 Avoid sending sensitive data in evaluation context. Only include attributes needed by targeting rules or rollout bucketing.
 

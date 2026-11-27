@@ -1,0 +1,296 @@
+---
+title: Sign requests to private S3 and GCS buckets
+pcx_content_type: example
+description: Use Request Header Transform Rules to sign private Amazon S3 and Google Cloud Storage reads with SigV4 and automatic UTC date headers.
+products:
+  - rules
+sidebar:
+  order: 20
+---
+
+import { Details, Step, Steps, TabItem, Tabs } from "~/components";
+
+Use [`sign_sigv4_hmac_sha256()`](/ruleset-engine/rules-language/functions/#sign_sigv4_hmac_sha256) in a Request Header Transform Rule to authenticate private storage reads without a Worker. The native signer handles key derivation and signing. The surrounding functions prepare the provider's signing message and generate date headers automatically.
+
+Choose your provider, replace the placeholders, and configure three origin headers: a date, a payload hash, and `Authorization`. You do not need to construct nested HMAC calls.
+
+These examples sign `GET` and `HEAD` requests for one object, `/test.txt`, with an empty query string and body. They do not implement general-purpose request canonicalization, uploads, or presigned URLs.
+
+## Prerequisites
+
+- A Pro, Business, or Enterprise plan for access to the HMAC signing and `sha256()` functions.
+- A private bucket containing a harmless `test.txt` object, and credentials restricted to reading that object.
+- A proxied DNS record for `storage.example.com`, with **Full (strict)** SSL/TLS.
+
+`format_date()` is available on all plans without an additional entitlement.
+
+:::caution[Origin authentication is not visitor authorization]
+Any visitor who matches the rule can trigger a signed origin read. Protect the public hostname with your own access controls if the object must remain private to visitors.
+
+This example excludes requests containing a visitor `Authorization` header, including bearer tokens. Design visitor authorization separately; do not remove that exclusion without reviewing the signing flow.
+
+Secrets in expressions are visible to anyone who can read the rule configuration. Restrict configuration access, use least-privilege credentials, and rotate them. Never return secrets or origin authorization headers in a response.
+:::
+
+## Bypass caching for validation
+
+Before deploying the connector and signing rules, create a [Cache Rule that bypasses caching](/cache/how-to/cache-rules/settings/#bypass-cache) for `storage.example.com`. Keep bypass active throughout successful-read and failure tests. This prevents a cached response from hiding an origin authentication failure.
+
+## Companion Transform Rule filter
+
+Use this filter for the Request Header Transform Rule in either provider's setup:
+
+```txt
+http.host eq "storage.example.com"
+and http.request.method in {"GET" "HEAD"}
+and http.request.uri.path eq "/test.txt"
+and http.request.uri.query eq ""
+and not http.request.headers.truncated
+and not any(http.request.headers.names[*] wildcard "x-amz-*")
+and not any(http.request.headers.names[*] wildcard "x-goog-*")
+and not any(http.request.headers.names[*] wildcard "authorization")
+```
+
+:::caution[Send requests without a body]
+These expressions use the SHA-256 hash of an empty body. Send only bodyless `GET` and `HEAD` requests. The method check does not enforce an empty body: these methods can carry one, and this filter does not inspect it. Requests with a body are not supported by this example.
+:::
+
+The filter excludes requests where [`http.request.headers.truncated`](/ruleset-engine/rules-language/fields/reference/http.request.headers.truncated/) is `true`, because their header-name lists may be incomplete. The remaining header checks exclude caller-supplied storage authentication and extension headers. Additional provider headers can change the canonical request. Do not remove these checks without accounting for those headers in the signature.
+
+This filter controls signing, not request blocking. Unmatched requests still match the hostname-only Cloud Connector rule but are not signed by this Transform Rule. Decide separately whether to block those requests. Do not assume every excluded request returns `403`.
+
+## Configure your provider {/* cloud-connector-rule */}
+
+Choose one provider. Cloud Connector routes the request to the bucket. The Transform Rule authenticates it. Configure both rules.
+
+<Tabs>
+<TabItem label="Amazon S3">
+
+### Amazon S3
+
+Replace every occurrence of these placeholders with your settings:
+
+| Placeholder | Your value |
+| --- | --- |
+| `<BUCKET_NAME>` | Private S3 bucket name, without dots |
+| `<REGION>` | Bucket Region, used in the endpoint and signing scope |
+| `<ACCESS_KEY_ID>` | Access key ID for the object reader |
+| `<SECRET_ACCESS_KEY>` | Corresponding secret access key |
+
+Keep Block Public Access turned on. Use the HTTPS API endpoint, not a website endpoint. Dots in the bucket name are not supported with this [Full (strict) configuration](/rules/cloud-connector/providers/#ssl-connections-to-aws-s3-endpoints).
+
+If your credentials include a session token, add a fourth header and update the expression as described in [Temporary AWS credentials](#temporary-aws-credentials) before deploying.
+
+<Steps>
+<Step title="Create the routing rule">
+
+Create a [Cloud Connector rule](/rules/cloud-connector/create-dashboard/) with these settings:
+
+| Setting | Value |
+| --- | --- |
+| Cloud provider | Amazon S3 |
+| Bucket URL | `<BUCKET_NAME>.s3.<REGION>.amazonaws.com` |
+| Cloud Connector name | `Private S3 object reads` |
+| Custom filter expression | `http.host eq "storage.example.com"` |
+
+</Step>
+<Step title="Configure the three origin headers">
+
+Create a [Request Header Transform Rule](/rules/transform/request-header-modification/create-dashboard/) with the [companion filter](#companion-transform-rule-filter). In that rule, configure these header operations:
+
+| Header name | Operation | Value |
+| --- | --- | --- |
+| `x-amz-date` | Set dynamic | `format_date(http.request.timestamp.sec, "%Y%m%dT%H%M%SZ")` |
+| `x-amz-content-sha256` | Set static | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| `Authorization` | Set dynamic | Complete expression in step 3 |
+
+</Step>
+<Step title="Copy this expression">
+
+Paste this complete expression into the dynamic `Authorization` value. Replace all placeholders consistently. Keep the `\x0a` newline escapes and signed-header lists unchanged.
+
+```txt
+concat(
+  "AWS4-HMAC-SHA256 Credential=<ACCESS_KEY_ID>/",
+  format_date(http.request.timestamp.sec, "%Y%m%d"),
+  "/<REGION>/s3/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=",
+  sign_sigv4_hmac_sha256(
+    concat(
+      "AWS4-HMAC-SHA256\x0a",
+      format_date(http.request.timestamp.sec, "%Y%m%dT%H%M%SZ"),
+      "\x0a",
+      format_date(http.request.timestamp.sec, "%Y%m%d"),
+      "/<REGION>/s3/aws4_request\x0a",
+      encode_hex(sha256(concat(
+        http.request.method,
+        "\x0a",
+        http.request.uri.path,
+        "\x0a\x0ahost:<BUCKET_NAME>.s3.<REGION>.amazonaws.com\x0ax-amz-content-sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\x0ax-amz-date:",
+        format_date(http.request.timestamp.sec, "%Y%m%dT%H%M%SZ"),
+        "\x0a\x0ahost;x-amz-content-sha256;x-amz-date\x0ae3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      )))
+    ),
+    "<SECRET_ACCESS_KEY>",
+    http.request.timestamp.sec,
+    "<REGION>",
+    "s3",
+    "AWS4",
+    "aws4_request"
+  )
+)
+```
+
+<Details header="Temporary AWS credentials" id="temporary-aws-credentials">
+
+For temporary AWS credentials, add a fourth header operation in the same Transform Rule:
+
+| Header name | Operation | Value |
+| --- | --- | --- |
+| `x-amz-security-token` | Set static | Your session token |
+
+In the canonical-request expression, insert `"\x0ax-amz-security-token:<SESSION_TOKEN>"` immediately after the date `format_date()` call, before the existing `"\x0a\x0ahost;..."` argument. Append `;x-amz-security-token` to **both** signed-header lists. Use the same token in the header and canonical request.
+
+Update or remove the rule before the credentials expire. The signing function does not obtain or refresh credentials.
+
+</Details>
+
+Deploy the Transform Rule after configuring all headers, then [verify the configuration](#verify-the-configuration).
+
+</Step>
+</Steps>
+
+</TabItem>
+<TabItem label="Google Cloud Storage">
+
+### Google Cloud Storage
+
+Replace every occurrence of these placeholders with your settings:
+
+| Placeholder | Your value |
+| --- | --- |
+| `<BUCKET_NAME>` | Private GCS bucket name |
+| `<HMAC_ACCESS_ID>` | [HMAC access ID](https://cloud.google.com/storage/docs/authentication/hmackeys), not an RSA service account key |
+| `<HMAC_SECRET>` | Corresponding HMAC secret text, without Base64 decoding |
+
+Keep public access prevention turned on. Use the storage API endpoint, not a GCS browser URL.
+
+<Steps>
+<Step title="Create the routing rule">
+
+Create a [Cloud Connector rule](/rules/cloud-connector/create-dashboard/) with these settings:
+
+| Setting | Value |
+| --- | --- |
+| Cloud provider | Google Cloud Storage |
+| Bucket URL | `<BUCKET_NAME>.storage.googleapis.com` |
+| Cloud Connector name | `Private GCS object reads` |
+| Custom filter expression | `http.host eq "storage.example.com"` |
+
+</Step>
+<Step title="Configure the three origin headers">
+
+Create a [Request Header Transform Rule](/rules/transform/request-header-modification/create-dashboard/) with the [companion filter](#companion-transform-rule-filter). In that rule, configure these header operations:
+
+| Header name | Operation | Value |
+| --- | --- | --- |
+| `x-goog-date` | Set dynamic | `format_date(http.request.timestamp.sec, "%Y%m%dT%H%M%SZ")` |
+| `x-goog-content-sha256` | Set static | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| `Authorization` | Set dynamic | Complete expression in step 3 |
+
+</Step>
+<Step title="Copy this expression">
+
+Paste this complete expression into the dynamic `Authorization` value. Replace all placeholders consistently. Keep the `\x0a` newline escapes and signed-header lists unchanged.
+
+```txt
+concat(
+  "GOOG4-HMAC-SHA256 Credential=<HMAC_ACCESS_ID>/",
+  format_date(http.request.timestamp.sec, "%Y%m%d"),
+  "/auto/storage/goog4_request, SignedHeaders=host;x-goog-content-sha256;x-goog-date, Signature=",
+  sign_sigv4_hmac_sha256(
+    concat(
+      "GOOG4-HMAC-SHA256\x0a",
+      format_date(http.request.timestamp.sec, "%Y%m%dT%H%M%SZ"),
+      "\x0a",
+      format_date(http.request.timestamp.sec, "%Y%m%d"),
+      "/auto/storage/goog4_request\x0a",
+      encode_hex(sha256(concat(
+        http.request.method,
+        "\x0a",
+        http.request.uri.path,
+        "\x0a\x0ahost:<BUCKET_NAME>.storage.googleapis.com\x0ax-goog-content-sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\x0ax-goog-date:",
+        format_date(http.request.timestamp.sec, "%Y%m%dT%H%M%SZ"),
+        "\x0a\x0ahost;x-goog-content-sha256;x-goog-date\x0ae3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      )))
+    ),
+    "<HMAC_SECRET>",
+    http.request.timestamp.sec,
+    "auto",
+    "storage",
+    "GOOG4",
+    "goog4_request"
+  )
+)
+```
+
+Deploy the Transform Rule after configuring all headers, then [verify the configuration](#verify-the-configuration).
+
+</Step>
+</Steps>
+
+</TabItem>
+</Tabs>
+
+## Verify the configuration
+
+Keep the [cache bypass](#bypass-caching-for-validation) active for every test.
+
+Send requests without storage credentials or date headers:
+
+```bash
+curl -i https://storage.example.com/test.txt
+curl -I https://storage.example.com/test.txt
+```
+
+Expect `200 OK` for both requests. The `GET` response must contain the expected `test.txt` content. The `HEAD` response has no body. An unsigned request directly to the private origin must fail. Also test that an incorrect signing secret fails when caching is bypassed.
+
+## Signing details
+
+<Details header="How the authorization expression works">
+
+The expressions construct three related values:
+
+- **Canonical request**: the provider-defined representation of the method, path, query, signed headers, and payload hash.
+- **String to sign**: the signing message containing the algorithm, timestamp, credential scope, and canonical-request hash.
+- **Credential scope**: the date, region or location, service, and scope suffix that bind the signature to its intended use.
+
+The native function derives the signing key and signs the string to sign. It does not construct the canonical request or the `Authorization` header. The surrounding `concat()`, `sha256()`, and encoding calls handle that preparation. Broadening the filter does not update these representations automatically.
+
+For complete protocol requirements, refer to [AWS Signature Version 4 header authentication](https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-header-based-auth.html), [GCS canonical requests](https://cloud.google.com/storage/docs/authentication/canonical-requests), and [GCS signatures](https://cloud.google.com/storage/docs/authentication/signatures).
+
+</Details>
+
+<Details header="Why the expressions use a literal bucket hostname">
+
+Cloud Connector preserves `/test.txt` and sets the origin `Host` to the bucket hostname:
+
+| Provider | Origin URL |
+| --- | --- |
+| S3 | `https://<BUCKET_NAME>.s3.<REGION>.amazonaws.com/test.txt` |
+| GCS | `https://<BUCKET_NAME>.storage.googleapis.com/test.txt` |
+
+The Transform Rule runs before Cloud Connector applies that hostname. Sign the exact bucket hostname the origin will receive, not the visitor-facing `storage.example.com`.
+
+</Details>
+
+<Details header="Why the date is calculated in each header expression">
+
+The date and `Authorization` expressions use the same request timestamp directly. They do not read the date header being set. [Fields are immutable within a phase](/ruleset-engine/about/rules/#field-values-during-rule-evaluation), so another header expression cannot read that newly computed value.
+
+</Details>
+
+## Next steps
+
+Before broadening the rule, implement the provider's canonicalization requirements for every permitted path, query parameter, and header. Ensure later rules do not change the signed host, path, or headers. This example uses a literal origin hostname because Cloud Connector sets the origin `Host` after the Transform Rule runs.
+
+Review caching and visitor authorization together before allowing cache hits. Monitor origin errors and rotate credentials. For S3, consider [server access logs, CloudTrail data events, and CloudWatch metrics](https://docs.aws.amazon.com/AmazonS3/latest/userguide/monitoring-overview.html). Storage requests, data transfer, and logging can incur [S3 charges](https://aws.amazon.com/s3/pricing/) or [GCS charges](https://cloud.google.com/storage/pricing).

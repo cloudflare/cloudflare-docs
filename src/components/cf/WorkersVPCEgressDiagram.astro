@@ -2,11 +2,11 @@
 import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 
 const policies = [
-	{ label: "DNS", href: "/cloudflare-one/traffic-policies/dns-policies/" },
-	{ label: "HTTP", href: "/cloudflare-one/traffic-policies/http-policies/" },
+	{ label: "DNS", href: "/cloudflare-one/traffic-controls/dns-policies/" },
+	{ label: "HTTP", href: "/cloudflare-one/traffic-controls/http-policies/" },
 	{
 		label: "Network",
-		href: "/cloudflare-one/traffic-policies/network-policies/",
+		href: "/cloudflare-one/traffic-controls/network-policies/",
 	},
 ];
 
@@ -15,44 +15,54 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 
 <figure
 	class="vpc-egress-diagram not-content"
-	aria-label="Workers VPC public Internet egress through Cloudflare Mesh and Cloudflare Gateway"
+	aria-label="Workers VPC public Internet egress through a VPC Network binding and Cloudflare Gateway, with no Cloudflare Tunnel, Mesh, or WAN on-ramp required"
 >
 	<ol class="flow">
 		<li class="flow-step">
 			<div class="node-card worker-card">
 				<div class="node-header">
-					<span class="node-icon worker-icon" aria-hidden="true"
-						><Icon name="workers" /></span
-					>
-					<a class="node-title" href="/workers/">Worker</a>
+					<span class="node-icon worker-icon" aria-hidden="true">
+						<Icon name="workers" />
+					</span>
+					<a class="node-title" href="/workers/">
+						Worker
+					</a>
 				</div>
-				<p class="node-caption">Calls <code>env.EGRESS.fetch()</code></p>
+				<p class="node-caption">
+					Calls <code>env.EGRESS.fetch()</code>
+				</p>
 			</div>
 		</li>
 
 		<li class="flow-connector">
-			<a class="connector-label" href="/workers-vpc/">VPC binding</a>
-			<span class="connector-arrow" aria-hidden="true">↓</span>
+			<a class="connector-label" href="/workers-vpc/">
+				VPC binding
+			</a>
+			<span class="connector-arrow" aria-hidden="true">
+				↓
+			</span>
 		</li>
 
 		<li class="flow-step">
-			<div class="node-card mesh-card">
+			<div class="node-card vpc-card">
 				<div class="node-header">
-					<span class="node-icon mesh-icon" aria-hidden="true"
-						><Icon name="cloudflare-mesh" /></span
-					>
-					<a
-						class="node-title"
-						href="/cloudflare-one/networks/connectors/cloudflare-mesh/"
-						>Cloudflare Mesh</a
-					>
+					<span class="node-icon vpc-icon" aria-hidden="true">
+						⇄
+					</span>
+					<a class="node-title" href="/workers-vpc/configuration/vpc-networks/">
+						VPC Network
+					</a>
 				</div>
 				<p class="node-caption">
-					Bind via <a
-						class="inline-pill mesh-pill"
+					Bind via{" "}
+					<a
+						class="inline-pill vpc-pill"
 						href="/workers-vpc/configuration/vpc-networks/"
-						><code>cf1:network</code></a
 					>
+						<code>cf1:network</code>
+					</a>
+					<br />
+					No Cloudflare Tunnel, Mesh, or WAN on-ramp required.
 				</p>
 			</div>
 		</li>
@@ -64,22 +74,20 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		<li class="flow-step">
 			<div class="node-card gateway-card">
 				<div class="node-header">
-					<span class="node-icon gateway-icon" aria-hidden="true"
-						><Icon name="gateway" /></span
-					>
-					<a class="node-title" href="/cloudflare-one/traffic-policies/"
-						>Cloudflare Gateway</a
-					>
+					<span class="node-icon gateway-icon" aria-hidden="true">
+						<Icon name="gateway" />
+					</span>
+					<a class="node-title" href="/cloudflare-one/traffic-controls/">
+						Cloudflare Gateway
+					</a>
 				</div>
 				<p class="node-caption">Policies applied:</p>
 				<div class="pill-row">
-					{
-						policies.map((p) => (
-							<a class="policy-pill" href={p.href}>
-								{p.label}
-							</a>
-						))
-					}
+					{policies.map((p) => (
+						<a class="policy-pill" href={p.href}>
+							{p.label}
+						</a>
+					))}
 				</div>
 			</div>
 		</li>
@@ -91,7 +99,9 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		<li class="flow-step">
 			<div class="node-card internet-card">
 				<div class="node-header">
-					<span class="node-icon internet-icon" aria-hidden="true">↗</span>
+					<span class="node-icon internet-icon" aria-hidden="true">
+						↗
+					</span>
 					<span class="node-title">Public Internet</span>
 				</div>
 				<p class="node-caption">Any public hostname or IP</p>
@@ -121,7 +131,7 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		--map-subtle: light-dark(#737373, #d4d4d4);
 		--map-caption: light-dark(#737373, #a3a3a3);
 		--map-brand: #f6821f;
-		--map-mesh: light-dark(#7c3aed, #a78bfa);
+		--map-vpc: light-dark(#7c3aed, #a78bfa);
 		--map-gateway: light-dark(#0ea5e9, #38bdf8);
 		--map-internet: light-dark(#10b981, #34d399);
 
@@ -221,9 +231,9 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		color: var(--map-brand);
 	}
 
-	.mesh-icon {
-		background: color-mix(in srgb, var(--map-mesh) 14%, transparent);
-		color: var(--map-mesh);
+	.vpc-icon {
+		background: color-mix(in srgb, var(--map-vpc) 14%, transparent);
+		color: var(--map-vpc);
 	}
 
 	.gateway-icon {
@@ -295,25 +305,25 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 	.inline-pill {
 		display: inline;
 		padding: 1px 6px;
-		border: 1px solid color-mix(in srgb, var(--map-mesh) 35%, var(--map-line));
+		border: 1px solid color-mix(in srgb, var(--map-vpc) 35%, var(--map-line));
 		border-radius: 5px;
-		background: color-mix(in srgb, var(--map-mesh) 6%, var(--map-card));
+		background: color-mix(in srgb, var(--map-vpc) 6%, var(--map-card));
 		transition:
 			border-color 150ms ease,
 			background-color 150ms ease;
 		white-space: nowrap;
 	}
 
-	.mesh-pill:hover {
-		border-color: var(--map-mesh);
-		background: color-mix(in srgb, var(--map-mesh) 12%, var(--map-card));
+	.vpc-pill:hover {
+		border-color: var(--map-vpc);
+		background: color-mix(in srgb, var(--map-vpc) 12%, var(--map-card));
 	}
 
 	.inline-pill code {
 		padding: 0;
 		border: 0;
 		background: transparent;
-		color: var(--map-mesh);
+		color: var(--map-vpc);
 		font-family:
 			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
 			monospace;

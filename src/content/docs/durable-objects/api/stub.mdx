@@ -8,7 +8,13 @@ products:
   - durable-objects
 ---
 
-import { Render, GlossaryTooltip, Tabs, TabItem } from "~/components";
+import {
+	Render,
+	GlossaryTooltip,
+	Tabs,
+	TabItem,
+	TypeScriptExample,
+} from "~/components";
 
 ## Description
 
@@ -17,6 +23,8 @@ The `DurableObjectStub` interface is a client used to invoke methods on a remote
 Durable Objects implement E-order semantics, a concept deriving from the [E distributed programming language](<https://en.wikipedia.org/wiki/E_(programming_language)>). When you make multiple calls to the same Durable Object, it is guaranteed that the calls will be delivered to the remote Durable Object in the order in which you made them. E-order semantics makes many distributed programming problems easier. E-order is implemented by the [Cap'n Proto](https://capnproto.org) distributed object-capability RPC protocol, which Cloudflare Workers uses for internal communications.
 
 If an exception is thrown by a Durable Object <GlossaryTooltip term="stub">stub</GlossaryTooltip> all in-flight calls and future calls will fail with [exceptions](/durable-objects/observability/troubleshooting/). To continue invoking methods on a remote Durable Object a Worker must recreate the stub. There are no ordering guarantees between different stubs.
+
+The runtime may retry a failed call before the exception reaches your code. For more information, refer to [Automatic retries](/durable-objects/best-practices/automatic-retries/).
 
 <Render file="example-rpc" product="durable-objects" />
 
@@ -76,6 +84,55 @@ assert stub.name == "foo", "This should always be true"
 
 </Tabs>
 
+## Methods
+
+### `connect`
+
+:::note[Public beta]
+Raw TCP connections to Workers and Durable Objects are in public beta.
+:::
+
+`connect(address, options)` opens a raw TCP connection to the Durable Object and invokes its [`connect()` handler](/durable-objects/api/base/#connect).
+
+```ts
+connect(address: SocketAddress | string, options?: SocketOptions): Socket
+```
+
+#### Parameters
+
+- `address` (`SocketAddress | string`) — A logical destination, expressed as a `host:port` string or a [`SocketAddress`](/workers/runtime-apis/tcp-sockets/#socketaddress) with `hostname` and `port` fields. The Durable Object receives the resulting `host:port` string as the socket's `localAddress`.
+- `options` (`SocketOptions`, optional) — Socket configuration. Refer to [`SocketOptions`](/workers/runtime-apis/tcp-sockets/#socketoptions).
+
+#### Return values
+
+Returns a [`Socket`](/workers/runtime-apis/tcp-sockets/#socket).
+
+#### Example
+
+<TypeScriptExample>
+```ts
+export default {
+	async connect(socket: Socket, env: Env): Promise<void> {
+		const stub = env.TCP_SESSION.getByName("shared-session");
+		const durableObjectSocket = stub.connect("tcp-session:8080", {
+			allowHalfOpen: true,
+		});
+
+		try {
+			await durableObjectSocket.opened;
+			await Promise.all([
+				socket.readable.pipeTo(durableObjectSocket.writable),
+				durableObjectSocket.readable.pipeTo(socket.writable),
+			]);
+		} finally {
+			await Promise.allSettled([socket.close(), durableObjectSocket.close()]);
+		}
+	},
+} satisfies ExportedHandler<Env>;
+```
+</TypeScriptExample>
+
 ## Related resources
 
 - [Durable Objects: Easy, Fast, Correct – Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).
+- [Connect handler](/workers/runtime-apis/handlers/connect/).

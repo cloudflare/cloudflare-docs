@@ -1,0 +1,59 @@
+---
+/**
+ * CliPreferenceSelector — the Wrangler / CF toggle. Its labels come from
+ * attributes and CSS, not text nodes, so they stay out of the Markdown
+ * version of the page.
+ */
+interface Props {
+	class?: string;
+}
+
+const { class: className } = Astro.props;
+const options = [
+	{ value: "wrangler", label: "Wrangler" },
+	{ value: "cf", label: "CF" },
+] as const;
+const toggleClass =
+	"before:content-[attr(aria-label)] text-muted-foreground hover:text-foreground aria-pressed:bg-card aria-pressed:text-foreground aria-pressed:ring-border focus-visible:ring-primary relative z-1 my-0.5 cursor-pointer rounded-sm border-0 px-2 text-xs font-medium whitespace-nowrap shadow-none transition-[color,background-color,box-shadow] focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset aria-pressed:shadow-sm aria-pressed:ring";
+---
+
+<div
+	data-nb-cli-control
+	style="visibility: hidden"
+	class:list={["mb-2 flex min-w-0 items-center justify-end gap-2", className]}
+>
+	<span
+		aria-hidden="true"
+		data-label="Select your preferred CLI"
+		class="text-muted-foreground text-xs font-medium before:content-[attr(data-label)]"
+	></span>
+	<div
+		role="group"
+		aria-label="Select your preferred CLI for the examples on this page"
+		class="ring-border/70 inline-flex h-6.5 max-w-full min-w-0 rounded-md bg-[var(--nb-surface-sunken)] px-0.5 ring"
+	>
+		{options.map(({ value, label }) => (
+			<button
+				type="button"
+				data-nb-cli-toggle={value}
+				aria-label={label}
+				aria-pressed={value === "wrangler"}
+				disabled
+				class={toggleClass}
+			></button>
+		))}
+	</div>
+	<span data-nb-cli-status role="status" class="sr-only"></span>
+</div>
+
+<style is:global>
+	@media (forced-colors: active) {
+		[data-nb-cli-toggle][aria-pressed="true"] {
+			border: 1px solid Highlight;
+		}
+	}
+</style>
+
+<script>
+	import "./cli-preference-selector.client";
+</script>

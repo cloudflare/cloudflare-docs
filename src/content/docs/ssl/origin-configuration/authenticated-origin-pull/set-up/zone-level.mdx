@@ -24,6 +24,12 @@ When you enable zone-level Authenticated Origin Pulls (AOP), all proxied traffic
 
 [Global](/ssl/origin-configuration/authenticated-origin-pull/set-up/global/), zone-level, and [per-hostname](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/) AOP are independent configurations. Enabling or disabling one does not affect the others.
 
+## Durable Object requests
+
+Zone-level AOP does not apply to requests originating from Durable Objects. This includes requests that continue through service bindings.
+
+To present a client certificate for supported origin destinations, configure and use a [Workers mTLS certificate binding](/workers/runtime-apis/bindings/mtls/).
+
 ## Before you begin
 
 Make sure your zone is using an [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) of **Full** or higher.

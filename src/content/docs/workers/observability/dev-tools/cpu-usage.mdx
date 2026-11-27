@@ -14,7 +14,7 @@ Profiling in DevTools can help you identify and fix code that uses too much CPU.
 
 Measuring execution time of specific functions in production can be difficult because Workers
 [only increment timers on I/O](/workers/reference/security-model/#step-1-disallow-timers-and-multi-threading)
-for security purposes. However, measuring CPU execution times is possible in local development with DevTools.
+for security purposes. You can profile CPU usage locally with DevTools or [capture CPU profiles in production](/workers/observability/profiling-in-production/) through the Cloudflare dashboard.
 
 When using DevTools to monitor CPU usage, it may be difficult to replicate specific behavior you are
 seeing in production. To mimic production behavior, make sure the requests you send to the local Worker
@@ -38,14 +38,14 @@ You now have a CPU profile.
 
 For Rust Workers, add the following to your `Cargo.toml` to preserve [DWARF](https://dwarfstd.org/) debug symbols (from [this comment](https://github.com/rustwasm/wasm-pack/issues/1351#issuecomment-2100231587)):
 
-```toml title="wrangler.toml"
+```toml title="Cargo.toml"
 [package.metadata.wasm-pack.profile.dev.wasm-bindgen]
 dwarf-debug-info = true
 ```
 
 Then, update your `wrangler.toml` to configure wasm-pack (via worker-build) to use the `dev` [profile](https://rustwasm.github.io/docs/wasm-pack/commands/build.html#profile) to preserve debug symbols.
 
-```toml title="Cargo.toml"
+```toml title="wrangler.toml"
 [build]
 command = "cargo install -q worker-build && worker-build --dev"
 ```

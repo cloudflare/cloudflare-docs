@@ -20,7 +20,7 @@ Use Request Header Transform Rules to manipulate the headers of HTTP requests se
 ```mermaid
 flowchart LR
 accTitle: Header modifications diagram
-accDescr: Header transform rules can change the headers sent to your origin server (request header modifications) or sent your your website visitors (response header modifications).
+accDescr: Header transform rules can change the headers sent to your origin server (request header modifications) or sent your website visitors (response header modifications).
 
 A[Visitor]
 B((Cloudflare))
@@ -47,6 +47,8 @@ Through Request Header Transform Rules you can:
 
 You can create a request header transform rule [in the dashboard](/rules/transform/request-header-modification/create-dashboard/), [via API](/rules/transform/request-header-modification/create-api/), or [using Terraform](/terraform/additional-configurations/transform-rules/#create-a-request-header-transform-rule).
 
+With access to the HMAC signing functions, you can [sign requests to private S3 and GCS buckets](/rules/transform/examples/sign-private-storage-requests/). The same rule can generate the signature and the required UTC date header.
+
 <Render
 	file="snippets-alternative"
 	product="rules"
@@ -59,7 +61,7 @@ You can create a request header transform rule [in the dashboard](/rules/transfo
 
 - Due to protocol compliance reasons, modifying or removing request headers with [forbidden header names](https://developer.mozilla.org/en-US/docs/Glossary/Forbidden_header_name) (such as `Accept-Encoding`) is generally not allowed in Request Header Transform Rules.
 
-- You cannot modify the value of any header commonly used to identify the website visitor's IP address or initial protocol, such as `x-forwarded-for`, `true-client-ip`, `x-real-ip`, or `x-forwarded-proto`. If your origin needs a custom value in a header like `x-real-ip` on requests reaching your origin server, use [Cloudflare Snippets](/rules/snippets/) or [Cloudflare Workers](/workers/) and set the header on a `fetch()` subrequest. The value must be a syntactically valid IP address. This workaround does not work for cross-zone subrequests, where Cloudflare unconditionally replaces the value with an internal Cloudflare address to prevent IP spoofing.
+- You cannot modify the value of any header commonly used to identify the website visitor's IP address or initial protocol, such as `x-forwarded-for`, `true-client-ip`, `x-real-ip`, or `x-forwarded-proto`. Cloudflare removes the `x-real-ip` header before the request reaches your origin server, including when a [Snippet](/rules/snippets/) or [Worker](/workers/) sets it on a `fetch()` subrequest. To send the visitor's IP address to your origin server, use the `CF-Connecting-IP` header, the [**Add "True-Client-IP" header**](/rules/transform/managed-transforms/reference/#add-true-client-ip-header) Managed Transform, or a Snippet or Worker that sets a header with a different name.
 
 - Although you can remove the `x-forwarded-for` header in a Request Header Transform Rule, Cloudflare's backend proxy re-adds it (with the visitor's IP address) before the request reaches your origin server, because the proxy runs after all rule phases. The same applies to [Managed Transforms](/rules/transform/managed-transforms/). However, if the request is handled by Cloudflare Workers — which [run before the cache](/workers/reference/how-the-cache-works/) — the `x-forwarded-for` request header will be absent because the proxy has not yet re-added it.
 

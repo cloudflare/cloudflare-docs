@@ -28,6 +28,7 @@ The [`compatibility_date`](/workers/configuration/compatibility-dates/) controls
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
 }
@@ -47,6 +48,7 @@ The [`nodejs_compat`](/workers/runtime-apis/nodejs/) compatibility flag gives yo
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
 }
@@ -56,9 +58,23 @@ The [`nodejs_compat`](/workers/runtime-apis/nodejs/) compatibility flag gives yo
 
 For more information, refer to [Node.js compatibility](/workers/runtime-apis/nodejs/).
 
+### Enable source maps
+
+Enable [source maps](/workers/observability/source-maps/) for every JavaScript or TypeScript Worker. Captured exception stack traces then point to your original files and lines.
+
+<WranglerConfig>
+
+```toml
+upload_source_maps = true
+```
+
+</WranglerConfig>
+
+If a framework or custom build tool bundles your Worker, enable external source maps in its server build too. With Vite, configure the Worker environment's `build.sourcemap` setting. Keep server maps out of public assets.
+
 ### Generate binding types with wrangler types
 
-Do not hand-write your `Env` interface. Run [`wrangler types`](/workers/wrangler/commands/general/#types) to generate a type definition file that matches your actual Wrangler configuration. This catches mismatches between your config and code at compile time instead of at deploy time.
+Do not hand-write your `Env` interface. Run [`wrangler types`](/workers/wrangler/commands/workers/#types) to generate a type definition file that matches your actual Wrangler configuration. This catches mismatches between your config and code at compile time instead of at deploy time.
 
 Re-run `wrangler types` whenever you add or rename a binding.
 
@@ -81,7 +97,7 @@ export default {
 
 </TypeScriptExample>
 
-For more information, refer to [wrangler types](/workers/wrangler/commands/general/#types).
+For more information, refer to [wrangler types](/workers/wrangler/commands/workers/#types).
 
 ### Store secrets with wrangler secret, not in source
 
@@ -93,6 +109,7 @@ Secrets (API keys, tokens, database credentials) must never appear in your Wrang
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
 
@@ -116,7 +133,7 @@ You can also pipe secrets from other tools or environment variables:
 
 ```bash
 # Pipe from another CLI tool
-npx some-cli-tool --get-secret | npx wrangler secret put API_KEY
+npx <some-cli-tool> --get-secret | npx wrangler secret put API_KEY
 # Pipe from an environment variable or .env file
 echo "$API_KEY" | npx wrangler secret put API_KEY
 ```
@@ -135,6 +152,7 @@ Each environment is treated separately. Bindings and vars need to be declared pe
 {
 	"name": "my-api",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
 
@@ -183,6 +201,7 @@ The most common mistake with routes is missing the DNS record. Without a proxied
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
 
@@ -465,6 +484,7 @@ Create a new `Client` on each request. Hyperdrive manages the underlying pool, s
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
 
@@ -625,6 +645,7 @@ Use structured JSON logging with `console.log` so logs are searchable and filter
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
 

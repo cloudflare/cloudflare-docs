@@ -1,0 +1,64 @@
+---
+title: "WAF Release - 2026-10-12"
+description: Cloudflare WAF managed rulesets 2026-10-12 release
+date: 2026-10-12
+---
+
+import { RuleID } from "~/components";
+
+This release introduces new detections to mitigate recent vulnerabilities affecting TanStack and Atlassian products.
+
+**Key Findings**
+
+- CVE-2026-102989: A reflected Cross-Site Scripting (XSS) vulnerability affecting TanStack. Unauthenticated attackers can exploit this flaw to inject malicious scripts into web pages viewed by other users, potentially leading to session hijacking or unauthorized actions. 
+
+- CVE-2026-21589: An arbitrary file access vulnerability affecting Atlassian products. Threat actors can exploit this flaw to read unauthorized files on the target system, risking the exposure of sensitive configuration data.
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="50873c55387d4882aba7ea3d02751ef3" />
+			</td>
+			<td>N/A</td>
+			<td>Generic Rules - Template Injection - 2 - Beta</td>
+			<td>Disabled</td>
+			<td>Disabled</td>
+			<td>This rule is merged into the original rule "Generic Rules - Template Injection - 2" (ID:{" "}<RuleID id="00a9a0d663da4add95b863abd3ed0123" />).</td>
+		</tr>	
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="22220c5e2682463daa5536214ee560b2" />
+			</td>
+			<td>N/A</td>
+			<td>TanStack - Reflected XSS - CVE:CVE-2026-102989</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+        <tr>
+            <td>Cloudflare Managed Ruleset</td>
+            <td>
+                <RuleID id="272b2eec72c04313a6f0da2ee919cd31" />
+            </td>
+            <td>N/A</td>
+            <td>Atlassian - Arbitrary File Access - CVE:CVE-2026-21589</td>
+            <td>N/A</td>
+            <td>Block</td>
+			<td>This is a new detection.</td>
+        </tr>
+	</tbody>
+</table>

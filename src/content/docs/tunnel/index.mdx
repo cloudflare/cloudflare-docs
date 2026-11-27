@@ -10,13 +10,7 @@ sidebar:
 description: Securely connect your origin servers, APIs, and services to Cloudflare with post-quantum encrypted tunnels — no public IPs required.
 ---
 
-import {
-	CardGrid,
-	Description,
-	LinkTitleCard,
-	Plan,
-	Stream,
-} from "~/components";
+import { CardGrid, Description, LinkTitleCard, Plan, Render, Stream } from "~/components";
 
 <Description>
 	Securely connect your origin servers, APIs, and services to Cloudflare with
@@ -26,8 +20,11 @@ import {
 <Plan type="all" />
 
 :::note[Looking for private networking or Zero Trust?]
-This documentation covers Cloudflare Tunnel use cases for public applications. For VPN replacement, private network access, and network traffic filtering, refer to the [Cloudflare One Tunnel documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/).
+This documentation covers Cloudflare Tunnel use cases for public applications. For VPN replacement and private network access, we recommend [Cloudflare Mesh](/mesh/). For existing Tunnel private network routes, refer to the [Cloudflare One Tunnel documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/).
 :::
+
+<Render file="choose-a-connector-tip" product="networking-services" />
+
 
 Cloudflare Tunnel connects your infrastructure to Cloudflare through an outbound-only, [post-quantum encrypted](/ssl/post-quantum-cryptography/) connection. Instead of exposing a public IP, you install a lightweight daemon called `cloudflared` on your server. It creates a persistent tunnel to Cloudflare's global network, so all traffic to your origins flows through Cloudflare — where CDN caching, WAF, Bot Management, and DDoS protection are applied automatically.
 
@@ -53,7 +50,7 @@ Each tunnel maintains four long-lived connections to two Cloudflare data centers
 ## Use cases
 
 - **Secure origin connectivity** — Eliminate public origin IPs. All traffic flows through Cloudflare with CDN, WAF, and DDoS protection applied.
-- **Public ingress routing** — Publish internal applications to the internet by mapping public hostnames to local services. Supports HTTP, HTTPS, TCP, SSH, RDP, and [more](/tunnel/routing/#supported-protocols).
+- **Public ingress routing** — Publish internal applications to the internet by mapping public hostnames to local services. Supports HTTP, HTTPS, TCP, SSH, RDP, and [more](/tunnel/concepts/routing/#supported-protocols).
 - **Workers VPC** — Enable [Cloudflare Workers](/workers-vpc/) to securely access private databases, APIs, and services through your tunnel.
 - **Load Balancing** — Use tunnels as origin endpoints in [Cloudflare Load Balancer](/load-balancing/) pools for high availability and intelligent traffic steering.
 
@@ -61,11 +58,11 @@ Each tunnel maintains four long-lived connections to two Cloudflare data centers
 
 <CardGrid>
 
-<LinkTitleCard title="Create your first tunnel" href="/tunnel/setup/">
+<LinkTitleCard title="Create your first tunnel" href="/tunnel/get-started/">
 	Set up a tunnel in under 5 minutes using the dashboard or API.
 </LinkTitleCard>
 
-<LinkTitleCard title="Routing" href="/tunnel/routing/">
+<LinkTitleCard title="Routing" href="/tunnel/concepts/routing/">
 	DNS records, protocols, and load balancing for published applications.
 </LinkTitleCard>
 

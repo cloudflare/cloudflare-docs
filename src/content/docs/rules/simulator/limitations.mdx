@@ -1,0 +1,46 @@
+---
+pcx_content_type: reference
+description: Known limitations when using Rules simulator.
+products:
+  - rules
+title: Rules simulator limitations
+sidebar:
+  order: 3
+  label: Limitations
+---
+
+## Automatic rule bypasses
+
+Rules simulator does not display rules that are automatically bypassed for operational reasons.
+
+For example, when SSL/TLS certificates are in `pending_validation` status, security rules are automatically disabled for domain control validation (DCV) paths like `/.well-known/pki-validation/` and `/.well-known/acme-challenge/`. These bypasses will not appear in simulation results.
+
+For more information, refer to [Why are some rules bypassed?](/waf/troubleshooting/faq/#why-are-some-rules-bypassed-when-i-did-not-create-an-exception) in the WAF documentation.
+
+---
+
+## Requests handled by Snippets or Workers
+
+When a simulated request matches a [Snippet](/rules/snippets/) rule or a [Worker](/workers/) route, the simulation results do not include the **Cache Parameters** > **Cache Key** section.
+
+Cloudflare computes the cache key on the subrequest that the Snippet or Worker sends with `fetch()`, not on the incoming request. Rules simulator does not trace that subrequest, so it cannot show the cache key. The Snippet or Worker code can also change the URL or headers of the subrequest, which changes the cache key.
+
+To check whether the response is served from cache, send a real request and inspect the `cf-cache-status` response header.
+
+---
+
+## Unsupported features
+
+Rules simulator currently does not support:
+
+- Hostnames using [Data Localization Suite](/data-localization/)
+- [Spectrum](/spectrum/) applications
+
+Additionally, the following products will not appear in simulation results:
+
+- [Firewall rules (deprecated)](/firewall/)
+- [Load Balancing](/load-balancing/) and [Load Balancer Custom Rules](/load-balancing/additional-options/load-balancing-rules/)
+- [IP Access rules](/waf/tools/ip-access-rules/)
+- [Rate limiting rules (previous version)](/waf/reference/legacy/old-rate-limiting/)
+- [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/)
+- [Content security rules](/client-side-security/rules/)

@@ -32,3 +32,11 @@ Each operation (create, edit, or delete) on a list item counts as a modification
 - You can make a maximum of 30,000 API requests over 12 hours doing list item modifications.
 
 If a write operation is still being processed — which happens asynchronously — and you submit a new request, you will receive a `429` HTTP status code. When this happens, submit your request again later.
+
+### CrowdSec-managed lists
+
+Lists that are kept up to date by a CrowdSec integration have a stricter limit: you can perform at most one bulk operation every 24 hours across all CrowdSec-managed lists in your account.
+
+If you exceed this limit, the API rejects the request with a `429` HTTP status code and error code `10040`. Because this limit applies at the account level, submitting an update to any CrowdSec-managed list starts the 24-hour cooldown for all CrowdSec-managed lists on the account. The response does not include an `operation_id`, because the request is rejected before the bulk operation is created.
+
+To avoid hitting this limit, schedule automated CrowdSec updates to run at most once every 24 hours per account, or use a separate custom list that is not managed by CrowdSec for more frequent updates.

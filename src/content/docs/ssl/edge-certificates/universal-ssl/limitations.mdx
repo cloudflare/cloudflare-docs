@@ -42,6 +42,17 @@ Cloudflare can change the [certificate authority](/ssl/reference/certificate-aut
 
 If you want to choose the issuing certificate authority, [order an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/).
 
+## Certificate type
+
+The type of certificate included in a Universal SSL certificate pack depends on your zone plan:
+
+- **Free**: An ECDSA certificate only.
+- **Pro, Business, and Enterprise**: Both an RSA and an ECDSA certificate.
+
+When you upgrade your zone from the Free plan to a paid plan, Cloudflare does not automatically re-issue your Universal SSL certificate. Your existing ECDSA-only certificate continues to serve until the certificate pack next renews. At renewal, Cloudflare issues both an RSA and an ECDSA certificate for your zone.
+
+If you need an RSA certificate before the next renewal, [order an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) (requires the Advanced Certificate Manager add-on).
+
 ## Validity period
 
 For Universal certificates, Cloudflare controls the validity period. Refer to [validity periods and renewal](/ssl/reference/certificate-validity-periods/#universal-ssl) for details.

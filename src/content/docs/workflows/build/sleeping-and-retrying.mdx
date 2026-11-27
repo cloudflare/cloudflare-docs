@@ -85,7 +85,7 @@ let someState = await step.do(
 	"call an API",
 	{
 		retries: {
-			limit: 10, // The total number of attempts
+			limit: 10, // The total number of retries (11 attempts total)
 			delay: "10 seconds", // Delay between each retry
 			backoff: "exponential", // Any of "constant" | "linear" | "exponential";
 		},

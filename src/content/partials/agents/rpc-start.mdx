@@ -1,0 +1,5 @@
+---
+{}
+---
+
+RPC calls do not go through `fetch()`, so they do not start the [Lifecycle](/agents/runtime/lifecycle/). Call `await this.lifecycle.start()` at the top of each RPC method that uses a capability, or anything `onStart()` sets up.

@@ -163,7 +163,7 @@ export default {
 	async fetch(request, env) {
 		const url = new URL(request.url);
 		if (url.pathname === "/submit") {
-			await submitHandler(request, env);
+			return submitHandler(request, env);
 		}
 		return new Response("Not found", { status: 404 });
 	},
@@ -177,6 +177,7 @@ async function submitHandler(request, env) {
 	if (request.method !== "POST") {
 		return new Response("Method Not Allowed", {
 			status: 405,
+			headers: { Allow: "POST" },
 		});
 	}
 	const body = await request.formData();
@@ -198,6 +199,7 @@ async function submitHandler(request, env) {
 		},
 	};
 	await createAirtableRecord(env, reqBody);
+	return new Response("Thanks for your submission", { status: 200 });
 }
 
 // Existing code
@@ -206,7 +208,7 @@ async function submitHandler(request, env) {
 
 <Render file="request-dot-clone-warning" product="workers" />
 
-While the majority of this function is concerned with parsing the request body (the data being sent as part of the request), there are two important things to note. First, if the HTTP method sent to this function is not `POST`, you will return a new response with the status code of [`405 Method Not Allowed`](https://httpstatuses.com/405).
+While the majority of this function is concerned with parsing the request body (the data being sent as part of the request), there are two important things to note. First, if the HTTP method sent to this function is not `POST`, you will return a new response with the status code of [`405 Method Not Allowed`](https://httpstatuses.net/405/) and an `Allow: POST` header listing the method this route accepts.
 
 The variable `reqBody` represents a collection of fields, which are key-value pairs for each column in your Airtable table. By formatting `reqBody` as an object with a collection of fields, you are creating a new record in your table with a value for each field.
 
@@ -248,6 +250,7 @@ Add a `vars` table at the end of your Wrangler file:
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "workers-airtable-form",
 	"main": "src/index.js",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"vars": {
 		"AIRTABLE_BASE_ID": "exampleBaseId",

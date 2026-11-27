@@ -1,27 +1,20 @@
 import { expect } from "vitest";
-import { describeEval, toolCalls } from "vitest-evals";
-import { createFlueAgentHarness } from "./harness";
-import type { SpamFilterInput } from "../agents/spam-filter";
+import { describeEval } from "vitest-evals";
+import { createClefHarness } from "./clef-harness";
+import type { ItemSpamInput, ItemSpamVerdict } from "../lib/spam-filter";
 
 const baseUrl = process.env.FLUE_BASE_URL ?? "http://localhost:5173";
 const token = process.env.DOCS_FLUE_INTERNAL_TOKEN;
 
-const harness = createFlueAgentHarness<SpamFilterInput>({
+const harness = createClefHarness<ItemSpamInput>({
 	baseUrl,
-	agentName: "spam-filter",
-	dataKey: "spam_verdict",
-	message:
-		"Evaluate this GitHub item for spam/off-topic and submit your verdict.",
+	kind: "item",
 	token,
 });
 
-type Verdict = {
-	is_spam?: boolean;
-	confidence?: string;
-	reason?: string;
-};
+type Verdict = ItemSpamVerdict;
 
-describeEval("spam filter", { harness }, (it) => {
+describeEval("item spam gate (clef)", { harness }, (it) => {
 	it("flags obvious spam issue", async ({ run }) => {
 		const result = await run({
 			eventType: "issues",
@@ -38,14 +31,11 @@ describeEval("spam filter", { harness }, (it) => {
 			},
 		});
 
-		const verdict = result.output as Verdict;
+		const verdict = result.output as unknown as Verdict;
 		expect(verdict).toBeDefined();
-		expect(verdict!.is_spam).toBe(true);
-		expect(["medium", "high"]).toContain(verdict!.confidence);
-		expect(verdict!.reason).toBeTruthy();
-		expect(toolCalls(result).map((c) => c.name)).toContain(
-			"submit_spam_verdict",
-		);
+		expect(verdict.is_spam).toBe(true);
+		expect(["medium", "high"]).toContain(verdict.confidence);
+		expect(["spam", "bot_or_test"]).toContain(verdict.category);
 	});
 
 	it("does not flag a legitimate docs typo report", async ({ run }) => {
@@ -64,12 +54,9 @@ describeEval("spam filter", { harness }, (it) => {
 			},
 		});
 
-		const verdict = result.output as Verdict;
+		const verdict = result.output as unknown as Verdict;
 		expect(verdict).toBeDefined();
-		expect(verdict!.is_spam).toBe(false);
-		expect(toolCalls(result).map((c) => c.name)).toContain(
-			"submit_spam_verdict",
-		);
+		expect(verdict.is_spam).toBe(false);
 	});
 
 	it("flags a support request as off-topic", async ({ run }) => {
@@ -88,19 +75,14 @@ describeEval("spam filter", { harness }, (it) => {
 			},
 		});
 
-		const verdict = result.output as Verdict;
+		const verdict = result.output as unknown as Verdict;
 		expect(verdict).toBeDefined();
 		// Off-topic support requests should be closed. The model returns
 		// is_spam:true with medium/high confidence, and trusted code closes
 		// the issue with the OFF_TOPIC_COMMENT redirect.
-		expect(verdict!.is_spam).toBe(true);
-		expect(["medium", "high"]).toContain(verdict!.confidence);
-		expect(verdict!.reason?.toLowerCase()).toMatch(
-			/\b(support|off-topic|wrong repo|community)\b/,
-		);
-		expect(toolCalls(result).map((c) => c.name)).toContain(
-			"submit_spam_verdict",
-		);
+		expect(verdict.is_spam).toBe(true);
+		expect(["medium", "high"]).toContain(verdict.confidence);
+		expect(verdict.category).toBe("support_request");
 	});
 
 	it("does not flag a PR with sparse metadata but real docs content", async ({
@@ -136,11 +118,48 @@ describeEval("spam filter", { harness }, (it) => {
 			},
 		});
 
-		const verdict = result.output as Verdict;
+		const verdict = result.output as unknown as Verdict;
 		expect(verdict).toBeDefined();
-		expect(verdict!.is_spam).toBe(false);
-		expect(toolCalls(result).map((c) => c.name)).toContain(
-			"submit_spam_verdict",
-		);
+		expect(verdict.is_spam).toBe(false);
+	});
+
+	it("categorises a product feature request", async ({ run }) => {
+		const result = await run({
+			eventType: "issues",
+			item: {
+				kind: "issue",
+				number: 995,
+				title: "Please add support for per-route rate limits in Workers",
+				body: "It would be great if Workers had a built-in way to rate limit per route, like a new binding with a config per path. Can you add this feature to the product?",
+				state: "open",
+				url: "https://github.com/cloudflare/cloudflare-docs/issues/995",
+				user: { login: "product-fan" },
+				author_association: "NONE",
+				labels: [],
+			},
+		});
+
+		const verdict = result.output as unknown as Verdict;
+		expect(verdict.category).toBe("feature_request");
+	});
+
+	it("does not flag a legitimate non-English docs issue", async ({ run }) => {
+		const result = await run({
+			eventType: "issues",
+			item: {
+				kind: "issue",
+				number: 994,
+				title: "Error en la documentación de Workers KV",
+				body: "En la página de Workers KV, el ejemplo de `put` usa un nombre de método incorrecto. Debería ser `KV.put(clave, valor)`.",
+				state: "open",
+				url: "https://github.com/cloudflare/cloudflare-docs/issues/994",
+				user: { login: "lector-docs" },
+				author_association: "NONE",
+				labels: [],
+			},
+		});
+
+		const verdict = result.output as unknown as Verdict;
+		expect(verdict.is_spam).toBe(false);
 	});
 });

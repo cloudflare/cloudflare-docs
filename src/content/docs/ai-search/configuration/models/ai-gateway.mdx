@@ -8,13 +8,15 @@ products:
   - ai-search
 ---
 
-Every AI Search instance is connected to a Cloudflare [AI Gateway](/ai-gateway/). The model calls that AI Search makes for embedding, query rewriting, reranking, and response generation run through this gateway. By configuring the connected gateway, you can observe and control those model calls.
+Every AI Search instance is connected to a Cloudflare [AI Gateway](/ai-gateway/). External-provider embedding and reranking calls run through your connected gateway. Query rewriting and response generation also run through your gateway.
+
+Workers AI embedding and reranking usage is included in AI Search usage. These calls do not appear in your AI Gateway logs or analytics and are not billed separately as Workers AI usage.
 
 To choose or change which gateway your instance uses, see [Models](/ai-search/configuration/models/).
 
 ## Observe your model calls
 
-AI Gateway records the model requests that run through it, so you can see what your instance is doing.
+AI Gateway records the model requests routed through your gateway. This includes all query-rewriting and response-generation calls, plus external-provider embedding and reranking calls.
 
 - **[Analytics](/ai-gateway/observability/analytics/):** Track the number of requests, tokens used, cost, latency, and errors across your model calls.
 - **[Logs](/ai-gateway/observability/logging/):** Inspect individual requests and responses, including the effective [system prompt](/ai-search/configuration/retrieval/system-prompt/), rewritten queries, and generated answers.
@@ -36,7 +38,7 @@ Configure [request retries and model fallbacks](/ai-gateway/configuration/fallba
 
 ## Caching and rate limiting
 
-Some AI Gateway features act on every request that passes through the gateway. Because your AI Search instance shares this gateway for its internal model calls, a few features can interfere with indexing and querying.
+Some AI Gateway features act on every request that passes through your gateway. These features can interfere with external-provider embedding and reranking, query rewriting, and response generation.
 
 Do not turn on [AI Gateway caching](/ai-gateway/features/caching/) for the gateway connected to your AI Search instance. This matters most for embedding requests. AI Search relies on fresh embeddings to build its vector index and to match each query against it, so serving cached embeddings can store or return incorrect vectors and quietly degrade the accuracy of your search results. To cache search results, use AI Search's own [Similarity cache](/ai-search/configuration/retrieval/cache/) instead.
 

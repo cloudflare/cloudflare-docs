@@ -1,0 +1,26 @@
+---
+title: Redesigned Bots Directory on Cloudflare Radar, now powered by BotBase
+description: The Cloudflare Radar Bots Directory now uses BotBase, Cloudflare's catalog of known bots and agents, with redesigned pages, a new Identity section, and new fields in the Radar API.
+products:
+  - radar
+date: 2026-11-09
+---
+
+The [**Cloudflare Radar**](/radar/) [Bots Directory](https://radar.cloudflare.com/bots/directory) now uses [BotBase](/bots/botbase/), Cloudflare's catalog of the bots and agents it tracks, and has a new design matching the Radar homepage.
+
+![Animation filtering the Bots Directory and opening the Cloudflare Crawler bot page, with its Identity and Traffic sections](~/assets/images/radar/radar-bots-directory-botbase.gif)
+
+Each bot page has a new **Identity** section showing the bot's access level, content use, [Web Bot Auth](/bots/reference/bot-verification/web-bot-auth/) verification, and user agents. Bot operators are also searchable from the Radar site search.
+
+## API
+
+The [List bots](/api/resources/radar/subresources/bots/methods/list/) and [Get bot details](/api/resources/radar/subresources/bots/methods/get/) endpoints now describe each bot with:
+
+- `categories`: a bot can now have more than one category. Categories follow BotBase's groups, which add `COMMERCE`, and some older categories are now part of broader groups.
+- `accessLevel`: `DIRECT` if the bot reaches websites under its own identity, or `INTERMEDIARY` if it acts on behalf of another agent or a person.
+- `contentUse`: `full` if the content it fetches is kept and reused (for example, for model training or a search index), `reference` if it is cited or linked back to the source, or `immediate` if it is used once to answer a user's request.
+- `documentationUrl` and `operatorWebsiteUrl` (bot details only).
+
+`category` and `operatorUrl` are deprecated in favor of `categories` and `documentationUrl`.
+
+Visit the [Bots Directory](https://radar.cloudflare.com/bots/directory) on Cloudflare Radar.

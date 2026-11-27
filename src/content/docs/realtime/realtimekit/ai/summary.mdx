@@ -14,6 +14,14 @@ RealtimeKit generates AI-powered meeting summaries from transcript data.
 Summarization requires a transcript. To generate summaries automatically when a meeting ends, turn on [real-time transcription](/realtime/realtimekit/ai/transcription/#real-time-transcription) or [post-meeting transcription](/realtime/realtimekit/ai/transcription/#post-meeting-transcription), and set `summarize_on_end: true`. With post-meeting transcription, RealtimeKit generates the summary after the transcript is available.
 :::
 
+## Models and Workers AI usage
+
+RealtimeKit generates summaries with the [`@cf/zai-org/glm-4.7-flash`](/workers-ai/models/glm-4.7-flash/) model on [Workers AI](/workers-ai/).
+
+If the estimated size of the transcript and prompts, plus an output token allowance, exceeds the model's context budget, RealtimeKit splits the transcript into chunks. It summarizes the chunks and combines their results, which requires multiple model calls. Cloudflare may change the model or how it is used at any time.
+
+Both summarization and [transcription](/realtime/realtimekit/ai/transcription/) contribute to Workers AI usage on your Cloudflare account. Summarization usage depends on the model and the input and output tokens across model calls. For rates, refer to [Workers AI model pricing](/workers-ai/platform/pricing/#llm-model-pricing).
+
 ## Turn on summarization
 
 Set `summarize_on_end: true` when [creating a meeting](/api/resources/realtime_kit/subresources/meetings/methods/create/). For post-meeting summaries, also set `transcribe_on_end: true` so RealtimeKit generates the summary automatically after the transcript is available:

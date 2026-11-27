@@ -8,7 +8,7 @@ date: 2026-04-13
 
 Local Explorer is a browser-based interface and REST API for viewing and editing local resource data during development. It removes the need to write throwaway scripts or dig through `.wrangler/state` to understand what data your Worker has stored locally.
 
-Local Explorer is available in Wrangler 4.82.1+ and the Cloudflare Vite plugin 1.32.0+. Start a local development session and press `e` in your terminal, or navigate to `/cdn-cgi/explorer` on your local dev server.
+Local Explorer is available in Wrangler 4.82.1+ and the Cloudflare Vite plugin 1.32.0+. Start a local development session and press `e` in your terminal, or navigate to `/cdn-cgi/local/explorer` on your local dev server.
 
 ## Supported resources
 
@@ -22,12 +22,12 @@ Local Explorer supports five resource types and works across multiple workers ru
 
 ## OpenAPI-powered REST API
 
-Local Explorer exposes a REST API at `/cdn-cgi/explorer/api` that provides programmatic access to the same operations available in the browser. The root endpoint returns an [OpenAPI specification](https://www.openapis.org/) describing all available endpoints, parameters, and response formats.
+Local Explorer exposes a REST API at `/cdn-cgi/local/explorer/api` that provides programmatic access to the same operations available in the browser. The root endpoint returns an [OpenAPI specification](https://www.openapis.org/) describing all available endpoints, parameters, and response formats.
 
 ```sh
-curl http://localhost:8787/cdn-cgi/explorer/api
+curl http://localhost:8787/cdn-cgi/local/explorer/api
 ```
 
-Point an AI coding agent at `/cdn-cgi/explorer/api` and it can discover and interact with your local resources without manual setup. This enables iterative development loops where an agent can populate test data in KV or D1, inspect Durable Object state, trigger Workflow runs, or upload files to R2.
+Point an AI coding agent at `/cdn-cgi/local/explorer/api` and it can discover and interact with your local resources without manual setup. This enables iterative development loops where an agent can populate test data in KV or D1, inspect Durable Object state, trigger Workflow runs, or upload files to R2.
 
 For more details, refer to the [Local Explorer documentation](/workers/local-development/local-explorer/).

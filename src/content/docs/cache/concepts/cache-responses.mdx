@@ -12,7 +12,7 @@ head:
 
 The `CF-Cache-Status` header output indicates whether a resource is cached or not. To investigate cache responses returned by this header, use services like [Redbot](https://redbot.org/), [webpagetest.org](http://www.webpagetest.org/), or a visual tool like [Cloudflare Optics plugin](https://chromewebstore.google.com/detail/cloudflare-optics/mdjgbjnbdnhneejmmaabmccfehigbjbe).
 
-:::note[`Age` response header]
+:::note[Age response header]
 The `Age` response header is returned when Cloudflare serves a response from cache. It is the number of seconds an asset has been in Cloudflare's cache since it was admitted or last revalidated, and it resets on revalidation against the origin, on purge, or on eviction. With [Tiered Cache](/cache/how-to/tiered-cache/), `Age` reflects the object's age in Cloudflare's network-wide cache — a `HIT` served locally can carry an `Age` inherited from an upper tier, so the value can be older than the last local fill.
 
 Cloudflare sets `Age` on `HIT`, `STALE`, and `UPDATING` responses. It does not set `Age` on `MISS`, on `EXPIRED` or `REVALIDATED` when the request revalidated against the origin, on `DYNAMIC`, `BYPASS`, or `NONE`/`UNKNOWN`. If the origin sets `Age` on an uncacheable response, that value is proxied to the client unchanged — a `DYNAMIC` or `BYPASS` response can carry an `Age` that came from the origin, not from Cloudflare.

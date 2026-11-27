@@ -12,6 +12,10 @@ import { InlineBadge, Render } from "~/components";
 
 Cache Response Rules allow you to configure cache settings based on request and response attributes. These rules execute prior to caching in the `http_response_cache_settings` phase, which runs after Cloudflare receives the origin response.
 
+:::note
+Cache Response Rules evaluate the request as it is sent to your origin. If an [Origin Rule](/rules/origin-rules/) rewrites the `Host` header, expressions that match on `http.host` must use the rewritten hostname. The equivalent Cache Rule still sees the original hostname because Cache Rules run before Origin Rules are applied.
+:::
+
 With Cache Response Rules you can:
 
 - Modify `Cache-Control` directives sent by your origin.

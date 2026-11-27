@@ -10,7 +10,7 @@ products:
 
 import { Steps } from '~/components';
 
-You can scope Cloudflare member permissions to individual [Cloudflare Tunnel](/tunnel/) instances and [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) nodes, instead of granting account-wide access to every Tunnel and Mesh node. This enables least-privilege delegation for private networking operations — for example, letting a support operator stream logs from a single Tunnel without exposing the rest of your account.
+You can scope Cloudflare member permissions to individual [Cloudflare Tunnel](/tunnel/) instances and [Cloudflare Mesh](/mesh/) nodes, instead of granting account-wide access to every Tunnel and Mesh node. This enables least-privilege delegation for private networking operations — for example, letting a support operator stream logs from a single Tunnel without exposing the rest of your account.
 
 Granular permissions are a parallel layer to [account-scoped roles](/fundamentals/manage-members/roles/#account-scoped-roles) — they do not replace them. Members who already hold an account-level role like `Cloudflare Access` or `Cloudflare Zero Trust` continue to have write access to every Tunnel and Mesh node in the account.
 
@@ -33,7 +33,7 @@ Granular permissions are assigned through the standard [member management](/fund
 3. In the **Scope** section, choose **Specific resources**.
 4. Set **Resource type** to one of:
    - **Cloudflare Tunnel instances** — for individual [Cloudflare Tunnel](/tunnel/) instances.
-   - **Cloudflare Mesh nodes** — for individual [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) nodes.
+   - **Cloudflare Mesh nodes** — for individual [Cloudflare Mesh](/mesh/) nodes.
 5. Select one or more specific Tunnels or Mesh nodes from the resource picker.
 6. Save the policy.
 </Steps>
@@ -64,4 +64,4 @@ Members with an account-level role that covers Tunnels and Mesh continue to see 
 - [Role scopes](/fundamentals/manage-members/scope/) — how policy scopes work across account, domain, and resource layers.
 - [Manage account members](/fundamentals/manage-members/manage/) — the member invite and edit flow.
 - [Cloudflare Tunnel](/tunnel/)
-- [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/)
+- [Cloudflare Mesh](/mesh/)

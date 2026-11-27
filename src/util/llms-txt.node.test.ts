@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import { formatPage, normalizeForIndexMd } from "./llms-txt";
+import { formatPage, formatModel, normalizeForIndexMd } from "./llms-txt";
 
 // Mirrors the module-default resolveRedirect passthrough for tests that
 // don't care about __redirects.
@@ -117,5 +117,43 @@ describe("formatPage", () => {
 			expect(out).not.toMatch(/[a-z]index\.md/);
 			expect(out).not.toMatch(/#[a-z0-9-]*index\.md/);
 		}
+	});
+});
+
+describe("formatModel", () => {
+	test("links a model page under the given models path", () => {
+		expect(
+			formatModel("https://example.com", "/workers-ai/models", {
+				title: "@cf/meta/llama-3.1-8b-instruct",
+				slug: "llama-3.1-8b-instruct",
+				description: "A text generation\n\nmodel.",
+			}),
+		).toBe(
+			"- [@cf/meta/llama-3.1-8b-instruct](https://example.com/workers-ai/models/llama-3.1-8b-instruct/index.md): A text generation model.",
+		);
+	});
+
+	test("keeps multi-segment slugs intact", () => {
+		expect(
+			formatModel("https://example.com", "/ai/models", {
+				title: "openai/tts-1",
+				slug: "openai/tts-1",
+				description: "Speech.",
+			}),
+		).toBe(
+			"- [openai/tts-1](https://example.com/ai/models/openai/tts-1/index.md): Speech.",
+		);
+	});
+
+	test("omits the description separator when the description is empty", () => {
+		expect(
+			formatModel("https://example.com", "/workers-ai/models", {
+				title: "@cf/example/model",
+				slug: "model",
+				description: " \n ",
+			}),
+		).toBe(
+			"- [@cf/example/model](https://example.com/workers-ai/models/model/index.md)",
+		);
 	});
 });

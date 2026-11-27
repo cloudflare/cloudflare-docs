@@ -1,0 +1,22 @@
+---
+pcx_content_type: configuration
+description: Block or challenge traffic from the Tor network.
+products:
+  - waf
+title: Block Tor traffic
+---
+
+Cloudflare identifies requests coming from Tor exit nodes with the continent code `T1`. If you do not want Tor traffic on your zone, this example [custom rule](/waf/custom-rules/create-dashboard/) blocks requests from the Tor network using the [`ip.src.continent`](/ruleset-engine/rules-language/fields/reference/ip.src.continent/) field.
+
+- **When incoming requests match**:
+
+  If you are using the expression editor:<br/>
+  `(ip.src.continent eq "T1")`
+
+- **Then take action**: _Block_
+
+If you prefer not to block Tor traffic outright, use the _Managed Challenge_ action instead.
+
+:::note
+If you block or challenge Tor traffic, disable [Onion Routing](/network/onion-routing/) on your zone. Onion Routing improves the experience of visitors using the Tor Browser, which contradicts blocking Tor traffic.
+:::

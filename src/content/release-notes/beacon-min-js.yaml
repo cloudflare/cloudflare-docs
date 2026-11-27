@@ -3,6 +3,27 @@ link: "/web-analytics/changelog/"
 productName: beacon.min.js
 productLink: "/web-analytics/"
 entries:
+  - publish_date: "2026-10-16"
+    description: |-
+      1. Bug fix to ignore same-page soft navigations when the URL does not change
+      2. Google's web-vitals library upgraded to version 6.2.3
+      3. Further improvements of OS version collection on iOS/MacOS
+
+  - publish_date: "2026-10-05"
+    description: |-
+      1. Allow `__cfBeacon` JavaScript object to override `data-cf-beacon` configuration
+      2. Improved OS version collection on iOS/MacOS
+      3. Improved backwards compatibility with ES2017 transpilation
+      4. Google's web-vitals library upgraded to version 6.2.2
+
+  - publish_date: "2026-09-02"
+    description: |-
+      1. Bug fix to prevent rounding of Cumulative Layout Shift (CLS)
+      2. Polyfills introduced for `Array.prototype.findLast` and `.at` to improve browser compatibility
+      3. Google's web-vitals library upgraded to version 6.2.1
+      4. OS/browser/engine versions included in beacon payload
+      5. Timing durations rounded to 1 millisecond to minimise beacon payload size
+
   - publish_date: "2026-08-20"
     description: Updated Google's web-vitals library to version 6.1.0. In order to improve the accuracy of tracking soft navigations (i.e. those used by Single Page Applications), we've introduced support for [Google's new Soft Navigations API](https://developer.chrome.com/docs/web-platform/soft-navigations) available in Chromium-based browsers (e.g. Chrome, Edge, Opera) and added an improved fallback for non-Chromium browsers (e.g. Safari and Firefox) using [the Navigation API](https://developer.mozilla.org/en-US/docs/Web/API/Navigation_API). For more information, see [Web Analytics for SPAs](/web-analytics/get-started/web-analytics-spa/).
 

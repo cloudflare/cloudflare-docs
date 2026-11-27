@@ -6,17 +6,20 @@
  *
  * CF source: cloudflare-docs/src/pages/[...changelog].xml.ts
  *
- * Faithful port with one adaptation to this app's conventions:
+ * Faithful port with two adaptations to this app's conventions:
  *   - Site origin comes from `virtual:nimbus/config` (`config.site`) — the
  *     same source the llms.txt routes use — rather than `context.site`.
+ *   - Not in upstream: entries with `deprecated: true` get a " (Deprecated)"
+ *     suffix on their RSS item title.
  */
 import rss from "@astrojs/rss";
 import { getCollection, getEntry } from "astro:content";
 import type { APIRoute } from "astro";
-import { marked, type Token } from "marked";
 import { slug } from "github-slugger";
 import { config } from "virtual:nimbus/config";
 import { entryToString } from "~/util/container";
+import { renderMarkdown } from "~/util/markdown";
+import { absolutizeUrls } from "~/util/rss";
 
 export const prerender = true;
 
@@ -42,16 +45,6 @@ export async function getStaticPaths() {
 }
 
 export const GET: APIRoute = async (context) => {
-	function walkTokens(token: Token) {
-		if (token.type === "image" || token.type === "link") {
-			if (token.href.startsWith("/")) {
-				token.href = new URL(token.href, config.site).href;
-			}
-		}
-	}
-
-	marked.use({ walkTokens });
-
 	const entry = context.props.entry;
 
 	if (!entry.data.release_notes_file_name) {
@@ -110,6 +103,7 @@ export const GET: APIRoute = async (context) => {
 					date: entry.publish_date,
 					description,
 					title,
+					deprecated: entry.deprecated,
 				};
 			});
 		}),
@@ -131,10 +125,8 @@ export const GET: APIRoute = async (context) => {
 		trailingSlash: false,
 		items: entries.map((entry) => {
 			return {
-				title: `${entry.product} - ${entry.title ?? entry.date}`,
-				description: marked.parse(entry.description ?? "", {
-					async: false,
-				}) as string,
+				title: `${entry.product} - ${entry.title ?? entry.date}${entry.deprecated ? " (Deprecated)" : ""}`,
+				description: absolutizeUrls(renderMarkdown(entry.description ?? "")),
 				pubDate: new Date(entry.date),
 				link: entry.link,
 			};

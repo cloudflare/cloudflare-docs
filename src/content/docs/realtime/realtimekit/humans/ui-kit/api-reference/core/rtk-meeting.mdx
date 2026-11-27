@@ -1,0 +1,66 @@
+---
+pcx_content_type: navigation
+title: rtk-meeting
+description: API reference for rtk-meeting component (Web Components (HTML) Library)
+products:
+  - realtime
+---
+
+{/*
+  AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.
+  Any manual changes will be overwritten the next time the docs are generated.
+
+  Source: https://github.com/cloudflare/realtimekit-ui/blob/main/packages/core/src/components/rtk-meeting/rtk-meeting.tsx
+  Generator: https://github.com/cloudflare/realtimekit-ui/blob/main/scripts/generate-stencil-docs.js
+
+  To update this page, edit the component source in the realtimekit-ui repository and submit a pull request against the staging branch; the changes will automatically sync here upon the next release.
+*/}
+
+A single component which renders an entire meeting UI.
+ It loads your preset and renders the UI based on it.
+ With this component, you don't have to handle all the states,
+ dialogs and other smaller bits of managing the application.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `applyDesignSystem` | `boolean` | ✅ | - | Whether to apply the design system on the document root from config |
+| `config` | `UIConfig` | ✅ | - | UI Config |
+| `gridLayout` | `GridLayout1` | ✅ | - | Grid layout |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `leaveOnUnmount` | `boolean` | ✅ | - | Whether participant should leave when this component gets unmounted |
+| `loadConfigFromPreset` | `boolean` | ✅ | - | Whether to load config from preset |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `mode` | `MeetingMode` | ✅ | - | Fill type |
+| `overrides` | `Overrides` | ❌ | `defaultOverrides` | UI Kit Overrides |
+| `showSetupScreen` | `boolean` | ✅ | - | Whether to show setup screen or not |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-meeting></rtk-meeting>
+```
+
+### With Properties
+
+```html
+<rtk-meeting
+ size="md">
+</rtk-meeting>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-meeting");
+
+  el.meeting = meeting;
+  el.applyDesignSystem = true;
+  el.config = defaultUiConfig;
+</script>
+```

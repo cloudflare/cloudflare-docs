@@ -40,7 +40,7 @@ Without content selectors, AI Search applies a default processing pipeline that 
 Content selectors are configured in the `source_params.web_crawler.parse_options.content_selector` field when creating or updating an AI Search instance. The field accepts an array of objects, each with a `path` and `selector` property.
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances" \
   -H "Authorization: Bearer <API_TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -109,7 +109,7 @@ If a CSS selector does not match any elements on a page, the resulting Markdown 
 
 - **Path filtering**: [Path filtering](/ai-search/configuration/indexing/path-filtering/) takes priority over content selectors. Pages excluded by path filters are never crawled, so content selectors do not apply to them.
 - **Rendering mode**: Content selectors apply to the HTML that AI Search receives. For sites that render content with JavaScript, use [Rendered sites](/ai-search/configuration/data-source/website/#rendering-mode) mode so that selectors can target the fully rendered DOM.
-- **Automatic re-indexing**: Updating content selectors triggers a new [sync job](/ai-search/configuration/indexing/) immediately, so changes are applied to all indexed pages.
+- **Automatic re-indexing**: Updating content selectors triggers a new [sync job](/ai-search/configuration/indexing/syncing/) immediately, so changes are applied to all indexed pages.
 
 ## Limits
 

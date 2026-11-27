@@ -12,6 +12,7 @@ interface SchemaTreeProps {
 	rows: SchemaRowData[];
 	schemaId: string;
 	hideRequired?: boolean;
+	hideSearch?: boolean;
 }
 
 interface SchemaNodeProps {
@@ -342,6 +343,7 @@ export default function SchemaTree({
 	rows,
 	schemaId,
 	hideRequired,
+	hideSearch,
 }: SchemaTreeProps) {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set());
@@ -403,16 +405,17 @@ export default function SchemaTree({
 
 	return (
 		<div className="schema-tree">
-			{/* Search filter */}
-			<div className="mb-4">
-				<input
-					type="text"
-					value={searchTerm}
-					onChange={(e) => setSearchTerm(e.target.value)}
-					placeholder="Filter parameters..."
-					className="border-border bg-card text-foreground focus:ring-ring w-full rounded-md border px-3 py-2 text-sm focus:ring-2 focus:outline-none"
-				/>
-			</div>
+			{!hideSearch && (
+				<div className="mb-4">
+					<input
+						type="text"
+						value={searchTerm}
+						onChange={(e) => setSearchTerm(e.target.value)}
+						placeholder="Filter parameters..."
+						className="border-border bg-card text-foreground focus:ring-ring w-full rounded-md border px-3 py-2 text-sm focus:ring-2 focus:outline-none"
+					/>
+				</div>
+			)}
 
 			{filteredRows.length === 0 ? (
 				<p className="text-muted-foreground py-4 text-sm">

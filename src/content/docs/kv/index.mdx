@@ -10,6 +10,8 @@ products:
 
 import {
 	CardGrid,
+	CliVariant,
+	CliVariants,
 	Description,
 	Feature,
 	LinkTitleCard,
@@ -40,9 +42,8 @@ Access your Workers KV namespace from Cloudflare Workers using [Workers Bindings
 
 <Tabs>
 <TabItem label="Workers Binding API">
-	<Tabs>
-	<TabItem label="index.ts">
-```ts
+
+```ts title="src/index.ts"
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
 		// write a key-value pair
@@ -65,23 +66,22 @@ export default {
 			}),
 		);
 	},
-
 } satisfies ExportedHandler<{ KV: KVNamespace }>;
+```
 
-    ```
-    </TabItem>
-    <TabItem label="wrangler.jsonc">
+<CliVariants>
+<CliVariant cli="wrangler">
 
-```json
+```jsonc title="wrangler.jsonc"
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "<ENTER_WORKER_NAME>",
 	"main": "src/index.ts",
-	"compatibility_date": "2025-02-04",
+	"upload_source_maps": true,
+	"compatibility_date": "<COMPATIBILITY_DATE>",
 	"observability": {
 		"enabled": true
 	},
-
 	"kv_namespaces": [
 		{
 			"binding": "KV",
@@ -91,10 +91,32 @@ export default {
 }
 ```
 
-    </TabItem>
-    </Tabs>
+</CliVariant>
+<CliVariant cli="cf">
 
-See the full [Workers KV binding API reference](/kv/api/read-key-value-pairs/).
+```ts title="cloudflare.config.ts"
+import { bindings, defineConfig } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "<ENTER_WORKER_NAME>",
+		entrypoint,
+		compatibilityDate: "<COMPATIBILITY_DATE>",
+		observability: {
+			enabled: true,
+		},
+		env: {
+			KV: bindings.kv({ id: "<YOUR_BINDING_ID>" }),
+		},
+	},
+});
+```
+
+</CliVariant>
+</CliVariants>
+
+For the full binding reference, refer to [Workers KV binding API](/kv/api/read-key-value-pairs/).
 
 </TabItem>
 <TabItem label="REST API">
@@ -160,11 +182,26 @@ See the full Workers KV [REST API and SDK reference](/api/resources/kv/) for det
 	Learn how Workers KV stores and retrieves data.
 </Feature>
 
+<CliVariants>
+<CliVariant cli="wrangler">
+
 <Feature header="Wrangler" href="/workers/wrangler/install-and-update/">
 
-The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/general/#init), [test](/workers/wrangler/commands/general/#dev), and [deploy](/workers/wrangler/commands/pages/#pages-deploy) your Workers projects.
+The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/general/#init), [test](/workers/wrangler/commands/general/#dev), and [deploy](/workers/wrangler/commands/general/#deploy) your Workers projects.
 
 </Feature>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+<Feature header="Cloudflare CLI (cf)" href="/cf/">
+
+The Cloudflare CLI (`cf`) allows you to [create](/cf/get-started/first-worker/), develop, and deploy your Workers projects and manage KV namespaces from the terminal.
+
+</Feature>
+
+</CliVariant>
+</CliVariants>
 
 <Feature header="Bindings" href="/kv/concepts/kv-bindings/">
 
@@ -174,7 +211,7 @@ Bindings allow your Workers to interact with resources on the Cloudflare develop
 
 <Feature header="Jurisdictions" href="/kv/reference/data-location/">
 
-Restrict a KV namespace to durably store data only within a specific jurisdiction to help meet compliance requirements. Currently in private beta.
+Restrict a KV namespace to durably store data only within a specific jurisdiction to help meet compliance requirements.
 
 </Feature>
 

@@ -1,0 +1,75 @@
+---
+title: "Sandbox SDK 1.0: control every sandbox from your own Durable Object"
+description: With Sandbox SDK 1.0, your Durable Object chooses the image, instance size, network access, and lifetime of each sandbox, and can save each sandbox as a snapshot.
+products:
+  - sandbox
+date: "2026-09-30T08:45:00-04:00"
+publish_future_dated_entry: true
+---
+
+import { TypeScriptExample } from "~/components";
+
+Sandbox SDK 1.0 is available. Your own Durable Object class now controls each sandbox container directly, through the [Durable Object container API](/containers/api/durable-object-container/) on `this.ctx.container`.
+
+With 1.0, your class can:
+
+- Choose the image and instance size each time it starts a sandbox. One class can run sandboxes on different images, and a deploy does not restart sandboxes that are running.
+- Save the files of a sandbox as a [snapshot](/sandbox/files/save-and-restore-a-workspace/), in public beta, and start the same sandbox or a new one from it.
+- Decide when each sandbox stops, for example when a task finishes, when its user goes idle, or after it saves a snapshot.
+- Run commands with streamed input and output, send them signals, and open [terminals](/sandbox/commands/open-a-terminal-in-the-browser/).
+- Serve [previews](/sandbox/previews/) from ports in the sandbox, with your own hostnames and authentication.
+- Handle outbound requests for each hostname in Worker code, so [credentials](/sandbox/network/call-an-authenticated-api/) and bindings stay in your Worker.
+- Expose only the methods that you want callers to use.
+- Run an [agent](/agents/tools/sandbox/) in the same Durable Object, and give the model a tool that runs commands in the sandbox.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Files } from "@cloudflare/sandbox";
+import { DurableObject } from "cloudflare:workers";
+
+export class MySandbox extends DurableObject<Env> {
+	private readonly container: Container;
+	private readonly files: Files;
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		if (!ctx.container) {
+			throw new Error("No container is configured");
+		}
+		this.container = ctx.container;
+		this.files = new Files(ctx.container);
+	}
+
+	async run(script: string) {
+		if (!this.container.running) {
+			// Your code chooses the image, size, and network access.
+			this.container.start({
+				image: this.container.images.sandbox,
+				instance: "lite",
+				enableInternet: false,
+			});
+		}
+
+		await this.files.writeFile("/tmp/task.sh", script);
+		const proc = await this.container.exec(["sh", "/tmp/task.sh"]);
+		return proc.output();
+	}
+}
+```
+
+</TypeScriptExample>
+
+Your class uses the container API directly, with the [`durable_object` scheduling policy](/changelog/post/2026-09-30-durable-object-scheduling-policy/) and [container snapshots](/changelog/post/2026-09-30-snapshots/), both in public beta. [`@cloudflare/sandbox`](/sandbox/reference/) adds classes for work that the API does not include:
+
+- `Files` streams files in and out of the running sandbox.
+- `S3Mount` mounts an S3-compatible bucket, such as R2. Your Worker signs each storage request, so the credentials stay out of the sandbox.
+- `DirectoryBackup` saves a directory to R2 and restores it into any sandbox, including one on a newer image.
+
+## If you use Sandbox SDK 0.x
+
+Your 0.x applications keep running, and `@cloudflare/sandbox` 0.x stays on npm. Sandbox SDK 0.x receives bug and security fixes until 2026-12-31, and its documentation stays at [Sandbox SDK 0.x](/sandbox/sdk/).
+
+When you are ready, [Migrate from Sandbox SDK 0.x](/sandbox/sdk/migrate/) shows the 1.0 code for each 0.x feature, including preview URLs, tunnels, background processes, terminals, backups, and the code interpreter. The guide keeps the preview URLs and named tunnels that your 0.x application created working. You can move every sandbox in one deploy, or run a 1.0 class next to your 0.x class and move sandboxes one at a time. The deploy that moves an existing class to the new policy is one-way, so the guide shows how to rehearse it first.
+
+The [Sandboxes documentation](/sandbox/) also covers Dynamic Workers, for untrusted code in JavaScript, Python, or WebAssembly.

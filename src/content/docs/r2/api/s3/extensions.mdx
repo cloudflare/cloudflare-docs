@@ -57,6 +57,14 @@ This is only useful if you are creating buckets on demand because you do not kno
 
 Add a `cf-create-bucket-if-missing` header with the value `true` to implicitly create the bucket if it does not exist yet. Refer to [Auto-creating buckets on upload](#auto-creating-buckets-on-upload) for a more detailed explanation of when to add this header.
 
+## CreateMultipartUpload
+
+### Conditional headers
+
+R2 supports `If-Match`, `If-None-Match`, `If-Modified-Since`, and `If-Unmodified-Since` on `CreateMultipartUpload`. R2 evaluates these conditions against the destination object when the upload is initiated. Amazon S3 does not support conditional headers on this operation.
+
+These conditions are not retained for upload completion. To enforce a condition when the object is committed, also send it on `CompleteMultipartUpload`. Refer to [Conditions on `CreateMultipartUpload`](/r2/api/s3/conditional-operations/#conditions-on-createmultipartupload) for details.
+
 ## CopyObject
 
 ### MERGE metadata directive

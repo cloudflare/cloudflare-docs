@@ -1,12 +1,12 @@
 id: dpTd6D
-name: trace-request
+name: rules-simulator
 
 entry:
-  title: Cloudflare Trace
-  url: /rules/trace-request/
+  title: Rules simulator
+  url: /rules/simulator/
   show: false
 
 meta:
-  title: Cloudflare Trace docs
-  description: Cloudflare Trace follows an HTTP/S request through Cloudflare's reverse proxy to your origin, helping you understand how different Cloudflare configurations interact with a request.
+  title: Rules simulator docs
+  description: Rules simulator simulates an HTTP/S request through Cloudflare's network to your origin, helping you understand how different Cloudflare configurations interact with a request.
   author: "@cloudflare"

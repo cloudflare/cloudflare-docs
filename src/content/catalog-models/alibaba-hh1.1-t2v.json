@@ -11,6 +11,11 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Default (per second)": 0.18,
+		"@720p (per second)": 0.14,
+		"@1080p (per second)": 0.18
+	},
 	"examples": [
 		{
 			"name": "Simple Text-to-Video",
@@ -59,6 +64,16 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "alibaba",
+			"pricing": {
+				"default": 0.18,
+				"720p": 0.14,
+				"1080p": 0.18
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-06-24 01:03:23",
 	"schema": {

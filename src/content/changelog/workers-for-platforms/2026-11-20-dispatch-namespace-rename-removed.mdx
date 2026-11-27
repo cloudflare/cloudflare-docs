@@ -1,0 +1,32 @@
+---
+title: Dispatch namespaces can no longer be renamed
+description: Dispatch namespace names are now fixed at creation. To use a different name, create a new namespace and redeploy your user Workers.
+products:
+  - workers-for-platforms
+date: 2026-11-20
+---
+
+You can no longer rename a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace) after creating it.
+
+Renaming a namespace could cause API requests to read, deploy, or delete Workers to fail because dispatch Workers and [outbound Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) retained the namespace name they were deployed with. This change prevents those failures by rejecting rename requests.
+
+**What changes:**
+
+- `PUT` and `PATCH` requests to the [dispatch namespace API](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/methods/update/) return a `400` error with code `100413` if they change `name`:
+
+  ```txt
+  Dispatch namespaces cannot be renamed. The name in the request must match the namespace's current name. To use a different name, create a new dispatch namespace.
+  ```
+
+- `wrangler dispatch-namespace rename` returns the same `100413` error.
+- Terraform applies that attempt to change `name` on a `cloudflare_workers_for_platforms_dispatch_namespace` resource fail.
+
+**To move your Workers to a namespace with a different name:**
+
+1. Create a new dispatch namespace with the name you want.
+2. Deploy your user Workers to the new namespace.
+3. Update the [dispatch namespace binding](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/) in your dispatch Worker to reference the new namespace, then redeploy the dispatch Worker.
+4. Verify that requests are routed to the new namespace and your Workers work as expected.
+5. Delete the user Workers in the old namespace, then delete the old namespace.
+
+For more information, refer to [How Workers for Platforms works](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace).

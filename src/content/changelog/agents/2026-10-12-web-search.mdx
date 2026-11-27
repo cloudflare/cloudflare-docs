@@ -1,0 +1,46 @@
+---
+title: New web_search tool in the Agents SDK, powered by the Cloudflare Web Search API
+description: A web_search tool backed by the Cloudflare Web Search API, with adapters for Pi Durable, AI SDK, and TanStack AI.
+date: 2026-10-12
+---
+
+import { TypeScriptExample } from "~/components";
+
+The [Cloudflare Agents SDK](/agents/) now provides a `web_search` tool that searches the public web through the [Cloudflare Web Search API](/web-search/), powered by [ceramic.ai, Exa, and Linkup](/web-search/providers/).
+
+When you give the `web_search` tool to your agent, the model provides a query and max results, and receives back a short numbered list of titles, URLs, and trimmed descriptions. When you also provide the [`web_fetch`](/agents/tools/web-fetch/) tool to your agent, the model is told to use it to read the pages that the `web_search` tool returns.
+
+To use the `web_search` tool, make sure you have [Agents SDK v0.27.0](https://github.com/cloudflare/agents/releases/tag/agents%400.27.0) or greater installed, and add it to a [Pi Durable](/agents/harnesses/pi/) [extension registry](/agents/harnesses/pi/extensions/) before opening the harness:
+
+<TypeScriptExample>
+
+```ts
+import { webSearchTool } from "agents/websearch/pi";
+
+export class MyAgent extends DurableObject<Env> {
+	// ...
+
+	readonly harness = new PiHarness({
+		harness: async ({ storage, context }) => {
+			this.registry.install({
+				name: "web-tools",
+				tools: [webSearchTool({ binding: this.env.AI, provider: "exa" })],
+			});
+
+			// ...
+
+			return Harness.open(
+				storage,
+				{ models, registry: this.registry },
+				context,
+			);
+		},
+	});
+}
+```
+
+</TypeScriptExample>
+
+The SDK also includes AI SDK and TanStack AI adapters. To search without a model, such as from a scheduled job, use `createAIWebSearch()` or `createHTTPWebSearch()` from `agents/websearch`.
+
+For setup, options, and error handling, refer to [Web search](/agents/tools/web-search/).

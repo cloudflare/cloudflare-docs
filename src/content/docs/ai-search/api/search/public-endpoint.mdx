@@ -79,7 +79,7 @@ curl https://<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com/chat/completions \
   }'
 ```
 
-For the full list of options, refer to the [Chat Completions API reference](/api/resources/ai_search/subresources/instances/methods/chat_completions/).
+For the full list of options, refer to the [Chat Completions API reference](/api/resources/ai_search/subresources/namespaces/subresources/instances/methods/chat_completions/).
 
 ## Search
 
@@ -98,7 +98,27 @@ curl https://<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com/search \
   }'
 ```
 
-For the full list of options, refer to the [Search API reference](/api/resources/ai_search/subresources/instances/methods/search/).
+For the full list of options, refer to the [Search API reference](/api/resources/ai_search/subresources/namespaces/subresources/instances/methods/search/).
+
+### Image queries
+
+Set `messages[].content` to an array containing an `image_url` part. The URL must use HTTPS or an inline `data:image/<subtype>;base64,...` URI.
+
+```bash
+curl https://<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com/search \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messages": [{
+      "role": "user",
+      "content": [{
+        "type": "image_url",
+        "image_url": { "url": "https://example.com/product.png" }
+      }]
+    }]
+  }'
+```
+
+The response includes `query_kind` as `image`. Image-only responses omit `search_query`. Add a `text` part for a multimodal query. Native image embedding requires `@cf/qwen/qwen3-vl-embedding-2b` or `google-ai-studio/gemini-embedding-2`. Text-only embedding models caption the image before embedding it.
 
 ## Next steps
 

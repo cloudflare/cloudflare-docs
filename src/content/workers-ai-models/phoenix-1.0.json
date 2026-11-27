@@ -1,22 +1,12 @@
 {
-    "id": "724608fa-983e-495d-b95c-340d6b7e78be",
-    "source": 1,
     "name": "@cf/leonardo/phoenix-1.0",
-    "description": "Phoenix 1.0 is a model by Leonardo.Ai that generates images with exceptional prompt adherence and coherent text.",
-    "task": {
-        "id": "3d6e1f35-341b-4915-a6c8-9a7142a9033a",
-        "name": "Text-to-Image",
-        "description": "Generates images from input text. These models can be used to generate and modify images based on text prompts."
-    },
-    "created_at": "2025-08-25 18:12:18.073",
-    "tags": [],
     "properties": [
         {
             "property_id": "price",
             "value": [
                 {
                     "unit": "per 512 by 512 tile",
-                    "price": 0.0058,
+                    "price": 0.00583,
                     "currency": "USD"
                 },
                 {
@@ -35,6 +25,16 @@
             "value": "https://leonardo.ai/terms-of-service/"
         }
     ],
+    "id": "724608fa-983e-495d-b95c-340d6b7e78be",
+    "source": 1,
+    "description": "Phoenix 1.0 is a model by Leonardo.Ai that generates images with exceptional prompt adherence and coherent text.",
+    "task": {
+        "id": "3d6e1f35-341b-4915-a6c8-9a7142a9033a",
+        "name": "Text-to-Image",
+        "description": "Generates images from input text. These models can be used to generate and modify images based on text prompts."
+    },
+    "created_at": "2025-08-25 18:12:18.073",
+    "tags": [],
     "schema": {
         "input": {
             "type": "object",
@@ -93,5 +93,6 @@
             "format": "binary",
             "description": "The generated image in JPEG format"
         }
-    }
+    },
+    "deprecated": false
 }

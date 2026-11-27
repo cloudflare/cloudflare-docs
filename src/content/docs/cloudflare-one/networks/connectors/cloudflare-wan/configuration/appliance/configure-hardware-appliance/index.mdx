@@ -118,10 +118,11 @@ When you have more than one anycast IP configured in your account (set up during
 4. In **VLAN ID**, enter a number between `0` and `4094` to specify a [VLAN ID](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/reference/#vlan-id).
 5. In **Priority**, choose the priority for your WAN. Lower numbers have higher priority. For details on how Cloudflare calculates priorities, refer to [Traffic steering](/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/).
 6. In **Health check rate** configure the health check frequency for your site. Options are `low`, `mid`, and `high`. For details, refer to [Update tunnel health checks frequency](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/common-settings/update-tunnel-health-checks-frequency/).
-7. **Addressing**: Select **DHCP**. This is needed the first time you set up your Cloudflare One Appliance to successfully download all settings to the machine and activate it. If you need a static IP address in your network environment:
+7. (Optional) In **Provisioned upload bandwidth (Mbps)** and **Provisioned download bandwidth (Mbps)**, enter the upload and download speeds of the WAN circuit. The appliance uses the upload value to shape upload traffic so that [prioritized traffic](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/network-options/application-based-policies/prioritized-traffic/) takes effect when the circuit is congested. Download traffic is not currently shaped. For details, refer to [Set the provisioned upload bandwidth](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/network-options/application-based-policies/prioritized-traffic/#set-the-provisioned-upload-bandwidth).
+8. **Addressing**: Select **DHCP**. This is needed the first time you set up your Cloudflare One Appliance to successfully download all settings to the machine and activate it. If you need a static IP address in your network environment:
 	1. Continue the set up flow to activate your Cloudflare One Appliance.
 	2. Refer to [WAN with a static IP address](#wan-with-a-static-ip-address). If you choose a static IP, you also need to specify the static IP and gateway addresses.
-8. Select **Save** when you are finished.
+9. Select **Save** when you are finished.
 
 </TabItem> <TabItem label="API">
 
@@ -131,7 +132,9 @@ You will need your [account ID](/fundamentals/account/find-account-and-zone-ids/
 
 Make a `POST` request [using the API](/api/resources/magic_transit/subresources/sites/subresources/wans/methods/create/) to create a WAN.
 
-The `static_addressing` object is optional. Omit it if you are using DHCP. If you are using static addressing, add the `secondary_address` parameter when your site is in high availability (HA) mode.
+The `static_addressing` object is optional. Omit it if you are using DHCP. If you are using static addressing, add the `secondary_address` parameter when your site is in high availability (HA) mode. If the secondary appliance uses a different default gateway than the primary appliance (for example, because each appliance connects to a different ISP), also add the `secondary_gateway_address` parameter. If you omit `secondary_gateway_address`, the secondary appliance uses `gateway_address`. You can only use `secondary_gateway_address` on sites in HA mode.
+
+To shape upload traffic for [prioritized traffic](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/network-options/application-based-policies/prioritized-traffic/), add the optional `provisioned_upload_kbps` parameter with the circuit's upload speed in kilobits per second. You can also add `provisioned_download_kbps` to record the circuit's download speed. Download traffic is not currently shaped.
 
 Example:
 
@@ -166,8 +169,11 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{sit
    - **Prefix**: The CIDR prefix for the subnet behind the L3 router.
    - **Next hop**: The address of the L3 router to which the Cloudflare One Appliance should forward packets for this subnet.
    - **Static NAT prefix**: Optional setting. If you want to enable NAT for a routed subnet, supply an "external" prefix for the overlay-facing side of the NAT to use. It must be the same size as **Prefix**. <br /> For details, refer to [Routed subnets](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/network-options/routed-subnets/).
-8. Select **Save**.
-9. Select **Done** to finish your configuration. Tunnels and <GlossaryTooltip term="static route">static routes</GlossaryTooltip> will be automatically created for your Cloudflare One Appliance, once it boots up.
+8. (Optional) To reach a remote subnet through Cloudflare using a different local prefix, select **Add DNAT translation** under **DNAT translations**:
+   - **Pre-NAT prefix**: The prefix that hosts on the LAN send traffic to. It cannot overlap the LAN's static address or routed subnets.
+   - **Post-NAT prefix**: The real prefix of the remote subnet, reachable through Cloudflare. It must be the same size as **Pre-NAT prefix**. <br /> For details, refer to [DNAT translations](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/network-options/dnat-translations/).
+9. Select **Save**.
+10. Select **Done** to finish your configuration. Tunnels and <GlossaryTooltip term="static route">static routes</GlossaryTooltip> will be automatically created for your Cloudflare One Appliance, once it boots up.
 
 </TabItem> <TabItem label="API">
 
@@ -405,13 +411,20 @@ The <code>reset device</code> option in your Cloudflare One Appliance clears mos
 
 You need to deploy two Connectors in your premises before you can set up a site in high availability. When you set up a site in high availability, the WANs and LANs in your Cloudflare One Appliance have the same configuration but are replicated on two nodes. In case of failure of one of the devices, the other device becomes the active node, taking over the configuration of the LAN gateway IP and allowing traffic to continue without disruption.
 
-Because Cloudflare One Appliances in high availability configurations share a single site, you need to set up:
+Because Cloudflare One Appliances in high availability configurations share a single site, you need to set up the following for each LAN:
 
 - **Static address**: The IP for the primary node in your site.
 - **Secondary static address**: The IP for the secondary node in your site.
 - **Virtual static address**: The IP that the LAN south of the Cloudflare One Appliance device will forward traffic to, which is the LAN's gateway IP.
 
-Make sure all IPs are part of the same subnet.
+Make sure all LAN IPs are part of the same subnet.
+
+For WANs with a static IP address, you need to set up:
+
+- **Static address**: The IP for the primary node's WAN interface.
+- **Secondary static address**: The IP for the secondary node's WAN interface.
+- **Primary gateway address**: The default gateway for the primary node.
+- **Secondary gateway address** (optional): The default gateway for the secondary node. Use this when each node connects to its own Internet circuit, such as a different ISP per appliance. If you leave it blank, the secondary node uses the primary gateway address.
 
 For detailed information about the expected behavior of high availability configurations, refer to the [High availability configurations](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/reference/#high-availability-configurations) reference page.
 
@@ -428,7 +441,7 @@ To set up a high availability configuration:
 5. From the list, choose your first Cloudflare One Appliance > **Add Appliance**.
 6. Back on the previous screen, select **Add secondary appliance**.
 7. From the list, choose your second Cloudflare One Appliance > **Add Appliance**.
-8. Select **Continue** to create a WAN. If you are configuring a static IP, configure the IP for the primary node as the static address, and the IP for the secondary node as the secondary static address.
+8. Select **Continue** to create a WAN. If you are configuring a static IP, configure the IP for the primary node as the static address, and the IP for the secondary node as the secondary static address. If the secondary node uses a different default gateway (for example, because it connects to a different ISP), enter it in **Secondary gateway address**. Otherwise, leave it blank and the secondary node will use the **Primary gateway address**.
 9. To create a LAN, follow the steps in [Create a LAN](#create-a-lan) up until step 4.
 10. In **Static address**, enter the IP for the primary node in your site. For example, `192.168.10.1/24`.
 11. In **Secondary static address**, enter the IP for the secondary node in your site. For example, `192.168.10.2/24`.

@@ -1,0 +1,1115 @@
+{
+	"model_id": "google/gemini-decision-1",
+	"name": "Gemini Decision 1",
+	"description": "Gemini Decision 1 evaluates typed questions over shared text, images, audio, video, and PDFs. It returns calibrated yes/no probabilities, choices, and rubric scores for classification, routing, and ranking, with zero output tokens.",
+	"task": "Text Generation",
+	"tags": [
+		"Classification",
+		"Multimodal"
+	],
+	"context_length": 262144,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 0.1,
+		"Output tokens (per 1M)": 0
+	},
+	"examples": [
+		{
+			"name": "Detect a damaged delivery",
+			"description": "Evaluate a yes/no question and return the calibrated probability and confidence.",
+			"input": {
+				"input": "The blue mug I ordered on Monday arrived cracked on Wednesday.",
+				"questions": {
+					"is_damaged": {
+						"type": "noul",
+						"instructions": "Did the item arrive damaged?"
+					}
+				}
+			},
+			"output": {
+				"answers": {
+					"is_damaged": {
+						"confidence": 0.99,
+						"noul": 0.99,
+						"type": "noul"
+					}
+				},
+				"usage": {
+					"total_tokens": 100,
+					"total_input_tokens": 100,
+					"input_tokens_by_modality": [
+						{
+							"modality": "text",
+							"tokens": 100
+						}
+					],
+					"total_output_tokens": 0
+				}
+			},
+			"raw_response": {
+				"answers": {
+					"is_damaged": {
+						"confidence": 0.99,
+						"noul": 0.99,
+						"type": "noul"
+					}
+				},
+				"usage": {
+					"total_tokens": 100,
+					"total_input_tokens": 100,
+					"input_tokens_by_modality": [
+						{
+							"modality": "text",
+							"tokens": 100
+						}
+					],
+					"total_output_tokens": 0
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-decision-1',\n  {\n    input: 'The blue mug I ordered on Monday arrived cracked on Wednesday.',\n    questions: { is_damaged: { type: 'noul', instructions: 'Did the item arrive damaged?' } },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-decision-1\",\n  \"input\": {\n    \"input\": \"The blue mug I ordered on Monday arrived cracked on Wednesday.\",\n    \"questions\": {\n      \"is_damaged\": {\n        \"type\": \"noul\",\n        \"instructions\": \"Did the item arrive damaged?\"\n      }\n    }\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Route and score a support ticket",
+			"description": "Ask independent yes/no, choice, and score questions over the same input.",
+			"input": {
+				"input": [
+					{
+						"type": "text",
+						"text": "Customer tier: Gold. Order: headphones, $240.\n"
+					},
+					{
+						"type": "text",
+						"text": "Audio cuts out on the left earcup. Fix it today or I cancel my membership."
+					}
+				],
+				"questions": {
+					"is_defect": {
+						"type": "noul",
+						"instructions": "Is the customer reporting a hardware defect?",
+						"criteria": {
+							"true_description": "The product itself is broken or faulty.",
+							"false_description": "A preference, sizing, shipping, or pricing complaint."
+						}
+					},
+					"department": {
+						"type": "choice",
+						"instructions": "Which department should handle this request?",
+						"criteria": {
+							"billing": "Payments, invoices, and refunds.",
+							"technical": "Problems using the product or hardware faults.",
+							"shipping": "Delivery and tracking.",
+							"other": "Anything outside these categories."
+						}
+					},
+					"churn_risk": {
+						"type": "score",
+						"instructions": "How likely is the customer to churn if this issue is not resolved?",
+						"criteria": [
+							"No churn signal",
+							"Mild frustration",
+							"Mentions alternatives",
+							"Threatens to cancel"
+						]
+					}
+				}
+			},
+			"output": {
+				"answers": {
+					"churn_risk": {
+						"confidence": 0.9871029342727191,
+						"score": 2.9847557447368054,
+						"probabilities": {
+							"0": 0.00024958590912331545,
+							"1": 0.001848017717667642,
+							"2": 0.01079946210049003,
+							"3": 0.9871029342727191
+						},
+						"legend": {
+							"0": "No churn signal",
+							"1": "Mild frustration",
+							"2": "Mentions alternatives",
+							"3": "Threatens to cancel"
+						},
+						"type": "score"
+					},
+					"is_defect": {
+						"confidence": 0.9740036578099637,
+						"noul": 0.9740036578099637,
+						"type": "noul"
+					},
+					"department": {
+						"confidence": 0.9785049522314109,
+						"choice": "technical",
+						"probabilities": {
+							"technical": 0.9785049522314109,
+							"billing": 0.006229438550145094,
+							"other": 0.013127015151353486,
+							"shipping": 0.0021385940670906965
+						},
+						"type": "choice"
+					}
+				},
+				"usage": {
+					"total_tokens": 315,
+					"total_input_tokens": 315,
+					"input_tokens_by_modality": [
+						{
+							"modality": "text",
+							"tokens": 315
+						}
+					],
+					"total_output_tokens": 0
+				}
+			},
+			"raw_response": {
+				"answers": {
+					"churn_risk": {
+						"confidence": 0.9871029342727191,
+						"score": 2.9847557447368054,
+						"probabilities": {
+							"0": 0.00024958590912331545,
+							"1": 0.001848017717667642,
+							"2": 0.01079946210049003,
+							"3": 0.9871029342727191
+						},
+						"legend": {
+							"0": "No churn signal",
+							"1": "Mild frustration",
+							"2": "Mentions alternatives",
+							"3": "Threatens to cancel"
+						},
+						"type": "score"
+					},
+					"is_defect": {
+						"confidence": 0.9740036578099637,
+						"noul": 0.9740036578099637,
+						"type": "noul"
+					},
+					"department": {
+						"confidence": 0.9785049522314109,
+						"choice": "technical",
+						"probabilities": {
+							"technical": 0.9785049522314109,
+							"billing": 0.006229438550145094,
+							"other": 0.013127015151353486,
+							"shipping": 0.0021385940670906965
+						},
+						"type": "choice"
+					}
+				},
+				"usage": {
+					"total_tokens": 315,
+					"total_input_tokens": 315,
+					"input_tokens_by_modality": [
+						{
+							"modality": "text",
+							"tokens": 315
+						}
+					],
+					"total_output_tokens": 0
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-decision-1',\n  {\n    input: [\n      { type: 'text', text: 'Customer tier: Gold. Order: headphones, $240.\\n' },\n      {\n        type: 'text',\n        text: 'Audio cuts out on the left earcup. Fix it today or I cancel my membership.',\n      },\n    ],\n    questions: {\n      is_defect: {\n        type: 'noul',\n        instructions: 'Is the customer reporting a hardware defect?',\n        criteria: {\n          true_description: 'The product itself is broken or faulty.',\n          false_description: 'A preference, sizing, shipping, or pricing complaint.',\n        },\n      },\n      department: {\n        type: 'choice',\n        instructions: 'Which department should handle this request?',\n        criteria: {\n          billing: 'Payments, invoices, and refunds.',\n          technical: 'Problems using the product or hardware faults.',\n          shipping: 'Delivery and tracking.',\n          other: 'Anything outside these categories.',\n        },\n      },\n      churn_risk: {\n        type: 'score',\n        instructions: 'How likely is the customer to churn if this issue is not resolved?',\n        criteria: [\n          'No churn signal',\n          'Mild frustration',\n          'Mentions alternatives',\n          'Threatens to cancel',\n        ],\n      },\n    },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-decision-1\",\n  \"input\": {\n    \"input\": [\n      {\n        \"type\": \"text\",\n        \"text\": \"Customer tier: Gold. Order: headphones, $240.\\n\"\n      },\n      {\n        \"type\": \"text\",\n        \"text\": \"Audio cuts out on the left earcup. Fix it today or I cancel my membership.\"\n      }\n    ],\n    \"questions\": {\n      \"is_defect\": {\n        \"type\": \"noul\",\n        \"instructions\": \"Is the customer reporting a hardware defect?\",\n        \"criteria\": {\n          \"true_description\": \"The product itself is broken or faulty.\",\n          \"false_description\": \"A preference, sizing, shipping, or pricing complaint.\"\n        }\n      },\n      \"department\": {\n        \"type\": \"choice\",\n        \"instructions\": \"Which department should handle this request?\",\n        \"criteria\": {\n          \"billing\": \"Payments, invoices, and refunds.\",\n          \"technical\": \"Problems using the product or hardware faults.\",\n          \"shipping\": \"Delivery and tracking.\",\n          \"other\": \"Anything outside these categories.\"\n        }\n      },\n      \"churn_risk\": {\n        \"type\": \"score\",\n        \"instructions\": \"How likely is the customer to churn if this issue is not resolved?\",\n        \"criteria\": [\n          \"No churn signal\",\n          \"Mild frustration\",\n          \"Mentions alternatives\",\n          \"Threatens to cancel\"\n        ]\n      }\n    }\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Evaluate an audio recording",
+			"description": "Evaluate spoken content and delivery directly from an audio URL.",
+			"input": {
+				"input": {
+					"type": "audio",
+					"uri": "https://storage.googleapis.com/generativeai-downloads/audio/rehearsing.wav",
+					"mime_type": "audio/wav"
+				},
+				"questions": {
+					"mentions_launch": {
+						"type": "noul",
+						"instructions": "Is the speaker talking about a product campaign launch?"
+					},
+					"delivery": {
+						"type": "score",
+						"instructions": "How fluent and prepared does the speaker sound?",
+						"criteria": [
+							"Hesitant, searching for notes, or self-correcting.",
+							"Mostly steady with minor pauses.",
+							"Polished, fluent, and confident throughout."
+						]
+					}
+				}
+			},
+			"output": {
+				"answers": {
+					"delivery": {
+						"confidence": 0.8753272828029849,
+						"score": 0.13564676347359578,
+						"probabilities": {
+							"0": 0.8753272828029849,
+							"1": 0.11369867092043455,
+							"2": 0.010974046276580619
+						},
+						"legend": {
+							"0": "Hesitant, searching for notes, or self-correcting.",
+							"1": "Mostly steady with minor pauses.",
+							"2": "Polished, fluent, and confident throughout."
+						},
+						"type": "score"
+					},
+					"mentions_launch": {
+						"confidence": 0.9023548793133858,
+						"noul": 0.9023548793133858,
+						"type": "noul"
+					}
+				},
+				"usage": {
+					"total_tokens": 2147,
+					"total_input_tokens": 2147,
+					"input_tokens_by_modality": [
+						{
+							"modality": "text",
+							"tokens": 298
+						},
+						{
+							"modality": "audio",
+							"tokens": 1849
+						}
+					],
+					"total_output_tokens": 0
+				}
+			},
+			"raw_response": {
+				"answers": {
+					"delivery": {
+						"confidence": 0.8753272828029849,
+						"score": 0.13564676347359578,
+						"probabilities": {
+							"0": 0.8753272828029849,
+							"1": 0.11369867092043455,
+							"2": 0.010974046276580619
+						},
+						"legend": {
+							"0": "Hesitant, searching for notes, or self-correcting.",
+							"1": "Mostly steady with minor pauses.",
+							"2": "Polished, fluent, and confident throughout."
+						},
+						"type": "score"
+					},
+					"mentions_launch": {
+						"confidence": 0.9023548793133858,
+						"noul": 0.9023548793133858,
+						"type": "noul"
+					}
+				},
+				"usage": {
+					"total_tokens": 2147,
+					"total_input_tokens": 2147,
+					"input_tokens_by_modality": [
+						{
+							"modality": "text",
+							"tokens": 298
+						},
+						{
+							"modality": "audio",
+							"tokens": 1849
+						}
+					],
+					"total_output_tokens": 0
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-decision-1',\n  {\n    input: {\n      type: 'audio',\n      uri: 'https://storage.googleapis.com/generativeai-downloads/audio/rehearsing.wav',\n      mime_type: 'audio/wav',\n    },\n    questions: {\n      mentions_launch: {\n        type: 'noul',\n        instructions: 'Is the speaker talking about a product campaign launch?',\n      },\n      delivery: {\n        type: 'score',\n        instructions: 'How fluent and prepared does the speaker sound?',\n        criteria: [\n          'Hesitant, searching for notes, or self-correcting.',\n          'Mostly steady with minor pauses.',\n          'Polished, fluent, and confident throughout.',\n        ],\n      },\n    },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-decision-1\",\n  \"input\": {\n    \"input\": {\n      \"type\": \"audio\",\n      \"uri\": \"https://storage.googleapis.com/generativeai-downloads/audio/rehearsing.wav\",\n      \"mime_type\": \"audio/wav\"\n    },\n    \"questions\": {\n      \"mentions_launch\": {\n        \"type\": \"noul\",\n        \"instructions\": \"Is the speaker talking about a product campaign launch?\"\n      },\n      \"delivery\": {\n        \"type\": \"score\",\n        \"instructions\": \"How fluent and prepared does the speaker sound?\",\n        \"criteria\": [\n          \"Hesitant, searching for notes, or self-correcting.\",\n          \"Mostly steady with minor pauses.\",\n          \"Polished, fluent, and confident throughout.\"\n        ]\n      }\n    }\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": true,
+	"zdr_comment": null,
+	"external_info": "https://aistudio.google.com/docs/models/gemini-decision-1",
+	"terms": "https://aistudio.google.com/docs/terms",
+	"cover_image_url": null,
+	"metadata": {
+		"API": "Decisions",
+		"Input modalities": "Text, image, audio, video, PDF",
+		"Maximum questions": "1,000",
+		"Output tokens": "0",
+		"Question types": "Yes/no (noul), choice, score"
+	},
+	"request_formats": null,
+	"provider_id": "google-ai-studio",
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "google-ai-studio",
+			"pricing": {
+				"input_tokens": 0.1,
+				"output_tokens": 0
+			}
+		}
+	],
+	"model_providers": [
+		{
+			"provider": "google-ai-studio",
+			"pricing": null,
+			"rates": null
+		}
+	],
+	"banner": null,
+	"pinned": false,
+	"created_at": "2026-11-13 20:19:58",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"input": {
+					"anyOf": [
+						{
+							"type": "string",
+							"minLength": 1
+						},
+						{
+							"oneOf": [
+								{
+									"type": "object",
+									"properties": {
+										"type": {
+											"type": "string",
+											"const": "text"
+										},
+										"text": {
+											"type": "string",
+											"minLength": 1
+										}
+									},
+									"required": [
+										"type",
+										"text"
+									],
+									"additionalProperties": false
+								},
+								{
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "string",
+											"minLength": 1
+										},
+										"uri": {
+											"type": "string",
+											"pattern": "^https:\\/\\/.*"
+										},
+										"mime_type": {
+											"type": "string",
+											"minLength": 1
+										},
+										"type": {
+											"type": "string",
+											"const": "image"
+										},
+										"resolution": {
+											"type": "string",
+											"enum": [
+												"low",
+												"medium",
+												"high",
+												"ultra_high"
+											]
+										}
+									},
+									"required": [
+										"mime_type",
+										"type"
+									],
+									"additionalProperties": false
+								},
+								{
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "string",
+											"minLength": 1
+										},
+										"uri": {
+											"type": "string",
+											"pattern": "^https:\\/\\/.*"
+										},
+										"mime_type": {
+											"type": "string",
+											"minLength": 1
+										},
+										"type": {
+											"type": "string",
+											"const": "audio"
+										}
+									},
+									"required": [
+										"mime_type",
+										"type"
+									],
+									"additionalProperties": false
+								},
+								{
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "string",
+											"minLength": 1
+										},
+										"uri": {
+											"type": "string",
+											"pattern": "^https:\\/\\/.*"
+										},
+										"mime_type": {
+											"type": "string",
+											"minLength": 1
+										},
+										"type": {
+											"type": "string",
+											"const": "video"
+										},
+										"resolution": {
+											"type": "string",
+											"enum": [
+												"low",
+												"medium",
+												"high"
+											]
+										}
+									},
+									"required": [
+										"mime_type",
+										"type"
+									],
+									"additionalProperties": false
+								},
+								{
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "string",
+											"minLength": 1
+										},
+										"uri": {
+											"type": "string",
+											"pattern": "^https:\\/\\/.*"
+										},
+										"mime_type": {
+											"type": "string",
+											"const": "application/pdf"
+										},
+										"type": {
+											"type": "string",
+											"const": "document"
+										}
+									},
+									"required": [
+										"mime_type",
+										"type"
+									],
+									"additionalProperties": false
+								}
+							]
+						},
+						{
+							"minItems": 1,
+							"type": "array",
+							"items": {
+								"oneOf": [
+									{
+										"type": "object",
+										"properties": {
+											"type": {
+												"type": "string",
+												"const": "text"
+											},
+											"text": {
+												"type": "string",
+												"minLength": 1
+											}
+										},
+										"required": [
+											"type",
+											"text"
+										],
+										"additionalProperties": false
+									},
+									{
+										"type": "object",
+										"properties": {
+											"data": {
+												"type": "string",
+												"minLength": 1
+											},
+											"uri": {
+												"type": "string",
+												"pattern": "^https:\\/\\/.*"
+											},
+											"mime_type": {
+												"type": "string",
+												"minLength": 1
+											},
+											"type": {
+												"type": "string",
+												"const": "image"
+											},
+											"resolution": {
+												"type": "string",
+												"enum": [
+													"low",
+													"medium",
+													"high",
+													"ultra_high"
+												]
+											}
+										},
+										"required": [
+											"mime_type",
+											"type"
+										],
+										"additionalProperties": false
+									},
+									{
+										"type": "object",
+										"properties": {
+											"data": {
+												"type": "string",
+												"minLength": 1
+											},
+											"uri": {
+												"type": "string",
+												"pattern": "^https:\\/\\/.*"
+											},
+											"mime_type": {
+												"type": "string",
+												"minLength": 1
+											},
+											"type": {
+												"type": "string",
+												"const": "audio"
+											}
+										},
+										"required": [
+											"mime_type",
+											"type"
+										],
+										"additionalProperties": false
+									},
+									{
+										"type": "object",
+										"properties": {
+											"data": {
+												"type": "string",
+												"minLength": 1
+											},
+											"uri": {
+												"type": "string",
+												"pattern": "^https:\\/\\/.*"
+											},
+											"mime_type": {
+												"type": "string",
+												"minLength": 1
+											},
+											"type": {
+												"type": "string",
+												"const": "video"
+											},
+											"resolution": {
+												"type": "string",
+												"enum": [
+													"low",
+													"medium",
+													"high"
+												]
+											}
+										},
+										"required": [
+											"mime_type",
+											"type"
+										],
+										"additionalProperties": false
+									},
+									{
+										"type": "object",
+										"properties": {
+											"data": {
+												"type": "string",
+												"minLength": 1
+											},
+											"uri": {
+												"type": "string",
+												"pattern": "^https:\\/\\/.*"
+											},
+											"mime_type": {
+												"type": "string",
+												"const": "application/pdf"
+											},
+											"type": {
+												"type": "string",
+												"const": "document"
+											}
+										},
+										"required": [
+											"mime_type",
+											"type"
+										],
+										"additionalProperties": false
+									}
+								]
+							}
+						}
+					]
+				},
+				"questions": {
+					"type": "object",
+					"propertyNames": {
+						"type": "string",
+						"minLength": 1,
+						"maxLength": 64,
+						"pattern": "^[A-Za-z0-9_-]+$"
+					},
+					"additionalProperties": {
+						"oneOf": [
+							{
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "noul"
+									},
+									"instructions": {
+										"anyOf": [
+											{
+												"type": "string",
+												"minLength": 1
+											},
+											{
+												"type": "object",
+												"properties": {
+													"type": {
+														"type": "string",
+														"const": "text"
+													},
+													"text": {
+														"type": "string",
+														"minLength": 1
+													}
+												},
+												"required": [
+													"type",
+													"text"
+												],
+												"additionalProperties": false
+											},
+											{
+												"minItems": 1,
+												"type": "array",
+												"items": {
+													"type": "object",
+													"properties": {
+														"type": {
+															"type": "string",
+															"const": "text"
+														},
+														"text": {
+															"type": "string",
+															"minLength": 1
+														}
+													},
+													"required": [
+														"type",
+														"text"
+													],
+													"additionalProperties": false
+												}
+											}
+										]
+									},
+									"criteria": {
+										"type": "object",
+										"properties": {
+											"true_description": {
+												"type": "string"
+											},
+											"false_description": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"true_description",
+											"false_description"
+										],
+										"additionalProperties": false
+									}
+								},
+								"required": [
+									"type",
+									"instructions"
+								],
+								"additionalProperties": false
+							},
+							{
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "choice"
+									},
+									"instructions": {
+										"anyOf": [
+											{
+												"type": "string",
+												"minLength": 1
+											},
+											{
+												"type": "object",
+												"properties": {
+													"type": {
+														"type": "string",
+														"const": "text"
+													},
+													"text": {
+														"type": "string",
+														"minLength": 1
+													}
+												},
+												"required": [
+													"type",
+													"text"
+												],
+												"additionalProperties": false
+											},
+											{
+												"minItems": 1,
+												"type": "array",
+												"items": {
+													"type": "object",
+													"properties": {
+														"type": {
+															"type": "string",
+															"const": "text"
+														},
+														"text": {
+															"type": "string",
+															"minLength": 1
+														}
+													},
+													"required": [
+														"type",
+														"text"
+													],
+													"additionalProperties": false
+												}
+											}
+										]
+									},
+									"criteria": {
+										"type": "object",
+										"propertyNames": {
+											"type": "string",
+											"minLength": 1,
+											"maxLength": 128
+										},
+										"additionalProperties": {
+											"type": "string"
+										}
+									}
+								},
+								"required": [
+									"type",
+									"instructions",
+									"criteria"
+								],
+								"additionalProperties": false
+							},
+							{
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "score"
+									},
+									"instructions": {
+										"anyOf": [
+											{
+												"type": "string",
+												"minLength": 1
+											},
+											{
+												"type": "object",
+												"properties": {
+													"type": {
+														"type": "string",
+														"const": "text"
+													},
+													"text": {
+														"type": "string",
+														"minLength": 1
+													}
+												},
+												"required": [
+													"type",
+													"text"
+												],
+												"additionalProperties": false
+											},
+											{
+												"minItems": 1,
+												"type": "array",
+												"items": {
+													"type": "object",
+													"properties": {
+														"type": {
+															"type": "string",
+															"const": "text"
+														},
+														"text": {
+															"type": "string",
+															"minLength": 1
+														}
+													},
+													"required": [
+														"type",
+														"text"
+													],
+													"additionalProperties": false
+												}
+											}
+										]
+									},
+									"criteria": {
+										"minItems": 2,
+										"maxItems": 255,
+										"type": "array",
+										"items": {
+											"type": "string",
+											"minLength": 1
+										}
+									}
+								},
+								"required": [
+									"type",
+									"instructions",
+									"criteria"
+								],
+								"additionalProperties": false
+							}
+						]
+					}
+				}
+			},
+			"required": [
+				"input",
+				"questions"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"answers": {
+					"type": "object",
+					"propertyNames": {
+						"type": "string",
+						"minLength": 1,
+						"maxLength": 64,
+						"pattern": "^[A-Za-z0-9_-]+$"
+					},
+					"additionalProperties": {
+						"oneOf": [
+							{
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "noul"
+									},
+									"noul": {
+										"type": "number",
+										"minimum": 0.01,
+										"maximum": 0.99
+									},
+									"confidence": {
+										"type": "number",
+										"minimum": 0,
+										"maximum": 1
+									}
+								},
+								"required": [
+									"type",
+									"noul",
+									"confidence"
+								],
+								"additionalProperties": false
+							},
+							{
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "choice"
+									},
+									"choice": {
+										"type": "string"
+									},
+									"probabilities": {
+										"type": "object",
+										"propertyNames": {
+											"type": "string"
+										},
+										"additionalProperties": {
+											"type": "number",
+											"minimum": 0,
+											"maximum": 1
+										}
+									},
+									"confidence": {
+										"type": "number",
+										"minimum": 0,
+										"maximum": 1
+									}
+								},
+								"required": [
+									"type",
+									"choice",
+									"probabilities",
+									"confidence"
+								],
+								"additionalProperties": false
+							},
+							{
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "score"
+									},
+									"score": {
+										"type": "number",
+										"minimum": 0
+									},
+									"probabilities": {
+										"type": "object",
+										"propertyNames": {
+											"type": "string"
+										},
+										"additionalProperties": {
+											"type": "number",
+											"minimum": 0,
+											"maximum": 1
+										}
+									},
+									"legend": {
+										"type": "object",
+										"propertyNames": {
+											"type": "string"
+										},
+										"additionalProperties": {
+											"type": "string"
+										}
+									},
+									"confidence": {
+										"type": "number",
+										"minimum": 0,
+										"maximum": 1
+									}
+								},
+								"required": [
+									"type",
+									"score",
+									"probabilities",
+									"legend",
+									"confidence"
+								],
+								"additionalProperties": false
+							}
+						]
+					}
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"total_input_tokens": {
+							"type": "integer",
+							"minimum": 0,
+							"maximum": 9007199254740991
+						},
+						"input_tokens_by_modality": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"modality": {
+										"type": "string"
+									},
+									"tokens": {
+										"type": "integer",
+										"minimum": 0,
+										"maximum": 9007199254740991
+									}
+								},
+								"required": [
+									"modality",
+									"tokens"
+								],
+								"additionalProperties": false
+							}
+						},
+						"total_output_tokens": {
+							"type": "number",
+							"const": 0
+						},
+						"total_tokens": {
+							"type": "integer",
+							"minimum": 0,
+							"maximum": 9007199254740991
+						}
+					},
+					"required": [
+						"total_input_tokens",
+						"total_output_tokens",
+						"total_tokens"
+					],
+					"additionalProperties": false
+				}
+			},
+			"required": [
+				"answers",
+				"usage"
+			],
+			"additionalProperties": false
+		}
+	}
+}

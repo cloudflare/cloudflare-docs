@@ -7,7 +7,13 @@ products:
   - workers
 ---
 
-import { WorkersArchitectureDiagram } from "~/components"
+import WorkersArchitectureDiagram from "~/components/cf/WorkersArchitectureDiagram.astro"
+
+:::note[Hosted Workers security model]
+
+This page describes Workers deployed on Cloudflare. Local `workerd` processes do not include every defense-in-depth protection described here. For local execution guidance, refer to [Local development security considerations](/workers/local-development/#security-considerations).
+
+:::
 
 This article includes an overview of Cloudflare security architecture, and then addresses two frequently asked about issues: V8 bugs and Spectre.
 

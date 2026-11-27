@@ -21,7 +21,7 @@ Follow the [Workers AI Get Started Guide](/workers-ai/get-started/workers-wrangl
 
 ## 2. Install additional npm package
 
-Next, run the following command in your project repository to install the Worker AI utilities package.
+Next, run the following command in your project repository to install the Workers AI utilities package.
 
 <PackageManagers pkg="@cloudflare/ai-utils" />
 
@@ -55,7 +55,7 @@ export default {
 				messages: [
 					{
 						role: "user",
-						content: "What the result of 123123123 + 10343030?",
+						content: "What is the result of 123123123 + 10343030?",
 					},
 				],
 				// Definition of available tools the AI model can leverage
@@ -84,9 +84,9 @@ export default {
 
 </TypeScriptExample>
 
-This example imports the utils with `import { runWithTools} from "@cloudflare/ai-utils"` and follows the API reference below.
+This example imports the utils with `import { runWithTools } from "@cloudflare/ai-utils"` and follows the [embedded function calling API reference](/workers-ai/features/function-calling/embedded/api-reference/).
 
-Moreover, in this example we define and describe a list of tools that the LLM can leverage to respond to the user query. Here, the list contains of only one tool, the `sum` function.
+Moreover, in this example we define and describe a list of tools that the LLM can leverage to respond to the user query. Here, the list contains only one tool, the `sum` function.
 
 Abstracted by the `runWithTools` function, the following steps occur:
 
@@ -102,7 +102,7 @@ sequenceDiagram
     WorkersAI-->>-Worker: Send response incorporating function output
 ```
 
-The `ai-utils package` is also open-sourced on [Github](https://github.com/cloudflare/ai-utils).
+The `ai-utils` package is also open-sourced on [GitHub](https://github.com/cloudflare/ai-utils).
 
 ## 4. Local development & deployment
 

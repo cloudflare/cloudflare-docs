@@ -1,0 +1,24 @@
+---
+title: PhishNet Microsoft 365
+tags:
+  - Microsoft
+pcx_content_type: how-to
+description: PhishNet Microsoft 365 in Email Security.
+products:
+  - cloudflare-one
+sidebar:
+  order: 1
+---
+
+import { GlossaryTooltip } from "~/components";
+
+PhishNet is an add-in button that helps users to submit directly to Email security <GlossaryTooltip term="phishing">phish</GlossaryTooltip> samples missed by Email security's detection.
+
+To set up PhishNet Microsoft 365:
+
+1. Get the customized manifest URL from [Cloudflare One](https://one.dash.cloudflare.com/?to=/:account/email-security/settings/email-policy/phish-submission?tab=phish-submission).
+2. Log in to the [Microsoft admin panel](https://admin.microsoft.com/).
+3. Go to **Microsoft 365 admin center** > **Settings** > **Integrated Apps**.
+4. Select **Upload custom apps**.
+5. Choose **Provide link to manifest file** and paste the URL you copied from the Cloudflare One dashboard.
+6. Verify and complete the wizard.
