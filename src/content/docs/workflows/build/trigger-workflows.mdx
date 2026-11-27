@@ -1,6 +1,6 @@
 ---
 title: Trigger Workflows
-description: Trigger Workflows from Workers bindings, the REST API, or the Wrangler CLI.
+description: Trigger Workflows from Workers bindings, the REST API, Wrangler, or the Cloudflare CLI (cf).
 pcx_content_type: concept
 tags:
   - Bindings
@@ -10,24 +10,29 @@ products:
   - workflows
 ---
 
-import { TypeScriptExample, WranglerConfig } from "~/components";
+import {
+	CliVariant,
+	CliVariants,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
 You can trigger Workflows both programmatically and via the Workflows APIs, including:
 
-1. With [Workers](/workers) via HTTP requests in a `fetch` handler, or bindings from a `queue` or `scheduled` handler
-2. On a recurring interval by defining `schedules` on a Workflow binding in your Wrangler configuration
+1. With [Workers](/workers/) via HTTP requests in a `fetch` handler, or from a `queue` or `scheduled` handler
+2. On a recurring interval by defining `schedules` on a Workflow in your configuration file
 3. Using the [Workflows REST API](/api/resources/workflows/methods/list/)
-4. Via the [wrangler CLI](/workers/wrangler/commands/workflows/#workflows) in your terminal
+4. Via the [Wrangler CLI or Cloudflare CLI (`cf`)](/workflows/reference/cli-commands/) in your terminal
 
 ## Workers API (Bindings)
 
-You can interact with Workflows programmatically from any Worker script by creating a binding to a Workflow. A Worker can bind to multiple Workflows, including Workflows defined in other Workers projects (scripts) within your account.
+You can interact with Workflows programmatically from any Worker script — either directly through [`ctx.exports`](/workflows/build/workers-api/#call-a-workflow-through-ctxexports) in the same Worker, or by creating a binding to a Workflow. A Worker can bind to multiple Workflows, including Workflows defined in other Workers projects (scripts) within your account.
 
 You can trigger a Workflow:
 
 - Directly over HTTP via the [`fetch`](/workers/runtime-apis/handlers/fetch/) handler
 - From a [Queue consumer](/queues/configuration/javascript-apis/#consumer) inside a `queue` handler
-- On a recurring schedule by defining `schedules` on the Workflow binding in `wrangler.jsonc`
+- On a recurring schedule by defining `schedules` on the Workflow in your configuration file
 - From a [Cron Trigger](/workers/configuration/cron-triggers/) inside a `scheduled` handler
 - Within a [Durable Object](/durable-objects/)
 
@@ -37,9 +42,27 @@ New to Workflows? Start with the [Workflows tutorial](/workflows/get-started/gui
 
 :::
 
-To bind to a Workflow from your Workers code, you need to define a [binding](/workers/wrangler/configuration/) to a specific Workflow. For example, to bind to the Workflow defined in the [get started guide](/workflows/get-started/guide/), you would configure the [Wrangler configuration file](/workers/wrangler/configuration/) with the below:
+To call a Workflow from your Workers code, configure it in your configuration file. For example, for the Workflow defined in the [get started guide](/workflows/get-started/guide/), add the following configuration:
 
-<WranglerConfig>
+<WranglerConfig
+	cfConfig={`import { defineConfig, exports } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "workflows-tutorial",
+		entrypoint,
+		compatibilityDate: "$today",
+		exports: {
+			// Must match the class defined in your code that extends WorkflowEntrypoint
+			MyWorkflow: exports.workflow({
+				// The name of the Workflow
+				name: "workflows-tutorial",
+			}),
+		},
+	},
+});`}
+>
 
 ```jsonc
 {
@@ -65,13 +88,41 @@ To bind to a Workflow from your Workers code, you need to define a [binding](/wo
 
 </WranglerConfig>
 
-The `binding = "MY_WORKFLOW"` line defines the JavaScript variable that our Workflow methods are accessible on, including `create` (which triggers a new instance) or `get` (which returns the status of an existing instance).
+<CliVariants>
+<CliVariant cli="wrangler">
+
+The `binding = "MY_WORKFLOW"` line defines the JavaScript variable (`env.MY_WORKFLOW`) that your Workflow methods are accessible on, including `create` (which triggers a new instance) or `get` (which returns the status of an existing instance).
+
+</CliVariant>
+<CliVariant cli="cf">
+
+Because `MyWorkflow` is declared under `worker.exports`, your Worker accesses it directly on `ctx.exports.MyWorkflow` without a separate `env` binding. It exposes the same `Workflow` methods — including `create` (which triggers a new instance) and `get` (which returns the status of an existing instance). To call this Workflow from a different Worker, add a [`bindings.workflow()`](/workflows/build/workers-api/#cross-script-calls) entry under `worker.env` in the calling Worker.
+
+</CliVariant>
+</CliVariants>
 
 ### Schedule a Workflow directly
 
-If you want to create Workflow instances on a recurring interval, add a `schedules` array (up to 100 cron expressions per account) to the Workflow binding in your Wrangler configuration:
+If you want to create Workflow instances on a recurring interval, add `schedules` (up to 100 cron expressions per account) to your Workflow configuration:
 
-<WranglerConfig>
+<WranglerConfig
+	cfConfig={`import { defineConfig, exports } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "workflows-tutorial",
+		entrypoint,
+		compatibilityDate: "$today",
+		exports: {
+			MyWorkflow: exports.workflow({
+				name: "workflows-tutorial",
+				schedules: ["0 * * * *"],
+			}),
+		},
+	},
+});`}
+>
 
 ```jsonc
 {
@@ -93,7 +144,18 @@ If you want to create Workflow instances on a recurring interval, add a `schedul
 
 </WranglerConfig>
 
+<CliVariants>
+<CliVariant cli="wrangler">
+
 Each matching cron expression creates a new Workflow instance automatically. Use this when you want to run a Workflow on a schedule without defining top-level `triggers.crons` and a separate `scheduled` handler.
+
+</CliVariant>
+<CliVariant cli="cf">
+
+Each matching cron expression creates a new Workflow instance automatically. Use this when you want to run a Workflow on a schedule without defining `triggers.scheduled()` and a separate `scheduled` handler.
+
+</CliVariant>
+</CliVariants>
 
 Scheduled instances include the matching cron expression and scheduled trigger time on `event.schedule`:
 
@@ -112,6 +174,9 @@ On [Workers Paid](/workers/platform/pricing/#workers), Workflow instances create
 
 This also applies to a Workflow with a [concurrency limit](/workflows/build/concurrency-limits/#per-workflow-concurrency-limits): instances created by `schedules` are not held back by the limit during the one-hour window. After the window, the instance yields and is queued until both your account and the Workflow have a free slot.
 
+<CliVariants>
+<CliVariant cli="wrangler">
+
 Use the latest Wrangler release when configuring Workflow schedules. If your local Wrangler schema does not recognize `schedules` yet, update Wrangler before deploying.
 
 The following example shows how you can manage Workflows from within a Worker, including:
@@ -120,7 +185,9 @@ The following example shows how you can manage Workflows from within a Worker, i
 - Creating (triggering) a new Workflow instance
 - Returning the status of a given instance ID
 
-```ts title="src/index.ts"
+<TypeScriptExample filename="src/index.ts">
+
+```ts
 interface Env {
 	MY_WORKFLOW: Workflow;
 }
@@ -150,6 +217,53 @@ export default {
 	},
 };
 ```
+
+</TypeScriptExample>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+The following example shows how you can manage Workflows from within a Worker using `ctx.exports`, including:
+
+- Retrieving the status of an existing Workflow instance by its ID
+- Creating (triggering) a new Workflow instance
+- Returning the status of a given instance ID
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(req: Request, env: Env, ctx: ExecutionContext) {
+		// Get instanceId from query parameters
+		const instanceId = new URL(req.url).searchParams.get("instanceId");
+
+		// If an ?instanceId=<id> query parameter is provided, fetch the status
+		// of an existing Workflow by its ID.
+		if (instanceId) {
+			let instance = await ctx.exports.MyWorkflow.get(instanceId);
+			return Response.json({
+				status: await instance.status(),
+			});
+		}
+
+		// Else, create a new instance of our Workflow, passing in any (optional)
+		// params and return the ID.
+		const newId = crypto.randomUUID();
+		let instance = await ctx.exports.MyWorkflow.create({ id: newId });
+		return Response.json({
+			id: instance.id,
+			details: await instance.status(),
+		});
+	},
+};
+```
+
+</TypeScriptExample>
+
+The snippets in the sections below call methods on `env.MY_WORKFLOW`; when calling a Workflow exported by the same Worker via `ctx.exports`, call the same methods on `ctx.exports.MyWorkflow`.
+
+</CliVariant>
+</CliVariants>
 
 ### Inspect a Workflow's status
 
@@ -233,6 +347,9 @@ let instance = await env.MY_WORKFLOW.get("abc-123");
 await instance.terminate({ rollback: true }); // Returns Promise<void>
 ```
 
+<CliVariants>
+<CliVariant cli="wrangler">
+
 You can also run rollback handlers from Wrangler:
 
 ```sh
@@ -240,6 +357,26 @@ npx wrangler workflows instances terminate <WORKFLOW_NAME> <INSTANCE_ID> --rollb
 # For a local Workflows instance during wrangler dev:
 npx wrangler workflows instances terminate <WORKFLOW_NAME> <INSTANCE_ID> --local --rollback
 ```
+
+</CliVariant>
+<CliVariant cli="cf">
+
+You can also run rollback handlers from the [Cloudflare CLI (`cf`)](/cf/):
+
+```sh
+cf workflows instances terminate <INSTANCE_ID> --workflow-name <WORKFLOW_NAME> --status terminate --rollback
+```
+
+During `cf dev`, terminate local Workflow instances in [Local Explorer](/workflows/build/local-development/#local-explorer).
+
+:::note
+
+`cf workflows instances terminate` currently requires `--status terminate` alongside the command.
+
+:::
+
+</CliVariant>
+</CliVariants>
 
 Once stopped/terminated, the Workflow instance _cannot_ be resumed.
 
@@ -367,6 +504,9 @@ console.log(result.errors); // Per-instance failures, if any
 
 `deleteBatch()` accepts between 1 and 100 IDs. Missing IDs are returned as per-instance errors. Duplicate IDs count toward the limit and are deleted once, with the result repeated for each input position. If any ID is invalid, the call fails before deleting any instances.
 
+<CliVariants>
+<CliVariant cli="wrangler">
+
 Wrangler accepts one or more instance IDs or a file containing a top-level JSON array of strings. You can combine positional IDs with `--filename`, up to 100 IDs total. Use `latest` to delete the most recently created instance.
 
 ```json title="instance-ids.json"
@@ -381,6 +521,28 @@ npx wrangler workflows instances delete <WORKFLOW_NAME> --filename ./instance-id
 # For local Workflow instances during wrangler dev:
 npx wrangler workflows instances delete <WORKFLOW_NAME> <INSTANCE_ID> --local
 ```
+
+</CliVariant>
+<CliVariant cli="cf">
+
+Use `cf workflows instances delete` to delete a single instance, or `cf workflows instances batch delete` to delete up to 100 instances at once with repeated `--instances` flags or a JSON file via `--body`:
+
+```json title="instance-ids.json"
+{
+	"instances": ["instance-abc", "instance-def"]
+}
+```
+
+```sh
+cf workflows instances delete <INSTANCE_ID> --workflow-name <WORKFLOW_NAME>
+cf workflows instances batch delete <WORKFLOW_NAME> --instances <INSTANCE_ID> --instances <INSTANCE_ID>
+cf workflows instances batch delete <WORKFLOW_NAME> --body @./instance-ids.json
+```
+
+Pass an explicit instance ID from `cf workflows instances list --workflow-name <WORKFLOW_NAME>`. During `cf dev`, delete local Workflow instances in [Local Explorer](/workflows/build/local-development/#local-explorer).
+
+</CliVariant>
+</CliVariants>
 
 For the full APIs, refer to [`delete`](/workflows/build/workers-api/#delete) and [`deleteBatch`](/workflows/build/workers-api/#deletebatch).
 
@@ -426,4 +588,4 @@ Refer to the [Workflows REST API documentation](/api/resources/workflows/subreso
 
 ## Command line (CLI)
 
-Refer to the [CLI quick start](/workflows/get-started/guide/) to learn more about how to manage and trigger Workflows via the command-line.
+For more information on managing and triggering Workflows from the command line, refer to [CLI commands](/workflows/reference/cli-commands/) and [Build your first Workflow](/workflows/get-started/guide/).
