@@ -22,7 +22,7 @@ The build output directory indicates where your project's build command outputs 
 
 The build command is provided by your framework. For example, a Vite project uses `npm run build` as its build command. When you are working without a framework and do not need a build step, leave the **Build command** field blank. Pages determines whether a build has succeeded or failed by reading the exit code returned from the user-supplied build command. Any non-zero return code causes a build to fail. An exit code of `0` marks the Pages build as successful and uploads assets regardless of whether logs are written to standard error.
 
-The build output directory is generated from the build command. Each framework has its own naming convention; for example, the build output directory is `dist` or `public` for many frameworks.
+The build output directory is generated from the build command. Each framework has its own naming convention. For example, the build output directory is `dist` or `public` for many frameworks.
 
 The root directory is where your site's content lives. If not specified, Cloudflare assumes that your linked Git repository is the root directory. Specify the root directory for cases like monorepos, where multiple projects live in one repository.
 
