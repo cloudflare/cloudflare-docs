@@ -12,7 +12,13 @@ description: Send invoice when shopping cart is checked out and paid for
 reviewed: 2024-10-24
 ---
 
-import { TabItem, Tabs, WranglerConfig, Render } from "~/components";
+import {
+	CliVariant,
+	CliVariants,
+	Render,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
 In this example, we implement a Workflow for an e-commerce website that is triggered every time a shopping cart is created.
 
@@ -143,7 +149,16 @@ export class cartInvoicesWorkflow extends WorkflowEntrypoint<Env, Params> {
 		);
 	}
 }
+```
 
+Add a `fetch` handler in `src/index.ts` to trigger and inspect Workflow instances:
+
+<CliVariants>
+<CliVariant cli="wrangler">
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
 // Default page for admin
 // Remove in production
 
@@ -185,7 +200,9 @@ export default {
 };
 ```
 
-Here's a minimal package.json:
+</TypeScriptExample>
+
+Here is a minimal `package.json`:
 
 ```json
 {
@@ -198,9 +215,95 @@ Here's a minimal package.json:
 }
 ```
 
-And finally [Wrangler configuration file](/workers/wrangler/configuration/):
+</CliVariant>
+<CliVariant cli="cf">
 
-<WranglerConfig>
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+// Default page for admin
+// Remove in production
+
+export default {
+	async fetch(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+		let url = new URL(req.url);
+
+		let id = new URL(req.url).searchParams.get("instanceId");
+
+		// Get the status of an existing instance, if provided
+		if (id) {
+			let instance = await ctx.exports.cartInvoicesWorkflow.get(id);
+			return Response.json({
+				status: await instance.status(),
+			});
+		}
+
+		if (url.pathname.startsWith("/new")) {
+			let instance = await ctx.exports.cartInvoicesWorkflow.create({
+				params: {
+					cartId: "123",
+				},
+			});
+			return Response.json({
+				id: instance.id,
+				details: await instance.status(),
+			});
+		}
+
+		return new Response(
+			`<html><body><a href="/new">new instance</a> or add ?instanceId=...</body></html>`,
+			{
+				headers: {
+					"content-type": "text/html;charset=UTF-8",
+				},
+			},
+		);
+	},
+};
+```
+
+</TypeScriptExample>
+
+Here is a minimal `package.json`:
+
+```json
+{
+	"type": "module",
+	"devDependencies": {
+		"cf": "latest"
+	},
+	"dependencies": {
+		"mimetext": "^3.0.24"
+	}
+}
+```
+
+</CliVariant>
+</CliVariants>
+
+And finally, the configuration file:
+
+<WranglerConfig
+	cfConfig={`import { bindings, defineConfig, exports } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "cart-invoices",
+		entrypoint,
+		compatibilityDate: "$today",
+		compatibilityFlags: ["nodejs_compat"],
+		exports: {
+			cartInvoicesWorkflow: exports.workflow({
+				name: "cart-invoices-workflow",
+			}),
+		},
+		env: {
+			SEND_EMAIL: bindings.sendEmail(),
+		},
+	},
+});`}
+>
 
 ```jsonc
 {
@@ -229,4 +332,15 @@ And finally [Wrangler configuration file](/workers/wrangler/configuration/):
 
 </WranglerConfig>
 
+<CliVariants>
+<CliVariant cli="wrangler">
+
 <Render file="wrangler-typegen" product="workers" />
+
+</CliVariant>
+<CliVariant cli="cf">
+
+If you use TypeScript, run `cf workers types` whenever you modify `cloudflare.config.ts`. This writes `.cloudflare/types/index.d.ts` with types for `ctx.exports`, `env`, and the Workers runtime.
+
+</CliVariant>
+</CliVariants>
