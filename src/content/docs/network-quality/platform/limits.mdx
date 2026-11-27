@@ -1,0 +1,33 @@
+---
+title: Limits
+pcx_content_type: reference
+description: Review the limits that apply to Network Quality authorization tokens and measurement requests.
+products:
+  - network-quality
+sidebar:
+  order: 1
+---
+
+The following limits apply to Network Quality authorization tokens:
+
+| Limit                                  | Value               |
+| -------------------------------------- | ------------------- |
+| Token lifetime                         | 10 minutes          |
+| Token byte budget (`bytes`)            | 1 byte to 32 GiB    |
+| `eyeball_id` length                    | 8 to 128 characters |
+| Maximum entries in `source_ips`        | 8                   |
+| Transfer grace period after expiration | 60 seconds          |
+
+## Token issuance
+
+The token issuance limit applies to each combination of account and `eyeball_id`. When you exceed it, the API returns a `429` status code and a `Retry-After` header with the number of seconds to wait.
+
+Token requests also count toward the [Cloudflare API rate limits](/fundamentals/api/reference/limits/) of the API token your service uses.
+
+## Byte budget
+
+The byte budget counts download and upload traffic from measurement requests that use the token. Each request reserves its full size from the budget before it starts. If a request is larger than the remaining budget, it returns a `429` status code.
+
+## Token expiration
+
+Measurement requests with an expired token return a `401` status code. Downloads and uploads that are already in progress can continue for up to 60 seconds after the token expires. After that, Cloudflare stops downloads and returns a `408` status code for uploads.

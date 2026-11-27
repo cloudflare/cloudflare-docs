@@ -668,6 +668,12 @@ package.json @cloudflare/content-engineering
 /src/content/directory/network-interconnect.yaml @aasaya4116 @alpdot @jeffh-cloudflare @steve-cloudflare @cloudflare/product-owners
 /src/icons/network-interconnect.svg @cloudflare/product-owners
 
+# network-quality
+
+/src/content/directory/network-quality.yaml @laiyi-ohlsen @cloudflare/product-owners
+/src/content/docs/network-quality/ @andre-j3sus @devandrepascoa @laiyi-ohlsen @cloudflare/product-owners
+/src/icons/network-quality.svg @laiyi-ohlsen @cloudflare/product-owners
+
 # networking-services
 
 /src/content/partials/networking-services/ @alpdot @jeffh-cloudflare @steve-cloudflare @cloudflare/product-owners

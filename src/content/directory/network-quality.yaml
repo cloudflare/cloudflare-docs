@@ -1,0 +1,12 @@
+id: bT9s7j
+name: Network Quality
+
+entry:
+  title: Network Quality
+  url: /network-quality/
+  group: Developer platform
+
+meta:
+  title: Cloudflare Network Quality docs
+  description: Measure the quality of connections between your end users or devices and the Cloudflare network
+  author: "@cloudflare"

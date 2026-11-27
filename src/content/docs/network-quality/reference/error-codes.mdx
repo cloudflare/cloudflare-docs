@@ -1,0 +1,54 @@
+---
+title: Error codes
+pcx_content_type: reference
+description: Review the errors returned by the Network Quality API and the measurement endpoints.
+products:
+  - network-quality
+sidebar:
+  order: 2
+---
+
+## Network Quality API
+
+The settings and token endpoints return errors in the standard Cloudflare API format:
+
+```json
+{
+	"success": false,
+	"errors": [
+		{
+			"code": 400,
+			"message": "eyeball_id must contain 8 to 128 characters from A-Z, a-z, 0-9, _, ., :, or -",
+			"path": ["body", "eyeball_id"]
+		}
+	],
+	"messages": [],
+	"result": null
+}
+```
+
+The API returns the following status codes:
+
+| Status code | Cause                                                                                                                              | Resolution                                                                                                                          |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `400`       | The request body is not valid JSON, a field is missing or invalid, or the body includes an unknown field.                          | Check the `path` and `message` of each error, and correct the request body.                                                         |
+| `401`       | The API token is missing, invalid, or expired.                                                                                     | Use a valid API token, or [create a new one](/network-quality/get-started/#2-create-an-api-token).                                  |
+| `403`       | The API token does not have the _Account_ > _Network Quality_ > _Edit_ permission for the account.                                 | [Create an API token](/network-quality/get-started/#2-create-an-api-token) with the right permission and account scope.             |
+| `403`       | The account does not have access to Network Quality. The token endpoint also returns this code when Network Quality is turned off. | Contact your account team to request access, or [turn on Network Quality](/network-quality/get-started/#1-turn-on-network-quality). |
+| `404`       | Network Quality has never been turned on for the account. Returned by the token endpoint only.                                     | [Turn on Network Quality](/network-quality/get-started/#1-turn-on-network-quality).                                                 |
+| `429`       | Cloudflare recently issued a token for the same `eyeball_id`.                                                                      | Wait for the number of seconds in the `Retry-After` header, or reuse the previous token.                                            |
+| `429`       | Your API token exceeded the [Cloudflare API rate limits](/fundamentals/api/reference/limits/).                                     | Wait for the number of seconds in the `Retry-After` header, and reduce how often your service requests tokens.                      |
+| `503`       | Cloudflare could not verify account access. Returned by the settings endpoint only.                                                | Retry the request later.                                                                                                            |
+
+## Measurement endpoints
+
+Measurement requests that include an authorization token can return the following status codes:
+
+| Status code | Cause                                                                                                                                                               | Resolution                                                                                                                                                            |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `400`       | The client sent the token over plain HTTP, or the `bytes` parameter is invalid.                                                                                     | Send measurement requests over HTTPS, and pass `bytes` as a non-negative integer.                                                                                     |
+| `401`       | The token is invalid or expired.                                                                                                                                    | Request a new token and start a new test.                                                                                                                             |
+| `403`       | The IP address of the client does not match any entry in `source_ips`.                                                                                              | Include every IP address the client might use when you [request the token](/network-quality/guides/authorization-tokens/#how-tokens-work), or leave out `source_ips`. |
+| `408`       | An upload was still in progress 60 seconds after the token expired.                                                                                                 | Request a new token and start a new test.                                                                                                                             |
+| `413`       | The upload body is larger than Cloudflare accepts in a single request. Browsers report this as a network error, because the response does not include CORS headers. | Split the upload into smaller requests.                                                                                                                               |
+| `429`       | The request is larger than the remaining byte budget of the token.                                                                                                  | Increase `bytes` when you request the token, or transfer less data per test.                                                                                          |

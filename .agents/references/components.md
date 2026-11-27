@@ -253,6 +253,8 @@ import { Plan } from "~/components";
 <Plan type="ent-add-on" />  <!-- Enterprise add-on -->
 <Plan type="workers-all" /> <!-- All Workers plans -->
 <Plan type="workers-paid" /><!-- Workers paid plans -->
+<Plan type="beta" />        <!-- Open beta -->
+<Plan type="private-beta" /><!-- Private beta -->
 ```
 
 ---

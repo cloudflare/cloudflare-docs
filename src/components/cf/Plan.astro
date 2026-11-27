@@ -12,6 +12,7 @@ const MAPPINGS = {
 	"workers-all": "Available on Free and Paid plans",
 	"workers-paid": "Available on Workers Paid plan",
 	beta: "Available in open beta",
+	"private-beta": "Available in private beta",
 } as const satisfies Record<string, string>;
 
 type PlanType = keyof typeof MAPPINGS;

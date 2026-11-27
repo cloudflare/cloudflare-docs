@@ -25,6 +25,11 @@
 		"parent": ["Networking", "Connectors"]
 	},
 	{
+		"deeplink": "/?to=/:account/network-quality",
+		"name": "Network Quality",
+		"parent": ["Networking"]
+	},
+	{
 		"deeplink": "/?to=/:account/magic-networks/routes/virtual-networks",
 		"name": "Virtual networks",
 		"parent": ["Networking", "Routes"]
