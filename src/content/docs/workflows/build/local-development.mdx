@@ -1,6 +1,6 @@
 ---
 title: Local Development
-description: Develop and test Cloudflare Workflows locally using Wrangler's emulated runtime.
+description: Develop and test Cloudflare Workflows locally using the Cloudflare CLI (cf) or Wrangler.
 pcx_content_type: reference
 reviewed: 2024-11-27
 sidebar:
@@ -9,9 +9,64 @@ products:
   - workflows
 ---
 
-import { Render } from "~/components";
+import { Render, TabItem, Tabs } from "~/components";
 
-Workflows support local development using [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers. Wrangler runs an emulated version of Workflows compared to the one that Cloudflare runs globally.
+<Tabs syncKey="cli">
+<TabItem label="Cloudflare CLI (cf)">
+
+Workflows support local development using the [Cloudflare CLI (`cf`)](/cf/). Local development runs an emulated version of Workflows compared to the one that Cloudflare runs globally.
+
+## Prerequisites
+
+To develop locally with Workflows using `cf`, you need:
+
+- [Install `cf`](/cf/get-started/) and meet its [requirements](/cf/get-started/#requirements).
+- If you are new to Workflows or Cloudflare Workers, refer to the [Workflows Guide](/workflows/get-started/guide/) to create and deploy your first Workflow.
+
+## Start a local development session
+
+Open your terminal and run `cf dev` in your project directory to start a local development session:
+
+```sh
+cf dev
+```
+
+`cf dev` starts your project's local development server (Vite with the Cloudflare Vite plugin, or Wrangler) and prints its local URL (by default `http://localhost:5173/` in Vite projects, or `http://127.0.0.1:8787/` when using the Wrangler bundler).
+
+Local development sessions create a standalone, local-only environment that mirrors the production environment Workflows runs in so you can test your Workflows _before_ you deploy to production.
+
+For more information on how `cf dev` runs your project, refer to [Start development](/cf/projects/#start-development).
+
+## Manage Workflows locally
+
+[`cf workflows` commands](/workflows/reference/cli-commands/) operate on deployed Workflows via the Cloudflare API (`--local` is not currently supported for Workflows in `cf`).
+
+While a `cf dev` session is running, use [Local Explorer](#local-explorer) to list Workflows, trigger instances, inspect step history, send events, and pause, terminate, restart, or delete local instances. You can also trigger and query instances through your Worker's `fetch` handler or the Local Explorer API (for example, `http://localhost:5173/cdn-cgi/local/explorer/api/workflows`).
+
+## Local Explorer
+
+[Local Explorer](/workers/local-development/local-explorer/) is a browser-based interface for viewing and managing your local Workflow instances during development. Instead of running CLI commands, you can open Local Explorer in your browser and interact with your Workflows directly.
+
+While a `cf dev` session is running, append `/cdn-cgi/local/explorer` to the local URL that `cf dev` prints (for example, `http://localhost:5173/cdn-cgi/local/explorer` in a Vite project).
+
+With Local Explorer you can:
+
+- View all Workflows defined in your project and their instances.
+- Inspect the step history and current status of each instance.
+- Trigger new Workflow runs and send events to running instances.
+- Pause, resume, terminate, and restart instances.
+- Delete specific instances or clear all of them at once.
+
+## Known issues
+
+Workflows are not supported as [remote bindings](/workers/local-development/#remote-bindings) (`dev: { remote: true }` in `cloudflare.config.ts`).
+
+Local development ignores the [`jurisdiction`](/workflows/reference/data-location/) setting of a Workflow.
+
+</TabItem>
+<TabItem label="Wrangler">
+
+Workflows support local development using [Wrangler](/workers/wrangler/install-and-update/). Local development runs an emulated version of Workflows compared to the one that Cloudflare runs globally.
 
 ## Prerequisites
 
@@ -22,14 +77,14 @@ To develop locally with Workflows, you will need:
 
   <Render file="nodejs-version-manager" product="workers" />
 
-- If you are new to Workflows and/or Cloudflare Workers, refer to the [Workflows Guide](/workflows/get-started/guide/) to install `wrangler` and deploy their first Workflows.
+- If you are new to Workflows or Cloudflare Workers, refer to the [Workflows Guide](/workflows/get-started/guide/) to install `wrangler` and deploy your first Workflow.
 
 ## Start a local development session
 
 Open your terminal and run the following commands to start a local development session:
 
 ```sh
-# Confirm we are using wrangler v3.89.0+
+# Confirm you are using wrangler v3.89.0+
 npx wrangler --version
 ```
 
@@ -37,7 +92,7 @@ npx wrangler --version
 ⛅️ wrangler 3.89.0
 ```
 
-Start a local dev session
+Start a local dev session:
 
 ```sh
 # Start a local dev session:
@@ -55,7 +110,7 @@ Your worker has access to the following bindings:
 
 Local development sessions create a standalone, local-only environment that mirrors the production environment Workflows runs in so you can test your Workflows _before_ you deploy to production.
 
-Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/general/#dev) to learn more about how to configure a local development session.
+For more information on configuring a local development session, refer to [`wrangler dev`](/workers/wrangler/commands/general/#dev).
 
 ## Manage Workflows locally
 
@@ -63,7 +118,7 @@ Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/general/#
 The `--local` flag for `wrangler workflows` commands requires Wrangler version `4.79.0` or greater. Use `npx wrangler@latest` to always use the latest version.
 :::
 
-While a `wrangler dev` session is running, you can use all [`wrangler workflows` commands](/workers/wrangler/commands/workflows/) with the `--local` flag to interact with your local Workflow instances.
+While a `wrangler dev` session is running, you can use all [`wrangler workflows` commands](/workflows/reference/cli-commands/) with the `--local` flag to interact with your local Workflow instances.
 
 The `--local` flag also works with Workflows declared only in the [`exports`](/workflows/build/workers-api/#declare-workflows-in-exports) field of your Wrangler configuration, without a `workflows` binding. This requires Wrangler 4.142.0 or above.
 
@@ -105,8 +160,11 @@ Local Explorer requires Wrangler version `4.82.1` or later, or [Cloudflare Vite 
 
 Local Explorer also lists Workflows declared only in `exports`, with Wrangler version `4.142.0` or later, or Cloudflare Vite plugin version `1.61.0` or later.
 
-## Known Issues
+## Known issues
 
-Workflows are not supported as [remote bindings](/workers/local-development/#remote-bindings) or when using `npx wrangler dev --remote`.
+Workflows are not supported as [remote bindings](/workers/local-development/#remote-bindings) (`remote: true` or `npx wrangler dev --remote`).
 
 Local development ignores the [`jurisdiction`](/workflows/reference/data-location/) setting of a Workflow.
+
+</TabItem>
+</Tabs>
