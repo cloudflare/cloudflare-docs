@@ -126,14 +126,17 @@ const resp = await env.AI.run(
 
 The third argument to `env.AI.run()` accepts a `gateway` object with the following parameters:
 
-| Parameter    | Type      | Default    | Description                                                                                                                                                                                                                                                                               |
-| ------------ | --------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`         | `string`  | _required_ | Name of your [AI Gateway](/ai-gateway/get-started/). Must be in the same account as your Worker. Use `"default"` to automatically create a gateway on the first authenticated request. Refer to [Default gateway](/ai-gateway/configuration/manage-gateway/#default-gateway) for details. |
-| `skipCache`  | `boolean` | `false`    | Skip the [cache](/ai-gateway/features/caching/) for this request.                                                                                                                                                                                                                         |
-| `cacheTtl`   | `number`  | —          | [Cache TTL](/ai-gateway/features/caching/) in seconds.                                                                                                                                                                                                                                    |
-| `cacheKey`   | `string`  | —          | Custom [cache key](/ai-gateway/features/caching/) for this request.                                                                                                                                                                                                                       |
-| `collectLog` | `boolean` | —          | Whether to [collect logs](/ai-gateway/observability/logging/) for this request.                                                                                                                                                                                                           |
-| `metadata`   | `object`  | —          | [Custom metadata](/ai-gateway/observability/custom-metadata/) to attach to the log entry.                                                                                                                                                                                                 |
+| Parameter          | Type      | Default    | Description                                                                                                                                                                                                                                                                               |
+| ------------------ | --------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`               | `string`  | _required_ | Name of your [AI Gateway](/ai-gateway/get-started/). Must be in the same account as your Worker. Use `"default"` to automatically create a gateway on the first authenticated request. Refer to [Default gateway](/ai-gateway/configuration/manage-gateway/#default-gateway) for details. |
+| `skipCache`        | `boolean` | `false`    | Skip the [cache](/ai-gateway/features/caching/) for this request.                                                                                                                                                                                                                         |
+| `cacheTtl`         | `number`  | —          | [Cache TTL](/ai-gateway/features/caching/) in seconds.                                                                                                                                                                                                                                    |
+| `cacheKey`         | `string`  | —          | Custom [cache key](/ai-gateway/features/caching/) for this request.                                                                                                                                                                                                                       |
+| `collectLog`       | `boolean` | —          | Whether to [collect logs](/ai-gateway/observability/logging/) for this request.                                                                                                                                                                                                           |
+| `metadata`         | `object`  | —          | [Custom metadata](/ai-gateway/observability/custom-metadata/) to attach to the log entry.                                                                                                                                                                                                 |
+| `eventId`          | `string`  | —          | Custom event identifier to associate with the log entry.                                                                                                                                                                                                                                  |
+| `requestTimeoutMs` | `number`  | —          | Request timeout in milliseconds before AI Gateway aborts the provider call.                                                                                                                                                                                                               |
+| `retries`          | `object`  | —          | Retry configuration with optional `maxAttempts` (`1` to `5`), `retryDelayMs`, and `backoff` (`"constant"`, `"linear"`, or `"exponential"`).                                                                                                                                               |
 
 ## `env.AI.aiGatewayLogId`
 
@@ -142,6 +145,10 @@ Returns the log ID from the most recent `env.AI.run()` request.
 ```typescript
 const myLogId = env.AI.aiGatewayLogId;
 ```
+
+:::caution
+`env.AI` is shared across concurrent requests handled by the same Worker isolate. If multiple requests call `env.AI.run()` concurrently (or a single request runs parallel `env.AI.run()` calls), another call can overwrite `env.AI.aiGatewayLogId` before your code reads it. To read the log ID per request without shared state, call the AI Gateway endpoint directly with `fetch()` and read the `cf-aig-log-id` response header.
+:::
 
 ## `env.AI.gateway()`
 
@@ -171,13 +178,17 @@ await gateway.patchLog("my-log-id", {
 
 ### `getLog()`
 
-Retrieves details of a specific log entry. If the `AiGatewayLog` type is missing, run [`wrangler types`](/workers/languages/typescript/#generate-types).
+Retrieves details of a specific log entry, including `cost`, `tokens_in`, `tokens_out`, `duration`, `status_code`, `cached`, `success`, and `metadata`. If the `AiGatewayLog` type is missing, run [`wrangler types`](/workers/languages/typescript/#generate-types).
 
 ```typescript
 const log = await gateway.getLog("my-log-id");
 ```
 
 **Returns:** `Promise<AiGatewayLog>`
+
+:::note
+AI Gateway persists logs asynchronously after returning the inference response. Calling `getLog()` immediately after `env.AI.run()` can throw `AiGatewayLogNotFound` if the log entry has not been written yet. Retry after a short delay if you query logs right after inference.
+:::
 
 ### `getUrl()`
 
