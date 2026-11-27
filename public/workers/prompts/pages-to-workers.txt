@@ -61,18 +61,21 @@ When migrating from Pages to Workers, you are:
 - **If a `functions/` directory exists (and no framework replaces it):**
   - Compile the `functions/` directory into a Worker bundle during the build step:
     `wrangler pages functions build --outdir=./dist/worker/`
+  - Pass the original Pages project's compatibility date with `--compatibility-date` and any compatibility flags with `--compatibility-flags`. The standalone Pages build command does not read these settings from the Workers configuration.
   - Point `"main"` at the compiled output (for example, `"main": "./dist/worker/index.js"`) and add `"binding": "ASSETS"` under `"assets"`.
   - Consider refactoring simple `functions/` routes into a standard Worker script or Hono app over time.
 - **If `_worker.js` is emitted inside the static assets directory:**
   - Either move `_worker.js` outside the static assets directory (recommended) or add `_worker.js` to an `.assetsignore` file in the static assets directory so it is not served publicly.
   - Set `"main"` to the `_worker.js` path and add `"binding": "ASSETS"` under `"assets"`.
 - **If `_routes.json` or `functions/_middleware.*` exists:**
-  - Unlike Pages (which runs Functions before static assets by default), Workers serves matching static assets first unless `assets.run_worker_first` is configured.
-  - Translate `_routes.json` rules into `assets.run_worker_first` (either `true` or an array of patterns such as `["/api/*", "!/api/docs/*"]`) so middleware, auth checks, or dynamic routes run before static assets.
+  - Set `assets.run_worker_first` to `true` if Functions or middleware should run before static assets on every request.
+  - With an array such as `["/api/*", "!/api/docs/*"]`, positive matches run the Worker first, negative (`!`) matches go directly to assets, and requests that match neither can still invoke the Worker if no asset matches.
+  - Do not treat an array as a Functions allowlist. To preserve a restricted `_routes.json` scope, apply its include and exclude rules before dispatching to Functions or middleware. Return `env.ASSETS.fetch(request)` for requests outside that scope without dispatching to Functions.
 
 ### 5. Preserve Static Asset Behavior (`_headers`, `_redirects`, `.assetsignore`)
 
 - Keep `_headers` and `_redirects` in the `assets.directory` output folder; Workers Static Assets supports both natively.
+- After migrating `_routes.json` rules, remove `_routes.json` from `assets.directory` or add `/_routes.json` to `.assetsignore`. Workers does not exclude this file from static asset uploads by default.
 - Pages automatically ignored files such as `node_modules`, `.DS_Store`, and `.git`. If your asset directory can contain ignored files, add an `.assetsignore` file inside `assets.directory`:
 
 ```txt
@@ -98,8 +101,8 @@ When migrating from Pages to Workers, you are:
 ### 8. Validate and Deploy
 
 1. Run the project's build command and confirm the output directory and any Worker entrypoint exist.
-2. Run `wrangler deploy --dry-run` to validate the configuration and inspect uploaded bindings/assets.
-3. Test locally with `wrangler dev` (or the framework's dev command with `@cloudflare/vite-plugin`).
+2. Run `wrangler deploy --dry-run` to validate the configuration, build the local asset manifest, and review the configured bindings without uploading anything.
+3. Test locally with `wrangler dev` (or the framework's dev command with `@cloudflare/vite-plugin`). Check asset hits and misses on routes inside and outside any migrated Functions scope.
 4. Deploy only with user permission using `wrangler deploy`.
 
 ## Common Patterns

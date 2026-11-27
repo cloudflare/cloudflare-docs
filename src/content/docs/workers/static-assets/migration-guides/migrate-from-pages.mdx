@@ -153,7 +153,7 @@ If you use Pages Functions with an ["advanced mode" `_worker.js` file](/pages/fu
 _worker.js
 ```
 
-Then, update your configuration file's `main` field to point to the location of this Worker script:
+Then, update your configuration file's `main` field to point to the location of this Worker script. If your script calls `env.ASSETS.fetch()`, configure the `ASSETS` binding as shown below:
 
 <WranglerConfig>
 
@@ -162,9 +162,10 @@ Then, update your configuration file's `main` field to point to the location of 
 	"name": "my-worker",
 	"compatibility_date": "$today",
 	"main": "./dist/client/_worker.js",
-	"upload_source_maps": true, // or some other location if you moved the script out of the static asset directory
+	"upload_source_maps": true,
 	"assets": {
-		"directory": "./dist/client/"
+		"directory": "./dist/client/",
+		"binding": "ASSETS"
 	}
 }
 ```
@@ -181,31 +182,11 @@ If you use **Pages Functions with a [folder of `functions/`](/pages/functions/)*
 	args={"pages functions build --outdir=./dist/worker/"}
 />
 
+The standalone Pages build command does not read compatibility settings from your Workers configuration. Pass the original Pages project's compatibility date with `--compatibility-date` and any compatibility flags with `--compatibility-flags`.
+
 Although this command will remain available to you to run at any time, we do recommend considering using another framework if you wish to continue to use file-based routing. [HonoX](https://github.com/honojs/honox) is one popular option.
 
-Once the Worker script has been compiled, you can update your configuration file's `main` field to point to the location it was built to:
-
-<WranglerConfig>
-
-```json
-{
-	"name": "my-worker",
-	"compatibility_date": "$today",
-	"main": "./dist/worker/index.js",
-	"upload_source_maps": true,
-	"assets": {
-		"directory": "./dist/client/"
-	}
-}
-```
-
-</WranglerConfig>
-
-##### `_routes.json` and Pages Functions middleware
-
-If you authored [a `_routes.json` file](/pages/functions/routing/#create-a-_routesjson-file) in your Pages project, or used [middleware](/pages/functions/middleware/) in Pages Functions, review how your Worker script routes requests. Pages defaults to running Pages Functions ahead of static assets, and `_routes.json` and middleware customize that behavior.
-
-Workers defaults to serving static assets ahead of your Worker script unless you configure [`assets.run_worker_first`](/workers/static-assets/routing/worker-script/#run-your-worker-script-first). Set `run_worker_first` to `true` to run your Worker script on every request, or pass an array of route patterns (including negative `!` patterns, such as `["/api/*", "!/api/docs/*"]`) to invoke your Worker script only on selected paths — for example, for authentication checks or request logging.
+Set `main` to the compiled Worker script and configure the `ASSETS` binding. The compiled script uses `env.ASSETS.fetch()` when no Function handles a request or middleware passes the request through without a response:
 
 <WranglerConfig>
 
@@ -217,12 +198,42 @@ Workers defaults to serving static assets ahead of your Worker script unless you
 	"upload_source_maps": true,
 	"assets": {
 		"directory": "./dist/client/",
+		"binding": "ASSETS"
+	}
+}
+```
+
+</WranglerConfig>
+
+##### `_routes.json` and Pages Functions middleware
+
+If you authored [a `_routes.json` file](/pages/functions/routing/#create-a-_routesjson-file) in your Pages project, or used [middleware](/pages/functions/middleware/) in Pages Functions, review how your Worker script routes requests. Pages defaults to running Pages Functions ahead of static assets, and `_routes.json` and middleware customize that behavior.
+
+By default, Workers serves a matching static asset before invoking your Worker script. Set [`assets.run_worker_first`](/workers/static-assets/routing/worker-script/#run-your-worker-script-first) to `true` to run your script before static assets on every request.
+
+If you pass an array of route patterns (such as `["/api/*", "!/api/docs/*"]`), positive matches run your Worker script first and negative (`!`) matches go directly to static assets. Paths that match neither keep the default behavior, so a request can still invoke your Worker script if no asset matches.
+
+Unlike `_routes.json`, an array does not limit Worker invocations to the listed paths. To preserve where your Pages Functions and middleware run, apply the original include and exclude rules in your Worker before dispatching to the compiled Functions. For requests outside that scope, return `env.ASSETS.fetch(request)` without dispatching to the Functions.
+
+<WranglerConfig>
+
+```json
+{
+	"name": "my-worker",
+	"compatibility_date": "$today",
+	"main": "./dist/worker/index.js",
+	"upload_source_maps": true,
+	"assets": {
+		"directory": "./dist/client/",
+		"binding": "ASSETS",
 		"run_worker_first": ["/api/*", "!/api/docs/*"]
 	}
 }
 ```
 
 </WranglerConfig>
+
+After migrating your routing rules, remove `_routes.json` from your static asset directory or add `/_routes.json` to [`.assetsignore`](/workers/static-assets/binding/#ignoring-assets). Workers does not exclude this file from static asset uploads by default.
 
 ##### Starting from scratch
 
@@ -374,9 +385,9 @@ For new Workers created with Workers Builds, preview builds use `wrangler previe
 
 ### Caching and Cache Rules
 
-Static assets on Workers are cached automatically across Cloudflare's network and served without invoking your Worker script unless [`assets.run_worker_first`](/workers/static-assets/routing/worker-script/#run-your-worker-script-first) matches the request.
+Static assets on Workers are cached automatically across Cloudflare's network. By default, matching assets are served without invoking your Worker script.
 
-If your Pages project relied on zone-level [Cache Rules](/cache/how-to/cache-rules/) in front of a Pages Function or [advanced mode `_worker.js`](/pages/functions/advanced-mode/), note that when a Worker script executes on a route, the Worker runs before Cache Rules and its cache settings take precedence. For details on precedence and compatibility flags, refer to [How Workers interact with Cache Rules](/cache/interaction-cloudflare-products/workers-cache-rules/).
+If your Pages project relied on zone-level [Cache Rules](/cache/how-to/cache-rules/) in front of a Pages Function or [advanced mode `_worker.js`](/pages/functions/advanced-mode/), check the compatibility flags on your migrated Worker. Your Worker's cache settings override Cache Rules only when the relevant Fetch API or Cache API compatibility flags are enabled. Otherwise, Cache Rules take precedence. For flag names and their default enable dates, refer to [How Workers interact with Cache Rules](/cache/interaction-cloudflare-products/workers-cache-rules/).
 
 ### pages.dev
 
@@ -500,7 +511,7 @@ This compatibility matrix compares the features of Workers and Pages. Unless oth
 
 [^1]: Workers can use Early Hints when the zone setting is turned on. Your Worker must send the appropriate `Link` headers. For more information, refer to the [103 Early Hints](/workers/examples/103-early-hints/) example.
 
-[^2]: Middleware can be configured via the [`run_worker_first`](/workers/static-assets/binding/#run_worker_first) option, which accepts `true` or an array of route patterns (including negative `!` patterns) so only selected paths invoke your Worker script. Requests routed to the Worker script are billed as normal Worker invocations.
+[^2]: The [`run_worker_first`](/workers/static-assets/binding/#run_worker_first) option controls whether your Worker script runs before static assets. With an array of patterns, a request that matches none of the patterns can still invoke the script if no asset matches. Requests routed to the Worker script are billed as normal Worker invocations.
 
 [^3]: [Pages Functions source maps](/pages/functions/source-maps/) require explicit opt-in (`upload_source_maps: true` or `--upload-source-maps`) and only apply to real-time logs. Workers uploads source maps by default and also supports Tail Workers and [Workers Issues](/workers/observability/issues/).
 
