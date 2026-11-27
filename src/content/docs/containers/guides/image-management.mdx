@@ -143,6 +143,32 @@ if (!this.ctx.container.running) {
 `destroy()` stops the Container immediately. In-progress work and any filesystem changes made since startup are lost. To preserve the filesystem, create a [snapshot](/containers/guides/snapshots/) before you stop the Container. A snapshot is tied to the image it was created from, so you cannot restore it onto the updated image.
 :::
 
+To let in-progress work finish before upgrading, send `SIGTERM` (`15`) with [`signal()`](/containers/api/durable-object-container/#signal) and wait for [`monitor()`](/containers/api/durable-object-container/#monitor) to settle before starting the updated image. Handle `SIGTERM` in your container process so it exits cleanly after draining active work:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+const image = this.ctx.container.images.base;
+const info = await this.ctx.container.inspect();
+
+if (info && info.image !== "" && info.image !== image) {
+	this.ctx.container.signal(15);
+	await this.ctx.container.monitor().catch(() => {
+		// monitor() rejects on non-zero exit codes
+	});
+}
+
+if (!this.ctx.container.running) {
+	this.ctx.container.start({
+		image,
+		instance: "standard-2",
+		enableInternet: false,
+	});
+}
+```
+
+</TypeScriptExample>
+
 ### Use an external image
 
 :::note
