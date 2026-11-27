@@ -1,7 +1,7 @@
 ---
 pcx_content_type: configuration
 title: Connect handler
-description: Handle inbound TCP connections and bidirectional protocols such as gRPC in a Cloudflare Worker with the connect() handler.
+description: Handle inbound TCP connections and UDP datagrams in a Cloudflare Worker with the connect() handler.
 products:
   - workers
   - spectrum
@@ -15,7 +15,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-The `connect()` handler receives inbound TCP connections as a [`Socket`](/workers/runtime-apis/tcp-sockets/#socket). Use the socket's readable and writable streams to inspect data, implement a TCP protocol, or proxy the connection to another service.
+The `connect()` handler receives inbound TCP connections and UDP flows as a [`Socket`](/workers/runtime-apis/tcp-sockets/#socket). Use the socket's readable and writable streams to exchange data with the client. TCP streams carry bytes, while [UDP streams carry datagrams](#udp-flows).
 
 :::note[Public beta]
 Inbound TCP connections to Workers are in public beta. Use a [Spectrum application with a Worker origin](/spectrum/how-to/route-tcp-traffic-to-a-worker/) to send public TCP connections to this handler. Sending an HTTP `CONNECT` request to a Worker's public URL does not invoke this handler.
@@ -47,9 +47,9 @@ The example echoes each byte back to the client. Await all stream operations tha
 
 ### Parameters
 
-- `socket` (`Socket`) — The established inbound connection.
-  - `socket.readable` contains bytes sent by the client.
-  - `socket.writable` sends bytes to the client.
+- `socket` (`Socket`) — The established inbound connection or UDP flow.
+  - `socket.readable` receives data from the client.
+  - `socket.writable` sends data to the client.
   - `socket.opened` resolves to [`SocketInfo`](/workers/runtime-apis/tcp-sockets/#socketinfo), which contains the [connection addresses](#connection-addresses).
   - `socket.closed` settles when the connection closes.
 - `env` (`Env`) — The Worker's [bindings](/workers/runtime-apis/bindings/).
@@ -59,7 +59,15 @@ The example echoes each byte back to the client. Await all stream operations tha
 
 The handler returns `void` or `Promise<void>`. Keep the returned promise pending while the Worker is processing the connection.
 
-Inbound sockets preserve TCP half-closes. When a client closes its writable side, the Worker can continue sending data through `socket.writable`. Set `allowHalfOpen: true` on outbound sockets when a proxy must preserve this behavior.
+Inbound TCP sockets preserve half-closes. When a client closes its writable side, the Worker can continue sending data through `socket.writable`. Set `allowHalfOpen: true` on outbound TCP sockets when a proxy must preserve this behavior.
+
+## UDP flows
+
+To receive public UDP traffic, [configure a Spectrum UDP application with your Worker as its origin](/spectrum/how-to/route-udp-traffic-to-a-worker/) and enable [UDP ingress](/workers/configuration/compatibility-flags/#udp-ingress). Spectrum invokes `connect()` for each UDP flow, not for each datagram.
+
+When UDP ingress is enabled, use `socket.protocol` to distinguish `"udp"` from `"tcp"`. Each chunk read from a UDP socket is one `Datagram`. Use `datagram.data` to read its payload as a `Uint8Array`. Write `new Datagram(bytes)` to send one datagram back to the client.
+
+UDP ingress does not provide an outbound UDP socket API. You cannot transfer a UDP socket over [Workers RPC](/workers/runtime-apis/rpc/), including to a Durable Object. To process a payload in a Durable Object, pass the bytes over RPC and send the reply from the Worker that received the flow.
 
 ## Connection addresses
 
@@ -73,7 +81,7 @@ For [service bindings](/workers/runtime-apis/bindings/service-bindings/), `local
 
 ## TLS
 
-Spectrum Enterprise can [terminate TLS before forwarding the connection](/spectrum/how-to/route-tcp-traffic-to-a-worker/#terminate-tls-with-spectrum-enterprise) to the Worker. Without Spectrum TLS termination, the Worker can proxy encrypted bytes to a backend service that terminates TLS.
+For TCP, Spectrum Enterprise can [terminate TLS before forwarding the connection](/spectrum/how-to/route-tcp-traffic-to-a-worker/#terminate-tls-with-spectrum-enterprise) to the Worker. Without Spectrum TLS termination, the Worker can proxy encrypted bytes to a backend service that terminates TLS.
 
 Calling `socket.startTls()` on an inbound socket delivered by Spectrum is not supported, including when Spectrum TLS termination is turned off.
 
@@ -179,4 +187,4 @@ For example, to test a local gRPC client, connect it to `localhost:8788`. Refer 
 
 Create a Spectrum application with the Worker as its origin. Spectrum accepts connections on the configured hostname and edge port, then invokes this handler.
 
-Refer to [Route TCP traffic to a Worker](/spectrum/how-to/route-tcp-traffic-to-a-worker/) for dashboard, Cloudflare CLI, and REST API instructions.
+Refer to [Route TCP traffic to a Worker](/spectrum/how-to/route-tcp-traffic-to-a-worker/) or [Route UDP traffic to a Worker](/spectrum/how-to/route-udp-traffic-to-a-worker/) for setup and verification instructions.
