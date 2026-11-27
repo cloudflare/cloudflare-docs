@@ -27,7 +27,7 @@ For more information on exceptions, refer to [Create an exception](/ruleset-engi
 
 You can define exceptions at the account level and at the zone level. The scope of an exception determines which rules it affects:
 
-- An account-level exception only skips rules configured at the account level. It does not affect zone-level rules.
+- An account-level exception skips the matching rules in account-level deployments and in any zone-level deployments of the same managed ruleset that run after it.
 - A zone-level exception only skips rules configured at the zone level. It does not affect account-level rules.
 
 Within each phase, account-level rulesets run before zone-level rulesets. This means that if you deploy managed rules at both the account level and the zone level, a request is evaluated against account-level rules first. An exception defined at the zone level will not prevent a match at the account level.
