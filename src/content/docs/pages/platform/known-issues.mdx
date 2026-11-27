@@ -122,15 +122,23 @@ If you have an issue that you do not see listed, let the team know in the Cloudf
 
 You may not be able to delete your Pages project if it has a high number (over 100) of deployments. The Cloudflare team is tracking this issue.
 
-As a workaround, you can use [`wrangler pages deployment delete`](/workers/wrangler/commands/pages/#pages-deployment-delete) to delete deployments individually. After you delete your deployments, you will be able to delete your Pages project.
+As a workaround, [set up the Cloudflare CLI](/cf/get-started/) (`cf`) and use it to delete deployments individually. Once your project has 100 or fewer deployments, you can delete it.
 
 ```sh
-npx wrangler pages deployment delete <DEPLOYMENT_ID> --project-name <PROJECT_NAME>
+cf pages deployments delete <DEPLOYMENT_ID> --project-name <PROJECT_NAME>
 ```
 
-Use the `--force` flag to skip the confirmation prompt and to force deletion of aliased deployments.
+Use `--force` to skip confirmation and `--allow-aliased` to allow deletion of deployments with aliases.
 
-To delete _all_ of your preview deployments for a particular project, save and run one of the following scripts, passing your project name as the first argument. Each script finds your production deployment, keeps it, and deletes the remaining preview deployments in parallel. You can optionally pass a second argument to control how many deletions run at once (the default is `5`):
+To delete deployments in bulk, save and run the script for your shell with your project name. The Bash script also requires `jq`. To set how many deletions run at once, pass a second argument in Bash or use `-Throttle` in PowerShell (default: `5`).
+
+Both scripts keep the active production deployment, including one restored by a rollback. They delete preview and older production deployments in batches. If a script cannot identify the active deployment, it stops before deleting anything. If a deletion fails, it stops after the current batch.
+
+:::caution
+
+These scripts permanently delete deployments, including potential rollback targets. Pause automatic deployments and avoid manual deployments or rollbacks while the script runs.
+
+:::
 
 <Tabs>
 	<TabItem label="macOS and Linux">
@@ -142,38 +150,46 @@ set -euo pipefail
 project="${1:?usage: $0 <project-name> [parallelism]}"
 parallel="${2:-5}"
 
-deployments=$(npx --no-install wrangler pages deployment list \
-    --project-name "$project" --json)
-
-prod_id=$(jq -r '[.[] | select(.Environment == "Production")][0].Id // empty' <<<"$deployments")
+project_data=$(cf pages get "$project")
+prod_id=$(jq -r '.canonical_deployment.id | strings' <<<"$project_data")
 if [ -z "$prod_id" ]; then
-    echo "No production deployment found for '$project' - aborting." >&2
-    echo "This script keeps your production deployment, so it needs one to run." >&2
-    echo "Create a production deployment by deploying to your production branch (for example: npx wrangler pages deploy <output-dir> --project-name $project), then re-run this script." >&2
+    echo "Cannot identify the active production deployment for '$project'. Nothing was deleted." >&2
     exit 1
 fi
 
-to_delete=$(jq -r '.[] | select(.Environment != "Production") | .Id' <<<"$deployments")
-count=$(printf '%s\n' "$to_delete" | grep -c . || true)
+echo "Production: $prod_id"
+deleted=0
 
-if [ "$count" -eq 0 ]; then
+while :; do
+    deployments=$(cf pages deployments list \
+        --project-name "$project" --page 1 --per-page 25)
+
+    to_delete=$(jq -r --arg keep "$prod_id" '.[] | select(.id != $keep) | .id' <<<"$deployments")
+    if [ -z "$to_delete" ]; then
+        break
+    fi
+
+    count=$(printf '%s\n' "$to_delete" | wc -l | tr -d ' ')
+    echo "Deleting batch of $count deployments..."
+
+    failed=$(printf '%s\n' "$to_delete" | xargs -P "$parallel" -I{} \
+        sh -c 'cf pages deployments delete "$1" --project-name "$2" --force --allow-aliased >/dev/null \
+               || echo "$1"' _ {} "$project")
+
+    if [ -n "$failed" ]; then
+        echo "The following deployments failed to delete:" >&2
+        printf '%s\n' "$failed" >&2
+        exit 1
+    fi
+
+    deleted=$((deleted + count))
+done
+
+if [ "$deleted" -eq 0 ]; then
     echo "Nothing to delete. Production: $prod_id"
-    exit 0
+else
+    echo "Done. Deleted $deleted deployments. Kept production: $prod_id"
 fi
-
-echo "Production: $prod_id. Deleting $count preview deployments..."
-
-failed=$(printf '%s\n' "$to_delete" | xargs -n1 -P "$parallel" -I{} \
-    sh -c 'npx --no-install wrangler pages deployment delete "$1" --project-name "$2" --force >/dev/null 2>&1 \
-           || echo "$1"' _ {} "$project")
-
-if [ -n "$failed" ]; then
-    echo "The following deployments failed to delete:" >&2
-    printf '%s\n' "$failed" >&2
-    exit 1
-fi
-
-echo "Done."
 ```
 
 	</TabItem>
@@ -186,46 +202,63 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
-$env:CLOUDFLARE_ACCOUNT_ID = $env:CLOUDFLARE_ACCOUNT_ID  # ensure inherited into runspaces
 
-$deployments = npx --no-install wrangler pages deployment list `
-    --project-name $ProjectName --json | ConvertFrom-Json
-
-$prod = $deployments | Where-Object { $_.Environment -eq "Production" } | Select-Object -First 1
-if (-not $prod) {
-    throw "No production deployment found for '$ProjectName' - aborting to avoid data loss. This script keeps your production deployment, so it needs one to run. Create a production deployment by deploying to your production branch (for example: npx wrangler pages deploy <output-dir> --project-name $ProjectName), then re-run this script."
+$projectJson = cf pages get $ProjectName
+if ($LASTEXITCODE -ne 0) {
+    throw "Failed to retrieve the Pages project '$ProjectName'."
 }
 
-$toDelete = $deployments | Where-Object { $_.Environment -ne "Production" }
-
-if ($toDelete.Count -eq 0) {
-    Write-Output "Nothing to delete. Production: $($prod.Id)"
-    return
+$prodId = ($projectJson | ConvertFrom-Json).canonical_deployment.id
+if ($prodId -isnot [string] -or [string]::IsNullOrWhiteSpace($prodId)) {
+    throw "Cannot identify the active production deployment for '$ProjectName'. Nothing was deleted."
 }
 
-Write-Output "Production: $($prod.Id). Deleting $($toDelete.Count) preview deployments..."
+Write-Output "Production: $prodId"
+$deleted = 0
 
-$results = $toDelete | ForEach-Object -Parallel {
-    $id = $_.Id
-    npx --no-install wrangler pages deployment delete $id `
-        --project-name $using:ProjectName --force *> $null
-    [pscustomobject]@{ Id = $id; ExitCode = $LASTEXITCODE }
-} -ThrottleLimit $Throttle
+while ($true) {
+    $deploymentsJson = cf pages deployments list `
+        --project-name $ProjectName --page 1 --per-page 25
+    if ($LASTEXITCODE -ne 0) {
+        throw "Failed to list deployments for '$ProjectName'."
+    }
 
-$failed = $results | Where-Object { $_.ExitCode -ne 0 }
-if ($failed) {
-    Write-Warning "$($failed.Count) deletions failed:"
-    $failed | Format-Table -AutoSize
-    exit 1
+    $deployments = $deploymentsJson | ConvertFrom-Json
+    $toDelete = @($deployments | Where-Object { $_.id -ne $prodId })
+    if ($toDelete.Count -eq 0) {
+        break
+    }
+
+    Write-Output "Deleting batch of $($toDelete.Count) deployments..."
+
+    $results = @($toDelete | ForEach-Object -Parallel {
+        $id = $_.id
+        $output = cf pages deployments delete $id `
+            --project-name $using:ProjectName --force --allow-aliased 2>&1
+        if ($LASTEXITCODE -ne 0) {
+            [pscustomobject]@{ Id = $id; Output = $output -join "`n" }
+        }
+    } -ThrottleLimit $Throttle)
+
+    if ($results.Count -gt 0) {
+        foreach ($failure in $results) {
+            [Console]::Error.WriteLine("Failed to delete $($failure.Id): $($failure.Output)")
+        }
+        exit 1
+    }
+
+    $deleted += $toDelete.Count
 }
 
-Write-Output "Done."
+if ($deleted -eq 0) {
+    Write-Output "Nothing to delete. Production: $prodId"
+} else {
+    Write-Output "Done. Deleted $deleted deployments. Kept production: $prodId"
+}
 ```
 
 	</TabItem>
 </Tabs>
-
-These scripts will not delete the active production deployment if one exists.
 
 ## Use Pages as Origin in Cloudflare Load Balancer
 

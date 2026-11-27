@@ -138,7 +138,7 @@ curl --ssl-reqd \
 
 ## Named recipients
 
-Provide a display name alongside the address for the sender and recipients.
+Provide a display name alongside the address for the sender and recipients. With the Workers binding, an address object requires both `email` and `name`. With the REST API, an address object requires `address`, and `name` is optional.
 
 <Tabs syncKey="send-method">
 <TabItem label="Workers">

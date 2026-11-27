@@ -31,6 +31,8 @@ This example single redirect will redirect all requests for `smallshop.example.c
 
 </Example>
 
+The target URL uses `${2}` instead of `${1}`. In the request URL, the `*` in `http*` is `${1}`, and the second `*` captures the path. Refer to [How wildcard references are numbered](/rules/url-forwarding/single-redirects/settings/#how-wildcard-references-are-numbered).
+
 For example, the redirect rule would perform the following redirects:
 
 | Request URL                                           | Target URL                                               | Status code |

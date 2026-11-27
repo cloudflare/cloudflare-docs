@@ -1,12 +1,14 @@
 ---
 pcx_content_type: reference
 title: Local Development
-description: Learn how to run Container-enabled Workers locally with `wrangler dev` and `vite dev`.
+description: Run Container-enabled Workers locally and test raw TCP and gRPC traffic with Wrangler.
 sidebar:
   order: 2
 products:
   - containers
 ---
+
+import { WranglerConfig } from "~/components";
 
 You can run both your container and your Worker locally by running [`npx wrangler dev`](/workers/wrangler/commands/workers/#dev) (or `vite dev` for Vite projects using the [Cloudflare Vite plugin](/workers/vite-plugin/)) in your project's directory.
 
@@ -32,6 +34,22 @@ As a workaround for Cloudflare Registry images, point `vite dev` at a local Dock
 
 Container instances will be launched locally when your Worker code calls to create
 a new container. Requests will then automatically be routed to the correct locally-running container.
+
+## Test TCP and gRPC locally
+
+To receive raw TCP connections locally, export a [`connect()` handler](/workers/runtime-apis/handlers/connect/) and configure a TCP listener in `wrangler.jsonc`:
+
+<WranglerConfig>
+```jsonc
+{
+	"connect": [{ "protocol": "tcp", "port": 8788 }],
+}
+```
+</WranglerConfig>
+
+Connect TCP or gRPC clients to `localhost:8788`. The port comes from this configuration; exporting the handler alone does not create a listener.
+
+Refer to [Bidirectional gRPC with Workers and Containers](/containers/examples/bidirectional-grpc/) for a complete local development workflow.
 
 When the dev session ends, all associated container instances should be stopped, but
 local images are not removed, so that they can be reused in subsequent builds.
@@ -69,25 +87,7 @@ you are using in your container code.
 
 ## Differences after you deploy
 
-Local development runs your container in Docker. A deployed container that uses the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy) differs from a local container in the following ways. Code that works locally can fail after you deploy.
-
-{/* Remove this section when the deployed hostname fits in a DNS label and /etc/hosts lists it. */}
-
-### The hostname is longer than a DNS label
-
-The hostname of a container is the name it uses for itself, which the `hostname` command prints. Nothing routes traffic to it. In a deployed container, the hostname is 64 characters, one more than a DNS label allows. `/etc/hosts` does not list it, so it does not resolve. Locally, the hostname is the 12-character Docker container ID, and `/etc/hosts` lists it. Code that looks up its own hostname can fail after you deploy.
-
-For example, `python3 -m http.server` and other servers built on the Python `http.server` module, such as `wsgiref`, exit on startup with this error:
-
-```txt
-UnicodeEncodeError: 'idna' codec can't encode characters in position 0-63: label too long
-```
-
-To serve files with Python, use `socketserver`, which does not look up the hostname:
-
-```sh
-python3 -c 'import http.server as h, socketserver as s; s.ThreadingTCPServer(("", 8000), h.SimpleHTTPRequestHandler).serve_forever()'
-```
+Local development runs your container in Docker. A deployed container that uses the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy) grants Linux capabilities differently from a local container. Code that works locally can fail after you deploy.
 
 ### Other Linux users keep root capabilities
 

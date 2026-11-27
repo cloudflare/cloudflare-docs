@@ -16,9 +16,9 @@ For a quick start, explore the one-click templates available in the Cloudflare d
 
 ## Page Rules migration
 
-To make the transition seamless, Cloudflare will handle the migration of your existing Page Rules automatically. This process is planned for late 2025 or beyond, with no action required on your part. You will receive advance notification before any changes are made.
+Your existing Page Rules continue to work, and no action is required on your part.
 
-If you wish to explore the benefits of modern Rules features sooner, you can begin adopting them today. Doing so allows you to:
+If you want to use the benefits of modern Rules features, you can begin adopting them today. Doing so allows you to:
 
 - Take advantage of modern features and capabilities sooner.
 - Customize and refine your rules to match your evolving needs.
@@ -42,7 +42,8 @@ Improvements in modern Rules features include:
 
 The evaluation and execution order of Rules features is different from Page Rules:
 
-- **Rule matching logic**: Page Rules apply the first matching rule (first match wins). In contrast, modern Rules are stackable, meaning multiple matching rules can combine and apply to the same request (last match wins). For example, if multiple cache rules match the same URL, the features in those rules will all apply in order.
+- **Rule matching logic**: Page Rules apply the first matching rule (first match wins). In contrast, modern Rules are stackable, meaning multiple matching rules can combine and apply to the same request (last match wins). For example, if multiple cache rules match the same URL, the features in those rules will all apply in order. Rules with a terminating action, such as redirect rules, are an exception: the first matching redirect rule wins, and Cloudflare does not evaluate the remaining redirect rules.
+- **Rule order**: Keep redirect rules in the same order as your Page Rules, with the most specific rule first. For Cache Rules, Configuration Rules, and other products where the last match wins, place the most specific rule last.
 - **Action separation**: A Page Rule may include multiple actions for different products that are applied in a sequence selected by the customer within the Page Rule itself. Modern Rules features are evaluated [in a fixed sequence](/rules/origin-rules/#execution-order), with customers defining the rule order within a product [phase](/ruleset-engine/reference/phases-list/).
 - **Precedence**: Modern Rules features take precedence over Page Rules. For instance, if both define caching settings for the same path, Cache Rules will override Page Rules.
 - **Caching behavior**: In Cache Rules, selecting **Eligible for cache** automatically enables **Cache Everything** by default. To maintain the exact behavior of Page Rules, you may need to [adjust your configuration](/cache/how-to/cache-rules/page-rules-migration/).
@@ -115,6 +116,8 @@ Also, to streamline common configurations, the Cloudflare dashboard now includes
 | Web Application Firewall    | N/A (deprecated)                     | N/A                                                                         |
 
 ### Migrate Always Use HTTPS
+
+If every hostname in your zone should use HTTPS, you can turn on [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) instead of creating a redirect rule.
 
 <Tabs> <TabItem label="Dashboard">
 
@@ -856,14 +859,18 @@ You configured a Page Rule permanently redirecting `www.example.com` to `example
 
 <Steps>
 
-1. [Create a single redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to permanently redirect requests from `https://www.example.com` to `https://example.com`. You can select the **Redirect from WWW to Root** rule template or enter the following rule configuration:
+1. [Create a single redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to permanently redirect requests from `www.example.com` to `example.com`. Enter the following configuration, or start from the **Redirect from WWW to root** template and change the **Request URL** and **Target URL** to these values. The template matches only HTTPS requests.
 
    - **If incoming requests match**: Wildcard pattern
-     - **Request URL**: `https://www.example.com/*`
+     - **Request URL**: `http*://www.example.com/*`
    - **Then**:
-     - **Target URL**: `https://example.com/${1}`
+     - **Target URL**: `https://example.com/${2}`
      - **Status code**: _301_
      - **Preserve query string**: Enabled
+
+   The `*` in `http*` matches both HTTP and HTTPS requests, like the original Page Rule. Because the `*` in `http*` is `${1}`, the path is `${2}`. Refer to [How wildcard references are numbered](/rules/url-forwarding/single-redirects/settings/#how-wildcard-references-are-numbered).
+
+   To redirect only HTTPS requests, use the request URL `https://www.example.com/*` and the target URL `https://example.com/${1}` instead.
 
 2. Turn off your existing Page Rule and validate the behavior of the redirect you created.
 
@@ -871,20 +878,13 @@ You configured a Page Rule permanently redirecting `www.example.com` to `example
 
 </Steps>
 
-<Render
-	file="page-rules-migration-wildcard-notice"
-	product="rules"
-	params={{
-		requestUrl: "http*://www.example.com/*",
-		targetUrl: "https://example.com/${2}",
-	}}
-/>
-
 </TabItem> <TabItem label="Visual guide">
+
+The single redirect screenshot shows the HTTPS-only configuration, with a request URL that starts with `https://` and `${1}` in the target URL. To match both HTTP and HTTPS requests, use the configuration in the **Dashboard** tab.
 
 | Page Rules configuration                                                                                                          | Migrate to a single redirect                                                                                                                                         |
 | --------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ![Example Page Rule #1 with 'Forwarding URL' setting](~/assets/images/rules/reference/page-rules-migration/pr-forwarding-url.png) | ![Single redirect matching the 'Forwarding URL' setting of the example Page Rule #1](~/assets/images/rules/reference/page-rules-migration/pr-forwarding-url-new.png) |
+| ![Example Page Rule #1 with 'Forwarding URL' setting](~/assets/images/rules/reference/page-rules-migration/pr-forwarding-url.png) | ![Single redirect (HTTPS-only configuration) for the 'Forwarding URL' setting of the example Page Rule #1](~/assets/images/rules/reference/page-rules-migration/pr-forwarding-url-new.png) |
 
 </TabItem> </Tabs>
 
@@ -908,11 +908,15 @@ You configured a Page Rule permanently redirecting `example.com/old-path` to `ex
 1. [Create a single redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to permanently redirect requests for `example.com/old-path` to `example.com/new-path`:
 
    - **If incoming requests match**: Wildcard pattern
-     - **Request URL**: `https://example.com/old-path/*`
+     - **Request URL**: `http*://example.com/old-path/*`
    - **Then**:
-     - **Target URL**: `https://example.com/new-path/${1}`
+     - **Target URL**: `https://example.com/new-path/${2}`
      - **Status code**: _301_
      - **Preserve query string**: Enabled
+
+   The `*` in `http*` matches both HTTP and HTTPS requests, like the original Page Rule. Because the `*` in `http*` is `${1}`, the path is `${2}`. Refer to [How wildcard references are numbered](/rules/url-forwarding/single-redirects/settings/#how-wildcard-references-are-numbered).
+
+   To redirect only HTTPS requests, use the request URL `https://example.com/old-path/*` and the target URL `https://example.com/new-path/${1}` instead.
 
 2. Turn off your existing Page Rule and validate the behavior of the redirect you created.
 
@@ -920,20 +924,13 @@ You configured a Page Rule permanently redirecting `example.com/old-path` to `ex
 
 </Steps>
 
-<Render
-	file="page-rules-migration-wildcard-notice"
-	product="rules"
-	params={{
-		requestUrl: "http*://example.com/old-path/*",
-		targetUrl: "https://example.com/new-path/${2}",
-	}}
-/>
-
 </TabItem> <TabItem label="Visual guide">
+
+The single redirect screenshot shows the HTTPS-only configuration, with a request URL that starts with `https://` and `${1}` in the target URL. To match both HTTP and HTTPS requests, use the configuration in the **Dashboard** tab.
 
 | Page Rules configuration                                                                                                            | Migrate to a single redirect                                                                                                                                           |
 | ----------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ![Example Page Rule #2 with 'Forwarding URL' setting](~/assets/images/rules/reference/page-rules-migration/pr-forwarding-url-2.png) | ![Single redirect matching the 'Forwarding URL' setting of the example Page Rule #2](~/assets/images/rules/reference/page-rules-migration/pr-forwarding-url-2-new.png) |
+| ![Example Page Rule #2 with 'Forwarding URL' setting](~/assets/images/rules/reference/page-rules-migration/pr-forwarding-url-2.png) | ![Single redirect (HTTPS-only configuration) for the 'Forwarding URL' setting of the example Page Rule #2](~/assets/images/rules/reference/page-rules-migration/pr-forwarding-url-2-new.png) |
 
 </TabItem> </Tabs>
 
@@ -1468,8 +1465,6 @@ The following Page Rules settings will not be migrated to other types of rules:
 - **Disable Security** (this setting is deprecated)
 - **Response Buffering** (this setting is deprecated)
 - **Web Application Firewall** (this setting is deprecated, since the previous version of WAF managed rules is deprecated)
-
-All other Page Rules settings will be migrated during 2025.
 
 ## More resources
 

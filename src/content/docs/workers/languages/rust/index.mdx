@@ -219,18 +219,26 @@ To run the resulting Wasm binary on Workers, `workers-rs` includes a build tool 
 
 `worker-build` is invoked by default in the template project using a custom build command specified in the `wrangler.toml` file.
 
-### Binary Size (`wasm-opt`)
+### Binary size (`wasm-opt`)
 
-Unoptimized Rust Wasm binaries can be large and may exceed Worker bundle size limits or experience long startup times. The template project pre-configures several useful size optimizations in your `Cargo.toml` file:
+Unoptimized Rust Wasm binaries can be large and may exceed Worker bundle size limits or experience long startup times. To reduce binary size, add these settings to the release profile in your `Cargo.toml` file:
 
 ```toml
 [profile.release]
 lto = true
-strip = true
 codegen-units = 1
 ```
 
-Finally, `worker-bundle` automatically invokes [`wasm-opt`](https://github.com/brson/wasm-opt-rs) to further optimize binary size before upload.
+Do not set `strip = true`. The linker removes the `target_features` custom section, which `wasm-bindgen` uses to detect enabled Wasm features. For example, `wasm-bindgen` 0.2.125 could fail with `externref table required for catch wrappers` when this section was missing.
+
+For release builds targeting `wasm32-unknown-unknown`, `worker-build` runs Binaryen's [`wasm-opt`](https://github.com/WebAssembly/binaryen) to optimize the binary. By default, it keeps Wasm function names so CPU profiles and stack traces stay readable. With `worker-build` 0.9.0 or later, use `wasm-opt = ["-O"]` to remove function names, or specify your own `wasm-opt` arguments in `Cargo.toml`:
+
+```toml
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = ["-O"]
+```
+
+To skip this optimization step, set `wasm-opt = false` in the same section or pass `--no-opt` to `worker-build`. Neither option controls the optimizer that Emscripten runs during linking.
 
 ## Related resources
 

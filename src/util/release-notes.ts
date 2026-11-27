@@ -9,6 +9,8 @@
  * here today, but the contract is preserved so dropping in the upstream YAML
  * "just works"). `individual_page: entry.individual_page && entry.link`
  * carries the link string through so the renderer can resolve the page.
+ *
+ * Not in upstream: the entry's `deprecated` flag is passed through.
  */
 import { getCollection, type CollectionEntry } from "astro:content";
 
@@ -49,6 +51,7 @@ export async function getReleaseNotes(opts?: {
 				description: entry.description,
 				title: entry.title,
 				scheduled: entry.scheduled,
+				deprecated: entry.deprecated,
 				productLink: product.data.productLink,
 				individual_page: entry.individual_page && entry.link,
 			};

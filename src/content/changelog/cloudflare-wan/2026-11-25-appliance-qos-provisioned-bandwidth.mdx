@@ -1,0 +1,29 @@
+---
+title: Prioritized traffic now takes effect on congested WAN circuits for Cloudflare One Appliance
+description: Set the provisioned upload bandwidth on a Cloudflare One Appliance WAN so the appliance shapes upload traffic and sends prioritized traffic first when the circuit is congested.
+date: 2026-11-25
+products:
+  - cloudflare-one-appliance
+  - cloudflare-one
+---
+
+import { APIRequest } from "~/components";
+
+[Prioritized traffic](/cloudflare-wan/configuration/appliance/network-options/application-based-policies/prioritized-traffic/) on [Cloudflare One Appliance](/cloudflare-wan/configuration/appliance/) now takes effect when your WAN circuit is slower than the appliance port, which is common for branch Internet connections. Enter the circuit's upload speed on each WAN, and the appliance shapes upload traffic to 95% of that value. Traffic then queues on the appliance instead of in your modem or ISP network, so the appliance can send prioritized applications, such as voice and video calls, ahead of everything else.
+
+- **Two traffic classes**: Applications in the **Prioritized traffic** list go first. All other traffic is default (best effort). Prioritized traffic cannot completely starve default traffic, and flows within each class share bandwidth fairly.
+- **Dashboard**: When you create or edit a WAN, enter **Provisioned upload bandwidth (Mbps)** and, optionally, **Provisioned download bandwidth (Mbps)**. Saved values appear in the WAN details.
+- **API**: Set `provisioned_upload_kbps` and `provisioned_download_kbps`, in kilobits per second, when you [create](/api/resources/magic_transit/subresources/sites/subresources/wans/methods/create/) or [update](/api/resources/magic_transit/subresources/sites/subresources/wans/methods/edit/) a WAN. To remove a value with a `PATCH` request, set it to `null`.
+
+<APIRequest
+	path="/accounts/{account_id}/magic/sites/{site_id}/wans/{wan_id}"
+	method="PATCH"
+	json={{
+		provisioned_upload_kbps: 100000,
+		provisioned_download_kbps: 500000,
+	}}
+/>
+
+Both fields are optional. If you do not set the upload value, the appliance does not shape the WAN, which matches how it worked before. The appliance does not currently shape download traffic. Upload shaping requires Appliance version 2026.10.3 or later, which appliances install automatically during their interrupt window.
+
+For details, refer to [How traffic prioritization works](/cloudflare-wan/configuration/appliance/network-options/application-based-policies/prioritized-traffic/#how-traffic-prioritization-works).

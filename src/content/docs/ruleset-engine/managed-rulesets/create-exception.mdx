@@ -28,7 +28,7 @@ An exception can have one of the following behaviors (from highest to lowest pri
 - [Skip one or more managed rulesets](#skip-one-or-more-managed-rulesets)
 - [Skip one or more rules of managed rulesets](#skip-one-or-more-rules-of-managed-rulesets)
 
-You define exceptions in a given context — zone level or account level — and they apply only to that context. For example, if you define an exception that skips all remaining rules at the account level, the rules defined in the entry point ruleset at the zone level will still be evaluated.
+You define exceptions in a given context — zone level or account level. Account-level exceptions that skip managed ruleset rules also apply to zone-level deployments of the same managed ruleset that run after them. Zone-level exceptions do not affect account-level rules. For details on how the `phases` skip option behaves at each level, refer to [Skip phases](/waf/custom-rules/skip/options/#skip-phases).
 
 If there is a match for the expressions of several exceptions, Cloudflare will consider the exception with the highest priority.
 

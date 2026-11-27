@@ -1,0 +1,148 @@
+---
+pcx_content_type: how-to
+title: Configure Polish
+description: Choose how Cloudflare Polish compresses images and serves AVIF or WebP, then configure these settings with the Cloudflare CLI, REST API, or dashboard.
+sidebar:
+  order: 1
+products:
+  - images
+---
+
+import { DashButton, Steps } from "~/components";
+
+Enable Polish on your zone to compress JPEG, PNG, and eligible GIF images from your origin and optionally serve AVIF or WebP versions to supported browsers.
+
+Polish does not process an image when:
+
+- The image URL uses [Images](/images/), which already applies compression and can [automatically select an output format](/images/optimization/features/#format).
+- The origin returns a `Vary` header other than `Vary: Accept-Encoding`.
+
+:::note
+To apply Polish on specific hostnames rather than the entire zone, use a [configuration rule](/rules/configuration-rules/).
+:::
+
+## Settings
+
+Polish uses the [`polish`](#polish), [`avif`](#avif), and [`webp`](#webp) settings to enable or disable Polish, select its compression mode, and optionally convert images to AVIF or WebP.
+
+These settings can be applied in the [Cloudflare CLI](#cloudflare-cli), [dashboard](#dashboard), or [REST API](#rest-api).
+
+Changes to Polish settings do not affect existing cached images. Cloudflare continues to serve those images until they expire or you purge them.
+
+### `polish`
+
+Controls whether Polish is enabled and which compression mode it uses. The default value is `off`.
+
+Accepts the following values:
+
+- `off` — Disables Polish. When set, Polish will not apply compression or format conversion.
+- `lossless` — Enables Polish with lossless compression.
+- `lossy` — Enables Polish with lossy compression.
+
+When `polish` is set to `lossless` or `lossy`, Polish attempts to remove as much metadata as possible. Cloudflare cannot guarantee that all metadata is removed because caching status can affect which metadata is included in the response.
+
+#### `lossless`
+
+Lossless compression keeps image pixels unchanged while recompressing image data and removing most metadata, such as EXIF. On average, this reduces file sizes by 21% compared to the unoptimized original images.
+
+In Lossless mode, Polish will not perform any optimizations that change image pixels, such as JPEG to WebP, as this will cause quality loss. This means Polish converts only between lossless image formats, such as PNG, GIF, and WebP-lossless. Polish can still apply lossless compression on JPEG images and may convert them to progressive JPEG.
+
+Polish can still convert PNG and GIF images to lossless WebP when this produces a smaller file.
+
+#### `lossy`
+
+Lossy compression permanently discards metadata, as well as some image data that cannot be recovered when the image is decoded. This offers significantly better compression at the cost of small quality loss. On average, lossy compression reduces file sizes by 48% compared to the unoptimized original images.
+
+Lossy mode mainly affects JPEG images, but can also apply lossy compression to convert PNG images to JPEG when the conversion will improve compression.
+
+:::note
+
+Multiple lossy operations can reduce image quality more than they reduce file size.
+
+Avoid using multiple lossy compression tools on the same image. If your origin server or content management system converts or optimizes images, disable that behavior before you use Polish.
+
+:::
+
+### `avif` and `webp`
+
+Controls AVIF and WebP conversion when `polish` is set to `lossless` or `lossy`. Each setting accepts `off` or `on`. Both can be enabled at the same time.
+
+When `avif` is on, Polish can convert JPEG and PNG source images to AVIF, which typically produces smaller files than WebP.
+
+When `webp` is on, Polish can convert PNG and GIF images to WebP. On average, WebP compression reduces PNG file sizes by 26% and reduces JPEG file sizes by 17%. It can also convert JPEG images when Polish uses Lossy mode.
+
+## Configure Polish
+
+### Cloudflare CLI
+
+Before you begin, [install the Cloudflare CLI and sign in](/cf/get-started/).
+
+Follow the steps below, replacing `example.com` with your domain or zone ID:
+
+<Steps>
+
+1. Run the following command and set `polish` to `lossless` or `lossy`:
+
+	```sh
+	cf zones settings edit polish --zone example.com --body '{"value":"lossy"}'
+	```
+
+	This enables Polish on your zone with lossy compression.
+
+2. Optionally, enable AVIF, WebP, or both:
+
+	```sh
+	cf zones settings edit avif --zone example.com --body '{"value":"on"}'
+	cf zones settings edit webp --zone example.com --body '{"value":"on"}'
+	```
+
+</Steps>
+
+### Dashboard
+
+<Steps>
+1. Go to the **Account home** page.
+
+   <DashButton url="/?to=/:account/home" />
+
+2. Select the zone where you want to configure Polish.
+3. Go to **Speed** > **Settings** > **Image Optimization**.
+4. Under **Polish**, select **Lossy** or **Lossless**.
+5. Optionally, turn on **AVIF**, **WebP**, or both.
+</Steps>
+
+### REST API
+
+Use the [Edit zone setting](/api/resources/zones/subresources/settings/methods/edit/) endpoint with `polish`, `avif`, or `webp` as the setting ID.
+
+## How Polish behaves
+
+When Polish processes an image, Cloudflare evaluates the source format, browser support, output file size, and image quality before selecting an output format.
+
+### Supported conversions
+
+| Source format | Convert to AVIF | Convert to WebP      |
+| ------------- | --------------- | -------------------- |
+| JPEG          | Yes             | Only with Lossy mode |
+| PNG           | Yes             | Yes                  |
+| GIF           | No              | Yes                  |
+| WebP          | No              | No                   |
+| AVIF          | No              | No                   |
+
+Polish does not produce AVIF versions of animated images or optimize WebP images served by your origin.
+
+### Browser support and format priority
+
+Polish serves AVIF and WebP only if the browser's `Accept` header includes the format. If a browser's `Accept` header includes both AVIF and WebP, then Polish prioritizes AVIF conversion.
+
+### File size and image quality
+
+Lossy formats like JPEG, WebP, and AVIF can produce progressively smaller files by discarding more image data. However, modest file size savings can cause a disproportionate reduction in image quality.
+
+Polish will not convert an image to AVIF or WebP when conversion would make the file bigger or reduce image quality too much.
+
+Re-encoding an already optimized image is especially likely to reduce quality more than file size. Existing compression artifacts in low-quality JPEG files can make the WebP or AVIF output larger while further reducing image quality.
+
+In cases where an optimized JPEG provides a smaller file or better quality than WebP, Polish retains the original JPEG format.
+
+For diagnostic steps and `Cf-Polished` statuses, refer to [Troubleshooting](/images/polish/troubleshooting-polish/).

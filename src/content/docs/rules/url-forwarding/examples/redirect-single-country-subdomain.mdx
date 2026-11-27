@@ -1,0 +1,55 @@
+---
+pcx_content_type: example
+summary: Create a redirect rule with the Expression Builder to temporarily
+  redirect visitors from one country to a localized subdomain.
+products: [redirect-rules]
+title: Redirect visitors from one country to a subdomain
+description: Create a redirect rule with the Expression Builder to temporarily
+  redirect visitors from one country to a localized subdomain.
+tags:
+  - Redirects
+  - Geolocation
+---
+
+import { Example } from "~/components";
+
+This example single redirect for zone `example.com` will redirect visitors from Germany who request the website's root path (`/`) to `https://de.example.com/`. You can create this rule with the Expression Builder and a static target URL, without writing an expression.
+
+<Example>
+
+**When incoming requests match**
+
+- **Custom filter expression**
+
+Using the Expression Builder:
+
+- _Hostname_ _equals_ `example.com` **AND**
+- _Country_ _equals_ _Germany_ **AND**
+- _URI Path_ _equals_ `/`
+
+If you are using the Expression Editor, enter the following expression:<br/>
+`(http.host eq "example.com" and ip.src.country eq "DE" and http.request.uri.path eq "/")`
+
+**Then**
+
+- **Type:** _Static_
+- **URL:** `https://de.example.com/`
+- **Status code:** _302_
+- **Preserve query string:** Enabled
+
+</Example>
+
+The _Hostname_ condition prevents a redirect loop. Without it, a visitor from Germany who requests `https://de.example.com/` would match the rule again and be redirected to the same URL.
+
+This example uses a `302` (temporary) status code. Browsers can cache `301` (permanent) redirects, and Cloudflare does not add a `Cache-Control` header to redirect responses. A visitor who later browses from another country might keep receiving a cached `301` redirect.
+
+For example, the redirect rule would perform the following redirects:
+
+| Visitor country | Request URL                  | Target URL                      | Status code |
+| --------------- | ---------------------------- | ------------------------------- | ----------- |
+| Germany         | `https://example.com/`       | `https://de.example.com/`       | `302`       |
+| Germany         | `https://example.com/?ref=1` | `https://de.example.com/?ref=1` | `302`       |
+| Germany         | `https://de.example.com/`    | (unchanged)                     | n/a         |
+| United States   | `https://example.com/`       | (unchanged)                     | n/a         |
+
+To redirect every path for visitors from one country to another domain, refer to [Redirect requests from one country to a domain](/rules/url-forwarding/examples/redirect-all-country/). That example uses Bulk Redirects and the Expression Editor.

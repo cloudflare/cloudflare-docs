@@ -1,0 +1,23 @@
+---
+title: Send feedback from the Cloudflare CLI and MCP
+description: Use cf feedback or the submit_feedback MCP tool to report bugs, feature requests, and problems you encounter.
+date: 2026-11-23
+---
+
+Send bug reports, feature requests, and feedback about where you got stuck
+directly to Cloudflare.
+
+Sign in with `cf auth login` or set `CLOUDFLARE_API_TOKEN`, then use
+`cf feedback` with a short note.
+
+```sh
+cf feedback "The deploy output did not identify the selected environment"
+```
+
+Coding agents connected to the Cloudflare API Model Context Protocol (MCP)
+server can use the `submit_feedback` tool. The tool requires a `message`,
+`type`, and `impact`. It accepts optional details such as the task and the
+expected and actual results. Both options return a submission ID you can share.
+
+For examples and the diagnostic details included in CLI reports, refer to
+[Agent feedback](/cf/agent-feedback/).

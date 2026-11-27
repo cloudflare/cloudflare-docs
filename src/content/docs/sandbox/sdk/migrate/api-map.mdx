@@ -214,7 +214,7 @@ These APIs came from the code interpreter and the subpath exports of the package
 | 0.12                                                             | Kind    | Replacement                             | Notes                                                                                                                                       |
 | ---------------------------------------------------------------- | ------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `cloudflare/sandbox`, `-python`, `-opencode`, and `-musl` images | Removed | Your own `linux/amd64` image            | Copy `sandbox-shim` into it if you use `Files`, `S3Mount`, or `DirectoryBackup`. Refer to [Requirements](/sandbox/reference/#requirements). |
-| `docker:dind-rootless` with `USER root`                          | Pattern | `docker:dind` with `--ip-forward=false` | Refer to [Run Docker inside the sandbox](/sandbox/sdk/migrate/other-features/#run-docker-inside-the-sandbox).                               |
+| `docker:dind-rootless` with `USER root`                          | Pattern | `docker:dind` with default bridge networking | Refer to [Run Docker inside the sandbox](/sandbox/sdk/migrate/other-features/#run-docker-inside-the-sandbox).                               |
 
 ## Errors and clients
 

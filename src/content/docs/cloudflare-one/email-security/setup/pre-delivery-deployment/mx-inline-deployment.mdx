@@ -33,3 +33,7 @@ When you choose an inline deployment, you get the following benefits:
 - Email security can modify delivered messages, adding subject or body mark-ups.
 - Email security can offer high availability and adaptive message pooling.
 - You can set up advanced handling downstream for non-quarantined messages with added X-headers.
+
+## Downstream outages
+
+Cloudflare holds messages in a queue during downstream outages. It retries delivery for up to 48 hours. After 48 hours, Cloudflare bounces any undelivered messages. Cloudflare notifies the sender that delivery failed.

@@ -7,24 +7,28 @@ import { mount } from "@cloudflare/nimbus-docs/client";
 
 const KEY_PREFIX = "nb-banner-dismissed-";
 
+function isDismissed(key: string): boolean {
+	try {
+		const stored = localStorage.getItem(key);
+		if (!stored) return false;
+		const expiry = Number(stored);
+		if (expiry === 0 || expiry > Date.now()) return true;
+		localStorage.removeItem(key);
+	} catch {
+		// localStorage unavailable; show without persistence.
+	}
+	return false;
+}
+
 function initBanner(banner: HTMLElement): () => void {
 	const id = banner.dataset.nbBannerDismiss;
 	if (!id) return () => {};
 
-	const key = `${KEY_PREFIX}${id}`;
+	const key = banner.dataset.nbBannerKey ?? `${KEY_PREFIX}${id}`;
 
-	try {
-		const stored = localStorage.getItem(key);
-		if (stored) {
-			const expiry = Number(stored);
-			if (expiry === 0 || expiry > Date.now()) {
-				banner.remove();
-				return () => {};
-			}
-			localStorage.removeItem(key);
-		}
-	} catch {
-		// localStorage unavailable; show without persistence.
+	if (isDismissed(key)) {
+		banner.remove();
+		return () => {};
 	}
 
 	const btn = banner.querySelector<HTMLButtonElement>("[data-nb-banner-close]");

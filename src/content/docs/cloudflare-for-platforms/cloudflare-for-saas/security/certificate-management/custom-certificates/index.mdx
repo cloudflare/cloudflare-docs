@@ -29,10 +29,10 @@ This situation commonly occurs when your customers use Extended Validation (EV) 
 
 If you use custom certificates, you are responsible for the entire certificate lifecycle (initial upload, renewal, subsequent upload).
 
-Cloudflare also only accepts publicly trusted certificates of these types:
+Cloudflare accepts publicly trusted certificates with the following signature algorithms:
 
-- `SHA256WithRSA`
-- `SHA1WithRSA`
-- `ECDSAWithSHA256`
+- RSA with SHA-256, SHA-384, or SHA-512
+- ECDSA with SHA-256, SHA-384, or SHA-512
+- RSA with SHA-1
 
-If you attempt to upload another type of certificate or a certificate that has been self-signed, it will be rejected.
+Cloudflare rejects self-signed certificates and certificates with unsupported signature algorithms.

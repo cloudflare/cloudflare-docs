@@ -1,0 +1,296 @@
+{
+	"model_id": "bytedance/seedance-1-pro-fast",
+	"name": "Seedance 1.0 Pro Fast",
+	"description": "A speed- and cost-optimized variant of Seedance 1.0 Pro, delivering roughly 30-60% faster inference at about 60% lower cost while keeping the same capability surface. Suited to rapid iteration, storyboarding, and platform-scale video workloads.",
+	"task": "Text-to-Video",
+	"tags": [
+		"Video Generation",
+		"Image-to-Video",
+		"Reference Images",
+		"Fast"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Default (per second)": 0.020592,
+		"@480p (per second)": 0.00972,
+		"@720p (per second)": 0.020592,
+		"@1080p (per second)": 0.04896
+	},
+	"examples": [
+		{
+			"name": "Launch Teaser",
+			"description": "Fast concept visualization for a launch announcement",
+			"input": {
+				"prompt": "A bright red electric scooter races through a clean white studio while colorful geometric shapes unfold behind it, energetic commercial lighting, smooth tracking shot",
+				"aspect_ratio": "16:9",
+				"duration": 5,
+				"resolution": "720p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/bytedance/seedance-1-pro-fast/launch-teaser.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/bytedance/seedance-1-pro-fast/launch-teaser.mp4"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedance-1-pro-fast',\n  {\n    prompt:\n      'A bright red electric scooter races through a clean white studio while colorful geometric shapes unfold behind it, energetic commercial lighting, smooth tracking shot',\n    aspect_ratio: '16:9',\n    duration: 5,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-1-pro-fast\",\n  \"input\": {\n    \"prompt\": \"A bright red electric scooter races through a clean white studio while colorful geometric shapes unfold behind it, energetic commercial lighting, smooth tracking shot\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": 5,\n    \"resolution\": \"720p\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Vertical Food Clip",
+			"description": "Vertical creator-style food clip",
+			"input": {
+				"prompt": "Close-up of a chef slicing a ripe strawberry tart, glossy glaze catching the light, crumbs falling in slow motion, warm bakery background, satisfying social-media food video",
+				"aspect_ratio": "9:16",
+				"duration": 5,
+				"resolution": "720p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/bytedance/seedance-1-pro-fast/vertical-food-clip.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/bytedance/seedance-1-pro-fast/vertical-food-clip.mp4"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedance-1-pro-fast',\n  {\n    prompt:\n      'Close-up of a chef slicing a ripe strawberry tart, glossy glaze catching the light, crumbs falling in slow motion, warm bakery background, satisfying social-media food video',\n    aspect_ratio: '9:16',\n    duration: 5,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-1-pro-fast\",\n  \"input\": {\n    \"prompt\": \"Close-up of a chef slicing a ripe strawberry tart, glossy glaze catching the light, crumbs falling in slow motion, warm bakery background, satisfying social-media food video\",\n    \"aspect_ratio\": \"9:16\",\n    \"duration\": 5,\n    \"resolution\": \"720p\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Animated Product Still",
+			"description": "Animate a still image for a rapid social concept",
+			"input": {
+				"image": "https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg",
+				"prompt": "The tea cup rotates slightly as steam curls upward, the camera makes a quick elegant push-in, cozy cafe atmosphere",
+				"duration": 5,
+				"resolution": "720p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/bytedance/seedance-1-pro-fast/animated-product-still.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/bytedance/seedance-1-pro-fast/animated-product-still.mp4"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedance-1-pro-fast',\n  {\n    image: 'https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg',\n    prompt:\n      'The tea cup rotates slightly as steam curls upward, the camera makes a quick elegant push-in, cozy cafe atmosphere',\n    duration: 5,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-1-pro-fast\",\n  \"input\": {\n    \"image\": \"https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg\",\n    \"prompt\": \"The tea cup rotates slightly as steam curls upward, the camera makes a quick elegant push-in, cozy cafe atmosphere\",\n    \"duration\": 5,\n    \"resolution\": \"720p\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://docs.byteplus.com/en/docs/ModelArk/video-generation-tutorial",
+	"terms": null,
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/bytedance/seedance-1-pro-fast.png",
+	"metadata": {
+		"Aspect Ratios": "16:9, 4:3, 1:1, 3:4, 9:16, 21:9, 9:21",
+		"Max Duration": "12 seconds",
+		"Native Audio": "No",
+		"Resolutions": "480p, 720p, 1080p"
+	},
+	"request_formats": null,
+	"provider_id": "bytedance",
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "bytedance",
+			"pricing": {
+				"default": 0.020592,
+				"480p": 0.00972,
+				"720p": 0.020592,
+				"1080p": 0.04896
+			}
+		}
+	],
+	"model_providers": [
+		{
+			"provider": "bytedance",
+			"pricing": {
+				"default": 0.020592,
+				"480p": 0.00972,
+				"720p": 0.020592,
+				"1080p": 0.04896
+			},
+			"rates": [
+				{
+					"key": null,
+					"label": null,
+					"description": null,
+					"rates": [
+						{
+							"key": "default",
+							"label": "Default (per second)",
+							"unit": null,
+							"value": 0.020592
+						},
+						{
+							"key": "1080p",
+							"label": "@1080p (per second)",
+							"unit": null,
+							"value": 0.04896
+						},
+						{
+							"key": "480p",
+							"label": "@480p (per second)",
+							"unit": null,
+							"value": 0.00972
+						},
+						{
+							"key": "720p",
+							"label": "@720p (per second)",
+							"unit": null,
+							"value": 0.020592
+						}
+					]
+				}
+			]
+		}
+	],
+	"banner": null,
+	"pinned": false,
+	"created_at": "2026-11-18 00:41:17",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string",
+					"maxLength": 10000,
+					"description": "Text prompt describing the video to generate"
+				},
+				"image": {
+					"description": "Reference image (HTTP(S) URL or base64 data URI) for image-to-video",
+					"type": "string"
+				},
+				"last_frame_image": {
+					"description": "Reference image (HTTP(S) URL or base64 data URI) for last-frame guidance. Only works if an image start frame is also given.",
+					"type": "string"
+				},
+				"duration": {
+					"default": 5,
+					"description": "Video duration in seconds",
+					"type": "integer",
+					"minimum": 4,
+					"maximum": 12
+				},
+				"resolution": {
+					"default": "720p",
+					"description": "Video resolution",
+					"type": "string",
+					"enum": [
+						"480p",
+						"720p",
+						"1080p"
+					]
+				},
+				"aspect_ratio": {
+					"default": "16:9",
+					"description": "Video aspect ratio. Ignored if an image is used.",
+					"type": "string",
+					"enum": [
+						"16:9",
+						"4:3",
+						"1:1",
+						"3:4",
+						"9:16",
+						"21:9",
+						"9:21"
+					]
+				},
+				"fps": {
+					"default": 24,
+					"description": "Frame rate (frames per second)",
+					"type": "number",
+					"const": 24
+				},
+				"camera_fixed": {
+					"default": false,
+					"description": "Whether to fix camera position",
+					"type": "boolean"
+				},
+				"watermark": {
+					"default": false,
+					"description": "Whether to add a watermark to the output video",
+					"type": "boolean"
+				},
+				"seed": {
+					"description": "Random seed for reproducible generation",
+					"type": "integer",
+					"minimum": -9007199254740991,
+					"maximum": 9007199254740991
+				},
+				"use_virtual_avatar": {
+					"default": false,
+					"description": "Route image reference inputs (image, reference_images, last_frame_image) through ByteDance's trusted virtual avatar asset library before generation. Intended for AI-generated/virtual character avatars that would otherwise be blocked by face or deepfake detection",
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"prompt",
+				"duration",
+				"resolution",
+				"aspect_ratio",
+				"fps",
+				"camera_fixed",
+				"watermark",
+				"use_virtual_avatar"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"type": "string",
+					"format": "uri",
+					"description": "URL to the generated video"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}

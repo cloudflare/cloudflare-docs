@@ -10,6 +10,10 @@ This page lists the scenarios where Workers Caching does not apply, followed by 
 
 ## Unsupported scenarios
 
+### Local tests
+
+Local Vitest tests do not exercise Workers Caching. Test cache behavior on a [Preview with its own cache](/workers/cache/#what-gets-cached) or a deployed test Worker with caching enabled. Check for `Cf-Cache-Status: HIT` using the [two-request debugging example](/workers/cache/debugging/#inspect-cf-cache-status).
+
 ### HTTP methods
 
 Only `GET` and `HEAD` requests are cached. `POST`, `PUT`, `PATCH`, `DELETE`, and other methods always invoke your Worker.
@@ -118,4 +122,5 @@ The `cf` properties on a `Request` behave differently across the two:
 The following surfaces are in development:
 
 - **Dashboard UI** for enabling caching without Wrangler.
-- **Cache Analytics in Workers Observability**.
+
+Cache analytics are available on your Worker's **Metrics** page in the dashboard. Refer to [I need more visibility](/workers/cache/debugging/#i-need-more-visibility).

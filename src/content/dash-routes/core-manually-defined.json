@@ -20,6 +20,11 @@
 		"parent": ["Networking"]
 	},
 	{
+		"deeplink": "/?to=/:account/magic-networks/connections/appliances",
+		"name": "Appliances",
+		"parent": ["Networking", "Connectors"]
+	},
+	{
 		"deeplink": "/?to=/:account/magic-networks/routes/virtual-networks",
 		"name": "Virtual networks",
 		"parent": ["Networking", "Routes"]
@@ -47,6 +52,11 @@
 	{
 		"deeplink": "/?to=/:account/workers/browser-run/runs",
 		"name": "Browser Run Runs",
+		"parent": ["Compute & AI"]
+	},
+	{
+		"deeplink": "/?to=/:account/workers/browser-run/script-studio",
+		"name": "Browser Run Script Studio",
 		"parent": ["Compute & AI"]
 	},
 	{
@@ -88,6 +98,11 @@
 		"deeplink": "/?to=/:account/r2/metrics",
 		"name": "R2 Metrics",
 		"parent": ["Storage & databases", "R2 object storage"]
+	},
+	{
+		"deeplink": "/?to=/:account/k2",
+		"name": "K2 Streams",
+		"parent": ["Storage & databases"]
 	},
 	{
 		"deeplink": "/?to=/:account/workers/services/view/:worker/production/issues?status=active",

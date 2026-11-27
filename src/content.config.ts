@@ -158,6 +158,9 @@ export const collections = {
 					link: z.string().optional(),
 					scheduled: z.boolean().optional(),
 					scheduled_date: z.string().optional(),
+					// Shows a Deprecated badge after the entry title (and a " (Deprecated)"
+					// RSS title suffix). Not rendered for `individual_page` entries.
+					deprecated: z.boolean().optional(),
 				}),
 			),
 		}),

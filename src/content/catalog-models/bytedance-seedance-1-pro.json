@@ -1,0 +1,326 @@
+{
+	"model_id": "bytedance/seedance-1-pro",
+	"name": "Seedance 1.0 Pro",
+	"description": "ByteDance's first-generation cinematic video model. Generates 1080p video from text or images with strong prompt adherence, stable motion, and native multi-shot narrative coherence. Supports first/last-frame image-to-video and image references.",
+	"task": "Text-to-Video",
+	"tags": [
+		"Video Generation",
+		"Image-to-Video",
+		"Reference Images"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Default (per second)": 0.05148,
+		"@480p (per second)": 0.0243,
+		"@720p (per second)": 0.05148,
+		"@1080p (per second)": 0.1224
+	},
+	"examples": [
+		{
+			"name": "Product Film",
+			"description": "Premium product-film generation with controlled camera movement",
+			"input": {
+				"prompt": "A handcrafted mechanical watch rests on black volcanic stone as a narrow beam of morning light moves across its polished steel case, macro cinematography, slow orbiting camera, crisp reflections",
+				"aspect_ratio": "16:9",
+				"duration": 5,
+				"resolution": "720p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/bytedance/seedance-1-pro/product-film.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/bytedance/seedance-1-pro/product-film.mp4"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedance-1-pro',\n  {\n    prompt:\n      'A handcrafted mechanical watch rests on black volcanic stone as a narrow beam of morning light moves across its polished steel case, macro cinematography, slow orbiting camera, crisp reflections',\n    aspect_ratio: '16:9',\n    duration: 5,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-1-pro\",\n  \"input\": {\n    \"prompt\": \"A handcrafted mechanical watch rests on black volcanic stone as a narrow beam of morning light moves across its polished steel case, macro cinematography, slow orbiting camera, crisp reflections\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": 5,\n    \"resolution\": \"720p\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Aerial Landscape",
+			"description": "Cinematic 1080p nature sequence with an aerial camera move",
+			"input": {
+				"prompt": "An aerial camera glides over a winding river through an autumn forest at dawn, low clouds drifting between amber trees, cinematic color grading, smooth forward movement",
+				"aspect_ratio": "16:9",
+				"duration": 5,
+				"resolution": "1080p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/bytedance/seedance-1-pro/aerial-landscape.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/bytedance/seedance-1-pro/aerial-landscape.mp4"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedance-1-pro',\n  {\n    prompt:\n      'An aerial camera glides over a winding river through an autumn forest at dawn, low clouds drifting between amber trees, cinematic color grading, smooth forward movement',\n    aspect_ratio: '16:9',\n    duration: 5,\n    resolution: '1080p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-1-pro\",\n  \"input\": {\n    \"prompt\": \"An aerial camera glides over a winding river through an autumn forest at dawn, low clouds drifting between amber trees, cinematic color grading, smooth forward movement\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": 5,\n    \"resolution\": \"1080p\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "First Frame Animation",
+			"description": "Animate a still image as the first frame of the video",
+			"input": {
+				"image": "https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg",
+				"prompt": "Steam rises gently from the cup while the camera slowly pushes in, soft afternoon window light, calm and natural movement",
+				"duration": 5,
+				"resolution": "720p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/bytedance/seedance-1-pro/first-frame-animation.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/bytedance/seedance-1-pro/first-frame-animation.mp4"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedance-1-pro',\n  {\n    image: 'https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg',\n    prompt:\n      'Steam rises gently from the cup while the camera slowly pushes in, soft afternoon window light, calm and natural movement',\n    duration: 5,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-1-pro\",\n  \"input\": {\n    \"image\": \"https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg\",\n    \"prompt\": \"Steam rises gently from the cup while the camera slowly pushes in, soft afternoon window light, calm and natural movement\",\n    \"duration\": 5,\n    \"resolution\": \"720p\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Vertical Fashion Editorial",
+			"description": "Vertical fashion editorial for social video formats",
+			"input": {
+				"prompt": "A fashion editor walks through a sunlit greenhouse in a flowing emerald dress, leaves sway in a soft breeze, editorial photography, subtle handheld camera motion",
+				"aspect_ratio": "9:16",
+				"duration": 5,
+				"resolution": "720p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/bytedance/seedance-1-pro/vertical-fashion-editorial.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/bytedance/seedance-1-pro/vertical-fashion-editorial.mp4"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedance-1-pro',\n  {\n    prompt:\n      'A fashion editor walks through a sunlit greenhouse in a flowing emerald dress, leaves sway in a soft breeze, editorial photography, subtle handheld camera motion',\n    aspect_ratio: '9:16',\n    duration: 5,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-1-pro\",\n  \"input\": {\n    \"prompt\": \"A fashion editor walks through a sunlit greenhouse in a flowing emerald dress, leaves sway in a soft breeze, editorial photography, subtle handheld camera motion\",\n    \"aspect_ratio\": \"9:16\",\n    \"duration\": 5,\n    \"resolution\": \"720p\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://docs.byteplus.com/en/docs/ModelArk/video-generation-tutorial",
+	"terms": null,
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/bytedance/seedance-1-pro.png",
+	"metadata": {
+		"Aspect Ratios": "16:9, 4:3, 1:1, 3:4, 9:16, 21:9, 9:21",
+		"Max Duration": "12 seconds",
+		"Native Audio": "No",
+		"Resolutions": "480p, 720p, 1080p"
+	},
+	"request_formats": null,
+	"provider_id": "bytedance",
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "bytedance",
+			"pricing": {
+				"default": 0.05148,
+				"480p": 0.0243,
+				"720p": 0.05148,
+				"1080p": 0.1224
+			}
+		}
+	],
+	"model_providers": [
+		{
+			"provider": "bytedance",
+			"pricing": {
+				"default": 0.05148,
+				"480p": 0.0243,
+				"720p": 0.05148,
+				"1080p": 0.1224
+			},
+			"rates": [
+				{
+					"key": null,
+					"label": null,
+					"description": null,
+					"rates": [
+						{
+							"key": "default",
+							"label": "Default (per second)",
+							"unit": null,
+							"value": 0.05148
+						},
+						{
+							"key": "1080p",
+							"label": "@1080p (per second)",
+							"unit": null,
+							"value": 0.1224
+						},
+						{
+							"key": "480p",
+							"label": "@480p (per second)",
+							"unit": null,
+							"value": 0.0243
+						},
+						{
+							"key": "720p",
+							"label": "@720p (per second)",
+							"unit": null,
+							"value": 0.05148
+						}
+					]
+				}
+			]
+		}
+	],
+	"banner": null,
+	"pinned": false,
+	"created_at": "2026-11-18 00:40:50",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string",
+					"maxLength": 10000,
+					"description": "Text prompt describing the video to generate"
+				},
+				"image": {
+					"description": "Reference image (HTTP(S) URL or base64 data URI) for image-to-video",
+					"type": "string"
+				},
+				"last_frame_image": {
+					"description": "Reference image (HTTP(S) URL or base64 data URI) for last-frame guidance. Only works if an image start frame is also given.",
+					"type": "string"
+				},
+				"duration": {
+					"default": 5,
+					"description": "Video duration in seconds",
+					"type": "integer",
+					"minimum": 4,
+					"maximum": 12
+				},
+				"resolution": {
+					"default": "720p",
+					"description": "Video resolution",
+					"type": "string",
+					"enum": [
+						"480p",
+						"720p",
+						"1080p"
+					]
+				},
+				"aspect_ratio": {
+					"default": "16:9",
+					"description": "Video aspect ratio. Ignored if an image is used.",
+					"type": "string",
+					"enum": [
+						"16:9",
+						"4:3",
+						"1:1",
+						"3:4",
+						"9:16",
+						"21:9",
+						"9:21"
+					]
+				},
+				"fps": {
+					"default": 24,
+					"description": "Frame rate (frames per second)",
+					"type": "number",
+					"const": 24
+				},
+				"camera_fixed": {
+					"default": false,
+					"description": "Whether to fix camera position",
+					"type": "boolean"
+				},
+				"watermark": {
+					"default": false,
+					"description": "Whether to add a watermark to the output video",
+					"type": "boolean"
+				},
+				"seed": {
+					"description": "Random seed for reproducible generation",
+					"type": "integer",
+					"minimum": -9007199254740991,
+					"maximum": 9007199254740991
+				},
+				"use_virtual_avatar": {
+					"default": false,
+					"description": "Route image reference inputs (image, reference_images, last_frame_image) through ByteDance's trusted virtual avatar asset library before generation. Intended for AI-generated/virtual character avatars that would otherwise be blocked by face or deepfake detection",
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"prompt",
+				"duration",
+				"resolution",
+				"aspect_ratio",
+				"fps",
+				"camera_fixed",
+				"watermark",
+				"use_virtual_avatar"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"type": "string",
+					"format": "uri",
+					"description": "URL to the generated video"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}

@@ -39,7 +39,7 @@ Notably, the cache key does **not** include:
 - **The request's host.** The Worker's cache is keyed by path and query string, not the full URL. See [The cache belongs to the Worker, not to a domain](#the-cache-belongs-to-the-worker-not-to-a-domain).
 - **The request body.** Since only `GET` and `HEAD` are cacheable, this is rarely relevant — but worth noting if your Worker reads `request.body` on a cacheable method, the body does not partition the cache.
 
-At launch, you cannot inspect the exact cache key Cloudflare computed for a request. The primary signals you have for understanding cache behavior are the `Cf-Cache-Status` response header and per-invocation cache-hit information in the [Workers observability dashboard](/workers/observability/). See [Inspecting the cache key](#inspecting-the-cache-key).
+At launch, you cannot inspect the exact cache key Cloudflare computed for a request. The primary signals you have for understanding cache behavior are the `Cf-Cache-Status` response header, per-invocation cache-hit information in the [Workers observability dashboard](/workers/observability/), and cache analytics on your Worker's **Metrics** page (refer to [I need more visibility](/workers/cache/debugging/#i-need-more-visibility)). See [Inspecting the cache key](#inspecting-the-cache-key).
 
 ## The cache belongs to the Worker, not to a domain
 

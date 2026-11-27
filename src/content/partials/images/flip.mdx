@@ -16,7 +16,20 @@ Accepts the following values:
 - `v` — Flips the image vertically.
 - `hv` — Flips the image both horizontally and vertically.
 
-Flip can be used with the `rotate` parameter to set the orientation of the image. Flip is performed before rotation. For example, if you apply `flip=h,rotate=90`, then the image will be flipped horizontally, then rotated by 90 degrees.
+Flip can be used with the [`rotate`](#rotate) parameter to set the orientation of the image. Flip is performed before rotation. For example, if you apply `flip=h,rotate=90`, then the image will be flipped horizontally, then rotated by 90 degrees.
+
+<Tabs>
+  <TabItem label="URL format">
+    ```txt
+    flip=h
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js
+  cf: {image: {flip: "h"}}
+  ```
+  </TabItem>
+</Tabs>
 
 <table style="width:100%; table-layout:fixed; text-align:center; border:none">
   <tr style="border:none; background:none">
@@ -44,16 +57,3 @@ Flip can be used with the `rotate` parameter to set the orientation of the image
     </td>
   </tr>
 </table>
-
-<Tabs>
-  <TabItem label="URL format">
-    ```txt
-    flip=h
-    ```
-  </TabItem>
-  <TabItem label="Workers">
-  ```js
-  cf: {image: {flip: "h"}}
-  ```
-  </TabItem>
-</Tabs>

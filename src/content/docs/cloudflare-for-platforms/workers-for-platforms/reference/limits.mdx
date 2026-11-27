@@ -8,7 +8,7 @@ products:
   - cloudflare-for-platforms
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 ## Script limits
 
@@ -20,20 +20,57 @@ The [`cf` object](/workers/runtime-apis/request/#the-cf-property-requestinitcfpr
 
 In the default [untrusted mode](/cloudflare-for-platforms/workers-for-platforms/reference/worker-isolation/#untrusted-mode-default), this also applies to outgoing requests. Any `cf` properties a user Worker sets on a `fetch()` subrequest are ignored, and the subrequest uses the default cache behavior for its URL.
 
-This includes the standard [`cache` option](/workers/examples/cache-using-fetch/#using-the-http-cache-api) of `fetch()` and `Request`. Workers implement `cache: 'no-store'` and `cache: 'no-cache'` as `cf` cache settings, so in untrusted mode they do not change how the subrequest is cached:
+This includes the standard [`cache` option](/workers/examples/cache-using-fetch/#using-the-http-cache-api) of `fetch()` and `Request`. Workers implement `cache: "no-store"` and `cache: "no-cache"` as `cf` cache settings, so in untrusted mode they do not change how the subrequest is cached:
 
 ```js
 // In a user Worker in an untrusted dispatch namespace:
-await fetch("https://example.com/file.bin", { method: "HEAD", cache: "no-store" });
+await fetch("https://example.com/file.bin", {
+	method: "HEAD",
+	cache: "no-store",
+});
 // The cache is not bypassed. Because .bin is a default cached file extension,
 // the request goes through the cache and reaches the origin as a GET.
 ```
 
-The Cache-Control: no-cache and Pragma: no-cache request headers that these options add are still sent to the origin, but they do not affect whether Cloudflare's cache handles the request.
-When a subrequest goes through the cache, HEAD requests can be sent to the origin as GET and the Range header can be removed. Refer to HEAD requests (/cache/concepts/cache-behavior/#interaction-of-head-requests-with-cache) and Range requests (/cache/reference/range-requests/).
-To use cf properties or the cache option in user Workers, either:
-- Enable trusted mode (/cloudflare-for-platforms/workers-for-platforms/reference/worker-isolation/#trusted-mode) for your namespace. Only enable this if you control all Worker code in the namespace.
-- Set the cache options in an Outbound Worker (/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/), which runs as your platform's Worker rather than the user Worker.
+The `Cache-Control: no-cache` and `Pragma: no-cache` request headers that these options add are still sent to the origin. They do not affect whether Cloudflare's cache handles the request.
+
+When a subrequest goes through the cache, `HEAD` requests can be sent to the origin as `GET`, and the `Range` header can be removed. For more information, refer to [Interaction of HEAD requests with Cache](/cache/concepts/cache-behavior/#interaction-of-head-requests-with-cache) and [Range request behavior](/cache/reference/range-requests/).
+
+To use `cf` properties or the `cache` option for requests from user Workers, use one of these options:
+
+- **Trusted mode**: Enable [trusted mode](/cloudflare-for-platforms/workers-for-platforms/reference/worker-isolation/#trusted-mode) for your namespace. Only enable this if you control all Worker code in the namespace.
+- **Outbound Worker**: Set the cache options in an [Outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/), which runs as your platform's Worker rather than the user Worker. When an Outbound Worker is enabled, user Workers cannot use `connect()`, except through [Hyperdrive](/hyperdrive/) bindings.
+- **Service binding**: Give user Workers a [service binding](/workers/runtime-apis/bindings/service-bindings/) to a Worker you own outside the namespace, in the same account. User code sends the requests that need the `cache` option through the binding. User Workers keep `connect()`.
+
+A Worker outside the namespace runs as your platform's code, so the `cache` option on its own `fetch()` takes effect. The `cf` object of the user Worker is not passed to it, so user code cannot use it to set other `cf` properties:
+
+```js
+// A Worker outside the dispatch namespace. User Workers have a service binding
+// to it named PLATFORM_FETCH. The cache option needs a compatibility date of
+// 2024-11-11 or later.
+export default {
+	fetch(request) {
+		return fetch(new Request(request, { cache: "no-store", cf: {} }));
+	},
+};
+```
+
+```js
+// In a user Worker:
+await env.PLATFORM_FETCH.fetch("https://example.com/file.bin", {
+	method: "HEAD",
+});
+// The cache is bypassed, and the origin receives a HEAD request.
+```
+
+Use `cache: "no-store"` rather than `cache: "no-cache"`. `no-cache` only asks the cache to revalidate, so `HEAD` requests can still be sent to the origin as `GET`.
+
+Any user Worker with the binding can use this Worker to send requests that bypass the cache. To keep it limited to that:
+
+- Do not add routes to this Worker, and turn off its `workers.dev` and Preview URLs, so that only user Workers with the binding can call it.
+- Do not add secrets or authentication to the requests this Worker sends, and do not trust headers from the caller for authentication.
+- Do not let end users choose the targets of the service bindings in the user Workers you upload. Otherwise, user code could bind to your dispatch Worker or other platform Workers.
+- If this Worker needs to know which user Worker is calling it, pass that information in the binding's [`props`](/workers/runtime-apis/context/#props).
 
 ## Durable Object namespace limits
 

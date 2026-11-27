@@ -1,0 +1,27 @@
+---
+title: Inspect multipart part headers, preambles, and empty parts
+description: Inspect standard and custom multipart part headers, bytes before the first boundary, and skipped empty parts in Rules expressions.
+date: 2026-11-27
+---
+
+Five new Rules fields provide more detail about multipart request bodies:
+
+| Field | Contents |
+| --- | --- |
+| `http.request.body.multipart.headers` | Standard and custom headers grouped by lowercase name for each part. |
+| `http.request.body.multipart.headers.names` | Header names in original case and occurrence order for each part. |
+| `http.request.body.multipart.headers.values` | Header values aligned with the names for each part. |
+| `http.request.body.multipart.preamble` | Original bytes before the first boundary delimiter. |
+| `http.request.body.multipart.empty_parts_count` | Headerless, empty-body parts skipped during parsing. |
+
+For example, match a custom header on the first parsed part:
+
+```txt
+http.request.body.multipart.headers[0]["x-upload-tag"][0] eq "review"
+```
+
+Header arrays preserve part association and duplicate headers. The preamble includes the line ending before the first delimiter. The empty-part count includes only parts encountered before parsing stops.
+
+These fields require an Enterprise plan. Request body inspection and multipart parsing limits apply.
+
+For details, refer to the [multipart headers](/ruleset-engine/rules-language/fields/reference/http.request.body.multipart.headers/), [preamble](/ruleset-engine/rules-language/fields/reference/http.request.body.multipart.preamble/), and [empty-part count](/ruleset-engine/rules-language/fields/reference/http.request.body.multipart.empty_parts_count/) field references.

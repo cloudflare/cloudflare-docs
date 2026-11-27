@@ -52,6 +52,16 @@ Update your Cache Rule expression to also match on the `PURGE` method, for examp
 
 For rules that match on fields which cannot be evaluated during purge (such as `cf.bot_management.score`), use [purge by prefix](/cache/how-to/purge-cache/purge_by_prefix/), [purge by tag](/cache/how-to/purge-cache/purge-by-tags/), or [purge everything](/cache/how-to/purge-cache/purge-everything/).
 
+**Why some URLs appear to purge successfully while others do not:**
+
+If single-file purge appears to clear some URLs on your zone but not others, consider these common explanations:
+
+- **Different Cache Rules apply to different paths.** A URL that appears to purge successfully may be covered by a different Cache Rule that does not filter on `GET`. Review your Cache Rules list to check which rule matches each URL.
+- **The URL was never cached.** A URL that returns fresh content after a purge attempt may not have been cached at all. For example, URLs with different query strings are treated as separate cache entries and may return `DYNAMIC` or `MISS` without requiring a purge. Check `cf-cache-status` on a fresh request to confirm the resource is cached (`HIT` or `REVALIDATED`) before purging.
+- **A broader purge method was also run.** If purge by prefix, purge by tag, or purge everything was run on the zone, those URLs may have been evicted by that operation rather than by single-file purge.
+
+Single-file purge does not partially succeed. If the Cache Rule does not match the `PURGE` method, no eviction occurs regardless of the API response.
+
 ### Redirect responses
 
 If the URL you want to purge returns a redirect (`301` or `302`), single-file purge removes the cached redirect response — not the content at the redirect destination. The resource at the destination URL remains cached.

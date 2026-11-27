@@ -34,10 +34,12 @@ Invalidation does not fetch new content in advance. Instead, the next request fo
 To revalidate, Cloudflare sends your origin a conditional request. The request uses the `ETag` or `Last-Modified` header that your origin sent with the content. Your origin's response determines what happens next:
 
 - If your origin responds with `304 Not Modified`, Cloudflare reuses the cached content and sets a new time to live (TTL).
-- If your origin returns new cacheable content, Cloudflare replaces the cached content.
+- If the content changed and your origin returns it with a new `ETag`, or a later `Last-Modified` if your origin sends no `ETag`, Cloudflare replaces the cached content.
 - If your origin returns a `5xx` error or cannot be reached, Cloudflare can serve the cached content stale. For details, refer to [Stale content during revalidation](#stale-content-during-revalidation).
 
 Invalidation does not guarantee that content is reused. Cloudflare fetches the full response if the content is no longer cached, your origin sent neither header, or your origin does not support conditional requests.
+
+Your origin must answer a matching conditional request with `304 Not Modified`. Whenever the content changes, your origin must send a new `ETag`, or a later `Last-Modified` if it sends no `ETag`. If your origin returns new content with the same `ETag`, Cloudflare and visitors' browsers can keep serving the old content, even if the `Last-Modified` is later. For details, refer to [Origin requirements for revalidation](/cache/concepts/revalidation/#origin-requirements-for-revalidation).
 
 A `304 Not Modified` response does not refresh cache tags set by [Cache Response Rules](/cache/how-to/cache-response-rules/). Cache tags from your origin's `Cache-Tag` header are updated only if your origin includes that header in the `304` response. To refresh cache tags otherwise, purge the content.
 
@@ -78,7 +80,7 @@ Invalidation from the dashboard or the `invalidate_cache` endpoint does not affe
 
 Check the following requirements before you invalidate content:
 
-- **Origin validators**: To reuse cached content, your origin must return an `ETag` or `Last-Modified` header and support conditional requests.
+- **Origin validators**: To reuse cached content, your origin must return an `ETag` or `Last-Modified` header and answer matching conditional requests with `304 Not Modified`. Whenever the content changes, the `ETag` must change, or `Last-Modified` must move later if your origin sends no `ETag`.
 - **Permissions**: For API requests, use a token with the **Cache Purge** permission for the zone. To invalidate from the dashboard, your role must include the same permission.
 - **Rate limits**: Invalidation requests count toward the purge limits for your account. For details, refer to [Limits](#limits).
 
@@ -222,14 +224,14 @@ To verify an invalidation, use a cacheable test URL whose origin returns an `ETa
 
 For cached content, expect the following results:
 
-| Result                                                 | `CF-Cache-Status`         |
-| ------------------------------------------------------ | ------------------------- |
-| Your origin confirms that the content has not changed  | `REVALIDATED`, then `HIT` |
-| Your origin returns new content                        | `EXPIRED`, then `HIT`     |
-| Your origin sends no `ETag` or `Last-Modified` header  | `EXPIRED`, then `HIT`     |
-| Cloudflare serves stale content while revalidating     | `UPDATING`, then `HIT`    |
-| Your origin returns a `5xx` error or cannot be reached | `STALE`                   |
-| The content is no longer cached                        | `MISS`                    |
+| Result                                                                                      | `CF-Cache-Status`         |
+| ------------------------------------------------------------------------------------------- | ------------------------- |
+| Your origin confirms that the content has not changed                                       | `REVALIDATED`, then `HIT` |
+| Your origin returns new content with a new `ETag`, or a later `Last-Modified` and no `ETag` | `EXPIRED`, then `HIT`     |
+| Your origin sends no `ETag` or `Last-Modified` header                                       | `EXPIRED`, then `HIT`     |
+| Cloudflare serves stale content while revalidating                                          | `UPDATING`, then `HIT`    |
+| Your origin returns a `5xx` error or cannot be reached                                      | `STALE`                   |
+| The content is no longer cached                                                             | `MISS`                    |
 
 Without an `ETag` or `Last-Modified` header from your origin, Cloudflare has nothing to revalidate with, so it fetches the full response. When your origin returns `304`, Cloudflare can still return `200 OK` to the visitor with the cached content.
 
@@ -244,6 +246,12 @@ Confirm that the content was cached and that your selectors match it. Also confi
 Check these headers in a request sent directly to your origin, not through Cloudflare. When your origin sends neither header, responses from Cloudflare can still include a `Last-Modified` header because of [smart revalidation towards users](/cache/concepts/revalidation/#smart-revalidation-towards-users). Cloudflare does not use that header when it revalidates with your origin.
 
 If the content was also purged after it was cached, the purge takes precedence, and the next request fetches the full response.
+
+### Visitors receive old content after your origin changes it
+
+Check whether your origin changed the `ETag` along with the content, or moved `Last-Modified` later if it sends no `ETag`. If your origin answers a conditional request with a `200` that repeats the cached `ETag`, it breaks the HTTP rule for `If-None-Match` ([RFC 9110, section 13.1.2](https://www.rfc-editor.org/rfc/rfc9110.html#section-13.1.2)), even if the `Last-Modified` is later. With [Tiered Cache](/cache/how-to/tiered-cache/), lower-tier data centers then keep serving their old copies, and browsers keep theirs.
+
+Change the `ETag` whenever the content changes, and answer matching conditional requests with `304 Not Modified`. Purging the content removes Cloudflare's old copies, but browsers that cached the old response keep it until the `ETag` changes. For details, refer to [Origin requirements for revalidation](/cache/concepts/revalidation/#origin-requirements-for-revalidation).
 
 ### Visitors receive stale content
 

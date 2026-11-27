@@ -1,0 +1,1248 @@
+{
+	"model_id": "openai/gpt-6.2-sol",
+	"name": "GPT-6.2 Sol",
+	"description": "OpenAI's go-to model for everyday work, from coding to powering agents at scale. GPT-6.2 Sol offers capable reasoning and tool use across common workflows.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Coding",
+		"Reasoning",
+		"Multimodal",
+		"Computer Use"
+	],
+	"context_length": 1050000,
+	"max_output_tokens": 128000,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Short-context input (per 1M)": 2,
+		"Short-context cached input (per 1M)": 0.1,
+		"Short-context cache write (per 1M)": 2.5,
+		"Short-context output (per 1M)": 10,
+		"Long-context input (per 1M)": 3,
+		"Long-context cached input (per 1M)": 0.15,
+		"Long-context cache write (per 1M)": 3.75,
+		"Long-context output (per 1M)": 15
+	},
+	"examples": [
+		{
+			"name": "Everyday Reasoning (RunV2)",
+			"description": "Use reasoning effort for a practical engineering decision",
+			"input": {
+				"input": "A service targets 99.95% monthly availability and has been down for 28 minutes in a 30-day month. How much of its monthly error budget remains? Show the calculation briefly.",
+				"max_output_tokens": 512,
+				"reasoning": {
+					"effort": "medium"
+				}
+			},
+			"output": {
+				"text": "**None remains.** The service exceeded its monthly error budget by **6.4 minutes**.\n\nA 30-day month has \\(30 \\times 24 \\times 60 = 43{,}200\\) minutes. At 99.95% availability, the allowed downtime is \\(43{,}200 \\times 0.0005 = 21.6\\) minutes. After 28 minutes of downtime, the balance is \\(21.6 - 28 = -6.4\\) minutes."
+			},
+			"raw_response": {
+				"id": "resp_00ac53ff7cffe7e7006afca0171f6487d19f407c194c650a46",
+				"object": "response",
+				"created_at": 1794940951,
+				"status": "completed",
+				"access_programs": {
+					"cyber": "standard"
+				},
+				"background": false,
+				"billing": {
+					"payer": "developer"
+				},
+				"completed_at": 1794940953,
+				"error": null,
+				"frequency_penalty": 0,
+				"image": {
+					"context_compression": "disabled"
+				},
+				"incomplete_details": null,
+				"input_transformations": [],
+				"instructions": null,
+				"max_output_tokens": 512,
+				"max_tool_calls": null,
+				"model": "gpt-6.2-sol",
+				"moderation": null,
+				"output": [
+					{
+						"id": "msg_00ac53ff7cffe7e7006afca017d06487d1b035b9bd43b719cd",
+						"type": "message",
+						"status": "completed",
+						"content": [
+							{
+								"type": "output_text",
+								"annotations": [],
+								"logprobs": [],
+								"text": "**None remains.** The service exceeded its monthly error budget by **6.4 minutes**.\n\nA 30-day month has \\(30 \\times 24 \\times 60 = 43{,}200\\) minutes. At 99.95% availability, the allowed downtime is \\(43{,}200 \\times 0.0005 = 21.6\\) minutes. After 28 minutes of downtime, the balance is \\(21.6 - 28 = -6.4\\) minutes."
+							}
+						],
+						"phase": "final_answer",
+						"role": "assistant"
+					}
+				],
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"prompt_cache_retention": "24h",
+				"reasoning": {
+					"context": "all_turns",
+					"effort": "medium",
+					"mode": "standard",
+					"summary": null
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"store": true,
+				"temperature": 1,
+				"text": {
+					"format": {
+						"type": "text"
+					},
+					"verbosity": "medium"
+				},
+				"tool_choice": "auto",
+				"tool_usage": {
+					"image_gen": {
+						"input_tokens": 0,
+						"input_tokens_details": {
+							"image_tokens": 0,
+							"text_tokens": 0
+						},
+						"output_tokens": 0,
+						"output_tokens_details": {
+							"image_tokens": 0,
+							"text_tokens": 0
+						},
+						"total_tokens": 0
+					},
+					"web_search": {
+						"num_requests": 0
+					}
+				},
+				"tools": [],
+				"top_logprobs": 0,
+				"top_p": 1,
+				"truncation": "disabled",
+				"usage": {
+					"input_tokens": 45,
+					"input_tokens_details": {
+						"cache_write_tokens": 0,
+						"cache_write_tokens_details": {
+							"ttl_12h_tokens": 0,
+							"ttl_30m_tokens": 0
+						},
+						"cached_tokens": 0
+					},
+					"output_tokens": 111,
+					"output_tokens_details": {
+						"reasoning_tokens": 0
+					},
+					"total_tokens": 156
+				},
+				"user": null,
+				"metadata": {}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-6.2-sol',\n  {\n    input:\n      'A service targets 99.95% monthly availability and has been down for 28 minutes in a 30-day month. How much of its monthly error budget remains? Show the calculation briefly.',\n    max_output_tokens: 512,\n    reasoning: { effort: 'medium' },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/responses \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/gpt-6.2-sol\",\n  \"input\": \"A service targets 99.95% monthly availability and has been down for 28 minutes in a 30-day month. How much of its monthly error budget remains? Show the calculation briefly.\",\n  \"max_output_tokens\": 512,\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Web Search (RunV2)",
+			"description": "Search for current guidance and summarize the key points",
+			"input": {
+				"input": "Search for current recommendations for writing reliable retry logic in distributed services. Summarize three practical recommendations with sources.",
+				"max_output_tokens": 512,
+				"tools": [
+					{
+						"type": "web_search_preview"
+					}
+				]
+			},
+			"output": {
+				"text": "Current guidance from AWS, Google Cloud, and Microsoft Azure points to three practical rules:\n\n1. **Retry only transient failures, and only when repeating the operation is safe.** Use the dependency\u2019s documented retryable errors: throttling and temporary unavailability are common candidates; invalid requests and permission errors generally aren\u2019t. A timeout doesn\u2019t mean a write failed\u2014it may have succeeded before the response was lost. For operations with side effects, reuse the same idempotency key across attempts if the server supports deduplication; otherwise, don\u2019t retry blindly. ([docs.cloud.google.com](https://docs.cloud.google.com/storage/docs/retry-strategy?utm_source=openai))\n2. **Use capped exponential backoff with jitter.** Increase the delay between attempts up to a cap, and randomize the wait so clients that fail together don\u2019t retry together. If the server sends `Retry-After`, wait at least that long; if the wait won\u2019t fit within the caller\u2019s deadline, skip the retry. ([builder.aws.com](https://builder.aws.com/content/3EumjoZascWd1oZiEgL8ORlv3qE/timeouts-retries-and-backoff-with-jitter))\n3. **Put retries in one layer and limit their total load.** Check whether your SDK or proxy already retries before adding an application-level loop. Set a per-attempt timeout, a maximum attempt count, and an end-to-end deadline. For busy dependencies, also use a shared retry budget across requests so that many individually reasonable retries don\u2019t collectively overwhelm a struggling service. ([builder.aws.com](https://builder.aws.com/content/3EumjoZascWd1oZiEgL8ORlv3qE/timeouts-retries-and-backoff-with-jitter))"
+			},
+			"raw_response": {
+				"id": "resp_05cee98713911bd5006afca019937887d189b33fa97bead4c2",
+				"object": "response",
+				"created_at": 1794940953,
+				"status": "completed",
+				"access_programs": {
+					"cyber": "standard"
+				},
+				"background": false,
+				"billing": {
+					"payer": "developer"
+				},
+				"completed_at": 1794940963,
+				"error": null,
+				"frequency_penalty": 0,
+				"image": {
+					"context_compression": "disabled"
+				},
+				"incomplete_details": null,
+				"input_transformations": [],
+				"instructions": null,
+				"max_output_tokens": 512,
+				"max_tool_calls": null,
+				"model": "gpt-6.2-sol",
+				"moderation": null,
+				"output": [
+					{
+						"id": "ws_05cee98713911bd5006afca01a4e9087d1aba020bd152966af",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"queries": [
+								"AWS Builders Library timeouts retries backoff jitter idempotency retries single layer token bucket",
+								"Google Cloud retry strategy exponential backoff jitter idempotency retry 429 503 distributed services",
+								"Microsoft Azure architecture retry pattern retry budget transient failures Retry-After cloud design patterns"
+							],
+							"query": "AWS Builders Library timeouts retries backoff jitter idempotency retries single layer token bucket"
+						}
+					},
+					{
+						"id": "ws_05cee98713911bd5006afca01ded4887d187a265914d6073c0",
+						"type": "web_search_call",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/"
+						}
+					},
+					{
+						"id": "msg_05cee98713911bd5006afca01f622c87d1afdc5cfbe6c93a90",
+						"type": "message",
+						"status": "completed",
+						"content": [
+							{
+								"type": "output_text",
+								"annotations": [
+									{
+										"type": "url_citation",
+										"end_index": 693,
+										"start_index": 591,
+										"title": "Retry strategy \u00a0|\u00a0 Cloud Storage \u00a0|\u00a0 Google Cloud Documentation",
+										"url": "https://docs.cloud.google.com/storage/docs/retry-strategy?utm_source=openai"
+									},
+									{
+										"type": "url_citation",
+										"end_index": 1118,
+										"start_index": 997,
+										"title": "Timeouts, retries, and backoff with jitter | AWS Builder Center",
+										"url": "https://builder.aws.com/content/3EumjoZascWd1oZiEgL8ORlv3qE/timeouts-retries-and-backoff-with-jitter"
+									},
+									{
+										"type": "url_citation",
+										"end_index": 1635,
+										"start_index": 1514,
+										"title": "Timeouts, retries, and backoff with jitter | AWS Builder Center",
+										"url": "https://builder.aws.com/content/3EumjoZascWd1oZiEgL8ORlv3qE/timeouts-retries-and-backoff-with-jitter"
+									}
+								],
+								"logprobs": [],
+								"text": "Current guidance from AWS, Google Cloud, and Microsoft Azure points to three practical rules:\n\n1. **Retry only transient failures, and only when repeating the operation is safe.** Use the dependency\u2019s documented retryable errors: throttling and temporary unavailability are common candidates; invalid requests and permission errors generally aren\u2019t. A timeout doesn\u2019t mean a write failed\u2014it may have succeeded before the response was lost. For operations with side effects, reuse the same idempotency key across attempts if the server supports deduplication; otherwise, don\u2019t retry blindly. ([docs.cloud.google.com](https://docs.cloud.google.com/storage/docs/retry-strategy?utm_source=openai))\n2. **Use capped exponential backoff with jitter.** Increase the delay between attempts up to a cap, and randomize the wait so clients that fail together don\u2019t retry together. If the server sends `Retry-After`, wait at least that long; if the wait won\u2019t fit within the caller\u2019s deadline, skip the retry. ([builder.aws.com](https://builder.aws.com/content/3EumjoZascWd1oZiEgL8ORlv3qE/timeouts-retries-and-backoff-with-jitter))\n3. **Put retries in one layer and limit their total load.** Check whether your SDK or proxy already retries before adding an application-level loop. Set a per-attempt timeout, a maximum attempt count, and an end-to-end deadline. For busy dependencies, also use a shared retry budget across requests so that many individually reasonable retries don\u2019t collectively overwhelm a struggling service. ([builder.aws.com](https://builder.aws.com/content/3EumjoZascWd1oZiEgL8ORlv3qE/timeouts-retries-and-backoff-with-jitter))"
+							}
+						],
+						"phase": "final_answer",
+						"role": "assistant"
+					}
+				],
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"prompt_cache_retention": "24h",
+				"reasoning": {
+					"context": "all_turns",
+					"effort": "medium",
+					"mode": "standard",
+					"summary": null
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"store": true,
+				"temperature": 1,
+				"text": {
+					"format": {
+						"type": "text"
+					},
+					"verbosity": "medium"
+				},
+				"tool_choice": "auto",
+				"tool_usage": {
+					"image_gen": {
+						"input_tokens": 0,
+						"input_tokens_details": {
+							"image_tokens": 0,
+							"text_tokens": 0
+						},
+						"output_tokens": 0,
+						"output_tokens_details": {
+							"image_tokens": 0,
+							"text_tokens": 0
+						},
+						"total_tokens": 0
+					},
+					"web_search": {
+						"num_requests": 1
+					}
+				},
+				"tools": [
+					{
+						"type": "web_search_preview",
+						"search_content_types": [
+							"text"
+						],
+						"search_context_size": "medium",
+						"user_location": {
+							"type": "approximate",
+							"city": null,
+							"country": "US",
+							"region": null,
+							"timezone": null
+						}
+					}
+				],
+				"top_logprobs": 0,
+				"top_p": 1,
+				"truncation": "disabled",
+				"usage": {
+					"input_tokens": 14968,
+					"input_tokens_details": {
+						"cache_write_tokens": 0,
+						"cache_write_tokens_details": {
+							"ttl_12h_tokens": 0,
+							"ttl_30m_tokens": 0
+						},
+						"cached_tokens": 4461
+					},
+					"output_tokens": 510,
+					"output_tokens_details": {
+						"reasoning_tokens": 165
+					},
+					"total_tokens": 15478
+				},
+				"user": null,
+				"metadata": {}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-6.2-sol',\n  {\n    input:\n      'Search for current recommendations for writing reliable retry logic in distributed services. Summarize three practical recommendations with sources.',\n    max_output_tokens: 512,\n    tools: [{ type: 'web_search_preview' }],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/responses \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/gpt-6.2-sol\",\n  \"input\": \"Search for current recommendations for writing reliable retry logic in distributed services. Summarize three practical recommendations with sources.\",\n  \"max_output_tokens\": 512,\n  \"tools\": [\n    {\n      \"type\": \"web_search_preview\"\n    }\n  ]\n}'"
+				}
+			]
+		},
+		{
+			"name": "Chat Completions Coding (RunV2)",
+			"description": "Generate a concise code example through Chat Completions",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Write a TypeScript function that groups an array of strings by their first letter. Include a short example of the output."
+					}
+				],
+				"max_completion_tokens": 512,
+				"reasoning_effort": "low"
+			},
+			"output": {
+				"text": "```typescript\nfunction groupByFirstLetter(words: string[]): Record<string, string[]> {\n  const groups: Record<string, string[]> = {};\n\n  for (const word of words) {\n    if (word.length === 0) continue;\n\n    const firstLetter = word.charAt(0).toLowerCase();\n    (groups[firstLetter] ??= []).push(word);\n  }\n\n  return groups;\n}\n\nconsole.log(groupByFirstLetter([\"Apple\", \"banana\", \"apricot\", \"Blueberry\"]));\n// { a: [\"Apple\", \"apricot\"], b: [\"banana\", \"Blueberry\"] }\n```\n\nThe function groups words case-insensitively, preserves their original spelling and order within each group, and skips empty strings."
+			},
+			"raw_response": {
+				"id": "resp_0a6cf3e0bc5c5614006afca024307087d19792161b4e6d5e81",
+				"object": "response",
+				"created_at": 1794940964,
+				"status": "completed",
+				"access_programs": {
+					"cyber": "standard"
+				},
+				"background": false,
+				"billing": {
+					"payer": "developer"
+				},
+				"completed_at": 1794940966,
+				"error": null,
+				"frequency_penalty": 0,
+				"image": {
+					"context_compression": "disabled"
+				},
+				"incomplete_details": null,
+				"input_transformations": [],
+				"instructions": null,
+				"max_output_tokens": 512,
+				"max_tool_calls": null,
+				"model": "gpt-6.2-sol",
+				"moderation": null,
+				"output": [
+					{
+						"id": "msg_0a6cf3e0bc5c5614006afca024e86887d186008e2b0cb15f3b",
+						"type": "message",
+						"status": "completed",
+						"content": [
+							{
+								"type": "output_text",
+								"annotations": [],
+								"logprobs": [],
+								"text": "```typescript\nfunction groupByFirstLetter(words: string[]): Record<string, string[]> {\n  const groups: Record<string, string[]> = {};\n\n  for (const word of words) {\n    if (word.length === 0) continue;\n\n    const firstLetter = word.charAt(0).toLowerCase();\n    (groups[firstLetter] ??= []).push(word);\n  }\n\n  return groups;\n}\n\nconsole.log(groupByFirstLetter([\"Apple\", \"banana\", \"apricot\", \"Blueberry\"]));\n// { a: [\"Apple\", \"apricot\"], b: [\"banana\", \"Blueberry\"] }\n```\n\nThe function groups words case-insensitively, preserves their original spelling and order within each group, and skips empty strings."
+							}
+						],
+						"phase": "final_answer",
+						"role": "assistant"
+					}
+				],
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"prompt_cache_retention": "24h",
+				"reasoning": {
+					"context": "all_turns",
+					"effort": "low",
+					"mode": "standard",
+					"summary": null
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"store": true,
+				"temperature": 1,
+				"text": {
+					"format": {
+						"type": "text"
+					},
+					"verbosity": "medium"
+				},
+				"tool_choice": "auto",
+				"tool_usage": {
+					"image_gen": {
+						"input_tokens": 0,
+						"input_tokens_details": {
+							"image_tokens": 0,
+							"text_tokens": 0
+						},
+						"output_tokens": 0,
+						"output_tokens_details": {
+							"image_tokens": 0,
+							"text_tokens": 0
+						},
+						"total_tokens": 0
+					},
+					"web_search": {
+						"num_requests": 0
+					}
+				},
+				"tools": [],
+				"top_logprobs": 0,
+				"top_p": 1,
+				"truncation": "disabled",
+				"usage": {
+					"input_tokens": 30,
+					"input_tokens_details": {
+						"cache_write_tokens": 0,
+						"cache_write_tokens_details": {
+							"ttl_12h_tokens": 0,
+							"ttl_30m_tokens": 0
+						},
+						"cached_tokens": 0
+					},
+					"output_tokens": 157,
+					"output_tokens_details": {
+						"reasoning_tokens": 0
+					},
+					"total_tokens": 187
+				},
+				"user": null,
+				"metadata": {}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-6.2-sol',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'Write a TypeScript function that groups an array of strings by their first letter. Include a short example of the output.',\n      },\n    ],\n    max_completion_tokens: 512,\n    reasoning_effort: 'low',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/gpt-6.2-sol\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Write a TypeScript function that groups an array of strings by their first letter. Include a short example of the output.\"\n    }\n  ],\n  \"max_completion_tokens\": 512,\n  \"reasoning_effort\": \"low\"\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": true,
+	"zdr_comment": null,
+	"external_info": "https://developers.openai.com/api/docs/models/gpt-6.2-sol",
+	"terms": "https://openai.com/policies/",
+	"cover_image_url": null,
+	"metadata": {
+		"API": "Responses, Chat Completions",
+		"Architecture": "Transformer",
+		"Input modalities": "Text, image",
+		"Knowledge cutoff": "June 1, 2026",
+		"Reasoning effort": "low, medium, high, xhigh, max",
+		"Tools": "Functions, web search, file search, computer use"
+	},
+	"request_formats": [
+		"responses",
+		"chat-completions"
+	],
+	"provider_id": "openai",
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "openai",
+			"pricing": {
+				"short_context_input_tokens": 2,
+				"short_context_input_cached_tokens": 0.1,
+				"short_context_input_cache_creation_tokens": 2.5,
+				"short_context_output_tokens": 10,
+				"long_context_input_tokens": 3,
+				"long_context_input_cached_tokens": 0.15,
+				"long_context_input_cache_creation_tokens": 3.75,
+				"long_context_output_tokens": 15,
+				"long_context_threshold_tokens": 272000
+			}
+		}
+	],
+	"model_providers": [
+		{
+			"provider": "openai",
+			"pricing": {
+				"short_context_input_tokens": 2,
+				"short_context_input_cached_tokens": 0.1,
+				"short_context_input_cache_creation_tokens": 2.5,
+				"short_context_output_tokens": 10,
+				"long_context_input_tokens": 3,
+				"long_context_input_cached_tokens": 0.15,
+				"long_context_input_cache_creation_tokens": 3.75,
+				"long_context_output_tokens": 15,
+				"long_context_threshold_tokens": 272000
+			},
+			"rates": [
+				{
+					"key": null,
+					"label": null,
+					"description": null,
+					"rates": [
+						{
+							"key": "short_context_input_tokens",
+							"label": "Short-context input",
+							"unit": "per_1m_tokens",
+							"value": 2
+						},
+						{
+							"key": "short_context_output_tokens",
+							"label": "Short-context output",
+							"unit": "per_1m_tokens",
+							"value": 10
+						},
+						{
+							"key": "long_context_input_tokens",
+							"label": "Long-context input",
+							"unit": "per_1m_tokens",
+							"value": 3
+						},
+						{
+							"key": "long_context_output_tokens",
+							"label": "Long-context output",
+							"unit": "per_1m_tokens",
+							"value": 15
+						},
+						{
+							"key": "long_context_input_cache_creation_tokens",
+							"label": "Long-context cache write",
+							"unit": "per_1m_tokens",
+							"value": 3.75
+						},
+						{
+							"key": "long_context_input_cached_tokens",
+							"label": "Long-context cached input",
+							"unit": "per_1m_tokens",
+							"value": 0.15
+						},
+						{
+							"key": "short_context_input_cache_creation_tokens",
+							"label": "Short-context cache write",
+							"unit": "per_1m_tokens",
+							"value": 2.5
+						},
+						{
+							"key": "short_context_input_cached_tokens",
+							"label": "Short-context cached input",
+							"unit": "per_1m_tokens",
+							"value": 0.1
+						}
+					]
+				}
+			]
+		}
+	],
+	"banner": null,
+	"pinned": false,
+	"created_at": "2026-11-18 15:54:47",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"input": {
+							"anyOf": [
+								{
+									"type": "string"
+								},
+								{
+									"type": "array",
+									"items": {}
+								}
+							]
+						},
+						"instructions": {
+							"type": "string"
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
+						"max_output_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"text": {
+							"type": "object",
+							"properties": {
+								"format": {}
+							},
+							"additionalProperties": {}
+						},
+						"reasoning": {
+							"type": "object",
+							"properties": {
+								"effort": {
+									"description": "Reasoning effort; availability and accepted values are model-dependent.",
+									"type": "string",
+									"enum": [
+										"none",
+										"low",
+										"medium",
+										"high",
+										"xhigh",
+										"max"
+									]
+								}
+							},
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"input"
+					],
+					"additionalProperties": {},
+					"title": "Responses"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"messages": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"enum": [
+											"system",
+											"developer",
+											"user",
+											"assistant",
+											"tool"
+										]
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											},
+											{
+												"type": "array",
+												"items": {}
+											}
+										]
+									}
+								},
+								"required": [
+									"role"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
+						"max_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"max_completion_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"frequency_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"presence_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"stream_options": {
+							"type": "object",
+							"properties": {
+								"include_usage": {
+									"type": "boolean"
+								}
+							},
+							"additionalProperties": false
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"response_format": {},
+						"modalities": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"enum": [
+									"text",
+									"audio"
+								]
+							}
+						},
+						"audio": {
+							"type": "object",
+							"properties": {
+								"voice": {
+									"type": "string",
+									"enum": [
+										"alloy",
+										"ash",
+										"ballad",
+										"coral",
+										"echo",
+										"sage",
+										"shimmer",
+										"verse"
+									]
+								},
+								"format": {
+									"type": "string",
+									"enum": [
+										"wav",
+										"mp3",
+										"flac",
+										"opus",
+										"pcm16"
+									]
+								}
+							},
+							"additionalProperties": false
+						},
+						"reasoning_effort": {
+							"description": "Optional reasoning control; availability and accepted values are model-dependent.",
+							"type": [
+								"string",
+								"null"
+							]
+						}
+					},
+					"required": [
+						"messages"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"messages": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"enum": [
+											"user",
+											"assistant",
+											"system"
+										]
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "array",
+												"items": {
+													"type": "object",
+													"properties": {
+														"type": {
+															"type": "string"
+														},
+														"text": {
+															"type": "string"
+														},
+														"source": {},
+														"cache_control": {
+															"type": "object",
+															"properties": {
+																"type": {
+																	"type": "string",
+																	"const": "ephemeral"
+																},
+																"ttl": {
+																	"type": "string",
+																	"enum": [
+																		"5m",
+																		"1h"
+																	]
+																}
+															},
+															"required": [
+																"type"
+															],
+															"additionalProperties": false
+														}
+													},
+													"required": [
+														"type"
+													],
+													"additionalProperties": {}
+												}
+											}
+										]
+									}
+								},
+								"required": [
+									"role",
+									"content"
+								],
+								"additionalProperties": false
+							}
+						},
+						"max_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"system": {
+							"anyOf": [
+								{
+									"type": "string"
+								},
+								{
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"type": {
+												"type": "string",
+												"const": "text"
+											},
+											"text": {
+												"type": "string"
+											},
+											"cache_control": {
+												"type": "object",
+												"properties": {
+													"type": {
+														"type": "string",
+														"const": "ephemeral"
+													},
+													"ttl": {
+														"type": "string",
+														"enum": [
+															"5m",
+															"1h"
+														]
+													}
+												},
+												"required": [
+													"type"
+												],
+												"additionalProperties": false
+											}
+										},
+										"required": [
+											"type",
+											"text"
+										],
+										"additionalProperties": {}
+									}
+								}
+							]
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"top_k": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"metadata": {
+							"type": "object",
+							"propertyNames": {
+								"type": "string"
+							},
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"messages",
+						"max_tokens"
+					],
+					"additionalProperties": {},
+					"title": "Messages"
+				}
+			]
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string",
+							"const": "response"
+						},
+						"created_at": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"output": {
+							"type": "array",
+							"items": {}
+						},
+						"output_text": {
+							"type": "string"
+						},
+						"status": {
+							"type": "string",
+							"enum": [
+								"in_progress",
+								"completed",
+								"failed",
+								"incomplete"
+							]
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"input_tokens": {
+									"type": "number"
+								},
+								"output_tokens": {
+									"type": "number"
+								},
+								"total_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"input_tokens",
+								"output_tokens",
+								"total_tokens"
+							],
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"id",
+						"object",
+						"created_at",
+						"model",
+						"output"
+					],
+					"additionalProperties": {},
+					"title": "Responses"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string"
+						},
+						"created": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"choices": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"index": {
+										"type": "number"
+									},
+									"message": {
+										"type": "object",
+										"properties": {
+											"role": {
+												"type": "string"
+											},
+											"content": {
+												"type": [
+													"string",
+													"null"
+												]
+											},
+											"tool_calls": {
+												"anyOf": [
+													{
+														"type": "array",
+														"items": {}
+													},
+													{
+														"type": "null"
+													}
+												]
+											},
+											"audio": {
+												"anyOf": [
+													{
+														"type": "object",
+														"properties": {
+															"id": {
+																"type": "string"
+															},
+															"data": {
+																"type": "string"
+															},
+															"expires_at": {
+																"type": "number"
+															},
+															"transcript": {
+																"type": "string"
+															}
+														},
+														"additionalProperties": {}
+													},
+													{
+														"type": "null"
+													}
+												]
+											}
+										},
+										"required": [
+											"role"
+										],
+										"additionalProperties": {}
+									},
+									"finish_reason": {
+										"type": [
+											"string",
+											"null"
+										]
+									}
+								},
+								"required": [
+									"index",
+									"message",
+									"finish_reason"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"prompt_tokens": {
+									"type": "number"
+								},
+								"completion_tokens": {
+									"type": "number"
+								},
+								"total_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"prompt_tokens",
+								"completion_tokens",
+								"total_tokens"
+							],
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"id",
+						"object",
+						"created",
+						"model",
+						"choices"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"type": {
+							"type": "string",
+							"const": "message"
+						},
+						"role": {
+							"type": "string",
+							"const": "assistant"
+						},
+						"content": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string"
+									},
+									"text": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"type"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"model": {
+							"type": "string"
+						},
+						"stop_reason": {
+							"type": [
+								"string",
+								"null"
+							]
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"input_tokens": {
+									"type": "number"
+								},
+								"output_tokens": {
+									"type": "number"
+								},
+								"cache_creation_input_tokens": {
+									"type": [
+										"number",
+										"null"
+									]
+								},
+								"cache_read_input_tokens": {
+									"type": [
+										"number",
+										"null"
+									]
+								},
+								"speed": {
+									"type": [
+										"string",
+										"null"
+									]
+								}
+							},
+							"required": [
+								"input_tokens",
+								"output_tokens"
+							],
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"id",
+						"type",
+						"role",
+						"content",
+						"model",
+						"stop_reason",
+						"usage"
+					],
+					"additionalProperties": {},
+					"title": "Messages"
+				}
+			]
+		}
+	}
+}

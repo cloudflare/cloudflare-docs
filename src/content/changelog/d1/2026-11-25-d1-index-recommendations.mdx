@@ -1,0 +1,19 @@
+---
+title: D1 Insights index recommendations
+description: Review recommended indexes for your D1 databases.
+products:
+  - d1
+date: 2026-11-25
+---
+
+D1 Insights now recommends indexes for your D1 databases. Each recommendation includes a `CREATE INDEX` statement, the queries it is expected to speed up, and usage metrics for those queries.
+
+You can turn recommendations on or off in the dashboard, with the Cloudflare CLI, or with the API.
+
+Review recommendations on the **Metrics** tab of a database in the dashboard, or list them with the Cloudflare CLI:
+
+```sh
+npx cf@latest d1 insights recommendations
+```
+
+For more information, refer to [Index recommendations](/d1/observability/metrics-analytics/index-recommendations/).
