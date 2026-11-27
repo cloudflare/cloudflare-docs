@@ -186,6 +186,14 @@ No special hooks needed — `saveMessages` returns after the full turn completes
 
 ### Email-triggered
 
+Install [`postal-mime`](https://www.npmjs.com/package/postal-mime) and add this import to your agent's module:
+
+```ts
+import PostalMime from "postal-mime";
+```
+
+Then add the `onEmail` handler to your agent class:
+
 ```ts
 async onEmail(email: AgentEmail) {
 	const stable = await this.waitUntilStable({ timeout: 30_000 });
