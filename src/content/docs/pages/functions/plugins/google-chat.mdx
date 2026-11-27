@@ -43,30 +43,31 @@ The Google Chat API can be called directly using the `GoogleChatAPI` class:
 ```typescript
 import { GoogleChatAPI } from "@cloudflare/pages-plugin-google-chat/api";
 
-export const onRequest: PagesFunction = () => {
-	// Initialize a GoogleChatAPI with your service account's credentials
+interface Env {
+	GOOGLE_CHAT_CLIENT_EMAIL: string;
+	GOOGLE_CHAT_PRIVATE_KEY: string;
+}
+
+export const onRequest: PagesFunction<Env> = async (context) => {
+	// Initialize a GoogleChatAPI with your service account's credentials stored as secrets
 	const googleChat = new GoogleChatAPI({
 		credentials: {
-			client_email: "SERVICE_ACCOUNT_EMAIL_ADDRESS",
-			private_key: "SERVICE_ACCOUNT_PRIVATE_KEY",
+			client_email: context.env.GOOGLE_CHAT_CLIENT_EMAIL,
+			private_key: context.env.GOOGLE_CHAT_PRIVATE_KEY,
 		},
 	});
 
 	// Post a message
 	// https://developers.google.com/chat/api/reference/rest/v1/spaces.messages/create
-	const message = await googleChat.createMessage(
-		{ parent: "spaces/AAAAAAAAAAA" },
-		undefined,
-		{
-			text: "I'm an alert!",
-		},
-	);
+	await googleChat.createMessage({ parent: "spaces/AAAAAAAAAAA" }, undefined, {
+		text: "I'm an alert!",
+	});
 
 	return new Response("Alert sent.");
 };
 ```
 
-We recommend storing your service account's credentials in KV rather than in plain text as above.
+Store your service account credentials as encrypted [secrets](/pages/functions/bindings/#secrets) in your Pages project rather than hardcoding them in source code or storing them in KV.
 
 The following functions are available on a `GoogleChatAPI` instance. Each take up to three arguments: an object of path parameters, an object of query parameters, and an object of the request body; as described in the [Google Chat API's documentation](https://developers.google.com/chat/api/reference/rest).
 

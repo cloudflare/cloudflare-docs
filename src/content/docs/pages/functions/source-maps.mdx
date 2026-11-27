@@ -11,15 +11,15 @@ import { Render, WranglerConfig } from "~/components";
 
 <Render file="source-maps" product="workers" />
 
-:::caution
+:::note
 
-Support for uploading source maps for Pages is available now in open beta. Minimum required Wrangler version: 3.60.0.
+Uploading source maps for Pages requires Wrangler version 3.60.0 or later.
 
 :::
 
 ## Source Maps
 
-To enable source maps, provide the `--upload-source-maps` flag to [`wrangler pages deploy`](/workers/wrangler/commands/general/#deploy) or add the following to your Pages application's [Wrangler configuration file](/pages/functions/wrangler-configuration/) if you are using the Pages build environment:
+To enable source maps, provide the `--upload-source-maps` flag to [`wrangler pages deploy`](/workers/wrangler/commands/pages/#pages-deploy) or add the following to your Pages application's [Wrangler configuration file](/pages/functions/wrangler-configuration/) if you are using the Pages build environment:
 
 <WranglerConfig>
 
@@ -31,18 +31,17 @@ To enable source maps, provide the `--upload-source-maps` flag to [`wrangler pag
 
 </WranglerConfig>
 
-When uploading source maps is enabled, Wrangler will automatically generate and upload source map files when you run [`wrangler pages deploy`](/workers/wrangler/commands/general/#deploy).
+When uploading source maps is enabled, Wrangler automatically generates and uploads source map files when you run [`wrangler pages deploy`](/workers/wrangler/commands/pages/#pages-deploy).
 
 ## Stack traces
 
-​​
-When your application throws an uncaught exception, we fetch the source map and use it to map the stack trace of the exception back to lines of your application’s original source code.
+When your application throws an uncaught exception, Cloudflare fetches the source map and uses it to map the stack trace of the exception back to lines of your application's original source code.
 
 You can then view the stack trace when streaming [real-time logs](/pages/functions/debugging-and-logging/).
 
 :::note
 
-The source map is retrieved after your Pages Function invocation completes — it's an asynchronous process that does not impact your applications's CPU utilization or performance. Source maps are not accessible inside the application at runtime, if you `console.log()` the [stack property](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack), you will not get a deobfuscated stack trace.
+The source map is retrieved after your Pages Function invocation completes — it is an asynchronous process that does not impact your application's CPU utilization or performance. Source maps are not accessible inside the application at runtime; if you `console.log()` the [`stack` property](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack), you will not get a deobfuscated stack trace.
 
 :::
 

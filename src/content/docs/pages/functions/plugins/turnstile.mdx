@@ -9,7 +9,7 @@ products:
   - turnstile
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { PackageManagers } from "~/components";
 
 [Turnstile](/turnstile/) is Cloudflare's smart CAPTCHA alternative.
 
@@ -24,24 +24,25 @@ The Turnstile Pages Plugin validates Cloudflare Turnstile tokens.
 ```typescript
 import turnstilePlugin from "@cloudflare/pages-plugin-turnstile";
 
-/**
- * POST /api/submit-with-plugin
- */
+interface Env {
+	TURNSTILE_SECRET_KEY: string;
+}
 
-export const onRequestPost = [
-	turnstilePlugin({
-		// This is the demo secret key. In prod, we recommend you store
-		// your secret key(s) safely.
-		secret: "0x4AAAAAAASh4E5cwHGsTTePnwcPbnFru6Y",
-	}),
-	// Alternatively, this is how you can use a secret key which has been stored as an environment variable
-	// (async (context) => {
-	//   return turnstilePlugin({secret: context.env.SECRET_KEY})(context)
-	// }),
+/**
+ * POST /register (when mounted in functions/register.ts)
+ */
+export const onRequestPost: PagesFunction<Env>[] = [
+	(context) =>
+		turnstilePlugin({
+			// Store your production secret key as an encrypted Pages secret.
+			// For local testing, use a Turnstile dummy test secret key such as
+			// "1x0000000000000000000000000000000AA".
+			secret: context.env.TURNSTILE_SECRET_KEY,
+		})(context),
 	async (context) => {
 		// Request has been validated as coming from a human
 		const formData = await context.request.formData();
-		// Additional solve metadata data is available at context.data.turnstile
+		// Additional solve metadata is available at context.data.turnstile
 		return new Response(
 			`Successfully verified! ${JSON.stringify(context.data.turnstile)}`,
 		);
@@ -49,16 +50,17 @@ export const onRequestPost = [
 ];
 ```
 
-This Plugin only exposes a single route to verify an incoming Turnstile response in a `POST` as the `cf-turnstile-response` parameter. It will be available wherever it is mounted. In the example above, it is mounted in `functions/register.ts`. As a result, it will validate requests to `/register`.
+This Plugin only exposes a single route to verify an incoming Turnstile response in a `POST` request as the `cf-turnstile-response` parameter. It is available wherever it is mounted. In the example above, mounting it in `functions/register.ts` validates requests to `/register`.
+
+For local development and automated tests, refer to [Turnstile dummy secret keys](/turnstile/troubleshooting/testing/).
 
 ## Properties
 
 The Plugin is mounted with a single object parameter with the following properties:
 
-[`secret`](https://dash.cloudflare.com/login) is mandatory and can both be found in your Turnstile dashboard.
+- `secret` (mandatory): Found in the [Turnstile dashboard](https://dash.cloudflare.com/?to=/:account/turnstile). Store this value as an encrypted [secret](/pages/functions/bindings/#secrets) in your Pages project.
+- `response` (optional): The Turnstile token string to verify. If omitted, the plugin extracts the `cf-turnstile-response` value from a `multipart/form-data` request.
+- `remoteip` (optional): The requester's IP address string. Defaults to the `CF-Connecting-IP` header of the request.
+- `onError` (optional): A function that takes the Pages Function context object and returns a `Promise` of a `Response`. By default, it returns a human-readable error `Response`.
 
-`response` and `remoteip` are optional strings. `response` is the Turnstile token to verify. If it is not provided, the plugin will default to extracting `cf-turnstile-response` value from a `multipart/form-data` request). `remoteip` is the requester's IP address. This defaults to the `CF-Connecting-IP` header of the request.
-
-`onError` is an optional function which takes the Pages Function context object and returns a `Promise` of a `Response`. By default, it will return a human-readable error `Response`.
-
-`context.data.turnstile` will be populated in subsequent Pages Functions (including for the `onError` function) with [the Turnstile Siteverify response object](/turnstile/get-started/server-side-validation/).
+`context.data.turnstile` is populated in subsequent Pages Functions (including for the `onError` function) with [the Turnstile Siteverify response object](/turnstile/get-started/server-side-validation/).

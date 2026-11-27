@@ -4,7 +4,6 @@ title: Use Pages Functions for A/B testing
 description: Implement A/B testing in Cloudflare Pages using Pages Functions and cookies.
 products:
   - pages
-
 ---
 
 import { DashButton } from "~/components";
@@ -40,10 +39,10 @@ When you create your `_middleware.js` file at the base of your `/functions` fold
 
 :::
 
-Following the Functions naming convention, the `_middleware.js` file exports a single async `onRequest` function that accepts a `request`, `env` and `next` as an argument.
+Following the Functions naming convention, the `_middleware.js` file exports an `onRequest` handler that receives the request `context` (containing `request`, `env`, and `next`).
 
 ```js
-const abTest = async ({ request, next, env }) => {
+const abTest = async (context) => {
 	/*
   Todo:
   1. Conditional statements to check for the cookie
@@ -56,11 +55,11 @@ export const onRequest = [abTest];
 
 To set the cookie, create the `cookieName` variable and assign any value. Then create the `newHomepagePathName` variable and assign it `/test`:
 
-```js null {1,2}
+```js {1,2}
 const cookieName = "ab-test-cookie";
 const newHomepagePathName = "/test";
 
-const abTest = async ({ request, next, env }) => {
+const abTest = async (context) => {
 	/*
   Todo:
   1. Conditional statements to check for the cookie
@@ -73,29 +72,29 @@ export const onRequest = [abTest];
 
 ## Set up conditional logic
 
-Based on the URL pathname, check that the cookie value is equal to `new`. If the value is `new`, then `newHomepagePathName` will be served.
+Based on the URL pathname, check whether the cookie is already set to `new` (serve `newHomepagePathName`) or `current` (keep the visitor in the control group by calling `context.next()`).
 
-```js null {7,8,9,10,11,12,13,14,15,16,17,18,19}
+```js {7-21}
 const cookieName = "ab-test-cookie";
 const newHomepagePathName = "/test";
 
-const abTest = async ({ request, next, env }) => {
+const abTest = async (context) => {
 	/*
   Todo:
   1. Assign cookies based on randomly generated percentage, then serve
   */
 
-	const url = new URL(request.url);
+	const url = new URL(context.request.url);
 	if (url.pathname === "/") {
-		// if cookie ab-test-cookie=new then change the request to go to /test
-		// if no cookie set, pass x% of traffic and set a cookie value to "current" or "new"
-
-		let cookie = request.headers.get("cookie");
-		// is cookie set?
+		// If cookie ab-test-cookie=new, serve /test
+		// If cookie ab-test-cookie=current, serve the default homepage
+		const cookie = context.request.headers.get("cookie");
 		if (cookie && cookie.includes(`${cookieName}=new`)) {
-			// Change the request to go to /test (as set in the newHomepagePathName variable)
 			url.pathname = newHomepagePathName;
-			return env.ASSETS.fetch(url);
+			return context.env.ASSETS.fetch(url);
+		}
+		if (cookie && cookie.includes(`${cookieName}=current`)) {
+			return context.next();
 		}
 	}
 };
@@ -103,11 +102,11 @@ const abTest = async ({ request, next, env }) => {
 export const onRequest = [abTest];
 ```
 
-If the cookie value is not present, you will have to assign one. Generate a percentage (from 0-99) by using: `Math.floor(Math.random() * 100)`. Your default cookie version is given a value of `current`.
+If no cookie is present, assign one. Generate a percentage (from `0` to `99`) using `Math.floor(Math.random() * 100)`. Your default cookie version is given a value of `current`.
 
-If the percentage of the number generated is lower than `50`, you will assign the cookie version to `new`. Based on the percentage randomly generated, you will set the cookie and serve the assets. After the conditional block, pass the request to `next()`. This will pass the request to Pages. This will result in 50% of users getting the `/test` homepage.
+If the percentage generated is lower than `50`, assign the cookie version to `new` and update `url.pathname` to `/test`. Fetch the static asset with `context.env.ASSETS.fetch(url)`, clone the response to attach the `Set-Cookie` header, and return it. For all non-homepage routes, pass the request to `context.next()`. This results in 50% of new visitors getting the `/test` homepage while keeping returning visitors in their assigned group.
 
-The `env.ASSETS.fetch()` function will allow you to send the user to a modified path which is defined through the `url` parameter. `env` is the object that contains your environment variables and bindings. `ASSETS` is a default Function binding that allows communication between your Function and Pages' asset serving resource. `fetch()` calls to the Pages asset-serving resource and returns the asset (`/test` homepage) to your website's visitor.
+The `env.ASSETS.fetch()` function allows you to send the user to a modified path defined through the `url` parameter. `env` is the object that contains your environment variables and bindings. `ASSETS` is a default Function binding that allows communication between your Function and Pages' asset-serving resource. `fetch()` calls the Pages asset-serving resource and returns the asset (`/test` homepage) to your website's visitor.
 
 :::note[Binding]
 
@@ -115,7 +114,7 @@ A Function is a Worker that executes on your Pages project to add dynamic functi
 
 :::
 
-```js null {20-36}
+```js {22-35}
 const cookieName = "ab-test-cookie";
 const newHomepagePathName = "/test";
 
@@ -123,29 +122,33 @@ const abTest = async (context) => {
 	const url = new URL(context.request.url);
 	// if homepage
 	if (url.pathname === "/") {
-		// if cookie ab-test-cookie=new then change the request to go to /test
-		// if no cookie set, pass x% of traffic and set a cookie value to "current" or "new"
+		// if cookie ab-test-cookie=new, serve /test
+		// if cookie ab-test-cookie=current, serve the default homepage
+		// if no cookie is set, split 50% of traffic and set a cookie value to "current" or "new"
 
-		let cookie = context.request.headers.get("cookie");
-		// is cookie set?
+		const cookie = context.request.headers.get("cookie");
 		if (cookie && cookie.includes(`${cookieName}=new`)) {
 			// pass the request to /test
 			url.pathname = newHomepagePathName;
 			return context.env.ASSETS.fetch(url);
-		} else {
-			const percentage = Math.floor(Math.random() * 100);
-			let version = "current"; // default version
-			// change pathname and version name for 50% of traffic
-			if (percentage < 50) {
-				url.pathname = newHomepagePathName;
-				version = "new";
-			}
-			// get the static file from ASSETS, and attach a cookie
-			const asset = await context.env.ASSETS.fetch(url);
-			let response = new Response(asset.body, asset);
-			response.headers.append("Set-Cookie", `${cookieName}=${version}; path=/`);
-			return response;
 		}
+		if (cookie && cookie.includes(`${cookieName}=current`)) {
+			// keep returning visitors in the control group
+			return context.next();
+		}
+
+		const percentage = Math.floor(Math.random() * 100);
+		let version = "current"; // default version
+		// change pathname and version name for 50% of traffic
+		if (percentage < 50) {
+			url.pathname = newHomepagePathName;
+			version = "new";
+		}
+		// get the static file from ASSETS, and attach a cookie
+		const asset = await context.env.ASSETS.fetch(url);
+		const response = new Response(asset.body, asset);
+		response.headers.append("Set-Cookie", `${cookieName}=${version}; path=/`);
+		return response;
 	}
 	return context.next();
 };
@@ -155,11 +158,12 @@ export const onRequest = [abTest];
 
 ## Deploy to Cloudflare Pages
 
-After you have set up your `functions/_middleware.js` file in your project you are ready to deploy with Pages. Push your project changes to GitHub/GitLab.
+After you have set up your `functions/_middleware.js` file in your project, you are ready to deploy with Pages. Push your project changes to GitHub or GitLab.
 
 After you have deployed your application, review your middleware Function:
 
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
-2. Select your Pages project > **Settings** > **Functions** > **Configuration**.
+
+2. Select your Pages project > **Settings** > **Functions**.

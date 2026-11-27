@@ -19,6 +19,7 @@ Functions metrics aggregate request data for an individual Pages project. To vie
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
+
 2. Select your Pages project.
 3. In your Pages project, select **Functions Metrics**.
 
@@ -32,10 +33,10 @@ There are three metrics that can help you understand the health of your Function
 
 In **Functions metrics**, you can see historical request counts broken down into total requests, successful requests and errored requests. Information on subrequests is available by selecting **Subrequests**.
 
-- **Total**: All incoming requests registered by a Function. Requests blocked by [Web Application Firewall (WAF)](https://www.cloudflare.com/waf/) or other security features will not count.
+- **Total**: All incoming requests registered by a Function. Requests blocked by [Web Application Firewall (WAF)](/waf/) or other security features will not count.
 - **Success**: Requests that returned a `Success` or `Client Disconnected` [invocation status](#invocation-statuses).
-- **Errors**: Requests that returned a `Script Threw Exception`, `Exceeded Resources`, or `Internal Error` [invocation status](#invocation-statuses)
-- **Subrequests**: Requests triggered by calling `fetch` from within a Function. When your Function fetches a static asset, it will count as a subrequest. A subrequest that throws an uncaught error will not be counted.
+- **Errors**: Requests that returned a `Script Threw Exception`, `Exceeded Resources`, or `Internal Error` [invocation status](#invocation-statuses).
+- **Subrequests**: Requests triggered by calling `fetch` from within a Function. When your Function fetches a static asset, it counts as a subrequest. A subrequest that throws an uncaught error will not be counted.
 
 Request traffic data may display a drop off near the last few minutes displayed in the graph for time ranges less than six hours. This does not reflect a drop in traffic, but a slight delay in aggregation and metrics delivery.
 
@@ -43,18 +44,18 @@ Request traffic data may display a drop off near the last few minutes displayed 
 
 Function invocation statuses indicate whether a Function executed successfully or failed to generate a response in the Workers runtime. Invocation statuses differ from HTTP status codes. In some cases, a Function invocation succeeds but does not generate a successful HTTP status because of another error encountered outside of the Workers runtime. Some invocation statuses result in a Workers error code being returned to the client.
 
-| Invocation status      | Definition                                            | Workers error code | Graph QL field       |
+| Invocation status      | Definition                                            | Workers error code | GraphQL field        |
 | ---------------------- | ----------------------------------------------------- | ------------------ | -------------------- |
 | Success                | Worker script executed successfully                   |                    | success              |
 | Client disconnected    | HTTP client disconnected before the request completed |                    | clientDisconnected   |
 | Script threw exception | Worker script threw an unhandled JavaScript exception | 1101               | scriptThrewException |
-| Exceeded resources^1   | Worker script exceeded runtime limits                 | 1102, 1027         | exceededResources    |
-| Internal error^2       | Workers runtime encountered an error                  |                    | internalError        |
+| Exceeded resources (1) | Worker script exceeded runtime limits                 | 1102, 1027         | exceededResources    |
+| Internal error (2)     | Workers runtime encountered an error                  |                    | internalError        |
 
-1. The Exceeded Resources status may appear when the Worker exceeds a [runtime limit](/workers/platform/limits/#request-and-response-limits). The most common cause is excessive CPU time, but is also caused by a script exceeding startup time or free tier limits.
-2. The Internal Error status may appear when the Workers runtime fails to process a request due to an internal failure in our system. These errors are not caused by any issue with the Function code nor any resource limit. While requests with Internal Error status are rare, some may appear during normal operation. These requests are not counted towards usage for billing purposes. If you notice an elevated rate of requests with Internal Error status, review [www.cloudflarestatus.com](http://www.cloudflarestatus.com).
+1. The Exceeded Resources status may appear when the Worker exceeds a [runtime limit](/workers/platform/limits/#request-and-response-limits). The most common cause is excessive CPU time, but it can also be caused by a script exceeding startup time or free tier limits.
+2. The Internal Error status may appear when the Workers runtime fails to process a request due to an internal failure in our system. These errors are not caused by any issue with the Function code or any resource limit. While requests with Internal Error status are rare, some may appear during normal operation. These requests are not counted toward usage for billing purposes. If you notice an elevated rate of requests with Internal Error status, review [cloudflarestatus.com](https://www.cloudflarestatus.com/).
 
-To further investigate exceptions, refer to [Debugging and Logging](/pages/functions/debugging-and-logging)
+To further investigate exceptions, refer to [Debugging and Logging](/pages/functions/debugging-and-logging/).
 
 ### CPU time per execution
 
@@ -66,9 +67,7 @@ In some cases, higher quantiles may appear to exceed [CPU time limits](/workers/
 
 The **Duration** chart underneath **Median CPU time** in the **Functions metrics** dashboard shows historical [duration](/workers/platform/limits/#duration) per Function execution. The data is broken down into relevant quantiles, similar to the CPU time chart.
 
-Understanding duration on your Function is useful when you are intending to do a significant amount of computation on the Function itself. This is because you may have to use the Standard or Unbound usage model which allows up to 30 seconds of CPU time.
-
-Workers on the [Bundled Usage Model](/workers/platform/pricing/#workers) may have high durations, even with a 50 ms CPU time limit, if they are running many network-bound operations like fetch requests and waiting on responses.
+Understanding duration on your Function is useful when your Function performs significant computation or waits on multiple network-bound operations (such as `fetch` requests). Even with low CPU time, a Function waiting on external network responses can have a high wall-clock duration. Refer to [Workers Limits](/workers/platform/limits/#cpu-time) and [Workers Pricing](/workers/platform/pricing/#workers) for details on CPU time and billing under the Standard usage model.
 
 ### Metrics retention
 

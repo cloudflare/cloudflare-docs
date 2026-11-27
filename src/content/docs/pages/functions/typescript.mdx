@@ -8,16 +8,16 @@ products:
   - pages
 ---
 
-import { PackageManagers, Render } from "~/components";
+import { PackageManagers } from "~/components";
 
 Pages Functions supports TypeScript. Author any files in your `/functions` directory with a `.ts` extension instead of a `.js` extension to start using TypeScript.
 
-You can add runtime types and Env types by running:
+You can add runtime types and `Env` types by running:
 
 <PackageManagers
 	type="exec"
 	pkg="wrangler"
-	args={"types --path='./functions/types.d.ts'"}
+	args={"types ./functions/types.d.ts"}
 />
 
 Then configure the types by creating a `functions/tsconfig.json` file:
