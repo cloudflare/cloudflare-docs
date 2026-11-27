@@ -1,0 +1,259 @@
+---
+title: Get started
+pcx_content_type: get-started
+description: Write a Programmable Flow Protection program, verify it locally, upload it, and deploy it safely with a rule in monitoring mode.
+products:
+  - ddos-protection
+sidebar:
+  order: 1
+---
+
+import { Steps, Tabs, TabItem, DashButton } from "~/components";
+
+This guide takes you from an empty file to a program running on Cloudflare's network. In this guide, you write a program that drops UDP packets sent to a game server port unless they start with a fixed magic value, verify it on your computer, upload it, and deploy it with a rule in monitoring mode before you turn on mitigation.
+
+## Before you begin
+
+- Make sure your account meets the [requirements](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/#requirements).
+- This guide creates a global rule. An account can have only one global rule. If your account already has one, use a [data center scope](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#scope) for the rule instead.
+- Install `clang` 19 with the BPF target, `git`, and a [Rust toolchain](https://www.rust-lang.org/tools/install). Cloudflare compiles programs with `clang` 19. On macOS, Apple clang does not include the BPF target. Install LLVM instead, for example with `brew install llvm@19`.
+- To use the API, [create an API token](/fundamentals/api/get-started/create-token/) with the **DDoS Protection Write** permission, and [find your account ID](/fundamentals/account/find-account-and-zone-ids/). The API examples on this page read them from environment variables:
+
+  ```sh
+  export ACCOUNT_ID="<ACCOUNT_ID>"
+  export CLOUDFLARE_API_TOKEN="<API_TOKEN>"
+  ```
+
+  The examples also use [`jq`](https://jqlang.org/) to read IDs from API responses.
+
+## Set up the tools
+
+<Steps>
+1. Clone the [`pfp-tools`](https://github.com/cloudflare/pfp-tools) repository, which contains the headers that every program includes:
+
+   ```sh
+   git clone https://github.com/cloudflare/pfp-tools.git
+   ```
+
+2. Install `pfp-verifier`, the verifier that Cloudflare runs on every uploaded program:
+
+   ```sh
+   cargo install --locked pfp-verifier
+   ```
+
+</Steps>
+
+## Write the program
+
+Create a file named `first_program.c` with the following content:
+
+```c title="first_program.c"
+#define CF_EBPF_HELPER_V0
+
+#include <cf_ebpf_defs.h>
+#include <cf_ebpf_helper.h>
+
+#define GAME_PORT 27015
+#define GAME_MAGIC 0x47414D45 /* "GAME" */
+
+uint64_t cf_ebpf_main(void *state)
+{
+    struct cf_ebpf_generic_ctx *ctx = state;
+    struct cf_ebpf_parsed_headers headers;
+    struct cf_ebpf_packet_data *p;
+
+    /* Parse the IP and UDP headers. Drop the packet if parsing fails. */
+    if (parse_packet_data(ctx, &p, &headers) != 0) {
+        return CF_EBPF_DROP;
+    }
+
+    /* Only inspect traffic for the game server port. */
+    if (ntohs(headers.udp->dest) != GAME_PORT) {
+        return CF_EBPF_PASS;
+    }
+
+    /* The UDP payload must hold at least the 4-byte magic value. */
+    uint32_t *magic = (uint32_t *)(headers.udp + 1);
+    if ((uint8_t *)(magic + 1) > headers.data_end) {
+        return CF_EBPF_DROP;
+    }
+
+    /* Drop packets that do not start with the magic value. */
+    if (ntohl(*magic) != GAME_MAGIC) {
+        return CF_EBPF_DROP;
+    }
+
+    return CF_EBPF_PASS;
+}
+```
+
+Every program follows the same structure:
+
+- `#define CF_EBPF_HELPER_V0` before the includes selects version 0 of the [helper functions](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/reference/helper-functions/).
+- `cf_ebpf_main` is the entry point. Cloudflare calls it once per packet.
+- `parse_packet_data` locates the IP and UDP headers.
+- The return value is the verdict: `CF_EBPF_PASS` or `CF_EBPF_DROP`.
+- Before reading packet data, the program checks that the data ends before `headers.data_end`.
+- Header fields are in network byte order, so the program converts them with `ntohs` and `ntohl`.
+
+For the full set of rules, refer to [Write programs](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/write-programs/).
+
+## Compile and verify the program
+
+<Steps>
+1. Compile the program with the same flags that Cloudflare uses when you upload a program:
+
+   ```sh
+   clang -O2 -target bpf -mllvm -bpf-stack-size=8192 \
+     -Wall -Werror -fno-gnu-inline-asm -Wformat=2 -Wconversion \
+     -Wimplicit-fallthrough -Werror=format-security -nostdlibinc \
+     -D__x86_64__ -D__LP64__ \
+     -I pfp-tools/pfp-headers/include \
+     -c first_program.c -o first_program.o
+   ```
+
+   On macOS, replace `clang` with `"$(brew --prefix llvm@19)/bin/clang"`. Apple clang fails with the error `Unknown command line argument '-bpf-stack-size=8192'`.
+
+2. Run the verifier on the compiled object:
+
+   ```sh
+   pfp-verifier first_program.o
+   ```
+
+   If the program is valid, the verifier prints the number of instructions in the program, for example `46`. The exact number depends on the version of `clang`. Otherwise, the verifier prints an error. Cloudflare also rejects programs that exceed the [instruction and size limits](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/reference/limits/#programs). For help with errors, refer to [Troubleshooting](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/troubleshooting/).
+
+</Steps>
+
+## Upload the program
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **L3/4 DDoS protection** page.
+
+   <DashButton url="/?to=/:account/network-security/ddos" />
+
+2. Go to **Advanced Protection** > **Programmable Flow Protection**.
+3. Under **Programs**, select **Upload new program**, and select `first_program.c`.
+
+</Steps>
+
+</TabItem>
+<TabItem label="API">
+
+Send the C source code as the request body. The `X-Program-Name` header sets the program name. The command saves the response, and stores the program ID in the `PROGRAM_ID` variable:
+
+```sh
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/programs" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: text/plain" \
+  --header "X-Program-Name: first-program" \
+  --data-binary "@first_program.c" \
+  --output upload.json
+
+PROGRAM_ID=$(jq -r '.result.id' upload.json)
+jq '.result | {state, err_msg}' upload.json
+```
+
+</TabItem>
+</Tabs>
+
+Cloudflare compiles and verifies the program. If the program `state` is `success`, the program is ready to use in a rule. If you used the dashboard, note the program ID. If the state is `failed_compiler` or `failed_verifier`, the `err_msg` field contains the error. Fix the program and [update it](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/deploy-programs/#update-a-program). An upload with the same name fails, because program names must be unique.
+
+## Test the program with a packet capture
+
+Before you deploy the program, run it against a packet capture of your own traffic. For example, capture traffic to the game server port on your server with `tcpdump`:
+
+```sh
+sudo tcpdump -i any -w capture.pcap udp port 27015
+```
+
+Then send the capture to Cloudflare. Cloudflare returns the capture with the program verdict as a comment on each packet:
+
+```sh
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/programs/$PROGRAM_ID/pcap" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/vnd.tcpdump.pcap" \
+  --data-binary "@capture.pcap" \
+  --output annotated.pcapng
+```
+
+Open `annotated.pcapng` in a tool such as Wireshark and check the packet comments. For details, refer to [Test programs](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/test-programs/#debug-with-a-packet-capture).
+
+## Deploy the program in monitoring mode
+
+Create a rule that runs the program in monitoring mode. In monitoring mode, the program runs on live traffic but Cloudflare does not drop any packets.
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
+<Steps>
+1. In the **Programmable Flow Protection** tab, under **Rules**, select **Create rule**.
+2. Select the program you uploaded.
+3. For the mode, select **Monitoring**.
+4. Keep the global scope, and filter the rule to the traffic for the game server port, `udp.dstport` equal to `27015`.
+5. Select **Deploy**.
+
+</Steps>
+
+</TabItem>
+<TabItem label="API">
+
+```sh
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/rules" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "program_id": "'"$PROGRAM_ID"'",
+    "scope": "global",
+    "name": "global",
+    "mode": "monitoring",
+    "expression": "udp.dstport eq 27015"
+  }' \
+  --output rule.json
+
+RULE_ID=$(jq -r '.result.id' rule.json)
+```
+
+</TabItem>
+</Tabs>
+
+## Review the results
+
+In [Network Analytics](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/monitor/), filter by the program name or the rule ID, and check which packets the program would drop. If the program would drop legitimate traffic, fix it, [update it](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/deploy-programs/#update-a-program), and repeat the tests. The rule switches to the new version automatically.
+
+## Turn on mitigation
+
+When you are confident in the results, change the rule mode to **Enabled**:
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
+<Steps>
+1. Under **Rules**, select the menu next to your rule, and select **Edit**.
+2. For the mode, select **Enabled**, and save the rule.
+
+</Steps>
+
+</TabItem>
+<TabItem label="API">
+
+```sh
+curl --request PATCH \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/rules/$RULE_ID" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{ "mode": "enabled" }'
+```
+
+</TabItem>
+</Tabs>
+
+The program now drops packets for the game server port that do not start with the magic value.
+
+## Next steps
+
+- Learn how programs, rules, and state work in [Concepts](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/).
+- Use the [example programs](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/examples/) as a starting point for rate limiting, challenges, and more.
+- Plan production rollouts with [Deploy programs](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/deploy-programs/).
