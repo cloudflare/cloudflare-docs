@@ -1,0 +1,266 @@
+---
+title: Publish and subscribe with Server-Sent Events
+description: Use a SQLite-backed Durable Object to fan out Server-Sent Events and replay missed events when clients reconnect.
+pcx_content_type: example
+sidebar:
+  order: 3
+products:
+  - durable-objects
+---
+
+import { TypeScriptExample } from "~/components";
+
+Use Server-Sent Events (SSE) to push updates to multiple clients over HTTP. In this example, one [SQLite-backed Durable Object](/durable-objects/api/sqlite-storage-api/) owns each topic. Clients subscribe with `GET /topics/:topic` and publish text with `POST /topics/:topic`.
+
+:::caution[An open SSE stream prevents hibernation]
+A Durable Object incurs [duration charges](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges) while an SSE response keeps it active, even between events. Use [hibernatable WebSockets](/durable-objects/best-practices/websockets/#choose-between-sse-and-hibernatable-websockets) if you need many long-lived connections with idle gaps. If eviction or a code update resets the object, the runtime ends its open SSE responses and discards its in-memory subscribers. SQLite history survives, so clients can reconnect and replay missed events.
+:::
+
+## Set up the Worker
+
+[Install the Cloudflare CLI](/cf/get-started/), then create a Worker project:
+
+```sh
+cf init sse-pub-sub
+cd sse-pub-sub
+```
+
+Replace `cloudflare.config.ts` with the following configuration. The `Topic` export gives the Worker a [loopback binding](/workers/runtime-apis/context/#exports) to its own Durable Object namespace.
+
+```ts title="cloudflare.config.ts"
+import { defineConfig, exports } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "sse-pub-sub",
+		entrypoint,
+		compatibilityDate: "2026-11-19",
+		exports: { Topic: exports.durableObject({ storage: "sqlite" }) },
+	},
+});
+```
+
+Replace `src/index.ts` with the following code. The object writes each event to SQLite before sending it to subscribers. A new subscriber without a cursor receives only live events. On reconnect, the object queues missed events in ID order and registers the subscriber for live events. It does both without an `await`, so a publish cannot interleave with that handoff.
+
+If you use the JavaScript version, save it as `src/index.js` and update the entrypoint import in `cloudflare.config.ts` to match.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+const HISTORY_LIMIT = 100;
+const MAX_EVENT_BYTES = 4_096;
+const MAX_PENDING_WRITES = 128;
+const MAX_SUBSCRIBERS = 100;
+const HEARTBEAT_MS = 15_000;
+const RETRY_MS = 3_000;
+const encoder = new TextEncoder();
+const sseHeaders = {
+	"Content-Type": "text/event-stream; charset=utf-8",
+	"Cache-Control": "no-store",
+};
+
+type TopicEvent = { id: number; data: string };
+type Send = (chunk: Uint8Array) => void;
+
+function encodeEvent({ id, data }: TopicEvent): Uint8Array {
+	return encoder.encode(`id: ${id}\ndata: ${data}\n\n`);
+}
+
+export class Topic extends DurableObject {
+	private subscribers = new Set<Send>();
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		this.ctx.storage.sql.exec(`
+			CREATE TABLE IF NOT EXISTS events (
+				id INTEGER PRIMARY KEY AUTOINCREMENT,
+				data TEXT NOT NULL
+			)
+		`);
+	}
+
+	async fetch(request: Request): Promise<Response> {
+		if (request.method === "GET") {
+			const cursor =
+				request.headers.get("Last-Event-ID") ??
+				new URL(request.url).searchParams.get("after");
+			return this.subscribe(cursor);
+		}
+
+		if (request.method === "POST") {
+			return this.publish(request);
+		}
+
+		return new Response("Use GET or POST.", {
+			status: 405,
+			headers: { Allow: "GET, POST" },
+		});
+	}
+
+	private async publish(request: Request): Promise<Response> {
+		const buffer = new Uint8Array(MAX_EVENT_BYTES);
+		let length = 0;
+		for await (const chunk of request.body ?? []) {
+			if (length + chunk.byteLength > buffer.byteLength) {
+				return new Response("Event exceeds 4,096 bytes.", { status: 413 });
+			}
+			buffer.set(chunk, length);
+			length += chunk.byteLength;
+		}
+
+		const data = JSON.stringify(
+			new TextDecoder().decode(buffer.subarray(0, length)),
+		);
+		if (encoder.encode(data).byteLength > MAX_EVENT_BYTES) {
+			return new Response("JSON-encoded event exceeds 4,096 bytes.", {
+				status: 413,
+			});
+		}
+		const sql = this.ctx.storage.sql;
+		const event = sql
+			.exec<TopicEvent>(
+				"INSERT INTO events (data) VALUES (?) RETURNING id, data",
+				data,
+			)
+			.one();
+		sql.exec("DELETE FROM events WHERE id <= ?", event.id - HISTORY_LIMIT);
+
+		const chunk = encodeEvent(event);
+		for (const send of this.subscribers) send(chunk);
+		return Response.json({ id: event.id }, { status: 201 });
+	}
+
+	private subscribe(lastEventId: string | null): Response {
+		const sql = this.ctx.storage.sql;
+		const { oldest, newest } = sql
+			.exec<{ oldest: number | null; newest: number | null }>(
+				"SELECT MIN(id) AS oldest, MAX(id) AS newest FROM events",
+			)
+			.one();
+		const cursor = lastEventId === null ? (newest ?? 0) : Number(lastEventId);
+		if (
+			(lastEventId !== null && !/^\d+$/.test(lastEventId)) ||
+			!Number.isSafeInteger(cursor) ||
+			cursor < (oldest ?? 1) - 1 ||
+			cursor > (newest ?? 0)
+		) {
+			return new Response("event: reset\ndata: Replay unavailable\n\n", {
+				headers: sseHeaders,
+			});
+		}
+
+		if (this.subscribers.size >= MAX_SUBSCRIBERS) {
+			return new Response(`retry: ${RETRY_MS}\n`, { headers: sseHeaders });
+		}
+
+		const replay = sql
+			.exec<TopicEvent>(
+				"SELECT id, data FROM events WHERE id > ? ORDER BY id",
+				cursor,
+			)
+			.toArray();
+		const { readable, writable } = new TransformStream<
+			Uint8Array,
+			Uint8Array
+		>();
+		const writer = writable.getWriter();
+		let pending = 0;
+		let closed = false;
+		const cleanup = () => {
+			if (closed) return;
+			closed = true;
+			clearInterval(heartbeat);
+			this.subscribers.delete(send);
+		};
+		const send: Send = (chunk) => {
+			if (closed) return;
+			if (pending >= MAX_PENDING_WRITES) {
+				cleanup();
+				void writer.abort("Subscriber fell behind").catch(() => {});
+				return;
+			}
+			pending++;
+			void writer.write(chunk).then(() => {
+				pending--;
+			}, cleanup);
+		};
+		const heartbeat = setInterval(
+			() => send(encoder.encode(": heartbeat\n\n")),
+			HEARTBEAT_MS,
+		);
+		void writer.closed.then(cleanup, cleanup);
+
+		send(encoder.encode(`id: ${cursor}\n\n`));
+		for (const event of replay) send(encodeEvent(event));
+		this.subscribers.add(send);
+		return new Response(readable, { headers: sseHeaders });
+	}
+}
+
+export default {
+	fetch(request, _env, ctx) {
+		const match = /^\/topics\/([\w-]{1,64})$/.exec(
+			new URL(request.url).pathname,
+		);
+		const topic = match?.[1];
+		if (!topic) return new Response("Topic not found.", { status: 404 });
+		return ctx.exports.Topic.getByName(topic).fetch(request);
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+`writer.closed` and rejected writes both remove the subscriber and clear its heartbeat timer. A client can disconnect between events without the object noticing right away. The next heartbeat attempts a write so it can surface the disconnect even when no one publishes. The heartbeat is an SSE comment: it neither dispatches an event nor changes the replay cursor. Each subscriber has a bounded write queue so a slow client cannot hold up a publisher or other subscribers.
+
+This example limits each topic to 100 subscribers and each publish to 4 KiB, including after JSON encoding. When a topic is full, the object sends a short `200` SSE response with only a `retry:` field, then closes it. The browser retries without advancing its cursor. An HTTP `503` would stop `EventSource` from reconnecting. Before you expose either route, authenticate callers, authorize access to each topic, and rate-limit publishers and subscribers.
+
+## Try live delivery and replay
+
+Run `cf dev`. In two other terminals, run the first command to subscribe both clients to `updates`. Publish from a separate terminal. Both subscribers receive the event with the same ID.
+
+```sh
+curl --no-buffer http://localhost:5173/topics/updates
+```
+
+```sh
+curl --data-binary 'First update' http://localhost:5173/topics/updates
+```
+
+Disconnect one subscriber, publish another update, then reconnect using the ID from the last event that subscriber received. On a fresh topic, the first event has ID `1`:
+
+```sh
+curl --data-binary 'Missed update' http://localhost:5173/topics/updates
+curl --no-buffer -H 'Last-Event-ID: 1' http://localhost:5173/topics/updates
+```
+
+The reconnecting subscriber receives event `2`, then stays connected for live events. You can also stop and restart `cf dev` without clearing local storage, then repeat the reconnect command. The old responses end, but SQLite still holds the event history.
+
+## Reconnect from a browser
+
+From a page on the Worker's origin, create an `EventSource` for the topic. To try it locally, open `http://localhost:5173/` and run the code in the browser console. This Worker returns `404` at `/` because it only serves topic endpoints.
+
+The stream starts with an `id:` line followed by a blank line and no `data:`. This sets the browser's replay cursor without dispatching a message. On a live-only subscription, the object uses the latest event ID, or `0` if the topic is empty. On a replay subscription, it uses the requested ID, not the latest ID, so a dropped connection during replay does not skip events.
+
+Once the browser receives that first ID, it sends `Last-Event-ID` on reconnect even if it has not received a message yet. The object replays up to the last 100 events. If the cursor is invalid, ahead of the topic, or too old to replay without a gap, the object sends a `reset` event instead.
+
+```js
+function subscribe() {
+	const source = new EventSource("/topics/updates");
+	source.onmessage = (event) => {
+		console.log(event.lastEventId, JSON.parse(event.data));
+	};
+	source.addEventListener("reset", () => {
+		source.close();
+		console.warn("Replay unavailable. Listening for new updates only.");
+		subscribe();
+	});
+}
+
+subscribe();
+```
+
+This browser example starts a fresh live stream on reset. If your app cannot skip updates, handle `reset` by loading a fresh application snapshot with its event ID, then creating a new `EventSource` with `?after=<event-id>` in the URL. The object uses `after` for the initial connection and gives `Last-Event-ID` precedence on later reconnects. Treat event IDs as deduplication keys within each topic, not as a guarantee of exactly-once delivery.
