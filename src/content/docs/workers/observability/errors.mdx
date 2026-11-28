@@ -426,6 +426,38 @@ async function handleRequest(request) {
 
 </TabItem> </Tabs>
 
+## 504 responses from Cache API lookups
+
+When a cache entry is missing or expired, [`cache.match()`](/workers/runtime-apis/cache/#match) resolves to `undefined` without contacting your origin. In HTTP request logs, the lookup can appear as a separate entry with `ClientRequestSource: edgeWorkerCacheAPI` and `EdgeResponseStatus: 504`. The `504` is the status of the lookup, not the response sent to the visitor. For example, your Worker can fetch the content after a miss and return `200 OK`.
+
+To check what the visitor received, [follow the lookup's `ParentRayID`](/logs/faq/worker-subrequests/#how-the-two-entries-are-linked) back to the original request (`ClientRequestSource: eyeball`) and check that entry's `EdgeResponseStatus`. If the visitor received a `504`, [troubleshoot the gateway timeout](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-502-504/). `OriginResponseStatus: 0` alone does not identify a cache miss.
+
+To count `504` responses sent to visitors, filter `httpRequestsAdaptiveGroups` in the [GraphQL Analytics API](/analytics/graphql-api/features/filtering/#filter-end-users) by `requestSource: "eyeball"` and `edgeResponseStatus: 504`. The filter excludes subrequest responses, such as a `504` from a cache lookup or a Worker `fetch()` to your origin. If the Worker returns a `504` to the visitor after a failed subrequest, the visitor response still counts.
+
+Set `zoneTag` to your zone ID and `start` and `end` to the bounds of the time range in UTC. The count can be an estimate when [sampling](/analytics/graphql-api/sampling/) applies.
+
+```graphql
+query Visitor504s($zoneTag: string, $start: Time, $end: Time) {
+	viewer {
+		zones(filter: { zoneTag: $zoneTag }) {
+			httpRequestsAdaptiveGroups(
+				limit: 1
+				filter: {
+					datetime_geq: $start
+					datetime_lt: $end
+					requestSource: "eyeball"
+					edgeResponseStatus: 504
+				}
+			) {
+				count
+			}
+		}
+	}
+}
+```
+
+For a [monitor](/notifications/monitors/#custom-sql) that queries `events.httpRequests` for `504` responses, add `AND requestSource = 'eyeball'` to its SQL filter to count only responses sent to visitors.
+
 ## Related resources
 
 - [Workers Issues](/workers/observability/issues/) - Detect and group recurring production failures.
