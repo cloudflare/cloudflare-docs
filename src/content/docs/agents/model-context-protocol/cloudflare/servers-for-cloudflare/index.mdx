@@ -20,17 +20,17 @@ Connect to each server's Streamable HTTP endpoint at `/mcp`. The servers support
 
 The [Cloudflare API MCP server](https://github.com/cloudflare/mcp) at `https://mcp.cloudflare.com/mcp` is the only MCP server you need to work with Cloudflare. It provides access to the entire [Cloudflare API](/api/) — over 2,500 endpoints across DNS, Workers, R2, Zero Trust, and every other product — and to the Cloudflare developer documentation.
 
-The server provides the `search()` and `execute()` tools to find and call API endpoints, and the `docs()` tool to search Cloudflare developer documentation.
+In default Code Mode, the server exposes four tools: `search` and `execute` to discover and call API endpoints, `docs` to search Cloudflare developer documentation, and `whoami` to identify the connected user or account.
 
 It uses [the search-and-execute Code Mode pattern](/agents/model-context-protocol/guides/build-codemode-mcp-server/#publish-a-large-api-with-search-and-execute), a technique where the model writes JavaScript against a typed representation of the OpenAPI spec and the Cloudflare API client, rather than loading individual tool definitions for each endpoint. The generated code runs inside an isolated [Dynamic Worker](/dynamic-workers/) sandbox.
 
 This approach uses approximately 1,000 tokens regardless of how many API endpoints exist. An equivalent MCP server that exposed every endpoint as a native tool would consume over 1 million tokens — more than the entire context window of most foundation models.
 
-| Approach                          | Tools | Token cost |
-| --------------------------------- | ----- | ---------- |
-| Native MCP (full schemas)         | 2,594 | ~1,170,000 |
-| Native MCP (required params only) | 2,594 | ~244,000   |
-| Code Mode                         | 2     | ~1,000     |
+| Approach                          | API tools | Token cost |
+| --------------------------------- | --------- | ---------- |
+| Native MCP (full schemas)         | 2,594     | ~1,170,000 |
+| Native MCP (required params only) | 2,594     | ~244,000   |
+| Code Mode                         | 2         | ~1,000     |
 
 ### Connect to the Cloudflare API MCP server
 
@@ -49,27 +49,6 @@ Add the following configuration to your MCP client:
 When you connect, you will be redirected to Cloudflare to authorize via OAuth and select the permissions to grant to your agent.
 
 For CI/CD or automation, you can create a [Cloudflare API token](https://dash.cloudflare.com/profile/api-tokens) with the permissions you need and pass it as a bearer token in the `Authorization` header. Both user tokens and account tokens are supported.
-
-### Use `search` and `execute` (default Code Mode)
-
-In default Code Mode (`https://mcp.cloudflare.com/mcp`), `search` and `execute` are separate MCP tools, not methods on a shared `cloudflare` object. Connecting with `?codemode=false` selects a different tool set.
-
-The `search` tool exposes the local OpenAPI `spec` without calling the Cloudflare API. The `execute` tool exposes `cloudflare.request` to call API endpoints:
-
-| Tool      | Code input                                                                            | What it does                                                 |
-| --------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
-| `search`  | `async () => spec.paths["/accounts"].get.summary`                                     | Reads the list-accounts summary locally. No account request. |
-| `execute` | `async () => (await cloudflare.request({ method: "GET", path: "/accounts" })).result` | Lists accounts this credential can read.                     |
-
-If calling `cloudflare` inside `search` raises `cloudflare is not defined`, switch to the `execute` tool instead of reconnecting or adding permissions.
-
-### Check connection identity and permissions
-
-Neither `whoami` nor API-token verification enumerates every effective permission on a connection. To check what you are connected as and whether a call is authorized, without pasting tokens into chat:
-
-1. **Identify the session**: Call `whoami` to view the connected identity. `whoami` does not return a permissions list.
-2. **Verify an API token**: Call `GET /user/tokens/verify` ([Verify user token](/api/resources/user/subresources/tokens/methods/verify/)) for a user-owned token, or `GET /accounts/{account_id}/tokens/verify` ([Verify account token](/api/resources/accounts/subresources/tokens/methods/verify/)) for an account-owned token. These endpoints validate API tokens, not OAuth sessions. On an OAuth connection, an HTTP `401` (`code 1000`) from token verification does not invalidate a working session when resource reads succeed.
-3. **Test OAuth access directly**: Run the intended read in `execute` (for example, `GET /accounts`). A successful read proves that read works. If the server denies the resource read and returns an `insufficient_scope` challenge naming the missing scope, approve the step-up prompt in your MCP client. For details on MCP authorization flows, refer to [Authorization](/agents/model-context-protocol/protocol/authorization/).
 
 For more information, refer to the [Cloudflare MCP repository](https://github.com/cloudflare/mcp).
 
@@ -108,6 +87,39 @@ Clone the [cloudflare/skills](https://github.com/cloudflare/skills) repository a
 | OpenCode     | `~/.config/opencode/skills/` | [OpenCode skills](https://opencode.ai/docs/skills/)                                                  |
 | OpenAI Codex | `~/.codex/skills/`           | [OpenAI Codex skills](https://developers.openai.com/codex/skills/)                                   |
 | Pi           | `~/.pi/agent/skills/`        | [Pi coding agent skills](https://github.com/badlogic/pi-mono/tree/main/packages/coding-agent#skills) |
+
+### Available tools
+
+In default Code Mode (`https://mcp.cloudflare.com/mcp`), your MCP client invokes four separate tools. The `search` and `execute` tools are distinct MCP tools, not methods on a shared `cloudflare` object:
+
+| Tool      | Purpose                                                                                                              | Example input                                                                         |
+| --------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `search`  | Queries the local OpenAPI `spec` to discover endpoints and schemas. Makes no Cloudflare API calls.                   | `async () => spec.paths["/accounts"].get.summary`                                     |
+| `execute` | Calls Cloudflare API endpoints through `cloudflare.request()` using credentials managed on the server.               | `async () => (await cloudflare.request({ method: "GET", path: "/accounts" })).result` |
+| `docs`    | Searches Cloudflare developer documentation.                                                                         | —                                                                                     |
+| `whoami`  | Returns the connected Cloudflare user or account identity (`id`, plus `email` or `name`). Does not list permissions. | —                                                                                     |
+
+If your MCP client runs its own Code Mode layer and needs direct per-endpoint tools instead of `search` and `execute`, connect to `https://mcp.cloudflare.com/mcp?codemode=false`. Both `docs` and `whoami` stay available in that mode.
+
+### Troubleshooting
+
+#### `cloudflare is not defined` in `search`
+
+**Cause:** The `search` tool runs read-only JavaScript against the local OpenAPI `spec` object and does not expose `cloudflare`. Only `execute` exposes `cloudflare.request()`.
+
+**Fix:** Use `search` to look up paths and schemas in `spec.paths`, then call the endpoint with `cloudflare.request()` inside `execute`. Do not reconnect or add permissions to resolve this error.
+
+#### HTTP `401` (`code 1000`) from token verification endpoints
+
+**Cause:** `GET /user/tokens/verify` ([Verify user token](/api/resources/user/subresources/tokens/methods/verify/)) and `GET /accounts/{account_id}/tokens/verify` ([Verify account token](/api/resources/accounts/subresources/tokens/methods/verify/)) validate Cloudflare API tokens, not OAuth sessions. Calling either endpoint on an OAuth connection returns HTTP `401` (`code 1000`) even when the session works.
+
+**Fix:** Check identity and access according to how the MCP client is authenticated. The MCP server attaches credentials on the server side, so you never need to paste tokens into chat:
+
+- **Connected identity (OAuth or API token):** Call `whoami` to view the authenticated user or account ID. Neither `whoami` nor token verification lists all effective permissions.
+- **OAuth sessions:** Skip `/tokens/verify` and run a read in `execute`. Use `GET /accounts` to confirm the session is active, or call the product endpoint you need to test access for that product.
+- **API tokens:** Call `GET /user/tokens/verify` in `execute` for a user token, or `GET /accounts/{account_id}/tokens/verify` in `execute` for an account token.
+
+When an OAuth call fails because a scope is missing, the server returns an `insufficient_scope` challenge naming that scope. Approve the step-up prompt in MCP clients that support [scope challenge handling](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization#scope-challenge-handling), or reconnect and grant the scope if your client does not prompt automatically. Endpoints without an OAuth scope require an API token instead.
 
 ## Product-specific MCP servers
 
