@@ -73,6 +73,9 @@ JavaScript is a single-threaded and event-driven programming language. This mean
 
 ## SQL API
 
+`PRAGMA user_version` is not supported. Track your schema version in a SQL table or [synchronous key-value storage](#synchronous-kv-api) instead. Refer to [schema initialization and migrations](/durable-objects/best-practices/rules-of-durable-objects/#initialize-storage-and-run-migrations-in-the-constructor) before changing stored schemas.
+
+
 The `SqlStorage` interface encapsulates methods that modify the SQLite database embedded within a Durable Object. The `SqlStorage` interface is accessible via the [`sql` property](/durable-objects/api/sqlite-storage-api/#sql) of `DurableObjectStorage` class.
 
 For example, using `sql.exec()` a user can create a table and insert rows.
