@@ -1,176 +1,34 @@
-Migrate Cloudflare Pages to Workers using the guide below:
+# Migrate this Cloudflare Pages project to Workers
 
-# Cloudflare Pages to Workers Migration Guide
+Implement the migration to Workers with Static Assets in this repository. Preserve the application's production-facing contract unless the user approves a change: public routes, redirects, methods, status codes, meaningful content, and security and cache behavior. Do not treat local emulator output or legacy adapter internals as the contract. Stop after local verification: do not deploy, upload a Preview, change dashboard settings or domains, or disable Pages without permission.
 
-## Goal
+Use the project's package manager and lockfile. Keep a supported, compatible Wrangler version; install or upgrade it only if the selected migration needs it. Avoid unrelated framework or dependency upgrades. Use the current [Pages migration guide](https://developers.cloudflare.com/workers/static-assets/migration-guides/migrate-from-pages/) and the [Workers framework guides](https://developers.cloudflare.com/workers/framework-guides/) where applicable.
 
-Migrate a Cloudflare Pages project to Cloudflare Workers with static assets support.
+## 1. Establish the Pages baseline
 
-## Core Migration Concepts
+- Find the project root, build and deploy commands, Wrangler config, framework and adapter versions, and Pages build output directory. Inspect CI and any available Pages settings for differences between local, production, and preview builds. Do not assume settings absent from the repository are unused.
+- Run the existing build before changing it. Inspect the built output for `_worker.js` (file or directory), `_routes.json` (checked in or generated), `_headers`, `_redirects`, and `404.html`. Inspect `functions/` and its middleware. In Pages advanced mode, `_worker.js` takes precedence over `functions/`; do not start running previously inactive Functions.
+- Run `wrangler pages dev` locally if possible. Record representative responses: a static asset, a deep link and missing URL, SSR or API endpoints, and any redirects or custom headers. Use the app's routes, tests, configuration, and any available hosted observations to distinguish public behavior from local or adapter artifacts. If an asset and a function share a URL, record which wins. For file-based Functions without a custom `_routes.json`, also inspect the routes Pages generates for deployment: the Functions build supports `--output-routes-path` alongside `--outdir`. Local Pages dev alone does not establish the deployed invocation scope. If you cannot collect a baseline, state what you could not verify and proceed without guessing.
 
-### Understanding the Migration
+## 2. Choose the migration path from the build output
 
-When migrating from Pages to Workers, you're essentially:
+- **Static or client-rendered:** If there is no server code, use an assets-only Worker. A client-side framework or Vite alone does not require a Worker entrypoint, adapter, or `@cloudflare/vite-plugin`. Point `assets.directory` at the built output and omit `main` and `assets.binding`.
+- **Framework SSR or APIs:** Follow the Workers path for the installed framework and adapter versions. Keep the adapter if it already supports Workers. Replace a Pages-only adapter or preset where needed, such as `@cloudflare/next-on-pages` or Nitro's `cloudflare_pages`. For Next.js, check the [current Workers framework guide](https://developers.cloudflare.com/workers/framework-guides/web-apps/nextjs/) and compatibility with the app's routes and runtime features before selecting a replacement. Do not treat wrapping a deprecated Pages adapter's output as a completed migration. Use the supported adapter's entrypoint. Add a route-scoped shim only for a demonstrated public behavior gap. Do not recreate legacy diagnostic headers, generated file aliases, or framework internals based only on local observations. Check that Pages build variables such as `CF_PAGES` do not force the adapter back to Pages. Rebuild and inspect the actual Worker entrypoint and assets directory. If the framework generates Wrangler config (for example, Nitro's `cloudflare_module` with `deployConfig` enabled), inspect `.wrangler/deploy/config.json` and its target. Edit the source config or adapter options, not the generated config, and do not pass `--config` to bypass the generated config unintentionally.
+- **Advanced mode (`_worker.js`):** Use the built file or the entry file inside the directory (typically `_worker.js/index.js`) as `main`, unless the framework configures it. Keep sibling chunks and modules available to Wrangler. If the handler calls `env.ASSETS`, set `assets.binding` to `ASSETS` unless the adapter already does. Keep the entire server bundle outside `assets.directory`, or exclude its file or directory from assets on every build.
+- **File-based Pages Functions:** Preserve the existing handlers and middleware. To keep them during the migration, run `wrangler pages functions build --outdir ./.wrangler/pages-functions` in the project build, outside `assets.directory`, and point `main` at the generated `index.js` or a wrapper around it. Pass the original `--compatibility-date` and any `--compatibility-flags` explicitly; this standalone command does not read Workers config. If the Functions use `assets:` imports, also pass `--build-output-directory` pointing to the final asset output. Configure `assets.binding` as `ASSETS` for the compiled Worker's asset fallback. Do not rewrite the application just to change deployment targets.
 
-1. Moving from Pages deployment commands to Workers deployment commands
-2. Converting Pages-specific configuration to Workers format
-3. Handling static assets using Workers Assets (not the deprecated Workers Sites)
-4. Converting any Pages Functions to Workers format if they exist
+## 3. Preserve configuration and routing
 
-### Key Principles
+- Replace `pages_build_output_dir` with Workers Static Assets configuration, or let the framework emit it. Keep one authoritative source Wrangler config, in the existing format when possible. Preserve the existing compatibility date, flags, and applicable settings. If no date was set, check the Pages runtime settings before choosing one for server code. An assets-only project with no previous date can use today's date.
+- Choose fallback behavior from the baseline, not the framework name. For a Pages-style `index.html` fallback, use `assets.not_found_handling: "single-page-application"`, even on a multi-page site that relied on it. For a static custom 404, use `"404-page"`. Do not let asset fallbacks replace framework SSR or API responses. Check status, `Location`, and query strings for canonical HTML redirects (such as `.html` and trailing-slash URLs). Workers may return `307` where Pages returned `308`. If the status must stay the same, use an explicit `_redirects` rule only if it also preserves method behavior: it can redirect `POST` where Pages returned `405`. If the redirect must be limited to `GET` and `HEAD`, handle it in a route-scoped Worker and let other methods follow the normal handler or asset path.
+- Preserve when Pages invoked the handler before assets, including collisions without middleware or a user-authored `_routes.json`. Use the effective Pages include and exclude rules, including generated rules where applicable. Use `assets.run_worker_first: true` if all requests must run the Worker first. In an array, a matching `!` rule sends requests directly to assets, even on a miss. An asset miss matching neither a positive nor a negative rule can still reach the Worker. Pages `/api/*` also matches `/api`; add the bare path explicitly for includes and excludes when translating a splat. Test both trailing-slash forms. If an array cannot preserve strict handler scope, check excludes before includes in a Worker wrapper. Call the legacy handler only for included paths and return `env.ASSETS.fetch(request)` otherwise. Use `run_worker_first: true` with that guard if necessary, but note that it also invokes the Worker for asset requests. Verify asset hits and misses.
+- Keep `_headers` and `_redirects` in the final assets output. Compare headers even if the project has no `_headers`: Pages adds defaults such as `Access-Control-Allow-Origin`, `Referrer-Policy`, and `X-Content-Type-Options` when serving assets. Restore needed defaults only on confirmed static asset or prerendered responses, including intentional overrides and removals. Identify those responses from the asset handler, route source, or build output, not from status or `Content-Type` alone. When restoring static defaults in a wrapper, pass dynamic responses (including errors) and any response marked `private` or `no-store` through unchanged. Do not remove `Vary` values or replace a restricted origin with `*`. Set required headers on Worker-generated responses explicitly, including redirects you recreate.
+- Verify that generated server code, its source maps, and files Pages previously ignored (such as `_routes.json`, `functions`, `.wrangler`, `node_modules`, `.git`, or `.DS_Store`) are not public. Remove them from the asset output or generate root `.assetsignore` entries. Make exclusions in build inputs or in a build step, not by hand in generated output.
+- Carry over each runtime binding and variable with the same name and intended resource. Map Pages production and preview separately. For branch previews, set an explicit top-level `previews` block in the Wrangler config (empty if no separate settings are needed), not `env.preview`. Follow [Worker Previews configuration](https://developers.cloudflare.com/workers/previews/configuration/) for settings that stay at the top level, and point Preview bindings at test resources rather than production resources. Record dashboard-only settings that still need confirmation. Keep build-time variables separate from runtime ones. Report only secret names, never values; do not copy or commit secrets.
 
-- **Deployment**: Use `wrangler deploy`, never `wrangler pages deploy`
-- **Configuration**: Prefer wrangler.jsonc for better documentation support
-- **Assets**: Use the modern Workers Assets format: `"assets": {"directory": "path"}`
-- **Flexibility**: Adapt the migration to your specific project structure
-- **Package Manager**: Use the appropriate package manager for the project (check for bun.lock, bun.lockb, pnpm-lock.yaml, yarn.lock, or package-lock.json)
+## 4. Wire up and verify the migration
 
-## Migration Steps
-
-### 1. Prerequisites
-
-- Update Wrangler to version 4 or later using your package manager:
-  - npm: `npm install --save-dev wrangler@^4.0.0`
-  - pnpm: `pnpm add --save-dev wrangler@^4.0.0`
-  - yarn: `yarn add --dev wrangler@^4.0.0`
-  - bun: `bun add --dev wrangler@^4.0.0`
-  - This is required as Workers deployment commands have evolved significantly in v4
-  - Check current version with `npx wrangler --version`
-- Install project dependencies if not already installed
-- Consult the official Cloudflare documentation for the latest guidance
-
-### 2. Configuration Migration
-
-#### Update Wrangler Configuration
-
-- Convert to wrangler.jsonc format if using .toml or .json
-- Replace `pages_build_output_dir` with `"assets": {"directory": "path"}`
-- Ensure a `compatibility_date` field exists
-
-#### Example Structure
-
-```jsonc
-{
-	"name": "project-name",
-	"compatibility_date": "2025-06-05",
-	"assets": { "directory": "./dist" },
-	// Add other fields as needed
-}
-```
-
-### 3. Determine Project Type
-
-**First, check for Pages Functions:**
-
-- Look for a `functions/` directory with .js/.ts files
-- If found, you **must** add `wrangler pages functions build` to your build process (see step 6)
-
-**Then, run your build command and check the output directory:**
-
-- **If \_worker.js exists**: You have a Workers script project
-  - Add `"main": "./path/to/_worker.js"`
-  - Add binding to assets: `"assets": {"directory": "path", "binding": "ASSETS"}`
-- **If no \_worker.js**: You have an assets-only project
-  - Just use `"assets": {"directory": "path"}` without main field
-
-### 4. Handle \_worker.js (if present)
-
-If your build creates a \_worker.js file or directory:
-
-1. Create a `.assetsignore` file containing `_worker.js`
-2. Update your build script to copy it to the output directory
-3. This prevents the worker code from being served as a static asset
-
-### 5. Update Package.json Scripts
-
-First, ensure wrangler is updated to v4+ using your package manager:
-
-```bash
-# npm
-npm install --save-dev wrangler@^4.0.0
-# pnpm
-pnpm add --save-dev wrangler@^4.0.0
-# yarn
-yarn add --dev wrangler@^4.0.0
-# bun
-bun add --dev wrangler@^4.0.0
-```
-
-Then replace Pages commands with Workers equivalents:
-
-- `wrangler pages deploy` to `wrangler deploy`
-- `wrangler pages dev` to `wrangler dev`
-
-Keep framework-specific commands unchanged (e.g., `astro dev`, `next dev`).
-
-### 6. Pages Functions Migration (if applicable)
-
-**ONLY if you have a `functions/` directory with .js/.ts files:**
-
-- **Always add** the Pages Functions build command to your build process
-- Use: `wrangler pages functions build --outdir=<output>/_worker.js/`
-- This command converts Pages Functions to Workers format
-- Update your main field to point to the compiled functions: `"main": "./path/to/_worker.js"`
-- The presence of a `functions/` directory means you **must** include this build step
-
-### 7. Validation and Deployment
-
-1. Build your project to ensure it works
-2. Run `wrangler deploy --dry-run` to validate configuration
-3. Fix any issues identified
-4. Deploy with user permission using `wrangler deploy`
-
-## Common Patterns
-
-### Assets-Only Projects
-
-Most static sites fall into this category:
-
-```jsonc
-{
-	"name": "my-site",
-	"assets": { "directory": "./dist" },
-	"compatibility_date": "2025-06-05",
-}
-```
-
-### Projects with Workers Scripts
-
-Sites with server-side logic or Pages Functions:
-
-```jsonc
-{
-	"name": "my-app",
-	"main": "./dist/_worker.js",
-	"assets": {
-		"directory": "./dist",
-		"binding": "ASSETS",
-	},
-	"compatibility_date": "2025-06-05",
-}
-```
-
-**Build script example for projects with Pages Functions:**
-
-```json
-{
-	"scripts": {
-		"build": "your-framework-build && wrangler pages functions build --outdir=./dist/_worker.js/"
-	}
-}
-```
-
-## Important Notes
-
-- **Bindings**: Don't add KV, D1, or other bindings unless your build explicitly fails
-- **Framework Messages**: Ignore informational logs about storage or sessions
-- **Documentation**: Always check the official Cloudflare docs for the latest guidance
-- **Flexibility**: Adapt these guidelines to your specific project structure
-
-## Migration Summary Format
-
-When complete, document:
-
-1. **Project Analysis**: What type of Pages project and its specific features
-2. **Migration Steps**: What changes were made and why
-3. **Validation**: How the migration was tested and verified
+- Update scripts and CI to use the selected framework's Workers commands or `wrangler dev` and `wrangler deploy` (and `wrangler preview` for branch previews where applicable). Keep framework-specific commands that own the build. Test the actual dev and deploy workflows with generated output absent. If a workflow needs a separate build, make that prerequisite explicit in the script, CI, or documented command sequence rather than relying on output left over from the Pages build.
+- Run the actual deployment build from clean output; a generic project build might not produce the Worker. Run `wrangler deploy --dry-run` when Wrangler owns deployment, using the same effective config and build sequence. For other deployment tools, use their documented local or dry-run verification without deploying. Confirm the entrypoint, asset directory, and bindings; a dry-run does not confirm routing or dashboard settings.
+- Run Workers locally and compare it against the Pages baseline. Check status, redirects, meaningful body content, and relevant headers such as `Content-Type`, `Cache-Control`, and custom headers. Where applicable, test a static hit and miss, a deep link, an SSR response or API method, a function/asset collision, and assets and misses inside and outside includes and excludes. Compare a plain request and a browser-style `Sec-Fetch-Mode: navigate` request on routes that may be handled by either assets or the Worker. If you add a response shim, verify that an out-of-scope response still keeps its own cache and security headers. Request generated server paths and verify their contents are not served, even if a fallback returns `200`.
+- Summarize what changed, which behavior you verified, and any mismatch or unverified assumption. List manual next steps for dashboard-only settings, secret setup, Worker Previews or Workers Builds, hostname cutover, and eventual Pages cleanup. A `pages.dev` hostname does not transfer to Workers; plan for any callers that still use it. Leave the current Pages deployment running.
