@@ -90,7 +90,7 @@ With `cf`, customize the migrations directory, bookkeeping table, and discovery 
 
 - `--dir <PATH>`: Directory containing migration files (default: `./migrations`).
 - `--table <NAME>`: Table recording applied migrations (default: `d1_migrations`). Must use D1's bookkeeping schema.
-- `--pattern <GLOB>`: Glob for discovering migration files under `--dir` (default: `<dir>/*.sql`).
+- `--pattern <GLOB>`: Glob for discovering migration files under `--dir` (default: `<dir>/*.sql`). When `--pattern` is set, `--dir` must also be set and `--pattern` must start with the `--dir` prefix (for example, `--dir ./migrations --pattern "migrations/*/migration.sql"`).
 
 </CliVariant>
 </CliVariants>

@@ -19,7 +19,7 @@ import { PackageManagers, TabItem, Tabs } from "~/components";
 
 ## 1. Create or initialize a vinext project
 
-Create a new Cloudflare Workers-ready vinext application:
+Create a new Cloudflare Workers-ready vinext application (select **Cloudflare** when prompted for the target platform, or pass `--platform cloudflare`):
 
 <PackageManagers type="create" pkg="vinext-app@latest" args="my-d1-app" />
 
@@ -40,11 +40,10 @@ cf d1 create --name my-db
 Add the `DB` binding under `worker.env` in `cloudflare.config.ts`:
 
 ```ts title="cloudflare.config.ts"
-import { bindings, defineConfig } from "cf/config";
-// ...existing imports
+import { bindings, defineConfig, defineWorker } from "cf/config";
 
 export default defineConfig({
-	worker: {
+	worker: defineWorker({
 		// ...existing worker configuration
 		env: {
 			// ...existing bindings
@@ -53,7 +52,7 @@ export default defineConfig({
 				name: "my-db",
 			}),
 		},
-	},
+	}),
 });
 ```
 

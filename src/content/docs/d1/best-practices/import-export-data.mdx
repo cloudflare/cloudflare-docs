@@ -94,7 +94,7 @@ For a small `.sql` schema or seed file in the current working directory, pass `-
 cf d1 query <DATABASE_ID> --sql @users_export.sql
 ```
 
-To import a larger file containing many statements without creating a separate API token, split the file into batches and invoke `cf d1 query` for each chunk. The following Node.js script reads a line-delimited `.sql` file (such as `users_export.sql` or output from `sqlite3 .dump`), writes temporary batches of 250 lines, and executes each batch through `cf`:
+To import a larger file containing many statements without creating a separate API token, split the file on complete SQL statement boundaries and invoke `cf d1 query` for each batch. The following Node.js script splits a `.sql` file (such as `users_export.sql` or output from `sqlite3 .dump`) into complete statements, writes temporary batches of 250 statements, and executes each batch through `cf`:
 
 ```js title="import-with-cf.mjs"
 import { execFileSync } from "node:child_process";
@@ -104,9 +104,105 @@ const DATABASE_ID = process.env.D1_DATABASE_ID;
 const SQL_FILE = process.argv[2] ?? "users_export.sql";
 const BATCH_SIZE = 250;
 
-const statements = readFileSync(SQL_FILE, "utf8")
-	.split(/\r?\n/)
-	.filter((line) => line.trim().length > 0);
+function splitSqlStatements(sql) {
+	const statements = [];
+	let current = "";
+	let inSingle = false;
+	let inDouble = false;
+	let inLineComment = false;
+	let inBlockComment = false;
+	let blockDepth = 0;
+
+	for (let i = 0; i < sql.length; i++) {
+		const ch = sql[i];
+		const next = sql[i + 1];
+
+		if (inLineComment) {
+			current += ch;
+			if (ch === "\n") inLineComment = false;
+			continue;
+		}
+		if (inBlockComment) {
+			current += ch;
+			if (ch === "*" && next === "/") {
+				current += next;
+				i++;
+				inBlockComment = false;
+			}
+			continue;
+		}
+		if (inSingle) {
+			current += ch;
+			if (ch === "'" && next === "'") {
+				current += next;
+				i++;
+			} else if (ch === "'") {
+				inSingle = false;
+			}
+			continue;
+		}
+		if (inDouble) {
+			current += ch;
+			if (ch === '"' && next === '"') {
+				current += next;
+				i++;
+			} else if (ch === '"') {
+				inDouble = false;
+			}
+			continue;
+		}
+
+		if (ch === "-" && next === "-") {
+			inLineComment = true;
+			current += ch + next;
+			i++;
+			continue;
+		}
+		if (ch === "/" && next === "*") {
+			inBlockComment = true;
+			current += ch + next;
+			i++;
+			continue;
+		}
+		if (ch === "'") {
+			inSingle = true;
+			current += ch;
+			continue;
+		}
+		if (ch === '"') {
+			inDouble = true;
+			current += ch;
+			continue;
+		}
+
+		if (/[A-Za-z]/.test(ch) && (i === 0 || !/\w/.test(sql[i - 1]))) {
+			const rest = sql.slice(i);
+			if (
+				/^BEGIN\b(?!\s+(?:DEFERRED|IMMEDIATE|EXCLUSIVE|TRANSACTION)\b)/i.test(
+					rest,
+				) ||
+				/^CASE\b/i.test(rest)
+			) {
+				blockDepth++;
+			} else if (/^END\b/i.test(rest) && blockDepth > 0) {
+				blockDepth--;
+			}
+		}
+
+		current += ch;
+		if (ch === ";" && blockDepth === 0) {
+			const trimmed = current.trim();
+			if (trimmed) statements.push(trimmed);
+			current = "";
+		}
+	}
+
+	const trailing = current.trim();
+	if (trailing) statements.push(trailing);
+	return statements;
+}
+
+const statements = splitSqlStatements(readFileSync(SQL_FILE, "utf8"));
 
 for (let i = 0; i < statements.length; i += BATCH_SIZE) {
 	const batchFile = `.d1-batch-${i}.sql`;
@@ -213,7 +309,9 @@ const headers = {
 	Authorization: `Bearer ${API_TOKEN}`,
 };
 
-async function pollImport(bookmark) {
+async function pollImport(initialBookmark) {
+	let bookmark = initialBookmark;
+
 	while (true) {
 		const res = await fetch(D1_IMPORT_URL, {
 			method: "POST",
@@ -223,26 +321,32 @@ async function pollImport(bookmark) {
 				current_bookmark: bookmark,
 			}),
 		});
-		const { result } = await res.json();
+		const data = await res.json();
+		if (!res.ok || !data.success) {
+			throw new Error(`Poll failed: ${JSON.stringify(data.errors)}`);
+		}
+
+		const { result } = data;
 		console.log("Poll status:", result.status, result.messages ?? "");
 
 		if (
 			result.status === "complete" ||
-			result.success ||
 			result.error === "Not currently importing anything."
 		) {
 			return result;
 		}
-		if (result.status === "error") {
+		if (!result.success || result.status === "error") {
 			throw new Error(result.error ?? "D1 import failed");
 		}
 
+		bookmark = result.at_bookmark ?? bookmark;
 		await new Promise((resolve) => setTimeout(resolve, 1000));
 	}
 }
 
 async function importSqlFile() {
-	const sql = readFileSync(SQL_FILE, "utf8");
+	// For multi-gigabyte dumps, stream the file to hash and upload rather than buffering in memory.
+	const sql = readFileSync(SQL_FILE);
 	const etag = crypto.createHash("md5").update(sql).digest("hex");
 
 	// 1. Init upload
@@ -252,7 +356,7 @@ async function importSqlFile() {
 		body: JSON.stringify({ action: "init", etag }),
 	});
 	const initData = await initRes.json();
-	if (!initData.success) {
+	if (!initRes.ok || !initData.success) {
 		throw new Error(`Init failed: ${JSON.stringify(initData.errors)}`);
 	}
 	const { upload_url: uploadUrl, filename } = initData.result;
@@ -262,6 +366,9 @@ async function importSqlFile() {
 		method: "PUT",
 		body: sql,
 	});
+	if (!r2Res.ok) {
+		throw new Error(`R2 upload failed with HTTP ${r2Res.status}`);
+	}
 	const r2Etag = r2Res.headers.get("ETag")?.replace(/"/g, "");
 	if (r2Etag !== etag) {
 		throw new Error(`ETag mismatch: expected ${etag}, got ${r2Etag}`);
@@ -274,12 +381,14 @@ async function importSqlFile() {
 		body: JSON.stringify({ action: "ingest", etag, filename }),
 	});
 	const ingestData = await ingestRes.json();
-	if (!ingestData.success) {
+	if (!ingestRes.ok || !ingestData.success) {
 		throw new Error(`Ingest failed: ${JSON.stringify(ingestData.errors)}`);
 	}
 
 	// 4. Poll until complete
-	await pollImport(ingestData.result.at_bookmark);
+	if (ingestData.result.status !== "complete") {
+		await pollImport(ingestData.result.at_bookmark);
+	}
 	console.log("Import completed successfully.");
 }
 
@@ -327,7 +436,7 @@ You can then follow the steps to [import an existing database](#import-an-existi
 ## Export an existing D1 database
 
 :::note
-`cf d1` does not yet provide an `export` command. Use Wrangler (shown below) or the [D1 `/export` REST API](/api/resources/d1/subresources/database/methods/export/) to export a database.
+`cf d1` does not yet provide an `export` command. Use Wrangler or the [D1 `/export` REST API](/api/resources/d1/subresources/database/methods/export/) to export a database.
 :::
 
 In addition to importing existing SQLite databases, you might want to export a D1 database for local development or testing. You can export a D1 database to a `.sql` file using [`wrangler d1 export`](/workers/wrangler/commands/d1/#d1-export) and then import it with `wrangler d1 execute --file` or the [REST API](#import-using-the-rest-api).

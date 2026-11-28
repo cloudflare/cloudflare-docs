@@ -926,7 +926,7 @@ You have now updated the API routes to connect to the D1 database. Start the loc
 npm run dev
 ```
 
-Navigate to `http://localhost:8787`. You should see the products listed. Click on a product to view the product details.
+Navigate to `http://localhost:8787`. You should see the products listed. Select a product to view the product details.
 
 </CliVariant>
 <CliVariant cli="cf">
@@ -940,7 +940,10 @@ Navigate to the local URL printed in your terminal (by default `http://localhost
 </CliVariant>
 </CliVariants>
 
-To insert a new product, use the following command while the development server is running (replace `localhost:8787` with `localhost:5173` if using `cf dev`):
+To insert a new product, run the following command while the development server is running:
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 ```sh
 curl -X POST http://localhost:8787/api/product \
@@ -948,15 +951,42 @@ curl -X POST http://localhost:8787/api/product \
      -d '{"id": 6, "name": "Fast Computer", "description": "A computer for your home or office", "price": 1000.00, "inventory": 10, "category": "Electronics"}'
 ```
 
+</CliVariant>
+<CliVariant cli="cf">
+
+```sh
+curl -X POST http://localhost:5173/api/product \
+     -H "Content-Type: application/json" \
+     -d '{"id": 6, "name": "Fast Computer", "description": "A computer for your home or office", "price": 1000.00, "inventory": 10, "category": "Electronics"}'
+```
+
+</CliVariant>
+</CliVariants>
+
 Navigate to `/product-details?id=6` on your local server. You should see the new product.
 
 Update the product using the following command, and navigate to `/product-details?id=6` again. You will see the updated product.
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 ```sh
 curl -X POST http://localhost:8787/api/product \
      -H "Content-Type: application/json" \
      -d '{"id": 6, "name": "Fast Computer", "description": "A computer for your home or office", "price": 1050.00, "inventory": 10, "category": "Electronics"}'
 ```
+
+</CliVariant>
+<CliVariant cli="cf">
+
+```sh
+curl -X POST http://localhost:5173/api/product \
+     -H "Content-Type: application/json" \
+     -d '{"id": 6, "name": "Fast Computer", "description": "A computer for your home or office", "price": 1050.00, "inventory": 10, "category": "Electronics"}'
+```
+
+</CliVariant>
+</CliVariants>
 
 :::note
 
