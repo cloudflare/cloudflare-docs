@@ -33,6 +33,8 @@ Custom Domains can be attached to your Worker via the Cloudflare dashboard, [Wra
 
 :::caution
 
+Cloudflare issues a certificate for the exact hostname you attach. That hostname can appear in public Certificate Transparency (CT) logs, even if you already have a wildcard certificate. This discloses the hostname itself rather than granting access to the Worker. Refer to [Certificates](#certificates) for issuance details and [Certificate Transparency Monitoring](/ssl/edge-certificates/additional-options/certificate-transparency-monitoring/) for background on public CT logs.
+
 You cannot create a Custom Domain on a hostname with an existing CNAME DNS record or on a zone you do not own.
 
 :::
@@ -163,7 +165,7 @@ export default {
 
 ## Certificates
 
-Creating a Custom Domain will also generate an [Advanced Certificate](/ssl/edge-certificates/advanced-certificate-manager/) on your target zone for your target hostname.
+Creating a Custom Domain will also generate an [Advanced Certificate](/ssl/edge-certificates/advanced-certificate-manager/) on your target zone for your target hostname. Because this certificate is issued for the exact attached hostname, that hostname can appear in public Certificate Transparency (CT) logs even if your zone already has a wildcard certificate (for background on CT logs, refer to [Certificate Transparency Monitoring](/ssl/edge-certificates/additional-options/certificate-transparency-monitoring/)).
 
 This includes multi-level subdomains such as `realms.app.example.com`. [Universal SSL](/ssl/edge-certificates/universal-ssl/) covers the apex and one level of subdomain only, so Universal SSL does not cover a hostname at the second level or deeper. The certificate generated for the Custom Domain covers it instead, and no separate Advanced Certificate Manager subscription is required.
 
