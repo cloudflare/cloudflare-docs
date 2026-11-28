@@ -155,10 +155,10 @@ The provided `Content-Type` header of each file part will be attached when event
 
 The `Authorization` header must be provided as a bearer token, using the JWT (upload token) from the aforementioned manifest upload call.
 
-:::caution[Cloudflare API MCP server limitation]
-If the manifest upload session returns files to upload (`buckets` is non-empty), use the deployment CLI (such as Wrangler) or run the direct-upload requests in your own HTTP client. The [Cloudflare API MCP server](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/#cloudflare-api-mcp-server) overwrites the `Authorization` header with its own connection credential, while this step requires `Authorization: Bearer <UPLOAD_TOKEN>` with the session upload JWT. Do not broaden your account API token or paste the upload JWT into chat.
+:::note
+You cannot run this file-upload step through the [Cloudflare API MCP server](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/#limitations), which overwrites the `Authorization` header with its own connection credential. Granting broader API token or OAuth permissions will not resolve the error.
 
-When `buckets` is empty, skip this file-upload step and pass the returned completion JWT in the Worker upload metadata (`assets.jwt`), not as an `Authorization` header.
+To upload new or modified assets, deploy with [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy), [`cf deploy`](/cf/get-started/first-worker/), or [Workers Builds](/workers/ci-cd/builds/), or run the full direct-upload flow from your own HTTP client or [SDK script](#programmatic-example). If all assets are unchanged, pass `keep_assets: true` (or `assets.jwt` when `buckets` is empty) in [Create/Deploy New Version](#createdeploy-new-version) instead.
 :::
 
 Once every file in the manifest has been uploaded, a status code of 201 will be returned, with the `jwt` field present. This JWT is a final "completion" token used to attach this asset set to a Worker version. This completion token is valid for 1 hour.

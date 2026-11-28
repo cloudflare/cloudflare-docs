@@ -52,6 +52,16 @@ For CI/CD or automation, you can create a [Cloudflare API token](https://dash.cl
 
 For more information, refer to the [Cloudflare MCP repository](https://github.com/cloudflare/mcp).
 
+### Limitations
+
+The Cloudflare API MCP server authenticates every request to `api.cloudflare.com` with its own connection credential and overwrites any custom `Authorization` header. Endpoints that require a separate per-session bearer token — such as uploading new or modified [Workers Static Assets](/workers/static-assets/direct-upload/#upload-static-assets) with a session upload JWT — cannot run through the MCP server.
+
+To deploy Workers with static assets instead:
+
+- **Deploy a project**: Use [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy), [`cf deploy`](/cf/get-started/first-worker/), or [Workers Builds](/workers/ci-cd/builds/).
+- **Run direct uploads programmatically**: Run the upload flow outside the MCP server with your own HTTP client, `curl`, or the [Cloudflare TypeScript SDK](/workers/static-assets/direct-upload/#programmatic-example).
+- **Update only Worker code**: Pass `keep_assets: true` in the [Worker upload metadata](/workers/static-assets/direct-upload/#createdeploy-new-version) to reuse existing assets through the MCP server.
+
 ### Install via agent and IDE plugins
 
 You can install the [Cloudflare Skills plugin](https://github.com/cloudflare/skills), which bundles the Cloudflare MCP servers alongside contextual skills and slash commands for building on Cloudflare. The plugin works with any agent that supports the Agent Skills standard, including Claude Code, OpenCode, OpenAI Codex, and Pi.
@@ -87,10 +97,6 @@ Clone the [cloudflare/skills](https://github.com/cloudflare/skills) repository a
 | OpenCode     | `~/.config/opencode/skills/` | [OpenCode skills](https://opencode.ai/docs/skills/)                                                  |
 | OpenAI Codex | `~/.codex/skills/`           | [OpenAI Codex skills](https://developers.openai.com/codex/skills/)                                   |
 | Pi           | `~/.pi/agent/skills/`        | [Pi coding agent skills](https://github.com/badlogic/pi-mono/tree/main/packages/coding-agent#skills) |
-
-### Limitations
-
-The Cloudflare API MCP server overwrites the `Authorization` header on requests to `api.cloudflare.com` with its own connection credential. Steps that require a separate per-session bearer token — such as uploading missing Workers Static Assets files with a session upload JWT — cannot run inside `execute`. For details and both session branches, refer to [Direct Uploads](/workers/static-assets/direct-upload/#upload-static-assets).
 
 ## Product-specific MCP servers
 
