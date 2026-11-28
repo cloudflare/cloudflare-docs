@@ -22,7 +22,7 @@ This guide will instruct you on configuring a binding for your Pages Function. Y
 
 :::note
 
-Pages Functions only support a subset of all [bindings](/workers/runtime-apis/bindings/), which are listed on this page.
+Pages Functions only support a subset of [Workers bindings](/workers/runtime-apis/bindings/), listed on this page. To use the full set of bindings (such as defining Durable Objects, Queue consumers, or Workflows), deploy on [Cloudflare Workers](/workers/static-assets/).
 
 :::
 
@@ -90,7 +90,7 @@ npx wrangler pages dev <OUTPUT_DIR> --kv=TODO_LIST
 
 <Render file="do-note" product="pages" />
 
-To bind your Durable Object to your Pages Function, you can configure a Durable Object binding in the [Wrangler configuration file](/pages/functions/wrangler-configuration/#kv-namespaces) or the Cloudflare dashboard.
+To bind your Durable Object to your Pages Function, you can configure a Durable Object binding in the [Wrangler configuration file](/pages/functions/wrangler-configuration/#durable-objects) or the Cloudflare dashboard.
 
 To configure a Durable Object binding via the Cloudflare dashboard:
 

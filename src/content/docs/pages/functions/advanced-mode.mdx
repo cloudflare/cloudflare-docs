@@ -71,9 +71,11 @@ In the above code, you have configured your Function to return a response under 
 - `ASSETS` is a default Function binding that allows communication between your Function and Pages' asset serving resource.
 - `fetch()` calls to Pages' asset-serving resource and serves the requested asset.
 
-## Migrate from Workers
+## Use an existing Worker with static assets
 
-To migrate an existing Worker to your Pages project, copy your Worker code and paste it into your new `_worker.js` file. Then handle static assets by adding the following code snippet to `_worker.js`:
+If you already have a Worker and want to serve static assets alongside it, add [Workers Static Assets](/workers/static-assets/binding/) directly to your Worker instead of moving it to Pages. Workers Static Assets uses the same `env.ASSETS.fetch(request)` binding pattern without Pages-specific routing constraints.
+
+If you need to run a `_worker.js` script inside an existing Pages project, place your Module Worker script in `_worker.js` inside your output directory and forward asset requests with:
 
 ```ts
 return env.ASSETS.fetch(request);
