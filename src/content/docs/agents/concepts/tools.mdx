@@ -14,7 +14,7 @@ A travel agent might use tools to search flights, check hotel rates, process pay
 
 Tool design involves three independent choices:
 
-1. **Model interface** — expose tools as direct tool calls or through Code Mode.
+1. **Model interface** — expose tools as direct tool calls, or as modules that model-written code imports with Code Mode.
 2. **Execution location** — run tool implementations in a Worker, browser, or another Agent.
 3. **Tool source** — define tools in the application or connect to externally hosted tools through Model Context Protocol (MCP).
 
@@ -27,7 +27,7 @@ Direct tool calls and Code Mode define how the model sees and invokes tools. The
 | Interface         | How it works                                                                                                       | Use when                                                                                                 |
 | ----------------- | ------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
 | Direct tool calls | The model receives individual tool definitions. Each result returns to the model before it chooses the next call. | The task is simple and uses a small, known tool set.                                                     |
-| Code Mode         | The model receives one code tool and writes code against typed tool interfaces.                                   | The task needs composition, dependent calls, filtering, branching, repeatable logic, or tool discovery. |
+| Code Mode         | The model receives one code tool and writes code that imports tools as modules.                                    | The task needs composition, dependent calls, filtering, branching, or many tools.                        |
 
 ### Direct tool calls
 
@@ -37,17 +37,15 @@ The model sees each intermediate result before choosing another tool. This makes
 
 ### Code Mode
 
-[Code Mode](/agents/tools/codemode/) gives the model one code-execution tool. The model writes JavaScript that calls typed tools, passes results between them, and applies control flow.
+[Code Mode](/agents/concepts/code-mode/) gives the model one code-execution tool. The model writes JavaScript that imports tools as modules, passes results between them, and applies control flow.
 
-The generated code can filter large responses and return only the final value the model needs. Intermediate results stay inside the sandbox instead of entering the model context after every operation. This makes Code Mode more efficient for composed workflows and large tool catalogs.
+The generated code can filter large responses and return only the final value the model needs. Intermediate results stay inside the sandbox instead of entering the model context after every operation. Adding a tool adds a module export, not another tool definition in every prompt, so Code Mode suits large tool catalogs.
 
-Code Mode also supports progressive discovery. The model can search available connectors and request detailed types only for the methods it needs. Successful programs can be saved as reusable snippets.
-
-For runtime behavior, approvals, replay, and snippets, refer to [How Code Mode works](/agents/tools/codemode/how-it-works/).
+To set it up, refer to [Run code with Computer](/agents/runtime/code-mode/computer/).
 
 ## Choose where tools run
 
-Execution location describes where a tool implementation runs. It is independent from the model interface. Tools in each location can be exposed directly or through Code Mode.
+Execution location describes where a tool implementation runs. It is independent from the model interface. Most tools can be exposed directly or through Code Mode.
 
 | Location      | Use when                                                                       | Start here                                                                            |
 | ------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- |
@@ -57,7 +55,7 @@ Execution location describes where a tool implementation runs. It is independent
 
 With direct tool calls, the model calls the tool and the framework routes execution to the configured location.
 
-With Code Mode, generated code runs in a sandbox. Calls from that code cross the sandbox boundary to the underlying tool implementation. Server tools can execute in the host Worker, browser-owned tools can execute in the parent page, and Agent tools can delegate work to another Agent.
+With Code Mode, generated code runs in a sandbox. Calls from that code cross the sandbox boundary to host modules, which run in the agent. Server tools and Agent tools can be called this way. Browser tools cannot, because they run in the user's page.
 
 ## Connect external tools with MCP
 
@@ -66,9 +64,9 @@ The [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction)
 An Agent can expose MCP tools through either model interface:
 
 - Pass MCP tools directly to a model with the [Agents MCP client](/agents/tools/mcp/).
-- Expose MCP tools inside Code Mode for composition and progressive discovery with [MCP connectors](/agents/tools/codemode/mcp/).
+- Let model-written code call MCP tools from every connected server with [`codemode:tools`](/agents/runtime/code-mode/computer/#supply-mcp-tools).
 
-An MCP server can also expose Code Mode itself. For example, it can present one `code` tool or separate `search` and `execute` tools. For these server-side patterns, refer to [Build a Code Mode MCP server](/agents/model-context-protocol/guides/build-codemode-mcp-server/).
+An MCP server can also do Code Mode itself, for example by exposing `search` and `execute` tools. Refer to [Code Mode on the server](/agents/concepts/code-mode/#code-mode-on-the-server).
 
 ## Control side effects
 
@@ -76,4 +74,4 @@ Approval policy is also independent from execution location and tool source. Any
 
 Direct tools can use the standard [human-in-the-loop approval pattern](/agents/concepts/agentic-patterns/human-in-the-loop/).
 
-The durable Code Mode runtime can pause generated code before an annotated connector method executes. Approval replays completed calls from the execution log, applies the approved action, and continues the same program.
+With Code Mode, a host module function can pause the run until a person answers. On approval, the run replays completed calls from a journal and continues. Refer to [Ask for approval](/agents/runtime/code-mode/computer/#ask-for-approval).
