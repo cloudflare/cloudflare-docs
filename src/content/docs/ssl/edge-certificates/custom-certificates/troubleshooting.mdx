@@ -67,6 +67,28 @@ If you are using a Let's Encrypt certificate uploaded by yourself as a custom ce
 - If you use **compatible** or **modern** [bundle method](/ssl/edge-certificates/custom-certificates/bundling-methodologies/) and have uploaded your certificate before September 9, 2024, [update your custom certificate](/ssl/edge-certificates/custom-certificates/uploading/#update-or-renew-an-existing-custom-certificate) so that it can be bundled with the new chain.
 - If you use **user-defined** bundle method, make sure that your certificates uploaded after September 30, 2024, do not use the Let's Encrypt cross-signed chain.
 
+## Served chain is different from the uploaded chain
+
+If you use **compatible** or **modern** [bundle method](/ssl/edge-certificates/custom-certificates/bundling-methodologies/), Cloudflare builds the chain itself and may discard intermediate or cross-signed certificates you upload. The chain is built when you upload or update the certificate and is not updated automatically afterwards.
+
+- To pick up a newer chain from Cloudflare's trust store, [update your custom certificate](/ssl/edge-certificates/custom-certificates/uploading/#update-or-renew-an-existing-custom-certificate).
+- To serve a specific chain, for example one that includes a cross-signed certificate required by older clients, use the **user-defined** bundle method.
+
+## Known issues
+
+### Certificates expiring in less than 14 days are not always rejected
+
+Custom certificates must [not expire in less than 14 days from the time of upload](/ssl/edge-certificates/custom-certificates/uploading/#certificate-requirements). Currently, this requirement is not consistently enforced:
+
+- Certificates that expire in less than 14 days may be accepted with any bundle method.
+- Certificates that have already expired may be accepted through the API when using the **user-defined** bundle method.
+
+An accepted certificate that is expired, or expires soon, causes TLS errors for your visitors. Always check the certificate validity dates before uploading:
+
+```bash
+openssl x509 -in certificate.crt -noout -dates
+```
+
 ## Error codes
 
 ### Invalid certificate. (Code: 1002)
@@ -86,6 +108,16 @@ openssl x509 -in certificate.crt -noout -text
 ```
 
 When using the API, carefully check the `{custom_certificate_id}` path parameter. You can confirm the certificate ID by [listing the existing custom certificates](/api/resources/custom_certificates/methods/list/) (`id` in the response).
+
+### Missing certificate key (Code: 1202)
+
+**Root cause**
+
+The request did not include a private key. This can happen when an update request (`PATCH`) only contains other fields, for example `type`, which some automation tools send to correct configuration drift.
+
+**Solution**
+
+Include both `certificate` and `private_key` when updating a certificate. If you use Terraform, set `type` explicitly in your configuration and check that `terraform plan` does not propose an unexpected type-only update.
 
 ### You have reached the maximum number of custom certificates. (Code: 1212)
 
@@ -113,6 +145,18 @@ You are trying to upload a custom certificate that you have already uploaded.
 
 If you are renewing the certificate with updated expiry or key material, [update the existing certificate](/ssl/edge-certificates/custom-certificates/uploading/#update-or-renew-an-existing-custom-certificate) instead of uploading a new one. Updating via the dashboard (or the API `PATCH` method) avoids downtime and does not consume an additional quota slot.
 
+### Custom certificate IP quota exceeded for this zone (Code: 1221)
+
+**Root cause**
+
+You have reached the quota for **Custom Legacy** (non-SNI) certificates on this zone.
+
+**Solution**
+
+If you are renewing a certificate, [update the existing certificate](/ssl/edge-certificates/custom-certificates/uploading/#update-or-renew-an-existing-custom-certificate) instead of uploading a new one. If you do not need non-SNI support, upload the certificate with **Legacy Client Support** set to **Modern** (API `type`: `sni_custom`).
+
+By design, Cloudflare allows you to upload one **Custom Legacy** certificate more than your quota. This lets you upload a new certificate and then delete the previous one during renewal, instead of updating the existing certificate. After the new certificate is active, delete the previous certificate to return within your quota. While your zone is above its quota, replacing an existing Legacy certificate may fail with this error.
+
 ### You already have a certificate of this signature type. (Code: 1228)
 
 **Root cause**
@@ -132,6 +176,16 @@ This error occurs when there is an issue with the certificate pack structure. Yo
 **Solution**
 
 Delete the other certificates in the certificate pack first, then delete this certificate. If the issue persists, [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+
+### Rate limit reached for the update operation. Please try again in a minute. (Code: 1400)
+
+**Root cause**
+
+Too many failed requests to create or update custom certificates were sent in a short period.
+
+**Solution**
+
+Stop retrying for at least one minute. Check that each request is valid, including the certificate, private key, and `type`, before sending it again. If you use automation, reduce parallelism and fix the failing request rather than retrying it.
 
 ### Only root CA certificate is allowed. (Code: 1411)
 
@@ -153,6 +207,16 @@ You are trying to upload a custom certificate that does not support any cipher t
 
 Modify the certificate so that it supports chromium-supported ciphers and try again.
 
+### Hit maximum cert allocation (Code: 1445)
+
+**Root cause**
+
+You have reached the maximum number of custom certificates allowed for this zone.
+
+**Solution**
+
+Follow the steps for [Code: 1212](#you-have-reached-the-maximum-number-of-custom-certificates-code-1212).
+
 ### You have reached your quota for the requested resource. (Code: 2005)
 
 **Root cause**
@@ -171,17 +235,24 @@ Then, when actually uploading or editing the certificate, make sure you select t
 
 **Root cause**
 
-You are trying to upload a custom certificate that contains the root and leaf certificate at the same time.
+Cloudflare cannot build a chain from your certificate to a root certificate in [Cloudflare's trust store](https://github.com/cloudflare/cfssl_trust). Common causes include:
+
+- The certificate was issued by a private or internal CA.
+- The certificate chains to a root or cross-signed certificate that is not in Cloudflare's trust store, for example after a CA hierarchy change.
 
 **Solution**
 
-Upload the leaf certificate only.
+- If your certificate is from a publicly trusted CA, upload the leaf certificate only.
+- If your certificate is from a private CA, or you need to serve a chain that is not in Cloudflare's trust store, use the **user-defined** [bundle method](/ssl/edge-certificates/custom-certificates/bundling-methodologies/#user-defined) and upload the full chain. Clients must trust the root of this chain.
+- If you believe a publicly trusted root or intermediate is missing from the trust store, open an issue in the [trust store repository](https://github.com/cloudflare/cfssl_trust/issues) or contact [Cloudflare Support](/support/contacting-cloudflare-support/).
 
 ### The certificate chain you uploaded has no leaf certificates. Please check your input and try again. (Code: 2101)
 
 **Root cause**
 
 You are trying to upload a root + intermediate + intermediate `.crt` file, but the actual leaf certificate is in a separate file.
+
+This error also occurs when every certificate in the file is a CA certificate (basic constraint `CA:TRUE`). The leaf certificate must have `CA:FALSE`.
 
 **Solution**
 
