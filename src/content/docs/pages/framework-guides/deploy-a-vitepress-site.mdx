@@ -6,13 +6,11 @@ products:
   - pages
 ---
 
-import {
-	PagesBuildPreset,
-	Render,
-	TabItem,
-	Tabs,
-	PackageManagers,
-} from "~/components";
+import { PagesBuildPreset, Render, PackageManagers } from "~/components";
+
+:::note
+Starting a new documentation site? You can also deploy VitePress sites to [Cloudflare Workers Static Assets](/workers/static-assets/) with Git-connected [Workers Builds](/workers/ci-cd/builds/).
+:::
 
 [VitePress](https://vitepress.dev/) is a [static site generator](https://en.wikipedia.org/wiki/Static_site_generator) (SSG) designed for building fast, content-centric websites. VitePress takes your source content written in [Markdown](https://en.wikipedia.org/wiki/Markdown), applies a theme to it, and generates static HTML pages that can be easily deployed anywhere.
 
@@ -39,7 +37,7 @@ If you encounter errors, make sure your local machine meets the [Prerequisites f
 
 Finally create a `.gitignore` file with the following content:
 
-```
+```txt
 node_modules
 .vitepress/cache
 .vitepress/dist

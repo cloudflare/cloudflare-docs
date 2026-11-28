@@ -8,26 +8,35 @@ products:
 
 import { PagesBuildPreset, Render } from "~/components";
 
-[Pelican](https://docs.getpelican.com) is a static site generator, written in Python. With Pelican, you can write your content directly with your editor of choice in reStructuredText or Markdown formats.
+:::note
+Starting a new static site? You can also deploy static sites to [Cloudflare Workers Static Assets](/workers/static-assets/) with Git-connected [Workers Builds](/workers/ci-cd/builds/).
+:::
+
+[Pelican](https://docs.getpelican.com) is a static site generator written in Python. With Pelican, you can write your content directly with your editor of choice in reStructuredText or Markdown formats.
 
 ## Create a Pelican project
 
-To begin, create a Pelican project directory. `cd` into your new directory and run:
+To begin, create a Pelican project directory, set up a virtual environment, and install Pelican:
 
 ```sh
+mkdir my-pelican-site
+cd my-pelican-site
+python3 -m venv .venv
+source .venv/bin/activate
 python3 -m pip install pelican
 ```
 
-Then run:
+Record Pelican (and any plugins or themes you use) in `requirements.txt` so Cloudflare Pages installs them automatically during builds:
 
 ```sh
-pip freeze > requirements.txt
+echo "pelican" > requirements.txt
 ```
 
-Create a directory in your project named `content`:
+Create a directory in your project named `content` and add `.venv/` to `.gitignore`:
 
 ```sh
 mkdir content
+echo ".venv/" >> .gitignore
 ```
 
 This is the directory name that you will set in the build command.
@@ -42,7 +51,7 @@ This is the directory name that you will set in the build command.
 
 <PagesBuildPreset framework="pelican" />
 
-7. Select **Environment variables (advanced)** and set the `PYTHON_VERSION` variable with the value of `3.7`.
+Cloudflare Pages Build Image v3 includes Python 3.13 by default and automatically installs packages listed in `requirements.txt`. If you need to pin a specific Python version, set `PYTHON_VERSION` under **Environment variables** as described in [Override default versions](/pages/configuration/build-image/#override-default-versions).
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 

@@ -8,6 +8,10 @@ products:
 
 import { Render } from "~/components";
 
+:::note
+Starting a new static site? You can also deploy Hexo sites to [Cloudflare Workers Static Assets](/workers/static-assets/) with Git-connected [Workers Builds](/workers/ci-cd/builds/).
+:::
+
 [Hexo](https://hexo.io/) is a tool for generating static websites, powered by Node.js. Hexo's benefits include speed, simplicity, and flexibility, allowing it to render Markdown files into static web pages via Node.js.
 
 In this guide, you will create a new Hexo application and deploy it using Cloudflare Pages. You will use the `hexo` CLI to create a new Hexo site.
@@ -67,7 +71,7 @@ Inside of `hello-hexo.md`, use Markdown to write the content of the article. You
 
 </div>
 
-After completing configuration, click the **Save and Deploy** button. You should see Cloudflare Pages installing `hexo` and your project dependencies, and building your site, before deploying it.
+After completing configuration, select **Save and Deploy**. You should see Cloudflare Pages installing `hexo` and your project dependencies, and building your site, before deploying it.
 
 :::note
 
@@ -80,11 +84,11 @@ Every time you commit new code to your Hexo site, Cloudflare Pages will automati
 
 ## Using a specific Node.js version
 
-Some Hexo themes or plugins have additional requirements for different Node.js versions. To use a specific Node.js version for Hexo:
+Some Hexo themes or plugins require a specific Node.js version. To override the Build Image v3 default Node.js version for Hexo:
 
 1. Go to your Pages project.
-2. Go to **Settings** > **Environment variables**.
-3. Set the environment variable `NODE_VERSION` and a value of your required Node.js version (for example, `14.3`).
+2. Go to **Settings** > **Variables and Secrets**.
+3. Set the environment variable `NODE_VERSION` to your required Node.js version (for example, `22.23.4`). Refer to [Override default versions](/pages/configuration/build-image/#override-default-versions) for more options.
 
 ![Follow the instructions above to set up an environment variable in the Pages dashboard](~/assets/images/pages/framework-guides/node-version-pages.png)
 

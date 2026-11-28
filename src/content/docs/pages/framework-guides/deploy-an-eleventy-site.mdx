@@ -8,6 +8,10 @@ products:
 
 import { PagesBuildPreset, Render } from "~/components";
 
+:::note
+Starting a new static site? You can also deploy Eleventy sites to [Cloudflare Workers Static Assets](/workers/static-assets/) with Git-connected [Workers Builds](/workers/ci-cd/builds/).
+:::
+
 [Eleventy](https://www.11ty.dev/) is a simple static site generator. In this guide, you will create a new Eleventy site and deploy it using Cloudflare Pages. You will be using the `eleventy` CLI to create a new Eleventy site.
 
 ## Installing Eleventy
@@ -35,7 +39,7 @@ npm install
 Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following command in your terminal:
 
 ```sh
-git remote set-url origin https://github.com/yourgithubusername/githubrepo
+git remote set-url origin https://github.com/<YOUR_GH_USERNAME>/<REPOSITORY_NAME>.git
 git branch -M main
 git push -u origin main
 ```

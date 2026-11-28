@@ -8,13 +8,19 @@ products:
 
 import { PagesBuildPreset, Render } from "~/components";
 
-[MkDocs](https://www.mkdocs.org/) is a modern documentation platform where teams can document products, internal knowledge bases and APIs.
+:::note
+Starting a new static documentation site? You can also deploy static sites to [Cloudflare Workers Static Assets](/workers/static-assets/) with Git-connected [Workers Builds](/workers/ci-cd/builds/).
+:::
+
+[MkDocs](https://www.mkdocs.org/) is a documentation platform where teams can document products, internal knowledge bases, and APIs.
 
 ## Install MkDocs
 
-MkDocs requires a recent version of Python and the Python package manager, pip, to be installed on your system. To install pip, refer to the [MkDocs Installation guide](https://www.mkdocs.org/user-guide/installation/). With pip installed, run:
+MkDocs requires Python 3 and the Python package manager `pip`. To install Python and `pip`, refer to the [MkDocs installation guide](https://www.mkdocs.org/user-guide/installation/). With `pip` installed, create a virtual environment and install MkDocs:
 
 ```sh
+python3 -m venv .venv
+source .venv/bin/activate
 pip install mkdocs
 ```
 
@@ -24,19 +30,20 @@ Use the `mkdocs new` command to create a new application:
 
 ```sh
 mkdocs new <PROJECT_NAME>
+cd <PROJECT_NAME>
 ```
 
-Then `cd` into your project, take MkDocs and its dependencies and put them into a `requirements.txt` file:
+Create a `requirements.txt` file listing MkDocs (and any themes or plugins your site uses) so Cloudflare Pages installs them automatically during builds:
 
 ```sh
-pip freeze > requirements.txt
+echo "mkdocs" > requirements.txt
 ```
 
 <Render file="tutorials-before-you-start" product="pages" />
 
 <Render file="framework-guides/create-github-repository" product="pages" />
 
-You have successfully created a GitHub repository and pushed your MkDocs project to that repository.
+You have created a GitHub repository and pushed your MkDocs project to that repository.
 
 ## Deploy with Cloudflare Pages
 
@@ -44,7 +51,7 @@ You have successfully created a GitHub repository and pushed your MkDocs project
 
 <PagesBuildPreset framework="mkdocs" />
 
-7. Go to **Environment variables (advanced)** > **Add variable** > and add the variable `PYTHON_VERSION` with a value of `3.7`.
+Cloudflare Pages Build Image v3 includes Python 3.13 by default and automatically installs packages listed in `requirements.txt`. If you need to pin a specific Python version, set `PYTHON_VERSION` under **Environment variables** as described in [Override default versions](/pages/configuration/build-image/#override-default-versions).
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 
