@@ -22,15 +22,16 @@ import { Render } from "~/components";
 
 These templates are starting points for Workers invoked by Forward policies. You can adapt them or write your own Worker using the `GatewayMiddleware.handle(request, context, next)` entrypoint. Each script implements one task.
 
-| Template                                                                                                              | What it does                                                                         |
-| --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| [Send a Slack notification](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/slack-notification/)  | Send a background notification when a selected request completes.                    |
-| [Capture a screenshot](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/screenshot/)               | Capture a public page in an independent browser and save the image to R2.            |
-| [Capture a downloaded file](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/download-capture/)    | Save a bounded copy of an attachment to R2 while returning the download to the user. |
-| [Watermark HTML pages](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/watermark/)                | Add a visible user label to an HTML response.                                        |
-| [Store headers and bodies as JSON](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/json-capture/) | Archive selected headers and bounded JSON request and response bodies in R2.         |
-| [Display a coaching page](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/coaching-page/)         | Return an explanatory page without contacting the original destination.              |
-| [Redact a JSON field](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/json-redaction/)            | Replace a specific field in an application request before sending it upstream.       |
+| Template                                                                                                                  | What it does                                                                         |
+| ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| [Send a Slack notification](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/slack-notification/)      | Send a background notification when a selected request completes.                    |
+| [Capture a screenshot](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/screenshot/)                   | Capture a public page in an independent browser and save the image to R2.            |
+| [Capture a downloaded file](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/download-capture/)        | Save a bounded copy of an attachment to R2 while returning the download to the user. |
+| [Watermark HTML pages](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/watermark/)                    | Add a visible user label to an HTML response.                                        |
+| [Store headers and bodies as JSON](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/json-capture/)     | Archive selected headers and bounded JSON request and response bodies in R2.         |
+| [Display a coaching page](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/coaching-page/)             | Return an explanatory page without contacting the original destination.              |
+| [Redact a JSON field](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/json-redaction/)                | Replace a specific field in an application request before sending it upstream.       |
+| [Block malicious packages](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/block-malicious-packages/) | Block npm package downloads that OSV lists as malware.                               |
 
 ## Use a template
 
