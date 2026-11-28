@@ -135,7 +135,11 @@ cd workers/api && npx wrangler preview --name "pr-123"
 cd ../web && npx wrangler preview --name "pr-123"
 ```
 
-Service bindings between these Previews resolve to the bound Worker's production deployment. Refer to [Limitations](/workers/previews/resources/#limitations).
+:::caution[Service bindings do not connect sibling Previews]
+Deploying `workers/api` and `workers/web` with the same Preview name does not connect them. Any service binding in `workers/web` always calls a deployed Worker, never the `pr-123` Preview of `workers/api`. If `workers/web` keeps its production service binding to `api`, requests read and write production data even when the `api` Preview uses isolated resources.
+
+To avoid hitting production, point `previews.services` at a dedicated staging Worker, or pass the `api` Preview URL to `workers/web` over HTTP instead of using a service binding. For details, refer to [Service bindings](/workers/previews/resources/#service-bindings).
+:::
 
 ## Other CI systems
 

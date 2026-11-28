@@ -30,7 +30,8 @@ This table shows which resources are automatically provisioned and which require
 | `hyperdrive`                        | Binds to a Hyperdrive configuration by `id`. Must be created manually. True data isolation requires a separate config pointing at a separate database or schema. | Bind to a different Hyperdrive config.       |
 | `analytics_engine_datasets`         | Writes to the `dataset` name you specify. Datasets are created implicitly by writes. Two Previews writing to the same dataset share rows.                        | Bind to a different dataset name.            |
 | `pipelines`                         | Binds to a Pipeline stream by `pipeline` ID. Two Previews sharing the same stream send events to the same destination.                                           | Bind to a different stream.                  |
-| `workflows`                         | Binds to an existing Workflow. Calls use that Workflow's deployed code, bindings, and instances.                                                                 | Bind to a dedicated non-production Workflow. |
+| `workflows`                         | Binds to an existing Workflow. Calls use that Workflow's deployed code, bindings, and instances.                                                                 | Bind to a dedicated non-production Workflow.                         |
+| [`services`](#service-bindings)     | Binds to a deployed Worker by `service` name. Always calls that Worker's deployed version, not a Preview of that Worker.                                         | Bind to a dedicated non-production Worker, such as `api-staging`.    |
 | `secrets_store_secrets`             | Binds to a Secrets Store secret by `store_id` and `secret_name`.                                                                                                 | Bind to a different store or secret name.    |
 | `dispatch_namespaces`               | Binds to a Workers for Platforms dispatch namespace by `namespace`.                                                                                              | Bind to a different namespace.               |
 | `mtls_certificates`                 | Binds to an mTLS client certificate by `certificate_id`.                                                                                                         | Bind to a different certificate.             |
@@ -366,9 +367,37 @@ Preview support for these areas may come later. If one of these limitations bloc
 
 ### Service bindings
 
-A [service binding](/workers/runtime-apis/bindings/service-bindings/) from Worker A to Worker B tells Cloudflare: when Worker A calls `env.AUTH.fetch()`, route that request to Worker B.
+A [service binding](/workers/runtime-apis/bindings/service-bindings/) from Worker A to Worker B routes calls such as `env.API.fetch()` directly to Worker B.
 
-By default, if Worker A has a service binding to Worker B and you deploy a Preview of Worker A, that service binding calls Worker B's production deployment, even if Worker B has a Preview for the same branch. It does not automatically bind to a matching Preview of Worker B, so writes sent through that binding affect production data.
+A service binding in a Preview always calls a deployed Worker. It cannot target another Worker's Preview, even if both Workers have a Preview for the same branch. If you copy a production service binding (such as `"service": "api"`) into `previews.services`, requests from your Preview read and write production data, even when the target Worker's own Preview uses isolated resources.
+
+To avoid touching production data when testing a Preview, point `previews.services` at a dedicated non-production Worker, such as a staging environment created with [Wrangler environments](/workers/wrangler/environments/#service-bindings):
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "web",
+	"services": [
+		{
+			"binding": "API",
+			"service": "api"
+		}
+	],
+	"previews": {
+		"services": [
+			{
+				"binding": "API",
+				"service": "api-staging"
+			}
+		]
+	}
+}
+```
+
+</WranglerConfig>
+
+To test branch changes across both Workers together, a service binding cannot route to the downstream Worker's Preview. Send HTTP requests to the target Worker's Preview URL instead (for example, by configuring the URL in `previews.vars` and protecting it with [Cloudflare Access](/workers/previews/custom-domains/#protect-preview-content)), or deploy separate per-branch Workers with [Wrangler environments](/workers/wrangler/environments/#service-bindings).
 
 For calls within the same Worker — not calls between separate Workers — use [`ctx.exports`](/workers/runtime-apis/context/#exports) instead of a service binding so calls stay inside the Preview.
 

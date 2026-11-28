@@ -37,6 +37,7 @@
 
 # Workers Previews
 /workers/previews/automation-examples/ /workers/previews/examples/ 301
+/workers/previews/limitations/ /workers/previews/resources/#limitations 301
 
 # Build Output reference pages removed
 /cf/projects/build-output/ /cf/projects/#build 301
