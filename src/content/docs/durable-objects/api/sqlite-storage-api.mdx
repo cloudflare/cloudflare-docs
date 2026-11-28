@@ -277,6 +277,10 @@ For [SQLite-backed Durable Objects](/durable-objects/best-practices/access-durab
 
 The PITR API represents points in time using 'bookmarks'. A bookmark is a mostly alphanumeric string like `0000007b-0000b26e-00001538-0c3e87bb37b3db5cc52eedb93cd3b96b`. Bookmarks are designed to be lexically comparable: a bookmark representing an earlier point in time compares less than one representing a later point, using regular string comparison.
 
+:::caution[Recovery changes the live object]
+The bookmark API restores the same Durable Object in place. It does not export a backup or restore another object. Restoring a bookmark replaces the stored state, so changes made after that bookmark are absent from the restored state.
+:::
+
 ### `getCurrentBookmark`
 
 <code>ctx.storage.getCurrentBookmark()</code>: <Type text="Promise<string>" />
@@ -299,26 +303,27 @@ This method returns a special bookmark representing the point in time immediatel
 
 <Tabs>
 
-<TabItem label="TypeScript" icon="seti:typescript">
+<TypeScriptExample omitTabs={true}>
 
 ```ts
-const DAY_MS = 24*60*60*1000;
-// restore to 2 days ago
-let bookmark = ctx.storage.getBookmarkForTime(Date.now() - 2 * DAYS_MS);
-ctx.storage.onNextSessionRestoreBookmark(bookmark);
+const DAY_MS = 24 * 60 * 60 * 1000;
+// Schedule a restore to two days ago on the next restart.
+const bookmark = await ctx.storage.getBookmarkForTime(Date.now() - 2 * DAY_MS);
+await ctx.storage.onNextSessionRestoreBookmark(bookmark);
 ```
 
-</TabItem>
+</TypeScriptExample>
 
 <TabItem label="Python" icon="seti:python">
 
 ```python
-from datetime import datetime, timedelta
+import time
 
-now = datetime.now()
-# restore to 2 days ago
-bookmark = ctx.storage.getBookmarkForTime(now - timedelta(days=2))
-ctx.storage.onNextSessionRestoreBookmark(bookmark)
+DAY_MS = 24 * 60 * 60 * 1000
+now_ms = int(time.time() * 1000)
+# Schedule a restore to two days ago on the next restart.
+bookmark = await ctx.storage.getBookmarkForTime(now_ms - 2 * DAY_MS)
+await ctx.storage.onNextSessionRestoreBookmark(bookmark)
 ```
 
 </TabItem>
