@@ -11,10 +11,130 @@ products:
   - workflows
 ---
 
-import { Render } from "~/components";
+import { Render, TypeScriptExample } from "~/components";
 
 <Render file="event-subscriptions/intro" product="queues" />
 
+Use Workflows event subscriptions to send instance lifecycle events to Cloudflare Queues. Your consumer can update your application after an instance finishes, even if the caller disconnects. Your consumer can be a [Worker](/queues/configuration/javascript-apis/#consumer) or an [external service that pulls and acknowledges messages over HTTP](/queues/configuration/pull-consumers/).
+
+## Choose how to track a Workflow
+
+- **Check the current state:** Call [`instance.status()`](/workflows/build/workers-api/#status) for a one-off lookup.
+- **Stream updates for one instance:** Use [`instance.subscribe()`](/workflows/build/subscribe-to-instance-events/) from a Worker or [`GET /subscribe`](/changelog/post/2026-09-15-instance-event-subscriptions/) over WebSocket. A live subscription replays retained events, then streams new events.
+- **Update a job after the caller disconnects:** Use a [Queue subscription](#consume-terminal-lifecycle-events) to receive terminal events.
+
+Workflows does not report application-defined progress, such as a percentage complete, as a separate event or status field. If a milestone matches a step boundary, you can return it from the step and read it from the live [`step_completed` event](/workflows/build/subscribe-to-instance-events/#event-fields). For progress that readers need to query independently, write updates from idempotent `step.do()` callbacks to storage such as [D1](/d1/) or [Durable Objects](/durable-objects/).
+
+## Consume terminal lifecycle events
+
+Before you create the instances you want to track, [create a Queue event subscription](/queues/event-subscriptions/manage-event-subscriptions/#create-subscription). Choose Workflows as the source, specify your Workflow by name, and select `instance.completed`, `instance.errored`, and `instance.terminated`. [Attach your Worker consumer to the queue](/queues/configuration/configure-queues/#consumer-worker-configuration) to process those events.
+
+Workflows attempts to publish each subscribed event but does not guarantee that it reaches the queue. After publication succeeds, Queues provides [at-least-once delivery](/queues/reference/delivery-guarantees/) and does not guarantee order. Configure a [dead letter queue](/queues/configuration/dead-letter-queues/) for messages that exhaust consumer retries. To catch missed events, schedule a check for jobs that have run longer than expected. Call `status()` and update the job if the instance has ended and the job still shows `running`.
+
+The event tells you how the instance ended but does not include its output, error, or rollback details. If you need those details, retrieve the instance with [`get()`](/workflows/build/workers-api/#get) and call `status()` while the instance remains within its [retention period](/workflows/reference/limits/). `status()` returns the current state, not a snapshot from the time of the event.
+
+### Update a job when its Workflow ends
+
+Suppose your app starts a Workflow to generate a report. You save a job row in D1 so users can check whether the report is ready after they close the page. When your Queue consumer receives a message that the Workflow ended, it uses the instance ID to find and update the job.
+
+Queues can deliver the same message more than once. For example:
+
+1. The consumer receives a completion message and marks the report job `completed` in D1.
+2. The consumer crashes before it can tell Queues it processed the message. Queues sends the message again.
+3. The job already shows `completed`. The update only matches `running` jobs, so the consumer leaves the status and finish time unchanged and acknowledges the message.
+
+This example uses a queue dedicated to terminal events for one Workflow and a [D1 binding](/d1/worker-api/) named `DB`. For each run, generate a fresh instance ID, for example with `crypto.randomUUID()`. Insert a job row with that ID as `workflow_id` and `running` as `status`. Then start the Workflow with [`create({ id })`](/workflows/build/workers-api/#create), passing the same ID.
+
+Do not restart the instance or reuse its ID for another job. A late message from the old run could update the new job. If `create()` fails without creating an instance, handle that failure separately: no terminal event follows.
+
+```sql
+CREATE TABLE jobs (
+  workflow_id TEXT PRIMARY KEY NOT NULL,
+  status TEXT NOT NULL,
+  finished_at TEXT
+);
+```
+
+The `UPDATE` changes the job only if its status is still `running`. The consumer acknowledges the message once it saves the result or finds that the job already has a final status. If the database write or lookup fails, or if the job row is missing, the consumer retries the message.
+
+<TypeScriptExample filename="src/consumer.ts">
+
+```ts
+type WorkflowLifecycleEvent = {
+	type: string;
+	payload: {
+		instanceId: string;
+	};
+	metadata: {
+		eventTimestamp: string;
+	};
+};
+
+interface Env {
+	DB: D1Database;
+}
+
+type TerminalStatus = "completed" | "failed" | "cancelled";
+
+const terminalStatuses = new Map<string, TerminalStatus>([
+	["cf.workflows.workflow.instance.completed", "completed"],
+	["cf.workflows.workflow.instance.errored", "failed"],
+	["cf.workflows.workflow.instance.terminated", "cancelled"],
+]);
+
+export default {
+	async queue(batch, env): Promise<void> {
+		for (const message of batch.messages) {
+			try {
+				const event = message.body;
+				const nextStatus = terminalStatuses.get(event.type);
+				if (!nextStatus) {
+					message.ack();
+					continue;
+				}
+				const { instanceId } = event.payload;
+				const result = await env.DB.prepare(
+					`UPDATE jobs
+					 SET status = ?, finished_at = ?
+					 WHERE workflow_id = ? AND status = 'running'`,
+				)
+					.bind(nextStatus, event.metadata.eventTimestamp, instanceId)
+					.run();
+
+				if (result.meta.changes === 0) {
+					const job = await env.DB.prepare(
+						"SELECT workflow_id FROM jobs WHERE workflow_id = ?",
+					)
+						.bind(instanceId)
+						.first();
+					if (!job) {
+						throw new Error(
+							`No job row for Workflow instance ${instanceId}. Insert the row before starting the instance.`,
+						);
+					}
+				}
+
+				message.ack();
+			} catch (error) {
+				console.error("Could not finalize Workflow job", {
+					messageId: message.id,
+					error,
+				});
+				message.retry();
+			}
+		}
+	},
+} satisfies ExportedHandler<Env, WorkflowLifecycleEvent>;
+```
+
+</TypeScriptExample>
+
+This example updates the job row only. If you send an email or webhook only when the row changes, the consumer will not retry a failed send: the next delivery leaves the row unchanged.
+
+Instead, save a pending notification with a unique key in the [same D1 transaction](/d1/worker-api/d1-database/#batch) as the job update. Retry the send separately from the job update. If the recipient supports idempotency keys, reuse the same key on each attempt.
+
 ## Available Workflows events
+
+### Instance lifecycle events
 
 <Render file="event-subscriptions/workflows-events" product="queues" />

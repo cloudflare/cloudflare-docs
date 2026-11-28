@@ -78,7 +78,7 @@ Triggered when an instance pauses execution.
 
 #### `instance.errored`
 
-Triggered when an instance step throws an error.
+Workflows emits this event when an instance ends in the `errored` state. A failed step attempt that can still retry does not emit this event.
 
 **Example:**
 

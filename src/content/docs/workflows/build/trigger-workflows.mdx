@@ -151,6 +151,8 @@ export default {
 };
 ```
 
+`create()` returns a Workflow instance without waiting for execution to finish.
+
 ### Inspect a Workflow's status
 
 You can inspect the status of any running Workflow instance by calling `status` against a specific instance ID. This allows you to programmatically inspect whether an instance is queued (waiting to be scheduled), actively running, paused, or errored.
@@ -191,7 +193,7 @@ The possible values of status are as follows:
 
 If your Workflow registers rollback handlers on `step.do()`, inspect `rollback` after the instance finishes to see whether the compensating steps completed successfully. While rollback is actively running, the Workers API continues to return `status: "running"`.
 
-To receive historical and live execution updates without polling, refer to [Subscribe to events](/workflows/build/subscribe-to-instance-events/).
+Use `status()` for one-off lookups. To track execution without polling, [choose a live or Queue subscription](/workflows/reference/event-subscriptions/#choose-how-to-track-a-workflow).
 
 ### Explicitly pause a Workflow
 

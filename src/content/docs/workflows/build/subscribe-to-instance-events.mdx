@@ -14,6 +14,8 @@ Use `WorkflowInstance.subscribe()` to receive events without polling [`status()`
 
 You can subscribe immediately after creating an instance. To subscribe later, retrieve the instance with [`get()`](/workflows/build/workers-api/#get). Subscriptions remain available during the [instance retention period](/workflows/reference/limits/).
 
+If your application needs to react when an instance ends without a live caller, use [Workflows event subscriptions with Cloudflare Queues](/workflows/reference/event-subscriptions/#consume-terminal-lifecycle-events).
+
 ## Subscribe to all events
 
 <TypeScriptExample>
