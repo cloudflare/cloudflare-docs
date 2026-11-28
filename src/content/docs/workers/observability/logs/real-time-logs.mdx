@@ -3,7 +3,7 @@ pcx_content_type: concept
 title: Real-time logs
 head: []
 description: Debug your Worker application by accessing logs and exceptions
-  through the Cloudflare dashboard or `wrangler tail`.
+  through the Cloudflare dashboard, `wrangler tail`, or `cf observability tail`.
 sidebar:
   order: 3
 products:
@@ -38,7 +38,7 @@ To view real-time logs associated with any deployed Worker using the Cloudflare 
 To view real-time logs associated with any deployed Worker using Wrangler:
 
 1. Go to your Worker project directory.
-2. Run [`npx wrangler tail`](/workers/wrangler/commands/general/#tail).
+2. Run [`npx wrangler tail`](/workers/wrangler/commands/workers/#tail).
 
 This will log any incoming requests to your application available in your local terminal.
 
@@ -74,13 +74,37 @@ npx wrangler tail | jq .event.request.url
 "https://www.bytesized.xyz/page-data/app-data.json"
 ```
 
-You can customize how `wrangler tail` works to fit your needs. Refer to [the `wrangler tail` documentation](/workers/wrangler/commands/general/#tail) for available configuration options.
+You can customize how `wrangler tail` works to fit your needs. Refer to [the `wrangler tail` documentation](/workers/wrangler/commands/workers/#tail) for available configuration options.
+
+## View logs using `cf observability tail`
+
+To stream live Worker log events using the [Cloudflare CLI (`cf`)](/cf/), run `cf observability tail` from any directory. You do not need a local Wrangler project directory, which makes this command useful in scripts, CI, and coding agent workflows.
+
+:::note[Requires Workers Logs]
+
+`cf observability tail` streams events from [Workers Logs](/workers/observability/logs/workers-logs/). Before running it, [configure Workers Logs](/workers/observability/logs/workers-logs/#enable-workers-logs) with `observability.enabled = true` and deploy your Worker. In contrast, `wrangler tail` streams live logs directly from an active session without requiring Workers Logs.
+
+:::
+
+After you [install and sign in to `cf`](/cf/get-started/), run:
+
+```sh
+cf observability tail --worker <WORKER_NAME>
+```
+
+Output is newline-delimited JSON. You can pipe it to tools such as `jq` or narrow events with `--filters`:
+
+```sh
+cf observability tail --worker <WORKER_NAME> --filters '{"filterCombination":"and","filters":[{"key":"$metadata.level","type":"string","operation":"eq","value":"error"}]}'
+```
+
+Each user can run one live tail per Worker and one account-wide live tail (`--all`, `--zone`, or `--filters` alone). For all available flags, refer to the [tail command reference](/workers/wrangler/commands/workers/#tail).
 
 ## Limits
 
 :::note
 
-You can filter real-time logs in the dashboard or using [`wrangler tail`](/workers/wrangler/commands/general/#tail). If your Worker has a high volume of messages, filtering real-time logs can help mitigate messages from being dropped.
+You can filter real-time logs in the dashboard or using [`wrangler tail`](/workers/wrangler/commands/workers/#tail). If your Worker has a high volume of messages, filtering real-time logs can help mitigate messages from being dropped.
 
 :::
 
@@ -102,3 +126,4 @@ Logs can be persisted, filtered, and analyzed with [Workers Logs](/workers/obser
 - [Logpush](/workers/observability/logs/logpush/) - Learn how to push Workers Trace Event Logs to supported destinations.
 - [Tail Workers](/workers/observability/logs/tail-workers/) - Learn how to attach Tail Workers to transform your logs and send them to HTTP endpoints.
 - [Source maps and stack traces](/workers/observability/source-maps) - Learn how to enable source maps and generate stack traces for Workers.
+- [Cloudflare CLI (`cf`)](/cf/) - Stream Workers Logs with `cf observability tail` and manage Cloudflare resources from one CLI.
