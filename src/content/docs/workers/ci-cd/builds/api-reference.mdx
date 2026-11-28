@@ -10,7 +10,7 @@ products:
 
 import { Aside } from "~/components";
 
-This guide shows you how to use the [Workers Builds REST API](/api/resources/workers_builds/) to connect a Worker to a Git repository, manage build settings and [Previews](/workers/previews/), and monitor builds. The examples use `curl` commands that you can run directly in your terminal or adapt to your preferred programming language. Some examples pipe output through [`jq`](https://jqlang.org/) to filter JSON responses.
+This guide shows you how to use the [Workers Builds REST API](/api/resources/workers_builds/) to connect a Worker to a Git repository, manage build settings and [Previews](/workers/previews/), and monitor builds. The REST examples use `curl`. Some examples pipe output through [`jq`](https://jqlang.org/) to filter JSON responses. You can also [update build settings with the Cloudflare CLI (`cf`)](#update-build-settings-with-cf).
 
 ## Before you start
 
@@ -18,7 +18,7 @@ This guide shows you how to use the [Workers Builds REST API](/api/resources/wor
 
 The Workers Builds API requires requests to act on behalf of a Cloudflare user. An [account-owned API token](/fundamentals/api/get-started/account-owned-tokens/) does not represent a user, so the Builds API returns `Invalid token` even if the token has the required account permissions.
 
-For the Builds API requests in this guide, [create a **user-owned API token**](/fundamentals/api/get-started/create-token/) from **My Profile** > **API Tokens**.
+For the `curl` requests in this guide, [create a **user-owned API token**](/fundamentals/api/get-started/create-token/) from **My Profile** > **API Tokens**.
 
 Under **Permissions**, select _Account_ for each permission in the following table. Under **Account Resources**, include the account that owns your Worker.
 
@@ -152,6 +152,8 @@ curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/worke
 
 The response has the same `git_repository`, `production_settings`, `previews_enabled`, and `previews_base_config` fields you set when [creating the build configuration](#create-the-build-configuration).
 
+The response includes plain build variable values but omits secret values. If you use these settings to connect another Worker, you need to supply the secret values separately and meet the [connection prerequisites](#prerequisites), including repository authorization and a valid build token UUID. To inspect settings from the Cloudflare CLI, refer to [View build settings with cf](/workers/ci-cd/builds/configuration/#view-build-settings-with-cf).
+
 ### Update build settings
 
 Send only the fields you want to change. For example, to change the production build command and add a Preview build variable:
@@ -185,6 +187,16 @@ curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/worke
 	use Previews, [switch to Worker Previews in the
 	dashboard](/workers/ci-cd/builds/build-branches/#existing-workers-connected-to-builds).
 </Aside>
+
+### Update build settings with cf
+
+Use `cf` to update an existing Builds configuration. First, [look up your Worker tag and set `worker_tag`](/workers/ci-cd/builds/configuration/#view-build-settings-with-cf). For example, change the production build command and set a non-secret build variable:
+
+```sh
+cf builds workers edit "$worker_tag" \
+  --production-settings-build-command 'npm run build' \
+  --production-settings-environment-variables '{"BUILD_FLAG":{"value":"production","is_secret":false}}'
+```
 
 ## Manage Previews
 
