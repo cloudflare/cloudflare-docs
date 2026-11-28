@@ -67,21 +67,21 @@ If external tools such as [DNSChecker.org](https://dnschecker.org) do not show y
 
 ## Add MX records
 
-MX records direct incoming email for your domain to Google's mail servers. Google Workspace requires five MX records.
+MX records direct incoming email for your domain to Google's mail servers. Google Workspace uses a single MX record.
 
 1. In the Cloudflare dashboard, go to **DNS** > **Records**.
 2. If your domain already has MX records pointing to a different mail provider, delete them.
-3. Add each of the records in this table:
+3. Add the record in this table:
 
 | Type | Name | Mail server | Priority |
 |------|------|-------------|----------|
-| MX | `@` | `aspmx.l.google.com` | `1` |
-| MX | `@` | `alt1.aspmx.l.google.com` | `5` |
-| MX | `@` | `alt2.aspmx.l.google.com` | `5` |
-| MX | `@` | `alt3.aspmx.l.google.com` | `10` |
-| MX | `@` | `alt4.aspmx.l.google.com` | `10` |
+| MX | `@` | `smtp.google.com` | `1` |
 
-Set **Proxy status** to **DNS only** for each record.
+Set **Proxy status** to **DNS only** for the record.
+
+:::note
+Google Workspace accounts set up before 2023 may use the legacy MX records that begin with `aspmx` (such as `aspmx.l.google.com`). Google still supports these values, so you do not need to change them if email is working. Refer to [Google's MX record instructions](https://knowledge.workspace.google.com/admin/domains/set-up-mx-records-for-google-workspace) for details.
+:::
 
 :::caution[Cloudflare Email Routing conflict]
 Cloudflare Email Routing and Google Workspace MX records cannot coexist on the same domain — both require exclusive control of your MX records. If Email Routing is active on the domain, disable it before adding Google Workspace MX records.
