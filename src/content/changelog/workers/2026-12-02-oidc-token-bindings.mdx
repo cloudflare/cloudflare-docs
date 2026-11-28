@@ -1,0 +1,49 @@
+---
+title: OIDC token bindings for Workers now in open beta
+description: Workers can get short-lived OpenID Connect tokens for their own identity, to authenticate to cloud providers and APIs without storing long-lived credentials.
+products:
+  - workers
+date: 2026-11-23
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+Workers can now get short-lived OpenID Connect (OIDC) tokens that identify the Worker, through an [OIDC token binding](/workers/runtime-apis/bindings/oidc-tokens/). Exchange a token for short-lived cloud credentials, or send it to an API as a bearer token. Your Worker no longer needs a long-lived access key stored as a secret.
+
+Add a binding for each audience your Worker needs:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"oidc_tokens": [
+		{
+			"binding": "API_TOKEN",
+			"audience": "https://api.example.com",
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+Then call `getToken()` when you need a token. Each call returns a newly signed JSON Web Token (JWT), valid for five minutes:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request, env): Promise<Response> {
+		const token = await env.API_TOKEN.getToken();
+		return fetch("https://api.example.com/v1/orders", {
+			headers: { Authorization: `Bearer ${token}` },
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+Each account has its own issuer, `https://oidc.cloudflare.com/accounts/<ACCOUNT_ID>`, with a standard discovery document and JSON Web Key Set. A token's subject is `worker:<WORKER_ID>`. After a deploy, `wrangler deploy` prints the issuer and subject to put in your verifier's trust policy.
+
+For the token claims and how to configure a verifier, refer to [OIDC Tokens](/workers/runtime-apis/bindings/oidc-tokens/).

@@ -261,6 +261,8 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 
 - `flagship` <Type text="object" /> <MetaInfo text="optional" />
   - A list of Flagship apps that your Worker should be bound to. Refer to [Flagship](#flagship).
+- `oidc_tokens` <Type text="object" /> <MetaInfo text="optional" />
+  - A list of OIDC token bindings that issue tokens for your Worker. Refer to [OIDC tokens](#oidc-tokens).
 
 ## Types of routes
 
@@ -1223,6 +1225,41 @@ Example of a Wrangler configuration file that includes an mTLS certificate bindi
 </WranglerConfig>
 
 mTLS certificate bindings can then be used at runtime to communicate with secured origins via their [`fetch` method](/workers/runtime-apis/bindings/mtls).
+
+### OIDC Tokens
+
+An OpenID Connect (OIDC) token binding issues short-lived tokens that identify your Worker, for one audience. Exchange them for cloud credentials, or send them to an API as a bearer token.
+
+To create an [OIDC token binding](/workers/runtime-apis/bindings/oidc-tokens/), assign an array of objects with the following shape to the `oidc_tokens` key.
+
+- `binding` <Type text="string" /> <MetaInfo text="required" />
+  - The binding name used to refer to the binding.
+- `audience` <Type text="string" /> <MetaInfo text="required" />
+  - The `aud` claim of every token from this binding. It must be 1 to 2,048 printable ASCII characters, with no whitespace.
+- `alg` <Type text="string" /> <MetaInfo text="optional" />
+  - The signing algorithm: `ES256` (the default) or `RS256`.
+
+Example of a Wrangler configuration file that includes OIDC token bindings:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"oidc_tokens": [
+		{
+			"binding": "API_TOKEN",
+			"audience": "https://api.example.com",
+		},
+		{
+			"binding": "EXCHANGE_TOKEN",
+			"audience": "api://token-exchange",
+			"alg": "RS256",
+		},
+	],
+}
+```
+
+</WranglerConfig>
 
 ### Workers AI
 
