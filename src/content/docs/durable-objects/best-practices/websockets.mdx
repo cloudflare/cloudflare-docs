@@ -15,6 +15,7 @@ import {
 	Type,
 	WranglerConfig,
 	TypeScriptExample,
+	Render,
 } from "~/components";
 
 Durable Objects can act as WebSocket servers that connect thousands of clients per instance. You can also use WebSockets as a client to connect to other servers or Durable Objects.
@@ -243,7 +244,7 @@ Configure your Wrangler file with a Durable Object [binding](/durable-objects/ge
 
 </WranglerConfig>
 
-A full example is available in [Build a WebSocket server with WebSocket Hibernation](/durable-objects/examples/websocket-hibernation-server/).
+A full example is available in [Build a WebSocket server with WebSocket Hibernation](/durable-objects/examples/websocket-hibernation-server/). To forward WebSocket upgrades through `stub.fetch(request)` while exposing typed RPC methods on the same Durable Object class for other Worker-to-Durable Object or Durable Object-to-Durable Object calls, refer to [Combine `fetch()` upgrades with RPC methods](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/#combine-fetch-upgrades-with-rpc-methods).
 
 :::caution[Local development support]
 
@@ -417,6 +418,77 @@ export class WebSocketServer extends DurableObject<Env> {
 
 </TypeScriptExample>
 
+## Communicate errors to browser WebSocket clients
+
+<Render file="browser-websocket-errors" product="workers" />
+
+If your entry Worker rejects the upgrade, it does not need to invoke the Durable Object.
+
+The following Durable Object accepts the upgrade but closes the connection with `4002` and `room_full` when the room reaches capacity. Only open sockets that the Durable Object admitted count toward the limit.
+
+<TypeScriptExample>
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+const CLOSE_ROOM_FULL = 4002;
+const MAX_CONNECTIONS = 100;
+
+export class ChatRoom extends DurableObject {
+	async fetch(request: Request): Promise<Response> {
+		if (request.headers.get("Upgrade") !== "websocket") {
+			return new Response("Expected Upgrade: websocket", { status: 426 });
+		}
+
+		const members = this.ctx.getWebSockets("member");
+		const openConnections = members.filter(
+			(ws) => ws.readyState === WebSocket.OPEN,
+		).length;
+		const [client, server] = Object.values(new WebSocketPair());
+		if (openConnections >= MAX_CONNECTIONS) {
+			this.ctx.acceptWebSocket(server);
+			server.close(CLOSE_ROOM_FULL, "room_full");
+		} else {
+			this.ctx.acceptWebSocket(server, ["member"]);
+		}
+
+		return new Response(null, {
+			status: 101,
+			webSocket: client,
+		});
+	}
+
+	webSocketClose(ws: WebSocket, code: number, reason: string): void {
+		if (code === 1006 || ws.readyState === WebSocket.CLOSED) {
+			return;
+		}
+		if (code === 1000 || (code >= 3000 && code <= 4999)) {
+			ws.close(code, reason);
+		} else {
+			ws.close();
+		}
+	}
+}
+```
+</TypeScriptExample>
+
+If your client needs confirmation of room admission, send a separate application message after admitting the client. Use `event.code` and `event.reason` to handle a full room:
+
+<TypeScriptExample>
+```ts
+const ws = new WebSocket("wss://example.com/websocket");
+
+ws.addEventListener("close", (event: CloseEvent) => {
+	if (event.code === 4002) {
+		console.warn("Room is full. Wait before reconnecting.", event.reason);
+	} else if (event.code === 1006) {
+		console.warn("Connection closed without a status the browser can read.");
+	}
+});
+```
+</TypeScriptExample>
+
+For a room that requires sign-in, check the session over HTTP before reconnecting. If you retry, use backoff and limit the number of attempts.
+
 ## WebSocket Standard API
 
 WebSocket connections are established by making an HTTP GET request with the `Upgrade: websocket` header.
@@ -430,7 +502,7 @@ The typical flow:
 
 :::note[Validate requests in a Worker]
 
-Both Workers and Durable Objects are billed based on the number of requests. Validate requests in your Worker to avoid billing for invalid requests against a Durable Object.
+Both Workers and Durable Objects are billed based on the number of requests. Validate requests in your Worker to avoid billing for invalid requests against a Durable Object. If a browser client needs to read why an upgrade was rejected, refer to [Communicate errors to browser WebSocket clients](#communicate-errors-to-browser-websocket-clients).
 
 :::
 
