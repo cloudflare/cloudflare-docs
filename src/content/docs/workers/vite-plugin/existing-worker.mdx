@@ -1,0 +1,75 @@
+---
+title: Add a Vite frontend to an existing Worker
+description: Serve a Vite SPA, API, and WebSocket endpoint from an existing Worker with a sibling frontend directory.
+pcx_content_type: how-to
+products:
+  - workers
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+:::note[Vite plugin v2 beta]
+This guide uses [Vite plugin v2 beta](/workers/vite-plugin/v2-beta/) and the [cf CLI](/cf/). For the stable plugin, refer to the [React SPA with an API tutorial](/workers/vite-plugin/tutorial/).
+:::
+
+You can serve a Vite single-page application, HTTP API, and WebSocket endpoint through one development server and one deployed Worker. Keep the existing Worker source and point the frontend's Cloudflare configuration at it:
+
+```text
+project/
+├── worker/index.ts
+└── frontend/
+    ├── package.json
+    ├── index.html
+    ├── vite.config.ts
+    └── cloudflare.config.ts
+```
+
+From `frontend`, install Vite plugin v2 and `cf`:
+
+<PackageManagers type="add" pkg="@cloudflare/vite-plugin@beta cf" dev />
+
+Run both Vite and `cf` from that directory so they use the same configuration and Build Output directory.
+
+<TypeScriptExample filename="frontend/vite.config.ts">
+
+```ts
+import { defineConfig } from "vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+
+export default defineConfig({ plugins: [cloudflare()] });
+```
+
+</TypeScriptExample>
+
+<TypeScriptExample filename="frontend/cloudflare.config.ts">
+
+```ts
+import { defineConfig, defineWorker } from "cf/config";
+
+export default defineConfig({
+	worker: defineWorker({
+		name: "full-stack-app",
+		entrypoint: "../worker/index.ts",
+		compatibilityDate: "$today",
+		assets: {
+			notFoundHandling: "single-page-application",
+			runWorkerFirst: ["/api/*", "/ws"],
+		},
+	}),
+});
+```
+
+</TypeScriptExample>
+
+Keep your existing API and WebSocket handlers. The `runWorkerFirst` patterns route requests as follows:
+
+| Request | Handler |
+| --- | --- |
+| `/api/hello` | Worker API handler |
+| `/api/missing` | Worker API handler; return `404` for unknown routes |
+| `/ws` | Worker [WebSocket handler](/workers/examples/websockets/) |
+| `/settings` | SPA fallback serves `index.html` |
+
+From `frontend`, run `npx cf dev` for local development or `npx cf deploy` to build and deploy. The plugin includes the client assets in Build Output; you do not need a second server or a build-copy step. Leave `assets.directory` unset.
+
+For routing rules, refer to [Full-stack application routing](/workers/static-assets/routing/full-stack-application/).
