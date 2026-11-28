@@ -1,0 +1,218 @@
+---
+pcx_content_type: how-to
+title: Resource sharing
+description: Share WAF rulesets, Gateway policies and settings, and identity providers across accounts in your Cloudflare Organization.
+sidebar:
+  order: 5
+products:
+  - fundamentals
+---
+
+import { APIRequest } from "~/components";
+
+Organizations allows you to create a resource in one account and share it with other accounts in your Organization. This ensures consistent configuration across all accounts without manually duplicating it.
+
+Resource sharing works the same way for both [Enterprise](/fundamentals/organizations/for-enterprise/) and [MSSP/Distributor](/fundamentals/organizations/for-mssp-distributors/) Organizations.
+
+## Names for resource sharing
+
+Different parts of Cloudflare use different names for this feature. They all refer to the same shares.
+
+| Where                 | Name                                                                               |
+| --------------------- | ---------------------------------------------------------------------------------- |
+| Dashboard             | **Share**, **Shared configurations**                                               |
+| Gateway documentation | [Tiered policies](/cloudflare-one/traffic-controls/tiered-policies/organizations/) |
+| API and SDKs          | **Resource Sharing**, with endpoints under `/accounts/{account_id}/shares`         |
+| API token permission  | **Resource Sharing Read**                                                          |
+| Terraform             | `cloudflare_share`, `cloudflare_share_recipient`, and `cloudflare_share_resource`  |
+| Resource tagging      | `resource_share` [resource type](/resource-tagging/reference/resource-types/)      |
+| Previous docs page    | Policy sharing                                                                     |
+
+## How it works
+
+A share connects three things:
+
+- **Source account**: The account that owns the resource. You create, edit, and delete the resource only in this account.
+- **Resources**: The resources included in the share, such as a WAF custom ruleset or a Gateway policy.
+- **Recipients**: The accounts that receive the resources. A share targets either specific accounts or every account in your Organization.
+
+Shared resources are **read-only** in recipient accounts. Changes made in the source account propagate to all recipient accounts automatically.
+
+Sharing is asynchronous. A successful API response means Cloudflare accepted the share, not that every recipient has it yet. When a share targets your whole Organization, accounts that join the Organization later receive the share automatically within a few minutes.
+
+## Supported resources
+
+| Resource                                          | API `resource_type`               | Where to share                                                                                                                                 |
+| ------------------------------------------------- | --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| WAF custom ruleset (account-level)                | `custom-ruleset`                  | [WAF policy sharing](#waf-policy-sharing)                                                                                                      |
+| Gateway DNS, network, HTTP, and resolver policies | `gateway-policy`                  | [Gateway tiered policies](/cloudflare-one/traffic-controls/tiered-policies/organizations/#share-policy)                                        |
+| Gateway block page                                | `gateway-block-page-settings`     | [Share Gateway block page](/cloudflare-one/traffic-controls/tiered-policies/organizations/#share-gateway-block-page)                           |
+| Gateway extended email matching                   | `gateway-extended-email-matching` | [Share extended email address matching](/cloudflare-one/traffic-controls/tiered-policies/organizations/#share-extended-email-address-matching) |
+| Access identity provider (IdP)                    | `idp-federation-grant`            | [IdP federation](/cloudflare-one/integrations/identity-providers/idp-federation/)                                                              |
+
+The following resources cannot be shared:
+
+- WAF and Gateway [lists](/waf/tools/lists/). A ruleset with a rule that references a list cannot be shared.
+- Gateway [egress policies](/cloudflare-one/traffic-controls/egress-policies/), and Gateway policies that use certain selectors or actions. Refer to [Gateway limitations](/cloudflare-one/traffic-controls/tiered-policies/organizations/#limitations).
+
+## Prerequisites
+
+- **Permissions**: You must be an [Organization Super Administrator](#required-permissions).
+- **Entitlements**: Resource sharing requires the appropriate product entitlements on the accounts involved. Organizations does not grant access to WAF or Gateway features — your accounts must already have the required SKUs.
+  - **WAF policy sharing** requires Enterprise WAF entitlements on both the source and recipient accounts.
+  - **Gateway policy sharing** requires Zero Trust Gateway entitlements and Zero Trust seats on both the source and recipient accounts.
+
+## Required permissions
+
+Creating, editing, and deleting shares crosses account boundaries, so it requires Organization-level access.
+
+| Action                                                            | Who can do it                                                                     |
+| ----------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| Create, edit, or delete a share, its recipients, or its resources | Organization Super Administrators                                                 |
+| View shares sent from or received by an account                   | Organization Super Administrators, and account members with read access to shares |
+| List all shares in an Organization                                | Organization Super Administrators                                                 |
+
+Organization Super Administrators have [implicit access](/fundamentals/organizations/for-enterprise/#implicit-access) to every account in the Organization. Account Super Administrators who are not Organization members can view shares, but cannot create, edit, or delete them.
+
+Anyone who can edit the resource in the source account can change what recipients receive. Restrict edit access to source accounts accordingly.
+
+### API credentials
+
+| Operation                                                                        | Supported credentials                                       |
+| -------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| Create, update, or delete shares, recipients, excluded recipients, and resources | Global API key                                              |
+| List or get account shares                                                       | Global API key, or API token with **Resource Sharing Read** |
+| List Organization shares                                                         | Global API key                                              |
+
+API tokens cannot create or modify shares. When you use a Global API key, also provide the user's registered email address. Refer to [Global API key limitations](/fundamentals/api/get-started/keys/#limitations).
+
+## WAF policy sharing
+
+Create WAF custom rulesets in one account and share them to other accounts within your Organization.
+
+### Key behaviors
+
+- **Read-only in recipient accounts**: Shared WAF rulesets cannot be edited in the receiving accounts. To modify the rules, update them in the source account.
+- **Recipient accounts cannot have their own account-level custom rules**: Sharing takes over the account-level WAF custom rules phase in each recipient account. While a share is active, the recipient account cannot deploy its own account-level custom rulesets. If a recipient account already has account-level custom rules, the shared ruleset is not applied until those rules are removed. Zone-level custom rules, rate limiting rules, and managed rulesets in the recipient account are not affected.
+- **Lists are not supported**: A ruleset that contains a rule referencing a [list](/waf/tools/lists/) cannot be shared.
+- **Source account owns the policy**: If the source account is removed from the Organization, the shared policy is removed from all recipient accounts.
+- **No cross-Organization sharing**: Policies can only be shared within a single Organization. You cannot share policies between different Organizations.
+- **Multiple rulesets**: You can share multiple WAF custom rulesets from the same or different source accounts.
+
+### Share a WAF custom ruleset
+
+1. In the source account, go to **Security** > **WAF** > **Custom rules**.
+2. Create or select a custom ruleset.
+3. From the ruleset action menu, select **Share**.
+4. In the sharing dialog, select one or more recipient accounts.
+5. Select **Share**.
+
+The shared ruleset now appears in the recipient accounts under their WAF custom rules.
+
+## Gateway sharing
+
+Share Zero Trust Gateway policies and settings across accounts in your Organization. You can share:
+
+- **DNS policies** — Filter and block DNS queries.
+- **Network policies** — Control network-level traffic.
+- **HTTP policies** — Inspect and filter HTTP traffic.
+- **Resolver policies** — Customize DNS resolution behavior.
+- **Block page settings** — Apply the same Gateway block page to recipient accounts.
+- **Extended email matching** — Apply the same extended email address matching setting to recipient accounts.
+
+Shared Gateway policies run before any policies created in the recipient account. Recipient accounts cannot bypass, modify, or reorder shared policies.
+
+For instructions and limitations, refer to [Cloudflare Organizations in Gateway](/cloudflare-one/traffic-controls/tiered-policies/organizations/).
+
+## IdP federation
+
+[IdP federation](/cloudflare-one/integrations/identity-providers/idp-federation/) lets you configure a single identity provider (such as Okta or Entra ID) in one account and share it across all accounts in your Organization. Shared IdP connections are read-only in recipient accounts and are automatically provisioned or removed as accounts join or leave the Organization.
+
+## Manage shares with the API
+
+Use the [Resource Sharing API](/api/resources/resource_sharing/) to create and manage shares. Each share includes a name, the resources to share, and its recipients.
+
+### Create a share
+
+To share resources with specific accounts, add one `recipient_account_id` entry per account to `recipients`:
+
+<APIRequest
+	path="/accounts/{account_id}/shares"
+	method="POST"
+	json={{
+		name: "Org-wide OWASP rules",
+		recipients: [{ recipient_account_id: "<RECIPIENT_ACCOUNT_ID>" }],
+		resources: [
+			{
+				resource_account_id: "<SOURCE_ACCOUNT_ID>",
+				resource_id: "<RESOURCE_ID>",
+				resource_type: "custom-ruleset",
+				meta: {},
+			},
+		],
+	}}
+/>
+
+To share resources with every account in your Organization, use `organization_id` instead:
+
+```json
+"recipients": [{ "organization_id": "<ORGANIZATION_ID>" }]
+```
+
+If you omit `recipients`, the share targets your whole Organization. To skip specific accounts in an Organization-wide share, list them in `excluded_recipients`.
+
+You cannot change a share between targeting specific accounts and targeting your Organization. To switch, delete the share and create a new one.
+
+### Check recipient status
+
+To check whether resources have reached each recipient, list the share's recipients:
+
+<APIRequest
+	path="/accounts/{account_id}/shares/{share_id}/recipients"
+	method="GET"
+/>
+
+Each recipient has an `association_status`:
+
+| Status           | Meaning                                                                 |
+| ---------------- | ----------------------------------------------------------------------- |
+| `associating`    | The recipient was added. Cloudflare is applying the shared resources.   |
+| `associated`     | The shared resources are applied to the recipient account.              |
+| `disassociating` | The recipient was removed. Cloudflare is removing the shared resources. |
+| `disassociated`  | The shared resources were removed from the recipient account.           |
+
+If a resource cannot be applied to a recipient, the recipient's resource entry includes an `error` message. The `terminal` field indicates whether Cloudflare will keep retrying.
+
+## Limits
+
+| Limit                                           | Value |
+| ----------------------------------------------- | ----- |
+| Shares targeting a single recipient account     | 20    |
+| Recipients per create or update request         | 100   |
+| Excluded recipients per Organization-wide share | 1,000 |
+
+## Manage shared resources
+
+### View shared resources
+
+From the Organization overview, you can see which resources are shared and to which accounts. Shared resources are marked with a sharing indicator in the recipient account.
+
+### Remove a shared resource
+
+To stop sharing a resource with a recipient account:
+
+1. In the source account, go to the shared resource.
+2. Select **Manage sharing**.
+3. Remove the recipient account from the sharing list.
+
+The resource is removed from the recipient account.
+
+For Gateway resources, refer to [Edit share recipients](/cloudflare-one/traffic-controls/tiered-policies/organizations/#edit-share-recipients) and [Unshare policy](/cloudflare-one/traffic-controls/tiered-policies/organizations/#unshare-policy).
+
+### Best practices
+
+- **Centralize policy authoring**: Designate one or two accounts as your source accounts. This simplifies management and ensures consistency.
+- **Limit edit access to source accounts**: Changes to a source resource apply to every recipient account.
+- **Use descriptive names**: Name shares clearly (for example, "Org-Wide OWASP Rules" or "Global DNS Block List") so recipient account admins understand what the share does.
+- **Test before sharing**: Validate policies in the source account before sharing to all recipient accounts to avoid unintended blocks or rule conflicts.
+- **Monitor shared resource coverage**: Regularly review which accounts have shared resources applied to ensure no accounts are missing critical security rules.
