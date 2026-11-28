@@ -132,6 +132,10 @@ Use this table to determine where each setting belongs.
         <td>Add a binding to an existing Workflow. Previews do not create a Workflow when you change the Workflow name.</td>
       </tr>
       <tr>
+        <td><a href="/workers/previews/resources/#service-bindings">Service bindings</a></td>
+        <td>Add <code>previews.services</code>, pointed at a dedicated non-production Worker such as <code>api-staging</code>. Service bindings always call a deployed Worker and cannot target another Worker's Preview.</td>
+      </tr>
+      <tr>
         <td>Queue producers</td>
         <td>Add <code>previews.queues.producers</code>, pointed at a Preview-safe queue.</td>
       </tr>
@@ -177,7 +181,7 @@ If your Worker uses only top-level settings, include an empty `previews` block:
 
 Do not add Queue consumers, Cron Triggers, or production routes to `previews`. These do not target Previews. For Preview hostnames, refer to [Custom domains](/workers/previews/custom-domains/).
 
-Service bindings from a Preview call the bound Worker's production deployment. For more limitations, refer to [Limitations](/workers/previews/resources/#limitations).
+Service bindings from a Preview always call a deployed Worker and cannot target another Worker's Preview. Point `previews.services` at a dedicated non-production Worker to avoid reading or writing production data. For details and workarounds, refer to [Service bindings](/workers/previews/resources/#service-bindings) and [Limitations](/workers/previews/resources/#limitations).
 
 ## Dashboard configuration
 

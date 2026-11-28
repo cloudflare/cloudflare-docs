@@ -47,7 +47,7 @@ Since secrets cannot be stored in the configuration file or version control, use
 
 Cloudflare automatically provisions a new [Durable Object namespace](/workers/previews/resources/#durable-objects) and [container instances](/workers/previews/resources/#containers) for each Preview. KV, D1, R2, and other resources are isolated when you bind the Preview to a separate resource. For the full matrix, refer to [Resources and isolation](/workers/previews/resources/).
 
-Workflow bindings use existing Workflows and do not create Preview-specific Workflows. Service bindings from a Preview call the bound Worker's production deployment. Routes and Cron Triggers target production. Queue consumers cannot target a Preview. For details, refer to [Limitations](/workers/previews/resources/#limitations).
+Workflow bindings use existing Workflows and do not create Preview-specific Workflows. Service bindings from a Preview always call a deployed Worker and cannot target another Worker's Preview. Routes and Cron Triggers target production. Queue consumers cannot target a Preview. For workarounds and details, refer to [Limitations](/workers/previews/resources/#limitations).
 
 ### Access control
 
