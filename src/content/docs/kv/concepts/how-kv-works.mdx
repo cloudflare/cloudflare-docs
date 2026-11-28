@@ -38,17 +38,17 @@ KV is optimized for high-read applications. It stores data centrally and uses a 
 
 ## Performance
 
-To improve KV performance, increase the [`cacheTtl` parameter](/kv/api/read-key-value-pairs/#cachettl-parameter) up from its default 60 seconds.
+To improve KV performance, increase the [`cacheTtl` parameter](/kv/api/read-key-value-pairs/#cachettl-parameter) up from its default 60 seconds. To reduce staleness on reads, you can lower `cacheTtl` down to the [minimum of 30 seconds](/kv/platform/limits/).
 
 KV achieves high performance by [caching](https://www.cloudflare.com/en-gb/learning/cdn/what-is-caching/) which makes reads eventually-consistent with writes.
 
-Changes are usually immediately visible in the Cloudflare global network location at which they are made. Changes may take up to 60 seconds or more to be visible in other global network locations as their cached versions of the data time out.
+Changes are usually immediately visible in the Cloudflare global network location at which they are made. Changes may take up to `cacheTtl` seconds (60 seconds by default, or as low as 30 seconds when configured) or more to be visible in other global network locations as their cached versions of the data time out.
 
 Negative lookups indicating that the key does not exist are also cached, so the same delay exists noticing a value is created as when a value is changed.
 
 ## Consistency
 
-KV achieves high performance by being eventually-consistent. At the Cloudflare global network location at which changes are made, these changes are usually immediately visible. However, this is not guaranteed and therefore it is not advised to rely on this behaviour. In other global network locations changes may take up to 60 seconds or more to be visible as their cached versions of the data time-out.
+KV achieves high performance by being eventually-consistent. At the Cloudflare global network location at which changes are made, these changes are usually immediately visible. However, this is not guaranteed and therefore it is not advised to rely on this behavior. In other global network locations, changes may take up to `cacheTtl` seconds (60 seconds by default, minimum 30 seconds) or more to be visible as their cached versions of the data time out.
 
 Visibility of changes takes longer in locations which have recently read a previous version of a given key (including reads that indicated the key did not exist, which are also cached locally).
 
