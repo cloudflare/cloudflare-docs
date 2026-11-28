@@ -3,7 +3,7 @@ pcx_content_type: reference
 title: Zone Analytics to GraphQL Analytics
 sidebar:
   order: 12
-description: Migrate from Zone Analytics API to GraphQL.
+description: Migrate from the sunset Zone Analytics API to GraphQL Analytics.
 products:
   - analytics
   - graphql-api
@@ -11,16 +11,286 @@ products:
 
 import { Details } from "~/components";
 
-The Zone Analytics API allows you to get request data by zone. It offers optional `since` and `until` parameters to specify the request time period and a `continuous` parameter to indicate whether the time period should be moved backward to find a period with completely aggregated data.
+:::caution[Zone Analytics API is sunset]
+The legacy Zone Analytics REST endpoint (`GET /zones/{zone_id}/analytics/dashboard`) is sunset and returns API error `1015`. Use the [GraphQL Analytics API](/analytics/graphql-api/) instead.
+:::
 
-For example, here is a sample curl call to get data for a two minute period:
+## Query zone HTTP analytics with GraphQL
+
+Unlike the retired Zone Analytics API, the GraphQL Analytics API lets you request only the metrics and dimensions you need.
+
+Before running a query:
+
+- Choose `$start` and `$end` timestamps within your zone plan's retention window.
+- Confirm dataset availability for your zone. `httpRequestsAdaptiveGroups` is available on all plans with at least 31 days of retention, while aggregated rollup datasets such as `httpRequests1mGroups` and `httpRequests1hGroups` have per-plan availability and retention limits.
+- Query the [Settings node](/analytics/graphql-api/features/discovery/settings/) to inspect `enabled`, `maxDuration`, and `notOlderThan` for your zone, or review [GraphQL Analytics limits](/analytics/graphql-api/limits/#node-limits-and-availability).
+
+To retrieve the same set of metrics and dimensions that Zone Analytics previously returned, query `httpRequests1mGroups`:
+
+```graphql graphql-api-explorer
+query ZoneAnalyticsMigrationSample($zoneTag: string, $start: Time, $end: Time) {
+	viewer {
+		zones(filter: { zoneTag: $zoneTag }) {
+			httpRequests1mGroups(
+				orderBy: [datetimeFiveMinutes_ASC]
+				limit: 100
+				filter: { datetime_geq: $start, datetime_lt: $end }
+			) {
+				dimensions {
+					datetimeFiveMinutes
+				}
+				sum {
+					browserMap {
+						pageViews
+						uaBrowserFamily
+					}
+					bytes
+					cachedBytes
+					cachedRequests
+					contentTypeMap {
+						bytes
+						requests
+						edgeResponseContentTypeName
+					}
+					clientSSLMap {
+						requests
+						clientSSLProtocol
+					}
+					countryMap {
+						bytes
+						requests
+						threats
+						clientCountryName
+					}
+					encryptedBytes
+					encryptedRequests
+					ipClassMap {
+						requests
+						ipType
+					}
+					pageViews
+					requests
+					responseStatusMap {
+						requests
+						edgeResponseStatus
+					}
+					threats
+					threatPathingMap {
+						requests
+						threatPathingName
+					}
+				}
+				uniq {
+					uniques
+				}
+			}
+		}
+	}
+}
+```
+
+<Details header="Response (illustrative sample timestamps)">
+
+```json
+{
+	"data": {
+		"viewer": {
+			"zones": [
+				{
+					"httpRequests1mGroups": [
+						{
+							"dimensions": {
+								"datetimeFiveMinutes": "2019-09-08T20:00:00Z"
+							},
+							"sum": {
+								"browserMap": [
+									{
+										"pageViews": 1,
+										"uaBrowserFamily": "PingdomBot"
+									}
+								],
+								"bytes": 312740,
+								"cachedBytes": 309930,
+								"cachedRequests": 12,
+								"clientSSLMap": [
+									{
+										"clientSSLProtocol": "none",
+										"requests": 2
+									},
+									{
+										"clientSSLProtocol": "TLSv1.2",
+										"requests": 13
+									}
+								],
+								"contentTypeMap": [
+									{
+										"bytes": 280590,
+										"edgeResponseContentTypeName": "png",
+										"requests": 3
+									},
+									{
+										"bytes": 32150,
+										"edgeResponseContentTypeName": "html",
+										"requests": 12
+									}
+								],
+								"countryMap": [
+									{
+										"bytes": 10797,
+										"clientCountryName": "CN",
+										"requests": 6,
+										"threats": 6
+									},
+									{
+										"bytes": 98224,
+										"clientCountryName": "IE",
+										"requests": 1,
+										"threats": 0
+									},
+									{
+										"bytes": 185176,
+										"clientCountryName": "US",
+										"requests": 3,
+										"threats": 0
+									},
+									{
+										"bytes": 18543,
+										"clientCountryName": "VN",
+										"requests": 5,
+										"threats": 0
+									}
+								],
+								"encryptedBytes": 309276,
+								"encryptedRequests": 13,
+								"ipClassMap": [
+									{
+										"ipType": "monitoringService",
+										"requests": 4
+									},
+									{
+										"ipType": "noRecord",
+										"requests": 11
+									}
+								],
+								"pageViews": 1,
+								"requests": 15,
+								"responseStatusMap": [
+									{
+										"edgeResponseStatus": 200,
+										"requests": 4
+									},
+									{
+										"edgeResponseStatus": 403,
+										"requests": 11
+									}
+								],
+								"threatPathingMap": [
+									{
+										"requests": 6,
+										"threatPathingName": "user.ban.ctry"
+									}
+								],
+								"threats": 6
+							},
+							"uniq": {
+								"uniques": 11
+							}
+						},
+						{
+							"dimensions": {
+								"datetimeFiveMinutes": "2019-09-08T20:01:00Z"
+							},
+							"sum": {
+								"browserMap": [
+									{
+										"pageViews": 1,
+										"uaBrowserFamily": "PingdomBot"
+									}
+								],
+								"bytes": 283399,
+								"cachedBytes": 280590,
+								"cachedRequests": 1,
+								"clientSSLMap": [
+									{
+										"clientSSLProtocol": "TLSv1.2",
+										"requests": 4
+									}
+								],
+								"contentTypeMap": [
+									{
+										"bytes": 280590,
+										"edgeResponseContentTypeName": "png",
+										"requests": 3
+									},
+									{
+										"bytes": 2809,
+										"edgeResponseContentTypeName": "html",
+										"requests": 1
+									}
+								],
+								"countryMap": [
+									{
+										"bytes": 101033,
+										"clientCountryName": "CA",
+										"requests": 2,
+										"threats": 0
+									},
+									{
+										"bytes": 182366,
+										"clientCountryName": "US",
+										"requests": 2,
+										"threats": 0
+									}
+								],
+								"encryptedBytes": 283399,
+								"encryptedRequests": 4,
+								"ipClassMap": [
+									{
+										"ipType": "monitoringService",
+										"requests": 4
+									}
+								],
+								"pageViews": 1,
+								"requests": 4,
+								"responseStatusMap": [
+									{
+										"edgeResponseStatus": 200,
+										"requests": 4
+									}
+								],
+								"threatPathingMap": [],
+								"threats": 0
+							},
+							"uniq": {
+								"uniques": 4
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"errors": null
+}
+```
+
+</Details>
+
+Specify the request time period using a dataset filter (refer to [Filtering](/analytics/graphql-api/features/filtering/)). The legacy `continuous` parameter is no longer needed because GraphQL Analytics provides data as soon as it is available.
+
+To retrieve totals for a period rather than a time-series breakdown, remove the `datetimeFiveMinutes` field under `dimensions`.
+
+## Legacy Zone Analytics comparison
+
+For reference when migrating existing integrations, the retired Zone Analytics API accepted optional `since`, `until`, and `continuous` query parameters and returned a fixed payload of metrics across all dimensions. Do not use this endpoint for new queries — it is sunset and returns API error `1015`.
 
 ```bash
+# Sunset endpoint — shown for historical migration comparison only
 curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/analytics/dashboard?since=2019-09-08T20:00:00Z&until=2019-09-08T20:02:00Z&continuous=false" \
 --header "Authorization: Bearer <API_TOKEN>" --silent | jq .
 ```
 
-<Details header="Response">
+<Details header="Historical response">
 
 ```json
 {
@@ -258,258 +528,3 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/analytics/dashboard?s
 ```
 
 </Details>
-
-As you can see from the response, Zone Analytics returns metrics along many dimensions and does not give you the option to control what you receive. With GraphQL Analytics, you can ask for only the data that you need. However, if you wanted to get exactly the same metrics and dimensions as you would from Zone Analytics, here is the query you would make:
-
-```graphql graphql-api-explorer
-query ZoneAnalyticsMigrationSample($zoneTag: string, $start: Time, $end: Time) {
-	viewer {
-		zones(filter: { zoneTag: $zoneTag }) {
-			httpRequests1mGroups(
-				orderBy: [datetimeFiveMinutes_ASC]
-				limit: 100
-				filter: { datetime_geq: $start, datetime_lt: $end }
-			) {
-				dimensions {
-					datetimeFiveMinutes
-				}
-				sum {
-					browserMap {
-						pageViews
-						uaBrowserFamily
-					}
-					bytes
-					cachedBytes
-					cachedRequests
-					contentTypeMap {
-						bytes
-						requests
-						edgeResponseContentTypeName
-					}
-					clientSSLMap {
-						requests
-						clientSSLProtocol
-					}
-					countryMap {
-						bytes
-						requests
-						threats
-						clientCountryName
-					}
-					encryptedBytes
-					encryptedRequests
-					ipClassMap {
-						requests
-						ipType
-					}
-					pageViews
-					requests
-					responseStatusMap {
-						requests
-						edgeResponseStatus
-					}
-					threats
-					threatPathingMap {
-						requests
-						threatPathingName
-					}
-				}
-				uniq {
-					uniques
-				}
-			}
-		}
-	}
-}
-```
-
-<Details header="Response">
-
-```json
-{
-	"data": {
-		"viewer": {
-			"zones": [
-				{
-					"httpRequests1mGroups": [
-						{
-							"dimensions": {
-								"datetimeFiveMinutes": "2019-09-08T20:00:00Z"
-							},
-							"sum": {
-								"browserMap": [
-									{
-										"pageViews": 1,
-										"uaBrowserFamily": "PingdomBot"
-									}
-								],
-								"bytes": 312740,
-								"cachedBytes": 309930,
-								"cachedRequests": 12,
-								"clientSSLMap": [
-									{
-										"clientSSLProtocol": "none",
-										"requests": 2
-									},
-									{
-										"clientSSLProtocol": "TLSv1.2",
-										"requests": 13
-									}
-								],
-								"contentTypeMap": [
-									{
-										"bytes": 280590,
-										"edgeResponseContentTypeName": "png",
-										"requests": 3
-									},
-									{
-										"bytes": 32150,
-										"edgeResponseContentTypeName": "html",
-										"requests": 12
-									}
-								],
-								"countryMap": [
-									{
-										"bytes": 10797,
-										"clientCountryName": "CN",
-										"requests": 6,
-										"threats": 6
-									},
-									{
-										"bytes": 98224,
-										"clientCountryName": "IE",
-										"requests": 1,
-										"threats": 0
-									},
-									{
-										"bytes": 185176,
-										"clientCountryName": "US",
-										"requests": 3,
-										"threats": 0
-									},
-									{
-										"bytes": 18543,
-										"clientCountryName": "VN",
-										"requests": 5,
-										"threats": 0
-									}
-								],
-								"encryptedBytes": 309276,
-								"encryptedRequests": 13,
-								"ipClassMap": [
-									{
-										"ipType": "monitoringService",
-										"requests": 4
-									},
-									{
-										"ipType": "noRecord",
-										"requests": 11
-									}
-								],
-								"pageViews": 1,
-								"requests": 15,
-								"responseStatusMap": [
-									{
-										"edgeResponseStatus": 200,
-										"requests": 4
-									},
-									{
-										"edgeResponseStatus": 403,
-										"requests": 11
-									}
-								],
-								"threatPathingMap": [
-									{
-										"requests": 6,
-										"threatPathingName": "user.ban.ctry"
-									}
-								],
-								"threats": 6
-							},
-							"uniq": {
-								"uniques": 11
-							}
-						},
-						{
-							"dimensions": {
-								"datetimeFiveMinutes": "2019-09-08T20:01:00Z"
-							},
-							"sum": {
-								"browserMap": [
-									{
-										"pageViews": 1,
-										"uaBrowserFamily": "PingdomBot"
-									}
-								],
-								"bytes": 283399,
-								"cachedBytes": 280590,
-								"cachedRequests": 1,
-								"clientSSLMap": [
-									{
-										"clientSSLProtocol": "TLSv1.2",
-										"requests": 4
-									}
-								],
-								"contentTypeMap": [
-									{
-										"bytes": 280590,
-										"edgeResponseContentTypeName": "png",
-										"requests": 3
-									},
-									{
-										"bytes": 2809,
-										"edgeResponseContentTypeName": "html",
-										"requests": 1
-									}
-								],
-								"countryMap": [
-									{
-										"bytes": 101033,
-										"clientCountryName": "CA",
-										"requests": 2,
-										"threats": 0
-									},
-									{
-										"bytes": 182366,
-										"clientCountryName": "US",
-										"requests": 2,
-										"threats": 0
-									}
-								],
-								"encryptedBytes": 283399,
-								"encryptedRequests": 4,
-								"ipClassMap": [
-									{
-										"ipType": "monitoringService",
-										"requests": 4
-									}
-								],
-								"pageViews": 1,
-								"requests": 4,
-								"responseStatusMap": [
-									{
-										"edgeResponseStatus": 200,
-										"requests": 4
-									}
-								],
-								"threatPathingMap": [],
-								"threats": 0
-							},
-							"uniq": {
-								"uniques": 4
-							}
-						}
-					]
-				}
-			]
-		}
-	},
-	"errors": null
-}
-```
-
-</Details>
-
-Notice that you can specify the request time period using a dataset filter (refer to [Filtering](/analytics/graphql-api/features/filtering/)). The `continuous` parameter is no longer needed because GraphQL Analytics is designed to provide data as soon as it is available.
-
-Also, if you want to get the totals for a particular period, rather than a breakdown by time period, simply remove the `datetimeFiveMinutes` field under `dimensions`.
