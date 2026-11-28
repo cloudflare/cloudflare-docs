@@ -48,6 +48,18 @@ The Hibernation WebSocket API reduces costs by allowing Durable Objects to sleep
 
 The Hibernation WebSocket API extends the [Web Standard WebSocket API](/workers/runtime-apis/websockets/) to reduce costs during periods of inactivity.
 
+:::caution[Hibernation applies to inbound WebSockets only]
+
+Only **inbound** WebSocket connections accepted by a Durable Object with [`ctx.acceptWebSocket()`](/durable-objects/api/state/#acceptwebsocket) can hibernate.
+
+**Outbound** WebSocket connections opened by a Durable Object — using a `fetch()` upgrade or `new WebSocket()` — cannot hibernate. Each open connection prevents eviction for up to 15 minutes from when it starts. The object [incurs duration charges](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges) while the connection prevents eviction. The connection may stay open after that, but it no longer prevents eviction. Later I/O can extend the time in memory. Once no operation prevents eviction, the [standard eviction rules](/durable-objects/concepts/durable-object-lifecycle/#durable-object-lifecycle-state-transitions) resume.
+
+When an eviction or code update resets the object, the runtime drops its outbound sockets. If you need to resume the connection, persist the upstream cursor or session ID if the upstream protocol provides one. Reconnect from your application when the object next handles work, or use a [Durable Object alarm](/durable-objects/api/alarms/) to schedule a retry.
+
+Other active work — such as incoming requests, open HTTP or [Server-Sent Events (SSE)](#server-sent-events-sse-versus-hibernatable-websockets) streams, running [alarms](/durable-objects/api/alarms/), unfinished `ctx.waitUntil()` promises, and `setTimeout()` or `setInterval()` callbacks — also prevents hibernation. For full hibernation conditions, refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/).
+
+:::
+
 When a hibernatable WebSocket receives a Close frame, reply with `close()` in `webSocketClose()`, unless you have already closed the outgoing side. An abnormal disconnection reported as `1006` has no Close frame to acknowledge.
 
 For method errors, refer to [State and error behavior](/workers/runtime-apis/websockets/#state-and-error-behavior).
@@ -323,16 +335,6 @@ export class GameRoom extends DurableObject<Env> {
 WebSocket reads require context switches between the kernel and JavaScript runtime. Each individual message triggers this overhead. Batching 10-100 logical messages into a single WebSocket frame reduces context switches proportionally.
 
 For high-frequency data like sensor readings or game state updates, use time-based or count-based batching. Batch every 50-100ms or every 50-100 messages, whichever comes first.
-
-:::note
-
-Hibernation is only supported when a Durable Object acts as a WebSocket server. Outgoing WebSockets do not hibernate.
-
-However, an open outbound WebSocket connection prevents eviction for up to 15 minutes. The connection itself may remain open after that. Starting another I/O operation later can extend the Durable Object's time in memory. For more information, refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/).
-
-Events such as [alarms](/durable-objects/api/alarms/), incoming requests, and scheduled callbacks prevent hibernation. This includes `setTimeout` and `setInterval` usage. Read more about [when a Durable Object incurs duration charges](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges).
-
-:::
 
 ### Extended methods
 
@@ -752,6 +754,30 @@ A forced code update disconnects WebSockets attached to the running instance. Th
 Refer to [Durable Objects code updates](/durable-objects/deployments/durable-objects-code-updates/) for more information.
 
 :::
+
+## Server-Sent Events (SSE) versus Hibernatable WebSockets
+
+Both Server-Sent Events (SSE) and the Hibernation WebSocket API push real-time updates from a Durable Object to connected clients, but they differ significantly in hibernation support, idle billing, and reconnection behavior.
+
+The following table compares SSE streams and Hibernatable WebSockets on a Durable Object:
+
+| Capability | Server-Sent Events (SSE) | Hibernatable WebSockets (`ctx.acceptWebSocket()`) |
+| --- | --- | --- |
+| **Directionality** | One-way (server to client) over a standard HTTP `ReadableStream` response (`text/event-stream`). Clients send data with separate HTTP requests. | Full-duplex (bi-directional) over a single upgraded connection. |
+| **Hibernation** | Not supported. An open streaming response counts as an active request and prevents hibernation. | Supported. The Durable Object hibernates when idle while Cloudflare keeps client sockets open. |
+| **Idle duration billing** | Billed continuously while any SSE stream remains open, even when no events are sent. | Zero idle [duration charges](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges) between messages while hibernated. |
+| **Eviction and code updates** | An object reset ends open streams and discards in-memory subscriber lists. | Connections stay open during hibernation, including when a deferred [code update](/durable-objects/deployments/durable-objects-code-updates/) applies after hibernation. An object reset still closes the connections. |
+| **Reconnection and replay** | Browsers using `EventSource` reconnect automatically. If the stream set a non-empty last event ID with `id:`, the browser sends `Last-Event-ID` on reconnect so the object can replay missed events. | Requires custom client reconnect logic and an application-level cursor or sequence number to replay missed events. |
+
+In both patterns, persist replay history in [Durable Object SQLite storage](/durable-objects/api/sqlite-storage-api/) rather than in-memory arrays so history survives hibernation, eviction, and restarts.
+
+### Choose between SSE and Hibernatable WebSockets
+
+**Choose Hibernatable WebSockets** (recommended default) for long-lived connections with idle gaps — such as chat rooms, notifications, live feeds, pub/sub fan-out, and multiplayer sessions — or when you need bi-directional messaging with zero idle duration costs.
+
+**Choose Server-Sent Events (SSE)** for short-lived, active one-way streams (such as streaming a model response or build output that closes once complete), or when clients require standard HTTP `EventSource` compatibility through proxies that block WebSocket upgrades.
+
+For one-to-many delivery over SSE, follow [Publish and subscribe with Server-Sent Events](/durable-objects/examples/sse-pub-sub/). The example shows how to replay missed events and clean up disconnected subscribers, including when a stream is idle.
 
 ## Related resources
 

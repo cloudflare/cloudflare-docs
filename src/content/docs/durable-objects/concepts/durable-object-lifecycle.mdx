@@ -44,12 +44,14 @@ At this point the Durable Object is in the **active in-memory state**.
 
 Once all incoming requests or events have been processed, the Durable Object remains idle in-memory for a few seconds either in a hibernateable state or in a non-hibernateable state.
 
-Hibernation can only occur if **all** of the conditions below are true:
+Hibernation can only occur if **all** of the following conditions are true:
 
-- No `setTimeout`/`setInterval` scheduled callbacks are set, since there would be no way to recreate the callback after hibernating.
-- No I/O operation or promise passed to `this.ctx.waitUntil()` remains unfinished, and no outbound connection remains open.
-- No WebSocket standard API is used.
-- No request/event is still being processed, because hibernating would mean losing track of the async function which is eventually supposed to return a response to that request.
+- No `setTimeout` or `setInterval` scheduled callbacks are set, since there would be no way to recreate the callback after hibernating.
+- No I/O operation or promise passed to `this.ctx.waitUntil()` remains unfinished, and no outbound connection (including outbound WebSockets opened with `fetch()` or `new WebSocket()`) remains open.
+- No WebSocket standard API is used. Hibernation applies only to **inbound** WebSocket connections accepted with [`ctx.acceptWebSocket()`](/durable-objects/api/state/#acceptwebsocket).
+- No request, event, or long-lived HTTP response stream — such as a Server-Sent Events (SSE) `ReadableStream` — is still open, because hibernating would lose track of the in-flight response.
+
+Open outbound WebSockets and long-lived HTTP or SSE streams prevent hibernation. While the object stays in memory, it [incurs duration charges](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges). An outbound WebSocket prevents eviction for up to 15 minutes, as explained below. For a comparison of SSE and hibernatable WebSockets, refer to [Use WebSockets](/durable-objects/best-practices/websockets/#server-sent-events-sse-versus-hibernatable-websockets).
 
 After 10 seconds of no incoming request or event, and all the above conditions satisfied, the Durable Object will transition into the **hibernated** state.
 
@@ -101,6 +103,8 @@ When a Durable Object is shut down, the object instance is automatically restart
 - **Other invocations (email, cron)**: Other invocations are treated similarly to HTTP requests.
 
 It is important to ensure that any services using Durable Objects are designed to handle the possibility of a Durable Object being shut down.
+
+If eviction or a reset ends an open SSE response, the next instance cannot resume that response or recover its in-memory subscribers. Have clients open a new stream and recover from [persisted event history](/durable-objects/examples/sse-pub-sub/).
 
 ### Code updates
 
