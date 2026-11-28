@@ -235,6 +235,10 @@ If you successfully receive the list of tables from your database when you acces
 </TabItem>
 </Tabs>
 
+## Scale beyond a single tunnel
+
+A single `cloudflared` host has a finite capacity for requests and bandwidth. If your workload sends high query volumes or large result sets through the tunnel, distribute Hyperdrive connections across several tunnels. Refer to [Load balance a private database across multiple tunnels](/hyperdrive/configuration/load-balance-private-database-tunnels/).
+
 ## Troubleshooting
 
 If you encounter issues when setting up your Hyperdrive configuration with tunnels to a private database, consider these common solutions, in addition to [general troubleshooting steps](/hyperdrive/observability/troubleshooting/) for Hyperdrive:
