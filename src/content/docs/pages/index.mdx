@@ -1,6 +1,6 @@
 ---
 title: Cloudflare Pages
-description: Deploy full-stack applications instantly to the Cloudflare global network with Pages.
+description: Configure and manage Cloudflare Pages projects. For new static and full-stack applications, use Cloudflare Workers.
 pcx_content_type: overview
 sidebar:
   order: 1
@@ -19,20 +19,19 @@ import {
 	Plan,
 	RelatedProduct,
 	Render,
-	Aside,
 } from "~/components";
-
-<Render file="workers-for-new-projects" product="pages" />
 
 <Description>
 
-Create full-stack applications that are instantly deployed to the Cloudflare global network.
+Deploy static and full-stack applications to the Cloudflare global network with Cloudflare Pages.
 
 </Description>
 
 <Plan type="all" />
 
-Deploy your Pages project by connecting to [your Git provider](/pages/get-started/git-integration/), uploading prebuilt assets directly to Pages with [Direct Upload](/pages/get-started/direct-upload/) or using [C3](/pages/get-started/c3/) from the command line.
+<Render file="workers-for-new-projects" product="pages" />
+
+Deploy Pages projects by connecting to [your Git provider](/pages/get-started/git-integration/), uploading prebuilt assets with [Direct Upload](/pages/get-started/direct-upload/), or using [C3](/pages/get-started/c3/) from the command line.
 
 ---
 
@@ -60,9 +59,9 @@ Set up redirects for your Cloudflare Pages project.
 
 ## Related products
 
-<RelatedProduct header="Workers" href="/workers/" product="workers">
+<RelatedProduct header="Workers" href="/workers/static-assets/" product="workers">
 
-Cloudflare Workers provides a serverless execution environment that allows you to create new applications or augment existing ones without configuring or maintaining infrastructure.
+Deploy static sites, front-end frameworks, and full-stack serverless applications with Workers Static Assets and Workers Builds.
 
 </RelatedProduct>
 
@@ -96,12 +95,12 @@ Offload third-party tools and services to the cloud and improve the speed and se
 </LinkTitleCard>
 
 <LinkTitleCard
-	title="Framework guides"
-	href="/pages/framework-guides/"
+	title="Migrate to Workers"
+	href="/workers/static-assets/migration-guides/migrate-from-pages/"
 	icon="open-book"
 >
-	Deploy popular frameworks such as React, Hugo, and static Next.js
-	exports on Pages.
+	Move an existing Pages project to Cloudflare Workers with Static Assets and
+	Workers Builds.
 </LinkTitleCard>
 
 <LinkTitleCard
