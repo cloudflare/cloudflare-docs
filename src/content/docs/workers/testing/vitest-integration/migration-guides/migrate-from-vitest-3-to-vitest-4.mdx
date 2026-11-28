@@ -100,7 +100,15 @@ export default defineConfig({
 
 ### Remove `isolatedStorage` and `singleWorker`
 
-The `isolatedStorage` and `singleWorker` options have been removed. Storage isolation is now per test file, matching Vitest's own isolation model. The codemod copies your existing `test.poolOptions.workers` options into `cloudflareTest()`, so if you previously set either option, remove it from the `cloudflareTest()` call. To make test files share the same storage instead, pass the `--max-workers=1 --no-isolate` flags to the Vitest command in your `package.json`.
+The `isolatedStorage` and `singleWorker` options have been removed. Storage isolation is now per test file, matching Vitest's own isolation model. The codemod copies your existing `test.poolOptions.workers` options into `cloudflareTest()`, so if you previously set either option, remove it from the `cloudflareTest()` call — leaving `isolatedStorage: true` in place has no effect. To make test files share the same storage instead, pass the `--max-workers=1 --no-isolate` flags to the Vitest command in your `package.json`.
+
+:::caution[Breaking change: per-test to per-file storage isolation]
+
+In Vitest 3 (`@cloudflare/vitest-pool-workers` v0.12.x), `isolatedStorage: true` automatically rolled back storage after every individual `test()` or `it()` block. In Vitest 4 (v0.13.0 and later), storage is isolated **per test file**, so tests within the same file share KV, R2, D1, Durable Object, and Cache API state.
+
+If tests in the same file begin leaking state or failing intermittently after migrating, reset storage in `beforeEach()` or `afterEach()`, use unique per-test IDs or key prefixes, or split tests into separate files. For patterns and examples, refer to [Clean up state between tests in the same file](/workers/testing/vitest-integration/isolation-and-concurrency/#clean-up-state-between-tests-in-the-same-file).
+
+:::
 
 ## Update your test files
 
@@ -134,7 +142,7 @@ Migrate my @cloudflare/vitest-pool-workers tests from v0.12.x to v0.13.x (Vitest
 1. Run the codemod to update vitest.config.ts: `npx jscodeshift -t https://unpkg.com/@cloudflare/vitest-pool-workers/dist/codemods/vitest-v3-to-v4.mjs --parser=ts vitest.config.ts`
 2. Replace all `import { env, SELF } from "cloudflare:test"` with `import { env, exports } from "cloudflare:workers"`. Replace uses of `SELF.fetch()` with `exports.default.fetch()`.
 3. Remove all uses of `fetchMock` imported from `cloudflare:test`. Replace with direct mocks on `globalThis.fetch`, or with MSW if the project already uses it.
-4. Remove the `isolatedStorage` and `singleWorker` options from the `cloudflareTest()` configuration in vitest.config.ts (the codemod copies them over from the old config). If tests relied on shared storage across files, add `--max-workers=1 --no-isolate` to the Vitest command in package.json.
+4. Remove the `isolatedStorage` and `singleWorker` options from the `cloudflareTest()` configuration in vitest.config.ts (the codemod copies them over from the old config). Because storage is now isolated per test file rather than per test, update any test files that relied on automatic per-test rollback to reset state between tests, use unique per-test IDs or key prefixes, or split into separate files. If tests relied on shared storage across files, add `--max-workers=1 --no-isolate` to the Vitest command in package.json.
 5. Update any test files affected by upstream Vitest 4 breaking changes. Refer to the migration guide at https://vitest.dev/guide/migration#vitest-4 for the full list of changes.
 ```
 
@@ -146,3 +154,4 @@ For breaking changes in Vitest 4 itself that may affect your tests, refer to the
 
 - [Write your first test](/workers/testing/vitest-integration/write-your-first-test/) - Write unit and integration tests for Workers.
 - [Configuration](/workers/testing/vitest-integration/configuration/) - Reference for the `cloudflareTest()` plugin options.
+- [Isolation and concurrency](/workers/testing/vitest-integration/isolation-and-concurrency/) - Understand per-file storage isolation and intra-file cleanup patterns.

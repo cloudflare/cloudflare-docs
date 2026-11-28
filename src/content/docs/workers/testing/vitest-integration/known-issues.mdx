@@ -29,7 +29,11 @@ Using WebSockets with Durable Objects is not supported with per-file storage iso
 
 ### Storage isolation
 
-Storage isolation is per test file. The test runner will undo any writes to storage at the end of each test file as detailed in the [isolation and concurrency documentation](/workers/testing/vitest-integration/isolation-and-concurrency/). Cloudflare recommends the following actions to avoid common issues:
+Storage isolation is **per test file**, not per individual test. The test runner resets storage at the end of each test file — writes to KV, R2, D1, Durable Objects, or the Cache API persist across `test()` and `it()` blocks within the same file, and the removed Vitest 3 `isolatedStorage` option has no effect.
+
+If state leaks between tests inside the same file, reset bindings between tests, use unique per-test IDs or key prefixes, or split tests into separate files. For patterns and examples, refer to [Clean up state between tests in the same file](/workers/testing/vitest-integration/isolation-and-concurrency/#clean-up-state-between-tests-in-the-same-file).
+
+When working with per-file storage isolation, Cloudflare recommends the following actions to avoid common issues:
 
 #### Await all storage operations
 

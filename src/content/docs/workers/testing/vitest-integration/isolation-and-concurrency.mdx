@@ -10,9 +10,9 @@ products:
   - workers
 ---
 
-import { WranglerConfig } from "~/components";
+import { TypeScriptExample, WranglerConfig } from "~/components";
 
-Review how the Workers Vitest integration runs your tests, how it isolates tests from each other, and how it imports modules.
+Review how the Workers Vitest integration runs your tests, isolates storage **per test file** (not per individual test), and imports modules.
 
 ## Run tests
 
@@ -27,9 +27,84 @@ When you run your tests with the Workers Vitest integration, Vitest will:
 
 ## Isolation model
 
-Storage isolation is per test file. Each test file gets its own storage environment, and any writes to storage during a test file are not visible to other test files. The Workers Vitest integration reuses Workers and their module caches between test runs where possible. A copy of all auxiliary `workers` exists in each `workerd` process.
+Storage isolation in Vitest 4 and later is **per test file**, not per individual test. Each test file (`*.test.ts` or `*.spec.ts`) receives its own isolated storage environment, so writes to KV, R2, D1, Durable Objects, or the Cache API in one test file are not visible to other test files.
+
+:::caution[Storage is shared across tests in the same file]
+
+Storage is **not** automatically reset between individual `test()` or `it()` blocks within the same test file. Any data written in one test remains visible to subsequent tests in that file until you reset or namespace it explicitly.
+
+In earlier Vitest 3 versions of `@cloudflare/vitest-pool-workers` (v0.12.x and earlier), the `isolatedStorage` option rolled back storage after each individual test. In Vitest 4 and later (`@cloudflare/vitest-pool-workers` v0.13.0+ and `@cloudflare/vitest-plugin`), the `isolatedStorage` and `singleWorker` options were removed to match standard Vitest per-file isolation, and setting `isolatedStorage: true` has no effect.
+
+:::
+
+The Workers Vitest integration reuses Workers and their module caches between test runs where possible. A copy of all auxiliary `workers` exists in each `workerd` process.
 
 By default, test files run concurrently. To make test files share the same storage (for example, for integration tests that depend on shared state), use the Vitest flags `--max-workers=1 --no-isolate`.
+
+### Clean up state between tests in the same file
+
+Because tests in the same file share storage bindings, use one of the following patterns to prevent state from leaking between `test()` or `it()` blocks:
+
+- **Reset storage in `beforeEach()` or `afterEach()`**: Delete rows from D1 tables, remove KV keys or R2 objects created by the test, or call [`reset()`](/workers/testing/vitest-integration/test-apis/#durable-objects) from `cloudflare:test` to delete all data across attached bindings.
+- **Use unique IDs or key prefixes per test**: Generate a unique identifier with `crypto.randomUUID()` for Durable Object names (`idFromName()`) or KV and R2 key prefixes so tests do not collide within the shared storage environment.
+- **Split tests into separate files**: Move tests that require a completely clean storage environment (for example, testing initial migrations or listing all keys in a namespace) into separate `*.test.ts` files so each file receives its own isolated storage.
+
+The following example combines `afterEach()` cleanup for D1 tables with unique per-test IDs for Durable Objects, KV keys, and R2 objects:
+
+<TypeScriptExample filename="test/storage.test.ts">
+```ts
+import { env } from "cloudflare:workers";
+import { afterEach, describe, expect, it } from "vitest";
+
+describe("isolated state within a test file", () => {
+	// Reset shared D1 tables between tests in the same file
+	afterEach(async () => {
+		await env.DB.exec("DELETE FROM items");
+	});
+
+	it("writes to D1 without leaking rows to the next test", async () => {
+		await env.DB.prepare("INSERT INTO items (id, name) VALUES (?, ?)")
+			.bind("1", "first")
+			.run();
+
+		const { results } = await env.DB.prepare("SELECT * FROM items").all();
+		expect(results).toHaveLength(1);
+	});
+
+	it("uses unique IDs for Durable Objects, KV keys, and R2 objects", async () => {
+		const testId = crypto.randomUUID();
+
+		// Each test addresses its own Durable Object instance
+		const stub = env.COUNTER.get(env.COUNTER.idFromName(testId));
+		const response = await stub.fetch("https://example.com/increment");
+		expect(await response.text()).toBe("1");
+
+		// Prefix KV and R2 keys with the per-test ID to avoid collisions
+		const kvKey = `${testId}:status`;
+		await env.KV.put(kvKey, "ready");
+		expect(await env.KV.get(kvKey)).toBe("ready");
+
+		const r2Key = `${testId}/report.txt`;
+		await env.BUCKET.put(r2Key, "ok");
+		const object = await env.BUCKET.get(r2Key);
+		expect(await object?.text()).toBe("ok");
+	});
+});
+```
+</TypeScriptExample>
+
+To wipe all data across every attached storage binding between tests in a file, call `reset()` from `cloudflare:test` inside `afterEach()`:
+
+<TypeScriptExample filename="test/reset.test.ts">
+```ts
+import { reset } from "cloudflare:test";
+import { afterEach } from "vitest";
+
+afterEach(async () => {
+	await reset();
+});
+```
+</TypeScriptExample>
 
 ## Modules
 
