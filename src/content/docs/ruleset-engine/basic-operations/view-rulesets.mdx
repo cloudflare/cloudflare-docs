@@ -133,6 +133,10 @@ If the entry point ruleset exists, the API will return a `200 OK` HTTP status co
 
 If the entry point ruleset does not exist, the API will return a `404 Not Found` HTTP status code.
 
+:::note
+A `404 Not Found` response only means no entry point ruleset exists at that level for the phase. It does not mean default Cloudflare-managed protections are inactive. For example, [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/) (`ddos_l7`) and the [Cloudflare Free Managed Ruleset](/waf/managed-rules/#available-managed-rulesets) (`http_request_firewall_managed` on Free plans) run by default without a zone-level entry point ruleset.
+:::
+
 ### Example: Get an entry point ruleset at the zone level
 
 The following [GET request](/api/resources/rulesets/subresources/phases/methods/get/) obtains the definition of the entry point ruleset for the `http_request_firewall_managed` phase at the zone level. In this case, the entry point ruleset exists and contains one rule.
