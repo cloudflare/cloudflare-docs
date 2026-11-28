@@ -1,0 +1,76 @@
+---
+title: Route a Twilio number to Cloudflare
+description: Configure Twilio Programmable Voice to dial a Cloudflare SIP address when someone calls your phone number.
+pcx_content_type: integration-guide
+sidebar:
+  label: Twilio setup
+  order: 2
+products:
+  - realtime
+---
+
+import { Steps } from "~/components";
+
+Give callers a phone number they can dial from any phone. When someone calls it, Twilio runs a Function that dials your Cloudflare SIP address and answers the SIP authentication challenge. The caller only needs the phone number.
+
+## Before you start
+
+This example uses Twilio Programmable Voice. Use a number with the **Voice** capability. To get your first number, go to **Home** > **Buy a number** in the Twilio Console and choose a number that accepts voice calls. [Get a Twilio phone number](https://help.twilio.com/articles/55716155296027)
+
+Get the SIP address, username, and password from your [SFU SIP configuration](/realtime/sfu/features/sip/#set-up-the-dial-in-address) or [RealtimeKit meeting](/realtime/realtimekit/sip-dial-in/). The address identifies the SFU configuration or meeting that this number will reach.
+
+## Connect the number
+
+<Steps>
+
+1. In the Twilio Console, go to **Builder tools** > **Functions & Assets**. Select **Create Service** and give the service a name. Under **Settings** > **Environment Variables**, add these three values. [Twilio environment variables](https://www.twilio.com/docs/serverless/functions-assets/functions/variables)
+
+   | Variable | Value from Cloudflare |
+   | --- | --- |
+   | `SIP_URI` | The full `sips:` address, including the generated user and host |
+   | `SIP_USERNAME` | The SIP digest username |
+   | `SIP_PASSWORD` | The SIP digest password |
+
+2. In the service, select **Add** > **Add Function**. Set its path to `/dial-cloudflare` and its visibility to **Protected**. With this setting, Twilio verifies that it signed the request before the Function can return the SIP credentials.
+
+3. Paste this code into the Function. It generates Twilio's call instructions. The Function converts Cloudflare's address to Twilio's explicit TLS transport format. Leave secure media (SRTP) off for this SIP leg. Cloudflare accepts plain RTP audio. [Twilio SIP interface](https://www.twilio.com/docs/voice/api/sip-interface)
+
+   ```javascript
+   exports.handler = function (context, event, callback) {
+     const response = new Twilio.twiml.VoiceResponse();
+     const dial = response.dial({ answerOnBridge: true });
+     const sipUri = context.SIP_URI.replace(/^sips:/, "sip:") + ";transport=tls";
+     dial.sip(
+       { username: context.SIP_USERNAME, password: context.SIP_PASSWORD },
+       sipUri,
+     );
+     return callback(null, response);
+   };
+   ```
+
+4. Select **Save**, then **Deploy All**. Copy the deployed HTTPS URL for `/dial-cloudflare`.
+
+5. In **Communications** > **Numbers & senders** > **Overview**, select your voice number. Open **Configuration Details**. Under **Voice and emergency calling**, select **Edit details**. Set the incoming voice webhook to the deployed Function URL, choose **HTTP POST**, and save. In the legacy Console, use **Phone Numbers** > **Manage** > **Active numbers**, select the number, then set **A call comes in** to *Webhook* and enter the same URL. [Twilio incoming call setup](https://www.twilio.com/docs/serverless/functions-assets/quickstart/receive-call)
+
+</Steps>
+
+The incoming voice webhook on the Twilio number points to the **Twilio Function**. For an SFU app, the webhook on the Cloudflare SIP configuration points to **your backend**. The first tells Twilio where to dial. The second tells your backend when to answer.
+
+## Test the route
+
+For SFU, enable the configuration, start your webhook receiver, and [answer the test call](/realtime/sfu/features/sip/#answer-and-exchange-audio). For RealtimeKit, [join the meeting and turn on a microphone](/realtime/realtimekit/sip-dial-in/#test-a-call) before dialing.
+
+Call the Twilio number from a phone. Check that the browser user and the phone caller can each hear the other. If the call fails, open the call record in Twilio's call logs and inspect the SIP response from the dialed leg. [Twilio SIP response codes and call parameters](https://www.twilio.com/docs/voice/twiml/sip)
+
+| Symptom                                     | What to check                                                                                                                                                              |
+| ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| The number plays an old greeting            | Check the number's incoming **voice** webhook, the Function URL, and whether you deployed the latest changes.                                                              |
+| The SIP provider sees `401 Unauthorized`    | One challenge is normal. If authentication keeps failing, check the full dialed URI, username, and current SIP password. After changing a Function variable, deploy again. |
+| The provider sees `488 Not Acceptable Here` | Offer one bidirectional audio stream over plain RTP with G.711 PCMA or PCMU. Remove video and SRTP from the offer.                                                         |
+| The call connects with one-way audio        | Check each direction separately. Confirm the browser receives the caller's track and that a live microphone was selected for the return audio.                             |
+
+## Use another SIP provider
+
+Configure the provider or private branch exchange (PBX) to send an authenticated `INVITE` to the complete SIP URI. Use TLS for signaling and SIP digest authentication on the invite. Cloudflare accepts direct inbound calls. A registration-only phone needs a provider or PBX to route its calls.
+
+In the Session Description Protocol (SDP) offer, advertise one `sendrecv` audio stream using `RTP/AVP`, a publicly routable IPv4 media address, and a UDP port. Send media from the advertised IP. Offer G.711 A-law (PCMA, payload type `8`) or μ-law (PCMU, payload type `0`) at 8 kHz. Cloudflare selects PCMA when both are offered. TLS protects signaling. The audio on this SIP leg travels unencrypted.

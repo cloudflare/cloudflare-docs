@@ -18,7 +18,7 @@ https://rtc.live.cloudflare.com/v1
 
 Send `Authorization: Bearer <APP_SECRET>` and `Content-Type: application/json`. Keep the App Secret on trusted backend infrastructure. Endpoint authentication and resource authorization belong to your application.
 
-[Download the full OpenAPI schema](/realtime/static/realtime-api-2024-05-21.yaml) for request and response fields.
+[Download the session, track, and adapter OpenAPI schema](/realtime/static/realtime-api-2024-05-21.yaml) for request and response fields.
 
 To implement a connection, follow the [browser and backend recipes](/realtime/sfu/get-started/connection-patterns/) for publication, reception, messages, or media with controls. Use this reference to look up operations and fields.
 
@@ -53,23 +53,23 @@ Call `GET /apps/{appId}/sessions/{sessionId}` to inspect the session's media tra
 
 ```json
 {
-  "tracks": [
-    {
-      "location": "local",
-      "mid": "0",
-      "trackName": "camera",
-      "status": "inactive"
-    }
-  ],
-  "dataChannels": [
-    {
-      "location": "remote",
-      "sessionId": "<PUBLISHER_SESSION_ID>",
-      "dataChannelName": "controls",
-      "id": 2,
-      "status": "active"
-    }
-  ]
+	"tracks": [
+		{
+			"location": "local",
+			"mid": "0",
+			"trackName": "camera",
+			"status": "inactive"
+		}
+	],
+	"dataChannels": [
+		{
+			"location": "remote",
+			"sessionId": "<PUBLISHER_SESSION_ID>",
+			"dataChannelName": "controls",
+			"id": 2,
+			"status": "active"
+		}
+	]
 }
 ```
 
@@ -108,6 +108,10 @@ Create adapters to ingest external audio or stream existing audio/video publicat
 | Close adapters  | `POST /apps/{appId}/adapters/websocket/close` |
 
 The [WebSocket adapter reference](/realtime/sfu/features/media-transport-adapters/websocket-adapter/) covers formats, request limits, partial success, reconnect, and close behavior.
+
+## SIP operations
+
+Use the [SIP API reference](/realtime/sfu/features/sip/api/) to configure dial-in addresses, accept or reject incoming calls, change the audio a caller hears, and end calls. For a first call, follow [Receive SIP calls](/realtime/sfu/features/sip/).
 
 ## Batch resource operations
 

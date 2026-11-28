@@ -1,0 +1,11 @@
+---
+title: Phone dial-in for Realtime SFU and RealtimeKit
+description: Connect a phone number to an SFU application or let callers join a live RealtimeKit meeting through a SIP provider.
+date: 2026-11-25
+---
+
+Phone callers can join a live RealtimeKit meeting or talk to a browser user in a Realtime SFU app. A voice provider routes your phone number to the SIP address that Cloudflare issues.
+
+For RealtimeKit, set `enable_sip` when you create or update a meeting. The response includes the SIP address and credentials for your provider. RealtimeKit answers incoming calls and adds callers as audio participants. Follow [Add phone dial-in to a meeting](/realtime/realtimekit/sip-dial-in/).
+
+For Realtime SFU, your backend receives a signed webhook when a call arrives. It decides whether to accept the call and which audio tracks the caller hears. Follow [Receive SIP calls](/realtime/sfu/features/sip/) for the API flow and [Route a Twilio number to Cloudflare](/realtime/sfu/features/sip/twilio/) for a provider setup.
