@@ -75,6 +75,18 @@ vi.mock("astro:content", () => ({
 						entry: { title: "Example", url: "/example/" },
 					},
 				},
+				{
+					id: "pages",
+					digest: "pages-directory-digest",
+					data: {
+						name: "Pages",
+						entry: { title: "Pages", url: "/pages/" },
+						meta: {
+							description:
+								"Configure and manage Cloudflare Pages projects. For new static and full-stack applications, use Cloudflare Workers.",
+						},
+					},
+				},
 			];
 		}
 		if (id === "docs") {
@@ -138,6 +150,18 @@ vi.mock("astro:content", () => ({
 					data: { title: "Browser" },
 				},
 				{
+					id: "example/tools/legacy",
+					digest: "example-legacy-digest",
+					body: "Deprecated tool.",
+					data: { title: "Legacy", sidebar: { hidden: true } },
+				},
+				{
+					id: "example/tools/unindexed",
+					digest: "example-unindexed-digest",
+					body: "Noindex page.",
+					data: { title: "Unindexed", noindex: true },
+				},
+				{
 					id: "example/getting-started",
 					digest: "example-getting-started-digest",
 					body: directoryOnlyBody,
@@ -148,6 +172,24 @@ vi.mock("astro:content", () => ({
 					digest: "example-quick-start-digest",
 					body: "Build your first agent.",
 					data: { title: "Quick start" },
+				},
+				{
+					id: "pages",
+					digest: "pages-index-digest",
+					body: "Cloudflare Pages documentation.",
+					data: { title: "Overview", sidebar: { order: 1 } },
+				},
+				{
+					id: "pages/configuration/headers",
+					digest: "pages-headers-digest",
+					body: "Configure HTTP headers.",
+					data: { title: "Headers" },
+				},
+				{
+					id: "pages/migrations/migrating-from-workers",
+					digest: "pages-hidden-migration-digest",
+					body: "Legacy migration guide.",
+					data: { title: "Migrating from Workers", sidebar: { hidden: true } },
 				},
 			];
 		}
@@ -223,6 +265,47 @@ describe("product llms.txt sections", () => {
 		]);
 		expect(body).not.toContain(
 			"https://developers.cloudflare.com/example/runtime/index.md",
+		);
+		expect(body).not.toContain(
+			"https://developers.cloudflare.com/example/tools/legacy/index.md",
+		);
+		expect(body).not.toContain(
+			"https://developers.cloudflare.com/example/tools/unindexed/index.md",
+		);
+		expect(body).not.toContain("Starting a new project?");
+	});
+
+	test("/pages/llms.txt excludes hidden pages and directs new projects to Workers", async () => {
+		const paths = await getStaticPaths();
+		const pages = paths.find((path) => path.params.product === "pages");
+		expect(pages).toBeDefined();
+
+		const response = await GET({
+			props: pages!.props,
+			url: new URL("https://developers.cloudflare.com/pages/llms.txt"),
+		} as never);
+		const body = await response.text();
+
+		expect(body).toContain(
+			"https://developers.cloudflare.com/workers/llms.txt",
+		);
+		expect(body).toContain(
+			"https://developers.cloudflare.com/workers/static-assets/get-started/index.md",
+		);
+		expect(body).toContain(
+			"https://developers.cloudflare.com/workers/framework-guides/index.md",
+		);
+		expect(body).toContain(
+			"https://developers.cloudflare.com/workers/framework-guides/automatic-configuration/index.md",
+		);
+		expect(body).toContain(
+			"https://developers.cloudflare.com/workers/static-assets/migration-guides/migrate-from-pages/index.md",
+		);
+		expect(body).toContain(
+			"https://developers.cloudflare.com/pages/configuration/headers/index.md",
+		);
+		expect(body).not.toContain(
+			"https://developers.cloudflare.com/pages/migrations/migrating-from-workers/index.md",
 		);
 	});
 });

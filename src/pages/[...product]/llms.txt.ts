@@ -1,6 +1,5 @@
 import type { APIRoute, GetStaticPaths, InferGetStaticPropsType } from "astro";
 import { getCollection } from "astro:content";
-import dedent from "dedent";
 import {
 	assertLlmsIndexLinkBudget,
 	compareLlmsSidebarOrderPath,
@@ -30,6 +29,22 @@ function isDirectoryOnlyPage(body: string): boolean {
 	prose = prose.replace(/<[A-Z][^>]*>[\s\S]*?<\/[A-Z][^>]*>/g, "");
 	prose = prose.replace(/\{\/\*[\s\S]*?\*\/\}/g, "");
 	return prose.trim().length <= DIRECTORY_PROSE_THRESHOLD;
+}
+
+function isHiddenFromLlms(page: {
+	data: {
+		noindex?: boolean;
+		sidebar?: { hidden?: boolean } | unknown;
+	};
+}): boolean {
+	if (page.data.noindex) return true;
+	const sidebar = page.data.sidebar;
+	return (
+		typeof sidebar === "object" &&
+		sidebar !== null &&
+		"hidden" in sidebar &&
+		sidebar.hidden === true
+	);
 }
 
 type ResolvedModel = Awaited<ReturnType<typeof getResolvedModels>>[number];
@@ -70,6 +85,7 @@ export const getStaticPaths = (async () => {
 			const productPages = docs.filter(
 				(e) =>
 					(e.id.startsWith(prefix + "/") || e.id === prefix) &&
+					!isHiddenFromLlms(e) &&
 					!isDisallowedByRobots(`/${e.id}/`) &&
 					!isExternalRedirect(`/${e.id}/`) &&
 					(!e.data.external_link || e.data.external_link.startsWith("/")),
@@ -399,17 +415,22 @@ export const GET: APIRoute<Props> = async ({ props, url }) => {
 			? "Links below point directly to Markdown versions of pages or to a more detailed `llms.txt` index for a section."
 			: "Links below point directly to Markdown versions of each page.";
 
-	const markdown = dedent(`
-		# ${title}
+	const blockquoteParagraphs = [
+		`> ${linksDescription} Any page can also be retrieved as Markdown by sending an \`Accept: text/markdown\` header to the page's URL without the \`index.md\` suffix (for example, \`curl -H "Accept: text/markdown" ${base}${productUrl}\`).`,
+		...(productUrl === "/pages/"
+			? [
+					`> Starting a new project? Use [Cloudflare Workers](${base}/workers/llms.txt) for new static sites and full-stack applications. Start with [Workers Static Assets](${base}/workers/static-assets/get-started/index.md), [Workers framework guides](${base}/workers/framework-guides/index.md), or [automatic configuration](${base}/workers/framework-guides/automatic-configuration/index.md) for existing projects. To migrate an existing Pages project, refer to [Migrate from Pages to Workers](${base}/workers/static-assets/migration-guides/migrate-from-pages/index.md).`,
+				]
+			: []),
+		`> For other Cloudflare products, see the [Cloudflare documentation directory](${base}/llms.txt).`,
+	].join("\n>\n");
 
-		${description ?? ""}
-
-		> ${linksDescription} Any page can also be retrieved as Markdown by sending an \`Accept: text/markdown\` header to the page's URL without the \`index.md\` suffix (for example, \`curl -H "Accept: text/markdown" ${base}${productUrl}\`).
-		>
-		> For other Cloudflare products, see the [Cloudflare documentation directory](${base}/llms.txt).
-
-		${pagesSection}
-	`);
+	const markdown = [
+		`# ${title}`,
+		description ?? "",
+		blockquoteParagraphs,
+		pagesSection,
+	].join("\n\n");
 	assertLlmsIndexLinkBudget(productUrl, markdown);
 
 	return new Response(markdown, {

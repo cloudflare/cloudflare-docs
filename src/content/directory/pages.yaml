@@ -8,5 +8,5 @@ entry:
 
 meta:
   title: Cloudflare Pages docs
-  description: Build full-stack, serverless applications globally with minimal configuration
+  description: Configure and manage Cloudflare Pages projects. For new static and full-stack applications, use Cloudflare Workers.
   author: "@cloudflare"
