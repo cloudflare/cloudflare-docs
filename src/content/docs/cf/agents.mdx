@@ -158,12 +158,14 @@ examples and context settings, refer to [Agent feedback](/cf/agent-feedback/).
 ## Read command output
 
 Results go to standard output as JSON. Messages, such as the selected zone,
-and errors go to standard error. When standard output is not a terminal, it
-contains only the result, so an agent can parse it or filter it with `jq`
-without extra flags.
+pagination metadata, and errors go to standard error. When standard output is
+not a terminal, it contains only the result, so an agent can parse it or filter
+it with `jq` without extra flags.
 
-- **Lists** print a JSON array and return one page. Paging options differ
-  between commands, so check the command's `--help` output.
+- **Lists** print the page items as JSON on standard output (usually a JSON
+  array, or an object wrapping the items for some endpoints) and return one
+  page per call. Paging options differ between commands, so check the command's
+  `--help` output.
 - **Changes that return no data** print nothing to standard output.
 - **Raw content**, such as an R2 object or an image from a Workers AI model,
   goes to standard output unchanged. Redirect it to a file.
@@ -172,6 +174,88 @@ without extra flags.
 
 A failed command exits with a non-zero status and prints the error to standard
 error.
+
+### Paginate list results
+
+To keep standard output clean JSON for `jq` and scripts, paginated `cf` list
+commands print page items on standard output (`stdout`) and write API
+pagination metadata to standard error (`stderr`) as a single line prefixed with
+`result_info:`:
+
+```txt output
+result_info: {"page":1,"per_page":20,"count":20,"total_count":45,"total_pages":3}
+```
+
+Omit `--quiet` (`-q`) when reading pagination metadata, because `--quiet`
+suppresses the `result_info:` line. Do not merge `stderr` into `stdout` with
+`2>&1` when piping to `jq` or a JSON parser — capture `stdout` and `stderr`
+separately so the `result_info:` line and other messages do not break JSON
+parsing.
+
+Cloudflare API endpoints do not all return the same `result_info` fields. Some
+endpoints include `total_pages`, while others (such as `cf d1 list`) return
+`total_count` and `per_page` — or only `count` or a `cursor` — without
+`total_pages`, and some omit `result_info` altogether. When scripting
+pagination, determine when to stop defensively:
+
+- Use `total_pages` when it is present in `result_info`.
+- When `total_pages` is absent but `total_count` and `per_page` are present,
+  calculate the page count with ceiling division (`Math.ceil(total_count / per_page)`),
+  or in `jq`:
+  `(.total_pages // (((.total_count + .per_page - 1) / .per_page) | floor))`.
+- Stop if a page returns an empty list (`[]`), empty output, or fewer items
+  than the page size (`result_info.per_page`, or the `--per-page` value you
+  requested).
+- For cursor-based commands, pass the `cursor` value from `result_info` on the
+  next call, and stop when `cursor` is absent or empty.
+
+The following example captures `stdout` and `stderr` separately and paginates
+`cf d1 list` without assuming `total_pages` is present:
+
+```sh
+page=1
+per_page=50
+
+while :; do
+  items_file=$(mktemp)
+  err_file=$(mktemp)
+
+  if ! cf d1 list --page "$page" --per-page "$per_page" >"$items_file" 2>"$err_file"; then
+    cat "$err_file" >&2
+    rm -f "$items_file" "$err_file"
+    exit 1
+  fi
+
+  # Process page items from standard output
+  jq -r '.[].name' "$items_file"
+
+  count=$(jq 'length' "$items_file")
+  count=${count:-0}
+  result_info=$(sed -n 's/^result_info: //p' "$err_file" | tail -n 1)
+  rm -f "$items_file" "$err_file"
+
+  # Use total_pages when present, otherwise derive it from total_count and per_page
+  total_pages=$(printf '%s' "$result_info" | jq -r '
+    .total_pages // (
+      if (.total_count != null and (.per_page // 0) > 0)
+      then (((.total_count + .per_page - 1) / .per_page) | floor)
+      else empty
+      end
+    )
+  ')
+  page_size=$(printf '%s' "$result_info" | jq -r '.per_page // empty')
+  page_size=${page_size:-$per_page}
+
+  if [ -n "$total_pages" ] && [ "$page" -ge "$total_pages" ]; then
+    break
+  fi
+  if [ "$count" -eq 0 ] || [ "$count" -lt "$page_size" ]; then
+    break
+  fi
+
+  page=$((page + 1))
+done
+```
 
 ## Run commands safely
 

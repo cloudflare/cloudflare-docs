@@ -53,8 +53,40 @@ Options narrow the results. For example, list only `A` records:
 cf dns records list --zone example.com --type A
 ```
 
-`cf dns records list` returns one page of results. To get more, use `--page`
-and `--per-page`.
+### Paginate results
+
+`cf dns records list` returns one page of results. To request more pages, pass
+`--page` and `--per-page` (or check a command's `--help` output for
+cursor-based options such as `--cursor`).
+
+Paginated `cf` list commands print page items as JSON on standard output
+(`stdout`) so you can pipe them directly to `jq`, and write API pagination
+metadata to standard error (`stderr`) as a `result_info:` line:
+
+```txt output
+result_info: {"page":1,"per_page":100,"count":100,"total_count":142,"total_pages":2}
+```
+
+When scripting across pages, capture `stdout` and `stderr` separately — do not
+merge `2>&1` into a `stdout` JSON parser — and omit `--quiet` (`-q`) so `cf`
+still prints `result_info:` on `stderr`:
+
+```sh
+cf dns records list --zone example.com --page 1 --per-page 50 >page.json 2>meta.err
+result_info=$(sed -n 's/^result_info: //p' meta.err | tail -n 1)
+```
+
+:::note[Compute total pages safely]
+Not every Cloudflare API endpoint includes `total_pages` in `result_info`. Some
+endpoints (such as `cf d1 list`) return `total_count` and `per_page` — or only
+`count` or a `cursor` — without `total_pages`. When `total_pages` is absent,
+compute it from `total_count` and `per_page` (for example,
+`Math.ceil(total_count / per_page)`, or in `jq`:
+`(.total_pages // (((.total_count + .per_page - 1) / .per_page) | floor))`),
+and stop when a page returns an empty list or fewer items than `per_page`. For a
+complete pagination loop, refer to
+[Paginate list results](/cf/agents/#paginate-list-results).
+:::
 
 ## 3. Preview a change
 
