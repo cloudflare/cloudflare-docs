@@ -74,6 +74,8 @@ The policy tester reports the percentage of active users who are allowed or deni
 
 You can test your Access application policies against your user population before deploying changes to your users. After saving your changes, you can also perform a more detailed policy test for a specific user.
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 To test if users have access to an application:
 
 1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
@@ -95,6 +97,33 @@ To test if users have access to an application:
 		- Whether the user is allowed or denied access to this application based on all configured policies.
 		- The user's identity from their most recent Access login attempt.
 		- Whether the user matches individual Allow, Block, or Bypass policies.
+
+</TabItem> <TabItem label="API">
+
+To test whether a specific user has access to an application, call [Test Access policies](/api/resources/zero_trust/subresources/access/subresources/applications/subresources/user_policy_checks/methods/list/) (`GET /accounts/{account_id}/access/apps/{app_id}/user_policy_checks`) and supply at least one query parameter to identify the user:
+
+| Parameter    | Description                                                                                                                                                           |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `user_id`    | The user's Access user ID (`id` from [Get users](/api/resources/zero_trust/subresources/access/subresources/users/methods/list/)). Not the account ID or application ID. |
+| `user_email` | The user's URL-encoded email address.                                                                                                                                 |
+
+Requests that omit both `user_id` and `user_email` return HTTP `400` (`invalid_user_id`). Supplying either parameter alone is sufficient.
+
+Test by Access user ID:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps/$APP_ID/user_policy_checks?user_id=$ACCESS_USER_ID" \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+Alternatively, test by email address (URL-encode special characters such as `+` and `@`):
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps/$APP_ID/user_policy_checks?user_email=alex%2Btest%40example.com" \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+</TabItem> </Tabs>
 
 ## Legacy policies
 
