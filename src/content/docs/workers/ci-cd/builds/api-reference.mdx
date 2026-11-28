@@ -8,7 +8,7 @@ products:
   - workers
 ---
 
-import { Aside } from "~/components";
+import { Aside, Steps, TabItem, Tabs } from "~/components";
 
 This guide shows you how to use the [Workers Builds REST API](/api/resources/workers_builds/) to connect a Worker to a Git repository, manage build settings and [Previews](/workers/previews/), and monitor builds. The examples use `curl` commands that you can run directly in your terminal or adapt to your preferred programming language. Some examples pipe output through [`jq`](https://jqlang.org/) to filter JSON responses.
 
@@ -22,10 +22,10 @@ For the Builds API requests in this guide, [create a **user-owned API token**](/
 
 Under **Permissions**, select _Account_ for each permission in the following table. Under **Account Resources**, include the account that owns your Worker.
 
-| Permission                   | Access level | Why you need it                                            |
-| ---------------------------- | ------------ | ---------------------------------------------------------- |
-| Workers Builds Configuration | Edit         | Manage build settings and Previews, and work with builds   |
-| Workers Scripts              | Read         | Only needed to [get your Worker tag](#get-your-worker-tag) |
+| Permission                   | Access level | Why you need it                                                                                                              |
+| ---------------------------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------- |
+| Workers Builds Configuration | Edit         | Manage build settings and Previews, and work with builds                                                                     |
+| Workers Scripts              | Read         | Needed to [get your Worker tag](#get-your-worker-tag) and [list Worker deployments](#find-the-commit-for-a-deployed-version) |
 
 <Aside type="note">
 	This API token is different from a **build token**. A build token is used by
@@ -253,6 +253,121 @@ curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/worke
 ```
 
 Builds older than 90 days are not returned. Refer to [Limits & pricing](/workers/ci-cd/builds/limits-and-pricing/).
+
+### Find the commit for a deployed version
+
+The latest successful build in [List builds](#list-builds) does not always match the version serving live traffic — for example, after a [rollback](/workers/versions-and-deployments/rollbacks/) or during a gradual deployment. To trace the live version or versions back to their source commits, read the active deployment first and then look up builds by version ID:
+
+<Tabs>
+<TabItem label="API">
+
+<Steps>
+
+1. **Read the active deployment's version IDs and traffic percentages** using [List Worker Deployments](/api/resources/workers/subresources/scripts/subresources/deployments/methods/list/) (`GET /accounts/{account_id}/workers/scripts/{script_name}/deployments`):
+
+   ```bash
+   LIVE_VERSIONS=$(curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/scripts/{script_name}/deployments" \
+     --header "Authorization: Bearer <API_TOKEN>" \
+     | jq '.result.deployments[0].versions')
+
+   echo "$LIVE_VERSIONS"
+   ```
+
+   Keep every `version_id` and its `percentage` from `.result.deployments[0].versions[]` rather than substituting the newest uploaded version.
+
+2. **Look up builds by version ID** with `GET /accounts/{account_id}/builds/builds?version_ids={version_ids}` (up to 20 comma-separated version UUIDs per request). The response keys `.result.builds` by `version_id`:
+
+   ```bash
+   VERSION_IDS=$(echo "$LIVE_VERSIONS" | jq -r '[.[].version_id] | join(",")')
+
+   BUILDS=$(curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/builds?version_ids=$VERSION_IDS" \
+     --header "Authorization: Bearer <API_TOKEN>" \
+     | jq '.result.builds')
+
+   jq -n --argjson versions "$LIVE_VERSIONS" --argjson builds "$BUILDS" '
+     $versions[] | {
+       version_id,
+       percentage,
+       build_uuid: ($builds[.version_id].build_uuid // null),
+       commit_hash: ($builds[.version_id].build_trigger_metadata.commit_hash // "commit unknown")
+     }'
+   ```
+
+</Steps>
+
+</TabItem>
+<TabItem label="Cloudflare CLI (cf)">
+
+With the [Cloudflare CLI](/cf/) (`cf`), you do not need to construct request URLs or headers manually. `cf` unwraps the API `result` envelope on stdout.
+
+<Steps>
+
+1. **Read the active deployment's version IDs and traffic percentages** with `cf workers deployments list`:
+
+   ```sh
+   LIVE_VERSIONS=$(cf workers deployments list --worker <SCRIPT_NAME> \
+     | jq '.deployments[0].versions')
+
+   echo "$LIVE_VERSIONS"
+   ```
+
+   Keep every `version_id` and its `percentage` from `.deployments[0].versions[]` rather than substituting the newest uploaded version.
+
+2. **Look up builds by version ID** with `cf builds versions get` (up to 20 comma-separated version UUIDs per request). The response keys `.builds` by `version_id`:
+
+   ```sh
+   VERSION_IDS=$(echo "$LIVE_VERSIONS" | jq -r '[.[].version_id] | join(",")')
+
+   BUILDS=$(cf builds versions get --version-ids "$VERSION_IDS" \
+     | jq '.builds')
+
+   jq -n --argjson versions "$LIVE_VERSIONS" --argjson builds "$BUILDS" '
+     $versions[] | {
+       version_id,
+       percentage,
+       build_uuid: ($builds[.version_id].build_uuid // null),
+       commit_hash: ($builds[.version_id].build_trigger_metadata.commit_hash // "commit unknown")
+     }'
+   ```
+
+</Steps>
+
+</TabItem>
+</Tabs>
+
+#### Example: Rollback where the latest build is not live
+
+If a newer build succeeded (`33333333-...`) but traffic was rolled back 100% to an earlier version (`11111111-...`), `.result.deployments[0].versions[]` lists only `11111111-...`, and querying `?version_ids=11111111-1111-4111-8111-111111111111` returns that live version's `build_uuid` and `commit_hash`:
+
+```json output
+{
+	"version_id": "11111111-1111-4111-8111-111111111111",
+	"percentage": 100,
+	"build_uuid": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+	"commit_hash": "9f8e7d6c5b4a3210fedcba9876543210abcdef12"
+}
+```
+
+#### Example: Split deployment with an unmatched version
+
+During a 90/10 split deployment where the 10% version has no matching build record (for example, it was uploaded directly with Wrangler or built past the [90-day Builds retention limit](/workers/ci-cd/builds/limits-and-pricing/)), `.result.builds` omits that version ID. Keep both live versions with their traffic percentages and record the unmatched version as `commit unknown`:
+
+```json output
+{
+	"version_id": "11111111-1111-4111-8111-111111111111",
+	"percentage": 90,
+	"build_uuid": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+	"commit_hash": "9f8e7d6c5b4a3210fedcba9876543210abcdef12"
+}
+{
+	"version_id": "22222222-2222-4222-8222-222222222222",
+	"percentage": 10,
+	"build_uuid": null,
+	"commit_hash": "commit unknown"
+}
+```
+
+A missing build record does not mean a different commit is serving traffic. Use [Get build logs](#get-build-logs) to inspect a known `build_uuid`, not to guess which build matches a live version by timestamp.
 
 ### Get build logs
 
