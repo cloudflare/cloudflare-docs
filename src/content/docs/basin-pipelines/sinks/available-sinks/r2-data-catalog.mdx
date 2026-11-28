@@ -77,6 +77,8 @@ Set maximum file size in MB before creating a new file:
 
 Basin Catalog sinks require an API token with [R2 Admin Read & Write permissions](/basin-catalog/manage-catalogs/#create-api-token-in-the-dashboard). This permission grants the sink access to both Basin Catalog and R2 storage.
 
+If your write permissions are bucket-scoped, add a separate **Basin Catalog Read** policy scoped to the account. Pipelines uses this permission to list catalogs during sink creation. This policy grants Catalog metadata read access across the account. Your write permissions can remain bucket-scoped.
+
 ```bash
 --catalog-token YOUR_CATALOG_TOKEN
 ```
