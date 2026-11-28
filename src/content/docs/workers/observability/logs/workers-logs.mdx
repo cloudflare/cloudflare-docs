@@ -89,6 +89,20 @@ Access logs for your Worker from the Cloudflare dashboard:
 2. In **Overview**, select your **Worker**.
 3. Select **Observability**.
 
+To run structured queries, filters, and aggregations across stored logs, use the [Query Builder](/workers/observability/query-builder/).
+
+## Stream logs using `cf observability tail`
+
+After you configure `observability.enabled = true` and deploy your Worker, you can stream Workers Logs from your terminal using the [Cloudflare CLI (`cf`)](/cf/):
+
+```sh
+cf observability tail --worker <WORKER_NAME>
+```
+
+For filter examples and live tail limits, refer to [Real-time logs](/workers/observability/logs/real-time-logs/#view-logs-using-cf-observability-tail).
+
+To stream live logs without turning on Workers Logs, use [`wrangler tail`](/workers/observability/logs/real-time-logs/#view-logs-using-wrangler-tail) or the [dashboard live view](/workers/observability/logs/real-time-logs/#view-logs-from-the-dashboard).
+
 ## Alert on application events
 
 Use [Workers Issues](/workers/observability/issues/) for failure notifications. Use [Monitors](/notifications/monitors/) for alerts based on custom log queries, such as budget warnings.
