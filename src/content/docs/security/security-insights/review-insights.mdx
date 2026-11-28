@@ -8,7 +8,7 @@ sidebar:
   order: 2
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, Steps } from "~/components";
 
 Check the **Security Insights** tab for a list of detected insights that you should address.
 
@@ -23,7 +23,7 @@ For each detected insight, you can resolve it or archive it, after understanding
 ## Resolve an insight
 
 :::warning
-Insights will not be automatically removed from your dashboard when you address them. You must either manually [archive insights](#archive-insights), manually trigger another scan or wait for the automatic scan to run as per [scan frequency](/security/security-insights/how-it-works/#scan-frequency).
+After you address an insight, it remains in **Active** until an applicable scan no longer detects the issue. You can manually trigger a scan or wait for the [automatic scan](/security/security-insights/how-it-works/#scan-frequency). [Archiving](#archive-insights) hides an insight without resolving the underlying issue.
 :::
 
 In the Resolve insights page, if you choose to update a configuration based on the recommendation actions, follow the instructions on the insight details page.
@@ -55,20 +55,47 @@ The exported CSV file includes information such as the severity of your data, in
 
 ## Archive insights
 
-You can archive one or more insights from the dashboard.
+Archive an insight by classifying it as a false positive, an accepted risk, or another reason. Archiving removes the insight from **Active** and suppresses it across subsequent scans until you unarchive it. It does not change your Cloudflare configuration or resolve the underlying issue.
 
-To archive insights:
+The classifications have different reason requirements:
+
+| Classification | When to use it | Reason |
+| --- | --- | --- |
+| _False positive_ | The insight incorrectly identifies an issue. | Optional |
+| _Accept risk_ | You understand the issue and accept its risk. | Required |
+| _Other_ | You are archiving the insight for another reason. | Required |
+
+To archive or unarchive insights, you need [permission to modify insights](/security/security-insights/roles-and-permissions/).
+
+### Archive selected insights
+
+<Steps>
 
 1. In the Cloudflare dashboard, go to the **Security Insights** page.
 
    <DashButton url="/?to=/:account/security-center" />
 
-2. Select the insight(s) you want to archive, then select **Archive selected**.
+2. In **Active**, select the insights you want to archive.
+3. Select **Classify selected**, then choose _False positive_, _Accept risk_, or _Other_.
+4. In **Add a reason**, enter a reason if required.
+5. Select **Confirm**.
 
-Alternatively, to archive an insight:
+</Steps>
 
-1. Select the insight you want to archive and select **Details**. The dashboard will open a page where you will be able to review [insight properties](/security/security-insights/how-it-works/#scan-properties).
-2. Select **Archive insight**.
+The same classification and reason apply to all selected insights.
+
+### Restore an archived insight
+
+The **Archived** tab shows archived insights that are still detected. It uses your current insight filters. Clear any filters that hide the insight you want to restore.
+
+<Steps>
+
+1. On the **Security Insights** page, select **Archived**.
+2. Open the insight's three-dot menu and select **Unarchive**.
+
+</Steps>
+
+Unarchiving clears the classification and returns the insight to **Active**. To change an insight's classification, unarchive it first, then classify it again.
 
 ## Enable alerts
 
