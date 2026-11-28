@@ -8,9 +8,21 @@ tags:
   - Redirects
 ---
 
-import { Example } from "~/components";
+import { Example, Render } from "~/components";
 
 This example creates a redirect rule that forwards HTTPS requests from the WWW subdomain (`www.example.com`) to the root domain (`example.com`), while retaining the original path and query string.
+
+## Prerequisites
+
+<Render
+	file="url-forwarding/requires-proxied-site"
+	product="rules"
+	params={{ forwardingRuleName: "Single Redirects" }}
+/>
+
+Each source hostname the rule matches (for example, `www.example.com` or `www.store.example.com`) must have a proxied DNS record (orange cloud). If the record is DNS-only or missing, the redirect rule will not run.
+
+Each destination hostname (for example, `example.com` or `store.example.com`) must resolve in DNS. The redirect rule does not create DNS records.
 
 <Example>
 
@@ -33,11 +45,11 @@ To also redirect HTTP requests, turn on [Always Use HTTPS](/ssl/edge-certificate
 
 For example, the redirect rule would perform the following redirects:
 
-| Request URL                                       | Target URL                                         | Status code |
-| ------------------------------------------------- | -------------------------------------------------- | ----------- |
-| `https://www.example.com/products/`               | `https://example.com/products/`                    | `301`       |
-| `https://www.store.example.com/products/`         | `https://store.example.com/products/`              | `301`       |
-| `https://store.example.com/products/`             | (unchanged)                                        | n/a         |
-| `https://www.example.com/admin/?logged_out=true`  | `https://example.com/admin/?logged_out=true`       | `301`       |
-| `http://www.example.com/?all_items=true`          | (unchanged)                                        | n/a         |
-| `http://example.com/admin/`                       | (unchanged)                                        | n/a         |
+| Request URL                                      | Target URL                                   | Status code |
+| ------------------------------------------------ | -------------------------------------------- | ----------- |
+| `https://www.example.com/products/`              | `https://example.com/products/`              | `301`       |
+| `https://www.store.example.com/products/`        | `https://store.example.com/products/`        | `301`       |
+| `https://store.example.com/products/`            | (unchanged)                                  | n/a         |
+| `https://www.example.com/admin/?logged_out=true` | `https://example.com/admin/?logged_out=true` | `301`       |
+| `http://www.example.com/?all_items=true`         | (unchanged)                                  | n/a         |
+| `http://example.com/admin/`                      | (unchanged)                                  | n/a         |
