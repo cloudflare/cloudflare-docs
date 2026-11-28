@@ -68,6 +68,8 @@ Cloudflare sets a number of its own custom headers on incoming requests and outg
 
 For a list of documented Cloudflare request headers, refer to [Cloudflare HTTP headers](/fundamentals/reference/http-headers/).
 
+Visitor IP headers depend on the destination of a `fetch()` subrequest. Refer to [CF-Connecting-IP in Worker subrequests](/fundamentals/reference/http-headers/#cf-connecting-ip-in-worker-subrequests) for same-zone, cross-zone, and external destination behavior, and the [trust requirements](/fundamentals/reference/http-headers/#trust-visitor-ip-headers) for using these headers in security decisions.
+
 ## Related resources
 
 * [Logging headers to console](/workers/examples/logging-headers/) - Review how to log headers in the console.
