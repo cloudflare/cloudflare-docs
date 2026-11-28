@@ -71,6 +71,10 @@ To delete a certificate using the API, send a [DELETE request](/api/resources/ss
 
 </TabItem> </Tabs>
 
+:::note[Certificate revocation]
+Deleting a certificate removes it from Cloudflare's network immediately. Cloudflare does not automatically submit a revocation request to the CA. Because the certificate is not revoked, it does not appear in the CA's CRL. Where the CA runs an OCSP responder, it reports the certificate as good until it expires. If you need explicit CA revocation, contact [Cloudflare Support](https://support.cloudflare.com).
+:::
+
 ---
 
 ## Restart validation
