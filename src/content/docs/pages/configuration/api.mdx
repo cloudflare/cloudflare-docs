@@ -27,14 +27,33 @@ To create an API token:
 
 ### Make requests
 
-After creating your token, you can authenticate and make requests to the API using your API token in the request headers. For example, here is an API request to get all deployments in a project.
+After creating your token, authenticate requests using your API token in the `Authorization` header. Refer to [Find your account ID](/fundamentals/account/find-account-and-zone-ids/) to locate your `{account_id}`.
+
+#### List projects
+
+To list the Pages projects in your account, send a `GET` request to [List Cloudflare Pages projects](/api/resources/pages/subresources/projects/methods/list/) (`/accounts/{account_id}/pages/projects`). For this endpoint, `page` must be at least `1` and `per_page` accepts integers from `1` to `10`. Requesting a `per_page` value greater than `10` returns an HTTP `400` error (`8000024`).
+
+For example, to fetch the second page of up to 10 projects:
+
+<APIRequest
+	path="/accounts/{account_id}/pages/projects"
+	method="GET"
+	parameters={{
+		page: "2",
+		per_page: "10",
+	}}
+/>
+
+#### List deployments
+
+To list deployments in a project, send a `GET` request to `/accounts/{account_id}/pages/projects/{project_name}/deployments`:
 
 <APIRequest
 	path="/accounts/{account_id}/pages/projects/{project_name}/deployments"
 	method="GET"
 />
 
-Try it with one of your projects by replacing `{account_id}`, `{project_name}`, and `<API_TOKEN>`. Refer to [Find your account ID](/fundamentals/account/find-account-and-zone-ids/) for more information.
+Replace `$ACCOUNT_ID`, `$PROJECT_NAME`, and `$CLOUDFLARE_API_TOKEN` with your values.
 
 ## Examples
 
