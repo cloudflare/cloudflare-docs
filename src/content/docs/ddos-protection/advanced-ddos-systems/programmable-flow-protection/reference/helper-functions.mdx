@@ -1,0 +1,310 @@
+---
+title: Helper functions
+pcx_content_type: reference
+description: Signatures, arguments, and return values of the helper functions that Programmable Flow Protection programs can call.
+products:
+  - ddos-protection
+sidebar:
+  order: 2
+---
+
+Helper functions are functions that Cloudflare provides to programs. They are declared in `cf_ebpf_helper.h`, from the [`pfp-headers`](https://github.com/cloudflare/pfp-tools/tree/main/pfp-headers/include) directory of the `pfp-tools` repository. To use them, define `CF_EBPF_HELPER_V0` before you include the header:
+
+```c
+#define CF_EBPF_HELPER_V0
+
+#include <cf_ebpf_defs.h>
+#include <cf_ebpf_helper.h>
+```
+
+Some helper functions are declared as macros or as inline functions that call a lower-level helper function. Call them with the signatures on this page.
+
+## Summary
+
+| Helper function | Purpose | Requires |
+| --- | --- | --- |
+| [`rand`](#rand) | Random 64-bit number. | — |
+| [`timestamp`](#timestamp) | Current UNIX time in seconds. | — |
+| [`hash_md5`, `hash_sha256`, `hash_sha512`, `hash_blake2b512`](#hash-functions) | Hash a buffer. | — |
+| [`hash_crc32`](#hash_crc32) | CRC-32 checksum of a buffer. | — |
+| [`hmac_sha256`, `hmac_sha512`, `hmac_blake2b512`](#hmac-functions) | Keyed hash of a buffer with a key that Cloudflare manages. | — |
+| [`entropy`](#entropy) | Shannon entropy of a buffer. | — |
+| [`set_network_analytics_tag`](#set_network_analytics_tag) | Tag the packet in Network Analytics. | — |
+| [`get_src_ip_status`, `set_src_ip_status`](#source-ip-status) | Read and write the status of the source IP. | Source IP state or challenges |
+| [`get_src_ip_data`, `set_src_ip_data`](#source-ip-data) | Read and write a 64-bit value for the source IP. | Source IP state |
+| [`get_flow_data`, `set_flow_data`](#flow-state) | Read and write a 64-bit value for the flow. | Flow state |
+| [`set_challenge`](#set_challenge) | Send a challenge to the source of the packet. | Challenges |
+| [`param_lookup`](#param_lookup) | Read a value from a parameter map. | Parameter maps |
+
+For the features that must be enabled for your account, refer to [Features that require enablement](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#features-that-require-enablement).
+
+## Return values
+
+Helper functions that can fail return a negative value on failure. The values have the same meaning across helper functions:
+
+| Value | Meaning |
+| --- | --- |
+| `-1` | No entry exists, or the source buffer is invalid. For the meaning for each helper function, refer to its section. |
+| `-2` | The destination buffer of a hash or HMAC function is invalid or too small. |
+| `-3` | The value buffer of `param_lookup` is too small. |
+| `-4` | An argument is invalid. |
+| `-5` | The feature is not enabled for your account. |
+| `-6` | Rate limited. |
+| `-7` | The parameter map does not exist. |
+
+When a helper function returns `-5`, it does not write to its output arguments, except `param_lookup`, which always fills `value` with zeros first. Initialize output variables before you call a helper function, so that the program reads a known value if the call fails.
+
+The verifier rejects programs that pass `NULL` to a pointer argument of a helper function. For the hash, HMAC, and entropy functions, it also rejects programs where `src_len` can be `0`. Return values that describe these arguments on this page cannot occur in a program that passes verification.
+
+## Utility functions
+
+### `rand`
+
+```c
+uint64_t rand(void);
+```
+
+Returns a random 64-bit number from a cryptographically secure random number generator. Cannot fail.
+
+### `timestamp`
+
+```c
+int64_t timestamp(void);
+```
+
+Returns the current time of the Cloudflare server as a UNIX timestamp: the number of seconds since January 1, 1970 00:00:00 UTC, without leap seconds. Cannot fail. Some examples check for a negative value as a precaution.
+
+Store the value in a smaller type with an explicit cast, for example `(uint32_t)timestamp()`. Otherwise, `-Wconversion` causes a compilation error.
+
+## Hash and entropy functions
+
+### Hash functions
+
+```c
+int hash_md5(uint8_t *src, size_t src_len, uint8_t *dest, size_t dest_len);
+int hash_sha256(uint8_t *src, size_t src_len, uint8_t *dest, size_t dest_len);
+int hash_sha512(uint8_t *src, size_t src_len, uint8_t *dest, size_t dest_len);
+int hash_blake2b512(const uint8_t *src, size_t src_len, uint8_t *dest, size_t dest_len);
+```
+
+Computes the digest of `src_len` bytes at `src`, and writes it to `dest`.
+
+| Argument | Description |
+| --- | --- |
+| `src` | Data to hash. |
+| `src_len` | Length of the data, in bytes. Must be greater than `0`. |
+| `dest` | Buffer that receives the digest. |
+| `dest_len` | Size of `dest`, in bytes. Must be at least the digest size. |
+
+| Function | Algorithm | Digest size |
+| --- | --- | --- |
+| `hash_md5` | MD5 | 16 bytes |
+| `hash_sha256` | SHA-256 | 32 bytes |
+| `hash_sha512` | SHA-512 | 64 bytes |
+| `hash_blake2b512` | BLAKE2b-512 | 64 bytes |
+
+Returns:
+
+- The digest size, on success.
+- `-1` if `src` is `NULL` or `src_len` is `0`.
+- `-2` if `dest` is `NULL` or `dest_len` is smaller than the digest size.
+
+The helper function fills all `dest_len` bytes of `dest` with zeros before it writes the digest, including when it fails.
+
+### `hash_crc32`
+
+```c
+int hash_crc32(uint8_t *src, size_t src_len, uint64_t *dest);
+```
+
+Computes the CRC-32 checksum (ISO-HDLC variant, as used by Ethernet and zlib) of `src_len` bytes at `src`. Writes the checksum to the lower 32 bits of `*dest`. The upper 32 bits are `0`.
+
+Returns `8` on success, or `-1` if `src` is `NULL` or `src_len` is `0`. On failure, `*dest` is not modified.
+
+### HMAC functions
+
+```c
+int hmac_sha256(uint8_t *src, size_t src_len, uint8_t *dest, size_t dest_len);
+int hmac_sha512(uint8_t *src, size_t src_len, uint8_t *dest, size_t dest_len);
+int hmac_blake2b512(const uint8_t *src, size_t src_len, uint8_t *dest, size_t dest_len);
+```
+
+Computes a keyed hash of `src_len` bytes at `src` with a secret key that Cloudflare manages, and writes it to `dest`. Programs cannot read the key. Use these helper functions to create values that clients cannot forge, for example challenge tokens.
+
+| Function | Algorithm | Output size |
+| --- | --- | --- |
+| `hmac_sha256` | HMAC-SHA-256 | 32 bytes |
+| `hmac_sha512` | HMAC-SHA-512 | 64 bytes |
+| `hmac_blake2b512` | Keyed BLAKE2b-512 | 64 bytes |
+
+The arguments and return values are the same as for the [hash functions](#hash-functions). In addition, if no key is available, the helper functions return `0` and fill `dest` with zeros. No key is available in the [PCAP debug endpoint](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/test-programs/#differences-from-cloudflares-network).
+
+The key is specific to your account and to each Cloudflare server, and changes when Cloudflare restarts the software on the server. A value computed on one server does not verify on another server, or on the same server after a restart. Design programs so that a client can recover, for example by being challenged again.
+
+### `entropy`
+
+```c
+int64_t entropy(uint8_t *src, size_t src_len);
+```
+
+Computes the Shannon entropy of `src_len` bytes at `src`, in millibits per byte. The result is between `0` (all bytes are the same) and `8000` (all 256 byte values are equally frequent).
+
+The maximum depends on the length of the buffer: for a buffer of fewer than 256 bytes, the maximum is 1000 × log2(`src_len`). For example, random data in a 64-byte payload has an entropy of at most `6000`. Choose thresholds based on the length of the payload.
+
+Returns the entropy, or `-1` if `src` is `NULL` or `src_len` is `0`.
+
+## Network Analytics
+
+### `set_network_analytics_tag`
+
+```c
+int set_network_analytics_tag(uint64_t value);
+```
+
+Sets a custom tag for the current packet. The tag appears with the packet samples in [Network Analytics](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/monitor/), so that you can tell apart the reasons why the program passed or dropped packets.
+
+- If the program sets a tag more than once for the same packet, the last value applies.
+- A value of `0` means no tag.
+- The tag only applies to the current packet.
+
+Returns `0`.
+
+## Source IP state
+
+Source IP state helper functions read and write the entry for the source IP of the current packet in the source IP state table. A program can only access the entry for the source IP of the current packet. For how the table works, refer to [State](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#state).
+
+Each entry has a status, an expiry for the status, and a 64-bit value. Helper functions that write to the table create the entry if it does not exist.
+
+### Source IP status
+
+```c
+int get_src_ip_status(uint8_t *out_status, uint64_t *out_expiry);
+int set_src_ip_status(uint8_t status, uint64_t expiry_secs);
+```
+
+`get_src_ip_status` reads the [status](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#source-ip-status) of the source IP and its expiry.
+
+| Argument | Description |
+| --- | --- |
+| `out_status` | Receives the status: one of the `CF_EBPF_SRC_IP_STATUS_*` values. |
+| `out_expiry` | Receives the time when the status expires, as a UNIX timestamp in seconds. `0` means that the status does not expire. |
+
+Returns:
+
+- `0` on success.
+- `-1` if the source IP has no entry.
+- `-5` if neither source IP state nor challenges is enabled for your account.
+
+When a status expires, Cloudflare resets it to `CF_EBPF_SRC_IP_STATUS_NONE` with an expiry of `0`. `get_src_ip_status` then returns `0`, not `-1`, because the entry still exists. Handle both `-1` and `CF_EBPF_SRC_IP_STATUS_NONE` as no status.
+
+`set_src_ip_status` sets the status of the source IP.
+
+| Argument | Description |
+| --- | --- |
+| `status` | The new status: one of the `CF_EBPF_SRC_IP_STATUS_*` values. Any other value is stored as `CF_EBPF_SRC_IP_STATUS_NONE`. |
+| `expiry_secs` | Number of seconds after which the status expires. `0` means that the status does not expire. |
+
+Setting `CF_EBPF_SRC_IP_STATUS_NONE` clears the status and the expiry, and keeps the 64-bit value of the entry.
+
+Returns `0` on success, or `-5` if neither source IP state nor challenges is enabled for your account.
+
+:::caution
+Cloudflare drops packets from source IPs with a `CF_EBPF_SRC_IP_STATUS_BLOCKLISTED` status without running the program. Because UDP source IPs can be spoofed, set an expiry when you blocklist a source IP. For details, refer to [Source IP status](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#source-ip-status).
+:::
+
+### Source IP data
+
+```c
+int get_src_ip_data(uint64_t *out_data);
+int set_src_ip_data(uint64_t data);
+```
+
+`get_src_ip_data` reads the 64-bit value of the source IP into `*out_data`. `set_src_ip_data` replaces it with `data`. The value does not expire. Cloudflare removes it only when it removes the entry.
+
+`get_src_ip_data` returns:
+
+- `0` on success. If the entry was created by `set_src_ip_status` or `set_challenge`, the value is `0`.
+- `-1` if the source IP has no entry.
+- `-5` if source IP state is not enabled for your account.
+
+`set_src_ip_data` returns `0` on success, or `-5` if source IP state is not enabled for your account.
+
+## Flow state
+
+```c
+int get_flow_data(uint64_t *out_data);
+int set_flow_data(uint64_t data);
+```
+
+Read and write a 64-bit value for the flow of the current packet. A flow is identified by source IP, source port, destination IP, and destination port. For how the table works, refer to [State](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#state).
+
+`get_flow_data` reads the value of the flow into `*out_data`. `set_flow_data` replaces it with `data`, and creates the entry if it does not exist.
+
+`get_flow_data` returns:
+
+- `0` on success.
+- `-1` if the flow has no entry.
+- `-5` if flow state is not enabled for your account.
+
+`set_flow_data` returns `0` on success, or `-5` if flow state is not enabled for your account.
+
+## Challenges
+
+### `set_challenge`
+
+```c
+int set_challenge(uint8_t *src, size_t src_len);
+```
+
+Sets the payload of a challenge for the current packet. If the program then returns `CF_EBPF_DROP` and the rule is in enabled mode, Cloudflare sends the challenge to the source of the packet. For how challenges work, refer to [Challenges](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#challenges).
+
+| Argument | Description |
+| --- | --- |
+| `src` | Challenge payload. Cloudflare copies it, so the buffer can be reused after the call. |
+| `src_len` | Length of the payload, in bytes. `0` clears a challenge set earlier for the same packet. |
+
+The maximum payload size depends on the size of the packet that the program is processing. By default, it is twice the length of the IP packet. It is always at least 256 bytes and at most 1,280 bytes, so a payload of 256 bytes or less is always accepted.
+
+Returns:
+
+- `-5` if challenges are not enabled for your account.
+- `0` on success, or when `src_len` is `0`.
+- `-4` if `src_len` is larger than the maximum payload size.
+- `-6` if a [challenge limit](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#challenges) applies. Cloudflare does not send the challenge.
+
+When the call succeeds for a source IP that has no entry in the source IP state table, Cloudflare creates an entry with the status `CF_EBPF_SRC_IP_STATUS_NONE`.
+
+A successful call counts toward the per-source-IP challenge limit even if Cloudflare does not send the challenge, for example because the program returns `CF_EBPF_PASS`, the rule is in monitoring mode, or the program clears the challenge. As a result, a second call for the same packet returns `-6`.
+
+## Parameter maps
+
+### `param_lookup`
+
+```c
+int param_lookup(uint32_t param_id, const void *key, size_t key_len,
+                 void *value, size_t value_len);
+```
+
+Looks up a key in a [parameter map](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#parameter-maps), and copies the value to `value`.
+
+| Argument | Description |
+| --- | --- |
+| `param_id` | ID of the parameter map. IDs start at `0`. |
+| `key` | Key to look up: an IPv4 address (4 bytes) or an IPv6 address (16 bytes), in network byte order. Copy it from `saddr` or `daddr` of the IP header. |
+| `key_len` | Length of the key: `4` for an IPv4 map, `16` for an IPv6 map. |
+| `value` | Buffer that receives the value, in host byte order. |
+| `value_len` | Size of `value`, in bytes. Must be at least the width of the map values: 1, 2, 4, or 8 bytes for `u8`, `u16`, `u32`, or `u64`. |
+
+The helper function fills all `value_len` bytes of `value` with zeros, and then copies the value on success. `key` and `value` can be the same buffer.
+
+Returns, in order of precedence:
+
+1. `-5` if parameter maps are not enabled for your account.
+2. `-4` if `key_len` is not `4` or `16`.
+3. `-7` if no map has the ID `param_id`.
+4. `-4` if `key_len` does not match the key type of the map.
+5. `-3` if `value_len` is smaller than the width of the map values. This takes precedence over `-1`.
+6. `-1` if the key is not in the map.
+7. The width of the map values in bytes, on success.
+
+To check for success, compare the return value with the size of the value you expect. For an example, refer to [Parameter map policy](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/examples/parameter-map-policy/).

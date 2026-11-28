@@ -1,0 +1,116 @@
+---
+title: Test programs
+pcx_content_type: how-to
+description: Compile and verify Programmable Flow Protection programs locally, and debug them against packet captures before you deploy them.
+products:
+  - ddos-protection
+sidebar:
+  order: 4
+---
+
+import { Steps } from "~/components";
+
+Test a program in three stages before it mitigates live traffic:
+
+1. Compile and verify the program on your computer, with the same compiler flags and verifier that Cloudflare uses.
+2. Run the program against packet captures (PCAP files) with the PCAP debug endpoint.
+3. Deploy the program in a rule in monitoring mode, and review the results in Network Analytics. For details, refer to [Deploy programs](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/deploy-programs/).
+
+## Compile and verify locally
+
+Cloudflare compiles every uploaded program with `clang` and checks it with [`pfp-verifier`](https://github.com/cloudflare/pfp-tools/tree/main/pfp-verifier). Run the same steps locally to catch errors before you upload.
+
+<Steps>
+1. Install `clang` 19 with the BPF target, and a [Rust toolchain](https://www.rust-lang.org/tools/install). Cloudflare compiles programs with `clang` 19. Other versions can produce different code, with a different instruction count and, in some cases, a different verifier result. On macOS, Apple clang does not include the BPF target. Install LLVM instead, for example with `brew install llvm@19`, and use `"$(brew --prefix llvm@19)/bin/clang"`.
+
+2. Clone the `pfp-tools` repository and install the verifier:
+
+   ```sh
+   git clone https://github.com/cloudflare/pfp-tools.git
+   cargo install --locked pfp-verifier
+   ```
+
+3. Compile the program with the flags that Cloudflare uses:
+
+   ```sh
+   clang -O2 -target bpf -mllvm -bpf-stack-size=8192 \
+     -Wall -Werror -fno-gnu-inline-asm -Wformat=2 -Wconversion \
+     -Wimplicit-fallthrough -Werror=format-security -nostdlibinc \
+     -D__x86_64__ -D__LP64__ \
+     -I pfp-tools/pfp-headers/include \
+     -c program.c -o program.o
+   ```
+
+4. Verify the compiled object:
+
+   ```sh
+   pfp-verifier program.o
+   ```
+
+   If the program passes verification, the verifier prints the number of instructions in the program and exits with status `0`. Otherwise, it prints an error and exits with status `1`.
+
+</Steps>
+
+Cloudflare also rejects programs that exceed the instruction and object size [limits](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/reference/limits/). Compare the instruction count that the verifier prints, and the size of `program.o`, with these limits.
+
+For help with compiler and verifier errors, refer to [Troubleshooting](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/troubleshooting/).
+
+### Use the example build
+
+The [`examples`](https://github.com/cloudflare/pfp-tools/tree/main/examples) directory of `pfp-tools` contains a `Makefile` that compiles programs with the flags that Cloudflare uses, and verifies them with a verifier built from the same repository. To use it for your own program, copy the program into the directory and run:
+
+```sh
+make -C pfp-tools/examples verify
+```
+
+On macOS, add `CLANG="$(brew --prefix llvm@19)/bin/clang"` to the command. For each program, the output shows the number of instructions and the size of the object file.
+
+The directory also contains native tests in `examples/tests/`. Each test compiles an example as a native program together with `harness.h`, which replaces the helper functions with in-memory versions of the state tables, challenges, and parameter maps. The test then runs the program against crafted packets and checks the verdicts. To test your own program, add a `tests/test_<name>.c` file for your `<name>.c` program, following the existing tests, and run `make -C pfp-tools/examples test`. On macOS, add `TEST_CC=cc` to compile the tests with Apple clang. For details, refer to the [examples README](https://github.com/cloudflare/pfp-tools/tree/main/examples#readme).
+
+## Debug with a packet capture
+
+The PCAP debug endpoint runs a program that you have uploaded against a packet capture, and returns the capture with the program verdict annotated on each packet. Use captures of your legitimate traffic and of attack traffic to check that the program passes and drops the right packets.
+
+```sh
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/programs/$PROGRAM_ID/pcap" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/vnd.tcpdump.pcap" \
+  --data-binary "@capture.pcap" \
+  --output annotated.pcapng
+```
+
+### Request
+
+- The request body is the capture file, in pcap format. The `Content-Type` header must be `application/vnd.tcpdump.pcap`. For the maximum file size, refer to [Limits](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/reference/limits/#debugging-and-analytics). To convert a pcapng file, for example one saved by Wireshark, use `editcap -F pcap capture.pcapng capture.pcap`.
+- The endpoint runs the current version of the program, which must be in the `success` state.
+- Cloudflare detects where the IP header starts in each packet from the link type of the capture: Ethernet, Linux cooked capture (SLL and SLL2), and raw IP captures are supported. For other link types, set the `ip_offset` query parameter to the number of bytes before the IP header, from `0` to `255`. All packets in the capture must use the same offset.
+
+### Response
+
+The response is a capture file in pcapng format, with the same packets as the input. Each packet has a comment:
+
+| Comment | Meaning |
+| --- | --- |
+| `Return value: CF_EBPF_PASS` | The program passed the packet. |
+| `Return value: CF_EBPF_DROP` | The program dropped the packet. |
+| `Analytics tag: <value>` | Added to the verdict when the program set a Network Analytics tag. |
+| `Ignored (not UDP)` | The packet is not UDP, so the program did not run. |
+| `Ignored (not valid ethernet)` | The packet could not be parsed as an Ethernet frame. |
+| `Ignored (not valid IP packet)` | The packet could not be parsed as an IP packet. |
+
+When the program drops a packet and sets a challenge, the response includes the challenge as an extra packet after the original packet, with the comment `Challenge packet`.
+
+### Differences from Cloudflare's network
+
+The debug endpoint runs the program in an isolated environment, so some helper functions behave differently than on Cloudflare's network:
+
+- **State**: each request starts with an empty source IP state table, which persists across the packets in the capture. Source IP state and challenges work even if they are not enabled for your account. The flow state table is not available, so `get_flow_data` and `set_flow_data` return `-5`.
+- **Parameter maps**: not available. `param_lookup` returns `-5`.
+- **HMAC helper functions**: no key is configured. `hmac_sha256`, `hmac_sha512`, and `hmac_blake2b512` return `0` and fill the output with zeros.
+- **Time**: `timestamp` returns the current time, not the time of the packets in the capture. All packets in a capture are processed within the same few seconds.
+- **Challenges**: the default challenge limits apply. Because all packets are processed within a few seconds, a second challenge to the same source IP, and challenges to many new source IPs, return `-6`.
+- **State table capacity**: the source IP state table has the default capacity, not the capacity configured for your account.
+- **Fragments**: the debug endpoint runs the program on fragmented UDP packets. On Cloudflare's network, fragmented packets pass without running the program.
+- **Rules**: the endpoint runs the program on every UDP packet in the capture. It does not apply rule expressions or modes.
+
+To test logic that depends on these helper functions, use local tests, and then a rule in monitoring mode.

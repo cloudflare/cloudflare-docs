@@ -1,0 +1,22 @@
+---
+title: Examples
+pcx_content_type: navigation
+description: Complete Programmable Flow Protection programs for header validation, rate limiting, flow tracking, challenges, and parameter maps.
+products:
+  - ddos-protection
+sidebar:
+  order: 7
+---
+
+Each example is a complete program that compiles with the flags Cloudflare uses and passes verification. The source code of every example, with tests, is in the [`examples`](https://github.com/cloudflare/pfp-tools/tree/main/examples) directory of the `pfp-tools` repository.
+
+| Example | What it shows | Features required |
+| --- | --- | --- |
+| [Header validation](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/examples/header-validation/) | Validate a custom application header, and tag drops for Network Analytics. | None |
+| [Rate limiting](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/examples/rate-limiting/) | Limit the packet rate of each source IP. | Source IP state |
+| [Flow handshake](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/examples/flow-handshake/) | Require each flow to start with a handshake message. | Flow state |
+| [Challenge-response](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/examples/challenge-response/) | Verify source IPs before passing their traffic. | Challenges, source IP state |
+| [Parameter map policy](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/examples/parameter-map-policy/) | Apply per-IP policies that you manage through the API. | Parameter maps |
+
+To enable a feature for your account, contact your account team.
+

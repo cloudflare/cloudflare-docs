@@ -1,0 +1,58 @@
+---
+title: Monitor programs
+pcx_content_type: how-to
+description: Review Programmable Flow Protection verdicts, drop reasons, and traffic in Network Analytics and the GraphQL Analytics API.
+products:
+  - ddos-protection
+sidebar:
+  order: 6
+---
+
+import { Steps, DashButton } from "~/components";
+
+Use [Network Analytics](/analytics/network-analytics/) to review the traffic that your programs inspect, the verdicts they return, and the tags they set.
+
+## Review traffic in the dashboard
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **Network Analytics** page.
+
+   <DashButton url="/?to=/:account/networking-insights/analytics/network-analytics/transport-analytics" />
+
+2. Select the **Flow Protection** tab.
+3. Filter by **Program name**, **Rule ID**, or **Custom tag**, and by action, source and destination IP, and ports.
+
+</Steps>
+
+For a rule in monitoring mode, Network Analytics shows the verdict the program would have applied. Compare the traffic the program would drop with what you expect before you switch the rule to enabled mode.
+
+## Understand the data
+
+Network Analytics shows samples of the packets that Programmable Flow Protection inspects. Each Cloudflare server samples one in every 1,000 packets, so the numbers in Network Analytics are estimates.
+
+To find the traffic of a program, filter by program name or rule ID. The program ID in Network Analytics matches the program ID in the API only for version `1` of a program. Each later version has a different ID in Network Analytics.
+
+Each sample includes:
+
+- The action that Cloudflare applied, or would have applied in monitoring mode.
+- The rule and program that processed the packet, if the packet matched a rule. Samples of packets that did not match the rule expression do not include a rule or program.
+- The custom tag the program set with `set_network_analytics_tag`, if any. A tag of `0` means that the program did not set a tag. Packets that Cloudflare drops because the source IP is blocklisted have no tag, because the program does not run.
+
+To tell drop reasons apart, set a different tag for each reason in your program. For an example, refer to [Header validation](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/examples/header-validation/).
+
+## Query the data with GraphQL
+
+To query Programmable Flow Protection data programmatically, use the `programmableFlowProtectionNetworkAnalyticsAdaptiveGroups` dataset of the [GraphQL Analytics API](/analytics/graphql-api/). In addition to the common Network Analytics fields, the dataset includes the following dimensions:
+
+| Dimension | Description |
+| --- | --- |
+| `programId` | Identifier of the program version that processed the packet. |
+| `programName` | Name of the program that processed the packet. |
+| `ruleId` | ID of the rule that ran the program. |
+| `pfpCustomTag` | Tag that the program set with `set_network_analytics_tag`. |
+
+The dataset supports the [Data Localization Suite metadata boundary](/data-localization/metadata-boundary/graphql-datasets/).
+
+## Alerts
+
+DDoS attack alerts are not available for Programmable Flow Protection. For the available alerts, refer to [DDoS alerts](/ddos-protection/reference/alerts/).

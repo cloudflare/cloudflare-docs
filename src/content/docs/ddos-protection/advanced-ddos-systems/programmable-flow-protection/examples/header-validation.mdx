@@ -1,0 +1,128 @@
+---
+title: Header validation
+pcx_content_type: example
+description: A Programmable Flow Protection program that drops UDP packets without a valid application header and tags each drop reason.
+products:
+  - ddos-protection
+sidebar:
+  order: 1
+---
+
+This program protects a game server that uses a custom UDP protocol. It drops packets sent to the game server port unless they start with a valid protocol header, and tags each drop with a reason that you can filter on in [Network Analytics](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/monitor/).
+
+The program does not require any feature to be enabled for your account.
+
+## How it works
+
+Each packet must start with an 8-byte header: a magic value, a version, a message type, and the length of the rest of the payload. The program drops a packet when:
+
+| Condition | Tag |
+| --- | --- |
+| The payload is shorter than the header. | `1` |
+| The magic value is not `GAME`. | `2` |
+| The version is not supported. | `3` |
+| The message type is not between `1` and `4`. | `4` |
+| The declared length does not match the payload length. | `5` |
+
+The program shows how to:
+
+- Check that a structure fits in the packet before reading it.
+- Convert multi-byte fields from network byte order with `ntohl` and `ntohs`.
+- Compare lengths as integers, which the verifier accepts, instead of comparing packet pointers with a variable offset.
+
+## Program
+
+```c title="header_validation.c"
+/*
+ * Validate a custom application header.
+ *
+ * Drops UDP packets that do not carry a well-formed header for a fictional
+ * game protocol, and tags each drop with a reason that you can filter on in
+ * Network Analytics.
+ */
+
+#define CF_EBPF_HELPER_V0
+
+#include <cf_ebpf_defs.h>
+#include <cf_ebpf_helper.h>
+
+#define GAME_PORT 27015
+#define GAME_MAGIC 0x47414D45 /* "GAME" */
+#define GAME_VERSION 1
+#define GAME_TYPE_MAX 4
+
+/* Drop reasons reported with set_network_analytics_tag(). */
+#define TAG_TOO_SHORT 1
+#define TAG_BAD_MAGIC 2
+#define TAG_BAD_VERSION 3
+#define TAG_BAD_TYPE 4
+#define TAG_BAD_LENGTH 5
+
+/* Application header. Multi-byte fields are in network byte order. */
+struct game_hdr {
+    uint32_t magic;
+    uint8_t version;
+    uint8_t type;
+    uint16_t length; /* Number of payload bytes after this header. */
+} __attribute__((packed));
+
+uint64_t cf_ebpf_main(void *state)
+{
+    struct cf_ebpf_generic_ctx *ctx = state;
+    struct cf_ebpf_parsed_headers headers;
+    struct cf_ebpf_packet_data *p;
+
+    if (parse_packet_data(ctx, &p, &headers) != 0) {
+        return CF_EBPF_DROP;
+    }
+
+    struct udphdr *udp = headers.udp;
+
+    /* Only inspect traffic for the game server port. */
+    if (ntohs(udp->dest) != GAME_PORT) {
+        return CF_EBPF_PASS;
+    }
+
+    /* Check that the full header is inside the packet before reading it. */
+    struct game_hdr *hdr = (struct game_hdr *)(udp + 1);
+    if ((uint8_t *)(hdr + 1) > headers.data_end) {
+        set_network_analytics_tag(TAG_TOO_SHORT);
+        return CF_EBPF_DROP;
+    }
+
+    if (ntohl(hdr->magic) != GAME_MAGIC) {
+        set_network_analytics_tag(TAG_BAD_MAGIC);
+        return CF_EBPF_DROP;
+    }
+
+    if (hdr->version != GAME_VERSION) {
+        set_network_analytics_tag(TAG_BAD_VERSION);
+        return CF_EBPF_DROP;
+    }
+
+    if (hdr->type == 0 || hdr->type > GAME_TYPE_MAX) {
+        set_network_analytics_tag(TAG_BAD_TYPE);
+        return CF_EBPF_DROP;
+    }
+
+    /*
+     * The declared payload length must match the bytes actually received.
+     * Compare lengths as integers: the verifier rejects comparisons between
+     * packet pointers that have a variable offset.
+     */
+    size_t udp_payload_len = p->total_packet_length - p->ip_header_length -
+                             sizeof(struct udphdr);
+    if (udp_payload_len != sizeof(struct game_hdr) + ntohs(hdr->length)) {
+        set_network_analytics_tag(TAG_BAD_LENGTH);
+        return CF_EBPF_DROP;
+    }
+
+    return CF_EBPF_PASS;
+}
+```
+
+## Adapt the program
+
+- The program only sees the first 1,500 bytes of each packet, so it drops IP packets larger than 1,500 bytes with the `TAG_BAD_LENGTH` tag. If your protocol uses larger packets, compare the header length with the payload bytes that are available instead.
+- Replace `struct game_hdr` and the checks with the header of your protocol.
+- To start with fewer false positives, deploy the program in a rule in monitoring mode, and check the tags of the packets it would drop.

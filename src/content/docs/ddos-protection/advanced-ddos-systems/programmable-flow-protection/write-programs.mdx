@@ -1,0 +1,108 @@
+---
+title: Write programs
+pcx_content_type: how-to
+description: Structure a Programmable Flow Protection program, read packet data safely, and write code that compiles and passes verification.
+products:
+  - ddos-protection
+sidebar:
+  order: 3
+---
+
+This page describes how to write a Programmable Flow Protection program that compiles, passes verification, and behaves correctly on Cloudflare's network. For the exact definitions of structures and functions, refer to the [program interface](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/reference/program-interface/) and [helper functions](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/reference/helper-functions/) references.
+
+## Program structure
+
+Every program has the same structure:
+
+```c
+#define CF_EBPF_HELPER_V0
+
+#include <cf_ebpf_defs.h>
+#include <cf_ebpf_helper.h>
+
+uint64_t cf_ebpf_main(void *state)
+{
+    struct cf_ebpf_generic_ctx *ctx = state;
+    struct cf_ebpf_parsed_headers headers;
+    struct cf_ebpf_packet_data *p;
+
+    if (parse_packet_data(ctx, &p, &headers) != 0) {
+        return CF_EBPF_DROP;
+    }
+
+    /* Your logic. */
+
+    return CF_EBPF_PASS;
+}
+```
+
+- Define `CF_EBPF_HELPER_V0` before you include the headers. It declares version 0 of the helper functions. Without it, the helper functions are not declared.
+- Include `cf_ebpf_defs.h` and `cf_ebpf_helper.h`. Get both from the [`pfp-headers`](https://github.com/cloudflare/pfp-tools/tree/main/pfp-headers/include) directory of the `pfp-tools` repository. Cloudflare compiles uploaded programs with the same headers.
+- Name the entry function `cf_ebpf_main`, with the signature `uint64_t cf_ebpf_main(void *state)`.
+- Return `CF_EBPF_PASS` or `CF_EBPF_DROP` on every path. The verifier rejects programs that can return any other value.
+
+## Read packet data
+
+`parse_packet_data` fills `headers` with pointers to the IP and UDP headers, and to the end of the packet data. It returns `0` on success. The packet data starts at the IP header and holds at most 1,500 bytes of the packet.
+
+Follow these rules when you read packet data:
+
+- **Check that the data is inside the packet before you read it.** Compare the end of the data you want to read with `headers.data_end`, which points one byte past the end of the packet data:
+
+  ```c
+  struct game_hdr *hdr = (struct game_hdr *)(headers.udp + 1);
+  if ((uint8_t *)(hdr + 1) > headers.data_end) {
+      return CF_EBPF_DROP;
+  }
+  ```
+
+  The verifier only rejects reads past the end of the 1,500-byte packet buffer. It does not detect a missing check against `headers.data_end`. Without this check, a program can read bytes past the end of the packet, which contain zeros, and make a decision on data that the client did not send.
+
+- **Check which IP version the packet uses.** Exactly one of `headers.ipv4` and `headers.ipv6` is set. The other is `NULL`. The verifier rejects programs that can dereference a `NULL` header pointer.
+- **Use `headers.udp` to find the UDP header.** IPv4 headers can include options, so the UDP header offset varies.
+- **Do not trust length fields in the packet.** `parse_packet_data` does not validate the IP total length or the UDP length fields, so an attacker can set them to any value. To get the length of the UDP payload, use `p->total_packet_length - p->ip_header_length - sizeof(struct udphdr)`. `total_packet_length` is at most 1,500 bytes.
+- **Convert multi-byte header fields from network byte order.** Use `ntohs`, `ntohl`, and `ntohll` to read fields, and `htons`, `htonl`, and `htonll` to write them.
+- **Use `__attribute__((packed))` on structures that describe your protocol**, so that the compiler does not add padding between fields.
+- **Compare lengths as integers, not as pointers with a variable offset.** For example, compute the UDP payload length from `p->total_packet_length`, `p->ip_header_length`, and the size of the UDP header. The verifier cannot always track packet pointers with a variable offset, and the result depends on the compiler version.
+
+## Return a verdict
+
+The program verdict applies only to the current packet. To act on later packets from the same source, store state. For example, set a source IP status, or count packets in the source IP state table.
+
+Decide what your program does when it cannot reach a decision. Programmable Flow Protection itself [fails open](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#failure-handling). In most cases, programs should:
+
+- Drop packets that are malformed, for example when `parse_packet_data` fails or the payload does not match your protocol.
+- Pass packets that the program cannot evaluate because a helper function returns an error, for example `-5` when a feature is not enabled for your account. This way, a configuration problem does not drop legitimate traffic.
+
+## Compiler requirements
+
+Cloudflare compiles programs with `clang` and a fixed set of flags. For the full command, refer to [Compile and verify locally](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/test-programs/#compile-and-verify-locally). As a result:
+
+- **Warnings are errors.** In particular, `-Wconversion` rejects implicit conversions that can lose precision. Cast explicitly, for example `uint32_t now_secs = (uint32_t)timestamp();`.
+- **There is no C library.** Do not include headers such as `stdlib.h` or `string.h`, and do not call C library functions. The headers in `pfp-headers` provide `memcmp`, and `stdint.h` and `stddef.h` are available.
+- **`__builtin_memcpy` and `__builtin_memset` only work for small, constant sizes.** For larger sizes, the compiler emits a call to a C library function and compilation fails.
+- **Inline assembly is not supported.**
+
+## Write code that passes verification
+
+The verifier analyzes every path through the program. The following patterns help programs pass verification:
+
+- **Keep each function within 2 KiB of stack.** The verifier allows 2,048 bytes of stack for each function, and up to four functions in a call chain, including `cf_ebpf_main`. The `-bpf-stack-size=8192` compiler flag sets the total for the whole chain. Large arrays on the stack fail verification.
+- **Avoid writing to stack buffers at a variable index inside a loop.** The verifier often cannot prove that the index stays in bounds. Read the data directly from the packet instead, or use a loop with a small constant number of iterations that the compiler can unroll.
+- **Bound every loop.** The verifier must prove that the program terminates. Loops over packet data that stop at `headers.data_end` pass verification.
+- **Initialize buffers that you pass to helper functions.** The verifier rejects reads of uninitialized stack memory.
+- **Use one buffer size when different paths call the same helper function.** The compiler can merge two calls into one. For example, to look up an IPv4 or an IPv6 address with `param_lookup`, copy the address into one zero-initialized 16-byte buffer and pass a length of `4` or `16`. For an example, refer to [Parameter map policy](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/examples/parameter-map-policy/).
+- **Pass valid pointers to helper functions.** The verifier rejects `NULL` for pointer arguments, even where the helper function documents a result for `NULL`.
+
+To check a program before you upload it, refer to [Test programs](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/test-programs/).
+
+## Use state safely
+
+- **State is per server.** A source IP can have different state on different Cloudflare servers. A rate limit applies to the traffic each server receives.
+- **State can be reset or evicted at any time.** Refer to [State](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#state) for when this happens. Design programs so that a client recovers from a reset, for example by being challenged again.
+- **Source IPs can be spoofed.** Do not blocklist a source IP, or let it consume state that other clients need, based only on packets that an attacker could send with a spoofed source IP.
+- **Pack multiple values into one entry.** Each table entry stores one 64-bit value. For example, store a timestamp in the upper 32 bits and a counter in the lower 32 bits. For an example, refer to [Rate limiting](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/examples/rate-limiting/).
+
+## Tag packets for Network Analytics
+
+To understand why a program drops packets, call `set_network_analytics_tag` with a value that identifies the reason. The tag appears with the packet samples in Network Analytics. The last tag set during a program run applies, and `0` means no tag. For an example, refer to [Header validation](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/examples/header-validation/).

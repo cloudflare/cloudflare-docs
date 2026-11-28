@@ -1,0 +1,103 @@
+---
+title: Rate limiting
+pcx_content_type: example
+description: A Programmable Flow Protection program that limits the number of packets each source IP can send in a fixed time window.
+products:
+  - ddos-protection
+sidebar:
+  order: 2
+---
+
+This program limits each source IP to 100 packets every 10 seconds, using a fixed-window counter in the [source IP state table](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#state).
+
+The program requires the source IP state feature. To enable it, contact your account team. If the feature is not enabled, the program passes all packets.
+
+## How it works
+
+The source IP state table stores one 64-bit value per source IP. The program packs two values into it: the start of the current window, in the upper 32 bits, and the number of packets in the window, in the lower 32 bits.
+
+For each packet, the program:
+
+1. Reads the value for the source IP with `get_src_ip_data`. A return value of `-1` means this is the first packet from the source IP.
+2. Starts a new window if the current one has ended.
+3. Drops the packet if the source IP already sent `RATE_LIMIT` packets in the window. Otherwise, increments the counter and stores it with `set_src_ip_data`.
+
+State is kept per Cloudflare server. The limit applies to the packets each server receives from a source IP, not to all the packets a source IP sends to your network.
+
+## Program
+
+```c title="rate_limit.c"
+/*
+ * Rate limit packets per source IP.
+ *
+ * Implements a fixed-window rate limit with the source IP state table: each
+ * source IP may send at most RATE_LIMIT packets per WINDOW_SECONDS. State is
+ * kept per Cloudflare server, so the limit applies to the traffic that each
+ * server receives, not to the global traffic from a source IP.
+ */
+
+#define CF_EBPF_HELPER_V0
+
+#include <cf_ebpf_defs.h>
+#include <cf_ebpf_helper.h>
+
+#define RATE_LIMIT 100     /* Packets allowed per window. */
+#define WINDOW_SECONDS 10  /* Window length in seconds. */
+
+/*
+ * The source IP state table stores one u64 of user data per source IP. Pack
+ * the window start time (upper 32 bits) and the packet count (lower 32 bits)
+ * into it.
+ */
+#define PACK_STATE(start, count) (((uint64_t)(start) << 32) | (uint32_t)(count))
+#define STATE_START(data) ((uint32_t)((data) >> 32))
+#define STATE_COUNT(data) ((uint32_t)(data))
+
+uint64_t cf_ebpf_main(void *state)
+{
+    (void)state; /* This program does not inspect packet contents. */
+
+    int64_t now = timestamp();
+    if (now < 0) {
+        return CF_EBPF_PASS;
+    }
+    uint32_t now_secs = (uint32_t)now;
+
+    uint64_t data;
+    uint32_t window_start;
+    uint32_t count;
+
+    int ret = get_src_ip_data(&data);
+    if (ret == -1) {
+        /* No entry: first packet from this source IP. */
+        window_start = now_secs;
+        count = 1;
+    } else if (ret != 0) {
+        /* Any other error, for example state not enabled: fail open. */
+        return CF_EBPF_PASS;
+    } else {
+        window_start = STATE_START(data);
+        count = STATE_COUNT(data);
+
+        if (now_secs - window_start >= WINDOW_SECONDS) {
+            /* The window has ended: start a new one. */
+            window_start = now_secs;
+            count = 1;
+        } else if (count >= RATE_LIMIT) {
+            /* Over the limit for this window. */
+            return CF_EBPF_DROP;
+        } else {
+            count++;
+        }
+    }
+
+    set_src_ip_data(PACK_STATE(window_start, count));
+    return CF_EBPF_PASS;
+}
+```
+
+## Adapt the program
+
+- Change `RATE_LIMIT` and `WINDOW_SECONDS` to match the traffic of a legitimate client.
+- The source IP state table has a fixed capacity, and evicts the least recently used entries when it is full. During an attack from many source IPs, entries for legitimate clients can be evicted, which resets their counters. For capacity, refer to [Capacity and expiry](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#capacity-and-expiry).
+- To limit packets per flow instead of per source IP, use `get_flow_data` and `set_flow_data`.

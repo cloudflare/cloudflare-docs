@@ -1,0 +1,195 @@
+---
+title: Concepts
+pcx_content_type: concept
+description: How Programmable Flow Protection selects traffic, runs programs, applies rules, and keeps state, challenges, and parameter maps.
+products:
+  - ddos-protection
+sidebar:
+  order: 2
+---
+
+This page explains how Programmable Flow Protection processes packets. For the steps to deploy a program, refer to [Deploy programs](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/deploy-programs/).
+
+## Inspected traffic
+
+Programmable Flow Protection inspects ingress UDP traffic over IPv4 and IPv6 that is sent to a [prefix](/ddos-protection/advanced-ddos-systems/overview/#prefixes) you added to Advanced DDoS Protection. It does not inspect:
+
+- Traffic that is not UDP.
+- Egress traffic, including traffic from your network to the Internet.
+- Traffic from source IPs in the Advanced DDoS Protection [allowlist](/ddos-protection/advanced-ddos-systems/concepts/#allowlist).
+- Fragmented UDP packets. Cloudflare passes them without running your program.
+
+Each Cloudflare server processes the packets it receives independently. There is no coordination between servers or data centers while a packet is processed.
+
+## Programs
+
+A program is C source code with an entry function named `cf_ebpf_main`. Cloudflare calls the function once for each packet, and the function returns a verdict: `CF_EBPF_PASS` or `CF_EBPF_DROP`. To learn how to write a program, refer to [Write programs](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/write-programs/).
+
+When you upload a program, Cloudflare compiles it to an [eBPF](https://docs.kernel.org/bpf/) object and runs [`pfp-verifier`](https://github.com/cloudflare/pfp-tools/tree/main/pfp-verifier) on the object. The verifier proves that the program only accesses valid memory, always terminates, and only returns known verdicts. The program `state` records the result:
+
+| State | Meaning |
+| --- | --- |
+| `success` | The program compiled and passed verification. Rules can use it. |
+| `failed_compiler` | The program did not compile. The `err_msg` field contains the compiler output. |
+| `failed_verifier` | The program compiled but did not pass verification. The `err_msg` field contains the verifier output. |
+
+Cloudflare automatically deletes programs that are not in the `success` state, are not used by any rule, and have not been modified for 30 days.
+
+Cloudflare runs programs in user space, not in the Linux kernel. Programs cannot call kernel or C library functions. They can only call the [helper functions](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/reference/helper-functions/) that Cloudflare provides.
+
+### Program versions
+
+Each program has a version number. A new program starts at version `1`, and each update increments the version. Each rule runs a specific version of a program, which the rule `program_version` field shows.
+
+:::caution[Updating a program updates its rules]
+When you update a program and the new code passes verification, every rule that uses the program switches to the new version immediately, in every location. If the source code changed, the state of those rules is reset.
+
+To roll out a change gradually, upload the new code as a separate program, and then move rules to it one at a time. For details, refer to [Deploy programs](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/deploy-programs/#update-a-program-safely).
+:::
+
+Renaming a program also creates a new version, and switches its rules to it, but does not reset their state.
+
+If the new code does not compile or verify, and a rule uses the program, Cloudflare rejects the update and the rules keep running the current version. If no rule uses the program, Cloudflare stores the failed version as the current version of the program.
+
+## Rules
+
+A rule runs a program on Cloudflare's network. Each rule has a scope, a mode, and an expression.
+
+### Scope
+
+The scope defines where the rule runs:
+
+- `global`: every Cloudflare data center.
+- `region`: every data center in a Cloudflare region.
+- `datacenter`: a single Cloudflare data center.
+
+Each Cloudflare data center runs at most one rule for your account: the rule with the most specific scope. A data center rule takes precedence over a region rule, which takes precedence over the global rule. Each scope can have only one rule for the same region or data center, so an account can have at most one global rule.
+
+### Expression
+
+The expression is a [Rules language expression](/ruleset-engine/rules-language/expressions/) that selects the packets the program runs on. The following fields are supported:
+
+- `ip.src`
+- `ip.dst`
+- `udp.srcport`
+- `udp.dstport`
+
+To run the program on all UDP packets, use the expression `true`.
+
+If a packet does not match the expression of the rule selected for the data center, Cloudflare passes the packet without running any program. Cloudflare does not fall back to a rule with a less specific scope.
+
+### Mode
+
+The mode defines what happens to the program verdict:
+
+| Mode | Program runs | Verdict applied | State and tags updated | Challenges sent |
+| --- | --- | --- | --- | --- |
+| `enabled` | Yes | Yes | Yes | Yes |
+| `monitoring` | Yes | No. All packets pass. | Yes | No |
+| `disabled` | No | — | No. The state is deleted. | No |
+
+In monitoring mode, Network Analytics shows the verdict the program would have applied. The program state is updated in monitoring mode, and is kept when you switch the rule from monitoring to enabled.
+
+Monitoring mode does not show how clients react to challenges, because Cloudflare does not send them. For a program that challenges clients, clients never respond in monitoring mode, so Network Analytics shows more drops than the program causes in enabled mode. To test challenges, use local tests and the PCAP debug endpoint, and then enable the program for a single data center.
+
+### Failure handling
+
+Programmable Flow Protection fails open. If a program cannot run for a packet, or returns a value other than `CF_EBPF_PASS` or `CF_EBPF_DROP`, Cloudflare passes the packet.
+
+## State
+
+Programs can keep state between packets in two state tables:
+
+- The **source IP state table** stores a status and a 64-bit value for each source IP.
+- The **flow state table** stores a 64-bit value for each flow, identified by source IP, source port, destination IP, and destination port.
+
+Programs read and write the tables with [state helper functions](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/reference/helper-functions/#source-ip-state). Both tables must be enabled for your account.
+
+### Where state lives
+
+State is local to each Cloudflare server. It is not shared between servers or data centers. The same source IP can have a different status on each server, and a rate limit implemented with state applies to the traffic each server receives.
+
+Cloudflare resets the state of a rule when:
+
+- The rule switches to another program or program version, including when you update the source code of the program.
+- The rule mode changes to `disabled`.
+- Some features enabled for your account change, such as challenges or the capacity of the state tables.
+- Cloudflare restarts the software on a server, for example during maintenance.
+
+Changing the rule mode between `monitoring` and `enabled`, or changing the rule expression, keeps the state.
+
+Design programs so that a reset is safe. For example, a client that a program had verified with a challenge must be able to pass a new challenge.
+
+### Capacity and expiry
+
+Each table holds a fixed number of entries per server. By default, the source IP state table holds 1,000 entries and the flow state table holds 10,000 entries. To change the capacity, contact your account team.
+
+Both tables evict the least recently used entry when they are full. Each packet that matches the rule expression counts as a use of its source IP entry and flow entry, including packets from blocklisted source IPs that Cloudflare drops before the program runs. Cloudflare also removes entries that have not received a packet for one hour. Eviction and removal apply to every entry, including verified and blocklisted source IPs. A blocklisted source IP that keeps sending packets is not removed, so its status only ends when it expires.
+
+### Source IP status
+
+Each source IP entry has a status:
+
+| Status | Value | Meaning |
+| --- | --- | --- |
+| `CF_EBPF_SRC_IP_STATUS_NONE` | `0` | No status. |
+| `CF_EBPF_SRC_IP_STATUS_CHALLENGED` | `1` | The program challenged the source IP. |
+| `CF_EBPF_SRC_IP_STATUS_VERIFIED` | `2` | The source IP passed a challenge. |
+| `CF_EBPF_SRC_IP_STATUS_BLOCKLISTED` | `3` | Cloudflare drops packets from the source IP. |
+
+The program sets a status with an expiry in seconds. When the status expires, it reads as `CF_EBPF_SRC_IP_STATUS_NONE`. Cloudflare only uses these values as described in this section. Programs can use the challenged and verified statuses for their own purposes.
+
+If a packet matches the rule expression and its source IP has a blocklisted status that has not expired, Cloudflare drops the packet without running the program. In monitoring mode, Cloudflare passes the packet and records the drop in Network Analytics.
+
+:::caution
+UDP source IPs can be spoofed. An attacker can send packets with the source IP of a legitimate client. Before you blocklist a source IP, make sure the program has evidence that the source IP itself sent the traffic, for example from a challenge-response exchange. Set an expiry on blocklisted statuses.
+:::
+
+## Challenges
+
+A challenge is a packet that Cloudflare sends back to the source of a packet on behalf of your program. Programs use challenges to check that a client can receive traffic at its source IP, which a spoofed source cannot do.
+
+A program sets the challenge payload with [`set_challenge`](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/reference/helper-functions/#set_challenge). Cloudflare sends the challenge only if the rule is in enabled mode and the program returns `CF_EBPF_DROP`. The challenge is a UDP packet:
+
+- From the destination IP and port of the original packet, to its source IP and port.
+- With the challenge payload as its UDP payload.
+
+The client must implement the challenge protocol that your program defines, and respond to the challenge. For a complete example, refer to [Challenge-response](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/examples/challenge-response/).
+
+Cloudflare limits how often each server sends challenges:
+
+- Each source IP receives at most one challenge every two seconds by default.
+- Each server limits how many new source IPs, which do not have a source IP state entry yet, it challenges per second.
+
+When a limit applies, `set_challenge` returns `-6`. A call that succeeds counts toward the per-source-IP limit even if Cloudflare does not send the challenge, for example because the rule is in monitoring mode. Challenges must be enabled for your account.
+
+## Parameter maps
+
+Parameter maps let a program read values that you manage through the API, such as per-IP policies or thresholds. Parameter maps are:
+
+- **Account-scoped**: every program in your account can read every map.
+- **Read-only**: programs can read values but not change them.
+- **Exact match**: each map is keyed by IPv4 or IPv6 addresses. A lookup matches a single address, not a prefix.
+- **Typed**: each map stores unsigned integers of one width, `u8`, `u16`, `u32`, or `u64`.
+- **Live**: when you update the maps, running programs use the new values. Programs are not recompiled, and their state is not reset.
+
+Programs refer to maps by numeric ID, not by name. IDs start at `0` and must be contiguous. Keep the ID of each map the same when you update the maps. Otherwise, your programs read from the wrong map.
+
+Updates reach Cloudflare's network asynchronously, so servers can briefly use different versions of the maps. If a server cannot apply an update, it keeps using the last version it applied.
+
+To read a map, use [`param_lookup`](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/reference/helper-functions/#param_lookup). To manage maps, refer to [Parameter operations](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/#parameter-operations).
+
+## Features that require enablement
+
+Programs can always parse packets, compute hashes and entropy, and set Network Analytics tags. The following features must be enabled for your account. To enable them, contact your account team.
+
+| Feature | Helper functions | Return value when not enabled |
+| --- | --- | --- |
+| Source IP state | `get_src_ip_data`, `set_src_ip_data`, `get_src_ip_status`, `set_src_ip_status` | `-5` |
+| Flow state | `get_flow_data`, `set_flow_data` | `-5` |
+| Challenges | `set_challenge`, `get_src_ip_status`, `set_src_ip_status` | `-5` |
+| Parameter maps | `param_lookup`, and the parameters API | `-5` |
+
+The source IP status helpers work if either source IP state or challenges is enabled. The source IP data helpers require source IP state.
+
+Each account can also use a limited number of distinct programs in its rules at the same time. For the current limits, refer to [Limits](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/reference/limits/).

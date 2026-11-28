@@ -1,0 +1,196 @@
+---
+title: Program interface
+pcx_content_type: reference
+description: The entry point, return values, structures, and header-defined functions available to Programmable Flow Protection programs.
+products:
+  - ddos-protection
+sidebar:
+  order: 1
+---
+
+Programs include two headers from the [`pfp-headers`](https://github.com/cloudflare/pfp-tools/tree/main/pfp-headers/include) directory of the `pfp-tools` repository:
+
+| Header | Contents |
+| --- | --- |
+| `cf_ebpf_defs.h` | Return values, packet structures, `parse_packet_data`, byte order macros, and `memcmp`. |
+| `cf_ebpf_helper.h` | [Helper functions](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/reference/helper-functions/) and source IP status values. Requires `CF_EBPF_HELPER_V0`. |
+
+Define `CF_EBPF_HELPER_V0` before you include `cf_ebpf_helper.h`. It selects version 0 of the helper functions. Cloudflare adds new helper functions in a backward-compatible way.
+
+## Entry point
+
+```c
+uint64_t cf_ebpf_main(void *state);
+```
+
+Cloudflare calls `cf_ebpf_main` once for each packet. The `state` argument points to a `cf_ebpf_generic_ctx` structure. Pass it to `parse_packet_data` to access the packet. The ELF object must contain a function with this name.
+
+## Return values
+
+The return value of `cf_ebpf_main` is the verdict for the packet:
+
+| Constant | Value | Verdict |
+| --- | --- | --- |
+| `CF_EBPF_PASS` | `0` | Pass the packet to your network. |
+| `CF_EBPF_DROP` | `1` | Drop the packet. If the program set a challenge, Cloudflare sends it. |
+
+The verifier rejects programs that can return any other value.
+
+## Structures
+
+### `cf_ebpf_generic_ctx`
+
+The context passed to `cf_ebpf_main`.
+
+```c
+struct cf_ebpf_generic_ctx {
+    /* Pointer to the beginning of the context data. */
+    uint64_t data;
+    /* Pointer to the end of the context data. */
+    uint64_t data_end;
+    /* Space for the program to store metadata. */
+    uint64_t metadata;
+};
+```
+
+`data` points to a `cf_ebpf_packet_data` structure. Use `parse_packet_data` instead of reading these fields directly.
+
+### `cf_ebpf_packet_data`
+
+The packet, starting at the IP header.
+
+```c
+struct cf_ebpf_packet_data {
+    /* Total length of the packet. */
+    size_t   total_packet_length;
+    /* Size of the IP header. Supports IPv4 (including options) and IPv6. */
+    size_t   ip_header_length;
+    /* Bytes of the packet, starting with the IP header. */
+    uint8_t  packet_buffer[1500];
+};
+```
+
+- `packet_buffer` holds at most the first 1,500 bytes of the packet. The bytes after the end of the packet are zero.
+- `total_packet_length` is the number of bytes of the packet in `packet_buffer`, at most 1,500. To get the length of a larger packet, read the length field of the IP header.
+
+### `cf_ebpf_parsed_headers`
+
+Pointers to the parsed headers, filled by `parse_packet_data`.
+
+```c
+struct cf_ebpf_parsed_headers {
+    /* Pointer to the parsed IPv4 header, if present (otherwise null). */
+    struct iphdr   *ipv4;
+    /* Pointer to the parsed IPv6 header, if present (otherwise null). */
+    struct ipv6hdr *ipv6;
+    /* Pointer to the parsed UDP header. */
+    struct udphdr  *udp;
+    /* Raw pointer to the byte after the last valid byte of the packet data. */
+    uint8_t        *data_end;
+};
+```
+
+- Exactly one of `ipv4` and `ipv6` is set. The other is `NULL`.
+- `udp` points to the UDP header, after any IPv4 options.
+- `data_end` points to the byte after the last byte of the packet. Data that you read must end at or before `data_end`.
+
+### `iphdr`, `ipv6hdr`, and `udphdr`
+
+The IPv4, IPv6, and UDP headers. They match the layout and field names of the Linux kernel definitions in [`ip.h`](https://github.com/torvalds/linux/blob/a7423e6ea2f8f6f453de79213c26f7a36c86d9a2/include/uapi/linux/ip.h#L87), [`ipv6.h`](https://github.com/torvalds/linux/blob/a7423e6ea2f8f6f453de79213c26f7a36c86d9a2/include/uapi/linux/ipv6.h#L118), and [`udp.h`](https://github.com/torvalds/linux/blob/a7423e6ea2f8f6f453de79213c26f7a36c86d9a2/include/uapi/linux/udp.h#L23). Multi-byte fields are in network byte order.
+
+```c
+struct iphdr {
+#if defined(__BYTE_ORDER__) && __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+    uint8_t  version:4,
+             ihl:4;
+#else
+    uint8_t  ihl:4,
+             version:4;
+#endif
+    uint8_t  tos;
+    uint16_t tot_len;
+    uint16_t id;
+    uint16_t frag_off;
+    uint8_t  ttl;
+    uint8_t  protocol;
+    uint16_t check;
+    uint32_t saddr;
+    uint32_t daddr;
+};
+
+struct ipv6hdr {
+#if defined(__BYTE_ORDER__) && __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+    uint8_t  version:4,
+             priority:4;
+#else
+    uint8_t  priority:4,
+             version:4;
+#endif
+    uint8_t  flow_lbl[3];
+    uint16_t payload_len;
+    uint8_t  nexthdr;
+    uint8_t  hop_limit;
+    uint8_t  saddr[16];
+    uint8_t  daddr[16];
+};
+
+struct udphdr {
+    uint16_t source;
+    uint16_t dest;
+    uint16_t len;
+    uint16_t check;
+};
+```
+
+## Functions defined in the headers
+
+The following functions are compiled into your program from `cf_ebpf_defs.h`. They are not helper functions, and they are available without `CF_EBPF_HELPER_V0`.
+
+### `parse_packet_data`
+
+```c
+static inline int parse_packet_data(
+    struct cf_ebpf_generic_ctx *ctx,
+    struct cf_ebpf_packet_data **out_p,
+    struct cf_ebpf_parsed_headers *out_headers
+);
+```
+
+Validates the packet and fills `out_headers`. Call it at the start of every program.
+
+| Argument | Description |
+| --- | --- |
+| `ctx` | The `state` argument of `cf_ebpf_main`. |
+| `out_p` | Receives a pointer to the `cf_ebpf_packet_data` structure. Can be `NULL`. |
+| `out_headers` | Receives the parsed headers. |
+
+Returns `0` on success. Returns `1` if the packet is not a valid IPv4 or IPv6 packet with a complete UDP header. On failure, `out_headers` is not modified.
+
+### Byte order macros
+
+These macros convert integers between network byte order (big-endian) and host byte order:
+
+| Macro | Converts |
+| --- | --- |
+| `ntohs(x)`, `htons(x)` | 16-bit values |
+| `ntohl(x)`, `htonl(x)` | 32-bit values |
+| `ntohll(x)`, `htonll(x)` | 64-bit values |
+
+### `memcmp`
+
+```c
+int memcmp(const void *lval, const void *rval, size_t length);
+```
+
+Compares `length` bytes. Returns `0` if they are equal, `-1` if the first differing byte is smaller in `lval`, and `1` if it is larger.
+
+## Source IP status values
+
+`cf_ebpf_helper.h` defines the values of the [source IP status](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#source-ip-status):
+
+| Constant | Value |
+| --- | --- |
+| `CF_EBPF_SRC_IP_STATUS_NONE` | `0` |
+| `CF_EBPF_SRC_IP_STATUS_CHALLENGED` | `1` |
+| `CF_EBPF_SRC_IP_STATUS_VERIFIED` | `2` |
+| `CF_EBPF_SRC_IP_STATUS_BLOCKLISTED` | `3` |

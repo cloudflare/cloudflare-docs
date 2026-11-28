@@ -1,0 +1,74 @@
+---
+title: Limits
+pcx_content_type: reference
+description: Current limits for Programmable Flow Protection programs, rules, state, challenges, parameter maps, and debugging.
+products:
+  - ddos-protection
+sidebar:
+  order: 3
+---
+
+The following limits apply to Programmable Flow Protection. Limits marked as account limits can be changed for your account. To request a change, contact your account team.
+
+## Programs
+
+| Limit | Value |
+| --- | --- |
+| Instructions in the compiled program | 10,000 |
+| Size of the compiled object file | 100,000 bytes |
+| Size of the uploaded source file | 5,000,000 bytes |
+| Length of the program name | 64 bytes |
+| Stack size for each function | 2,048 bytes |
+| Packet data available to the program | First 1,500 bytes of the packet, starting at the IP header |
+
+Program names must be unique in your account.
+
+## Rules
+
+| Limit | Value |
+| --- | --- |
+| Rules for each scope and location | 1 global rule, 1 rule for each region, and 1 rule for each data center |
+| Distinct programs used by rules (account limit) | 5 |
+| Length of the rule expression | 8,192 bytes |
+| Nesting depth of the rule expression | 32 |
+
+The limit on distinct programs counts every program that a rule uses, in any mode. Rule expressions cannot use functions.
+
+## State
+
+| Limit | Default value |
+| --- | --- |
+| Entries in the source IP state table, per server (account limit) | 1,000 |
+| Entries in the flow state table, per server (account limit) | 10,000 |
+| Time without packets after which Cloudflare removes an entry | 1 hour |
+| Size of the value stored in each entry | 64 bits |
+
+## Challenges
+
+| Limit | Default value |
+| --- | --- |
+| Maximum challenge payload size | Twice the length of the IP packet, at least 256 bytes and at most 1,280 bytes |
+| Minimum interval between challenges to the same source IP, per server (account limit) | 2 seconds |
+
+Each server also limits how many source IPs without a source IP state entry it challenges per second.
+
+## Parameter maps
+
+| Limit | Value |
+| --- | --- |
+| Number of parameter maps (account limit) | 5 |
+| Total size of all parameter maps (account limit) | 10 MiB |
+| Size of the request body to replace the parameters | 32 MiB |
+| Rate of requests to replace the parameters | 1 per second |
+
+The total size of the parameter maps is measured on the stored maps, not on the JSON request body.
+
+## Debugging and analytics
+
+| Limit | Value |
+| --- | --- |
+| Size of a packet capture for the PCAP debug endpoint | 5,000,000 bytes |
+| `ip_offset` query parameter of the PCAP debug endpoint | 0 to 255 |
+| Network Analytics sampling rate | 1 in 1,000 packets, per server |
+| Time range of a Network Analytics GraphQL query | 31 days |
+| Retention of Network Analytics data | 16 weeks |
