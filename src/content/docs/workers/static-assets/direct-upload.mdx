@@ -155,6 +155,12 @@ The provided `Content-Type` header of each file part will be attached when event
 
 The `Authorization` header must be provided as a bearer token, using the JWT (upload token) from the aforementioned manifest upload call.
 
+:::note
+You cannot run this file-upload step through the [Cloudflare API MCP server](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/#limitations), which overwrites the `Authorization` header with its own connection credential. Granting broader API token or OAuth permissions will not resolve the error.
+
+To upload new or modified assets, deploy with [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy), [`cf deploy`](/cf/get-started/first-worker/), or [Workers Builds](/workers/ci-cd/builds/), or run the full direct-upload flow from your own HTTP client or [SDK script](#programmatic-example). If all assets are unchanged, pass `keep_assets: true` (or `assets.jwt` when `buckets` is empty) in [Create/Deploy New Version](#createdeploy-new-version) instead.
+:::
+
 Once every file in the manifest has been uploaded, a status code of 201 will be returned, with the `jwt` field present. This JWT is a final "completion" token used to attach this asset set to a Worker version. This completion token is valid for 1 hour.
 
 The completion token confirms that asset upload is complete. You must still attach the assets to a Worker version and deploy it to receive production traffic. The deployment change takes time to reach every location on the network.
