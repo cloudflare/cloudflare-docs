@@ -608,7 +608,7 @@ return Response.json({
 });
 ```
 
-Returns a `WorkflowInstance`.
+Returns a `WorkflowInstance` without waiting for execution to finish.
 
 Throws an error if the provided ID is already used by an existing instance that has not yet passed its [retention limit](/workflows/reference/limits/). To re-run a workflow with the same ID, you can [`restart`](/workflows/build/trigger-workflows/#restart-a-workflow) the existing instance.
 
@@ -956,6 +956,8 @@ Return the status of a running Workflow instance.
 
 - <code>status(): Promise&lt;InstanceStatus&gt;</code>
 
+Use `status()` for one-off lookups. To track execution without polling, [choose a live or Queue subscription](/workflows/reference/event-subscriptions/#choose-how-to-track-a-workflow).
+
 ### pause
 
 Pause a running Workflow instance.
@@ -1153,7 +1155,7 @@ using filteredEvents = await instance.subscribe({
 
 </TypeScriptExample>
 
-For event types, filtering behavior, and cursor usage, refer to [Subscribe to events](/workflows/build/subscribe-to-instance-events/).
+For event types, filtering behavior, and cursor usage, refer to [Subscribe to instance events](/workflows/build/subscribe-to-instance-events/).
 
 ### InstanceStatus
 
