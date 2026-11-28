@@ -1,6 +1,6 @@
 ---
 title: Limits
-description: Limits for concurrent Dynamic Worker requests.
+description: Limits for concurrent Dynamic Worker requests, plan availability, and local development behavior.
 pcx_content_type: concept
 sidebar:
   order: 2
@@ -17,4 +17,12 @@ Cloudflare limits the number of distinct Dynamic Workers with in-flight requests
 
 In a Worker, each request has its own input/output (I/O) context. Each request can therefore have up to four distinct Dynamic Workers with in-flight requests.
 
-A Durable Object shares one I/O context across all concurrent requests to the same object. Those requests can collectively have up to ten distinct Dynamic Workers with in-flight requests. To set lower CPU time or subrequest limits, refer to [Custom resource limits](/dynamic-workers/usage/limits/).
+A Durable Object shares one I/O context across all concurrent requests to the same object. Those requests can collectively have up to ten distinct Dynamic Workers with in-flight requests.
+
+Each Dynamic Worker invocation also uses your [Workers Paid plan limits](/workers/platform/limits/#account-plan-limits) for CPU time, isolate memory, and subrequests. Deploying Dynamic Workers to Cloudflare requires the [Workers Paid plan](/workers/platform/pricing/). For billing details, refer to [Pricing](/dynamic-workers/pricing/). To set lower CPU time or subrequest limits per Dynamic Worker, refer to [Custom resource limits](/dynamic-workers/usage/limits/).
+
+## Local development
+
+Local development with `wrangler dev` runs in a local `workerd` process. It does not enforce a Dynamic Worker's `limits.cpuMs` CPU budget or Workers Paid plan checks. It also does not reproduce deployed platform limits, including concurrent Dynamic Worker quotas, isolate memory limits, CPU time limits, or subrequest limits. Accounts on the Workers Free plan can test Dynamic Workers locally, while deploying to Cloudflare requires Workers Paid.
+
+To test limit enforcement on Cloudflare before deploying to production, use a [Worker Preview](/workers/previews/). Add the binding under `previews.worker_loaders` in your Wrangler configuration, because Previews do not inherit top-level `worker_loaders` bindings. For more information, refer to [Dynamic Worker Loaders](/workers/runtime-apis/bindings/worker-loader/#configuration) and [Custom resource limits](/dynamic-workers/usage/limits/#local-development).

@@ -9,6 +9,12 @@ products:
 
 import { MetaInfo, Render, Type, WranglerConfig } from "~/components";
 
+:::note
+
+Deploying a Worker with a `worker_loaders` binding requires the [Workers Paid plan](/workers/platform/pricing/). Accounts on the Workers Free plan can develop and test `worker_loaders` locally with `wrangler dev`, while deploying to Cloudflare requires Workers Paid. For billing details, refer to [Dynamic Workers pricing](/dynamic-workers/pricing/).
+
+:::
+
 <Render file="local-development-security" product="workers" />
 
 A Worker Loader binding allows you to load additional Workers containing arbitrary code at runtime.
@@ -22,7 +28,7 @@ Worker Loaders also enable **sandboxing** of code, meaning that you can strictly
 - You can arrange to intercept or simply block all network requests made by the Worker within.
 - You can supply the sandboxed Worker with custom bindings to represent specific resources which it should be allowed to access.
 
-When deployed to Cloudflare, properly configured Dynamic Workers can run code you do not trust in a dynamic isolate.
+When deployed to Cloudflare, properly configured [Dynamic Workers](/dynamic-workers/) can run code you do not trust in a dynamic isolate.
 
 ## Code Mode
 
@@ -99,7 +105,7 @@ To add a dynamic worker loader binding to your worker, add it to your Wrangler c
 
 </WranglerConfig>
 
-The local `workerd` runtime does not enforce a dynamic Worker's [`limits.cpuMs`](#limits) CPU budget. Use a [Worker Preview](/workers/previews/) to test CPU-limit failures on Cloudflare before deploying to production. Add the binding under `previews.worker_loaders` too. Previews do not inherit it from the top level.
+The local `workerd` runtime does not enforce a dynamic Worker's [`limits.cpuMs`](#limits) CPU budget or Workers Paid plan checks. Local development with `wrangler dev` also does not reproduce deployed [Workers platform limits](/workers/platform/limits/) (such as CPU time, isolate memory, or subrequest limits) or [concurrent Dynamic Worker limits](/dynamic-workers/platform/limits/). Use a [Worker Preview](/workers/previews/) to test limit failures on Cloudflare before deploying to production. Add the binding under `previews.worker_loaders` too, because Previews do not inherit it from the top level. For more information, refer to [Custom resource limits](/dynamic-workers/usage/limits/#local-development) and [Dynamic Workers limits](/dynamic-workers/platform/limits/).
 
 ## API Reference
 

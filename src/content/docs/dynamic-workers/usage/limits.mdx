@@ -36,3 +36,15 @@ You can also specify limits as part of the `getEntrypoint()` call:
 const entrypoint = worker.getEntrypoint(null, { limits: { cpuMs: 10, subRequests: 5 } });
 await entrypoint.fetch(...);
 ```
+
+## Local development
+
+:::caution[Local limit enforcement]
+
+The local `workerd` runtime used by `wrangler dev` does not enforce a Dynamic Worker's `limits.cpuMs` CPU budget or Workers Paid plan checks. Local development also does not reproduce deployed [Workers platform limits](/workers/platform/limits/) (such as CPU time, isolate memory, or subrequest limits) or [concurrent Dynamic Worker limits](/dynamic-workers/platform/limits/).
+
+:::
+
+To test CPU-limit failures and deployed resource limits on Cloudflare before deploying to production, use a [Worker Preview](/workers/previews/). Add the binding under `previews.worker_loaders` in your Wrangler configuration as well, because Previews do not inherit top-level `worker_loaders` bindings.
+
+For binding configuration details, refer to [Dynamic Worker Loaders](/workers/runtime-apis/bindings/worker-loader/#configuration). For concurrency limits, refer to [Limits](/dynamic-workers/platform/limits/).

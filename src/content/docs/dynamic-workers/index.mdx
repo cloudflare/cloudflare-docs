@@ -8,7 +8,7 @@ products:
   - dynamic-workers
 ---
 
-import { Description } from "~/components";
+import { Description, Plan } from "~/components";
 
 <Description>
 
@@ -16,9 +16,17 @@ Spin up Workers at runtime to execute code on-demand in a secure, sandboxed envi
 
 </Description>
 
+<Plan type="workers-paid" />
+
 Dynamic Workers let you spin up an unlimited number of Workers to execute arbitrary code specified at runtime. Use Dynamic Workers as a lightweight alternative to containers for securely sandboxing code you do not trust.
 
 Dynamic Workers are the lowest-level primitive for spinning up a Worker, giving you full control over defining how the Worker is composed, which bindings it receives, whether it can reach the network, and more.
+
+:::note
+
+Deploying Dynamic Workers to Cloudflare requires the [Workers Paid plan](/workers/platform/pricing/). Accounts on the Workers Free plan can develop and test Dynamic Workers locally with `wrangler dev`, while deploying a Worker with a `worker_loaders` binding requires Workers Paid. For billing details, refer to [Pricing](/dynamic-workers/pricing/).
+
+:::
 
 ## Get started
 

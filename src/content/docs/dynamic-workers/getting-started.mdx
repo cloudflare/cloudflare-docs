@@ -19,6 +19,12 @@ Dynamic Workers support two loading modes:
 
 `load()` is best for one-time code execution, for example when using [Code Mode](/agents/tools/codemode/). `get(id, callback)` is better when the same code will receive subsequent requests, for example when you are building applications.
 
+## Prerequisites
+
+Deploying a Worker with a `worker_loaders` binding to Cloudflare requires the [Workers Paid plan](/workers/platform/pricing/). For billing details, refer to [Pricing](/dynamic-workers/pricing/).
+
+Accounts on the Workers Free plan can develop and test Dynamic Workers locally with `wrangler dev`. Local development runs in a local `workerd` process, which does not enforce deployed resource limits or provide production sandbox isolation. For more information, refer to [Local development security considerations](/workers/local-development/#security-considerations) and [Custom resource limits](/dynamic-workers/usage/limits/#local-development).
+
 ## Try it out
 
 ### Dynamic Workers Starter
@@ -53,7 +59,7 @@ Add the following to your Worker's Wrangler configuration:
 
 </WranglerConfig>
 
-Your Worker will then have access to the Worker Loader API via `env.LOADER`.
+Your Worker will then have access to the Worker Loader API via `env.LOADER`. For binding configuration options and local development details, refer to [Dynamic Worker Loaders](/workers/runtime-apis/bindings/worker-loader/).
 
 ## Run a Dynamic Worker
 
