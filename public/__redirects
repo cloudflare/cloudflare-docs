@@ -1750,7 +1750,10 @@
 /pages/framework-guides/deploy-a-solid-site/ /pages/framework-guides/deploy-a-solid-start-site/ 301
 /pages/framework-guides/pages/framework-guides/deploy-a-svelte-site/ /pages/framework-guides/deploy-a-svelte-kit-site/ 301
 /pages/how-to/deploy-a-zola-site/ /pages/framework-guides/deploy-a-zola-site/ 301
-/pages/how-to/elderjs/ /pages/framework-guides/deploy-an-elderjs-site/ 301
+/pages/how-to/elderjs/ /workers/framework-guides/web-apps/sveltekit/ 301
+/pages/framework-guides/deploy-a-brunch-site/ /workers/vite-plugin/ 301
+/pages/framework-guides/deploy-a-gridsome-site/ /workers/framework-guides/web-apps/vue/ 301
+/pages/framework-guides/deploy-an-elderjs-site/ /workers/framework-guides/web-apps/sveltekit/ 301
 /pages/configuration/language-support-and-tools/ /pages/configuration/build-image/ 301
 /pages/platform/github-integration/ /pages/configuration/git-integration/ 301
 /pages/platform/direct-uploads/ /pages/get-started/direct-upload/ 301
@@ -1758,6 +1761,9 @@
 /pages/platform/functions/billing/ /pages/functions/pricing/ 301
 /pages/platform/functions/pricing/ /pages/functions/pricing/ 301
 /pages/tutorials/build-an-api-with-workers/ /pages/tutorials/build-an-api-with-pages-functions/ 301
+/pages/tutorials/build-a-blog-using-nuxt-and-sanity/ /workers/framework-guides/web-apps/more-web-frameworks/nuxt/ 301
+/pages/tutorials/add-a-react-form-with-formspree/ /workers/framework-guides/web-apps/react/ 301
+/pages/tutorials/use-r2-as-static-asset-storage-for-pages/ /workers/tutorials/upload-assets-with-r2/ 301
 /pages/platform/functions/ /pages/functions/ 301
 /pages/platform/functions/get-started/ /pages/functions/get-started/ 301
 /pages/platform/functions/routing/ /pages/functions/routing/ 301
