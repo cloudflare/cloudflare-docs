@@ -11,6 +11,7 @@ products:
 import {
 	DirectoryListing,
 	Render,
+	Steps,
 	Tabs,
 	TabItem,
 	DashButton,
@@ -31,25 +32,38 @@ For preview builds, a **Preview command** runs instead (defaults to `npx wrangle
 `wrangler deploy` can build and publish container images and roll out container instances. `wrangler versions upload` does not update container images. Version URLs are not generated for Workers that implement Durable Objects, including Containers. Refer to [Deploy Containers](/containers/guides/deploy/#before-production).
 :::
 
+## Sources of truth
+
+A Worker connected to Workers Builds uses two separate sources of truth: Cloudflare Workers Builds stores your Git and CI pipeline settings, while your repository's [Wrangler configuration file](/workers/wrangler/configuration/) (`wrangler.jsonc` or `wrangler.toml`) stores your Worker's runtime and deployment configuration.
+
+The following table shows where each group of settings is stored and when it is applied:
+
+| Configuration scope | Settings included | Source of truth | When applied |
+| --- | --- | --- | --- |
+| **Workers Builds Git and CI configuration** | Repository connection, [production branch and preview triggers](/workers/ci-cd/builds/build-branches/), [build watch paths](/workers/ci-cd/builds/build-watch-paths/), build command, deploy command, Preview command, root directory, build caching, build API token, and build-time environment variables and secrets | Cloudflare Workers Builds — configured in the Cloudflare dashboard (**Settings** > **Build**) or programmatically with the [Builds API](/workers/ci-cd/builds/api-reference/). Not stored in `wrangler.jsonc` or `wrangler.toml`. | Before and during the CI container run, when Workers Builds clones your repository and executes your build and deploy commands |
+| **Worker runtime and deployment configuration** | `name`, `main`, `compatibility_date`, `compatibility_flags`, bindings, routes, custom domains, Cron Triggers, runtime `vars`, and [static assets](/workers/static-assets/) | Your repository's [Wrangler configuration file](/workers/wrangler/configuration/) (`wrangler.jsonc` or `wrangler.toml`). Runtime [secrets](/workers/configuration/secrets/) are stored separately in Cloudflare via `wrangler secret put` or the dashboard. | When the deploy command (`npx wrangler deploy`) or Preview command (`npx wrangler preview`) runs |
+
+Workers Builds does not read Git or CI settings from your Wrangler configuration file, including [Custom Builds](/workers/wrangler/custom-builds/) (`build.command`). To inspect, export, or automate Workers Builds repository connections, branch triggers, commands, and build-time variables programmatically, refer to the [Builds API reference](/workers/ci-cd/builds/api-reference/).
+
 ## Build settings
 
-Build settings can be found by navigating to **Settings** > **Build** within your Worker.
+Manage build settings in the Cloudflare dashboard under **Settings** > **Build**, or programmatically through the [Builds API](/workers/ci-cd/builds/api-reference/).
 
 Note that when you update and save build settings, the updated settings will be applied to your _next_ build. When you _retry_ a build, the build configurations that exist when the build is retried will be applied.
 
 ### Overview
 
-| Setting                                                                      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| ---------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Git account**                                                              | Select the Git account you would like to use. After the initial connection, you can continue to use this Git account for future projects.                                                                                                                                                                                                                                                                                                                                              |
-| **Git repository**                                                           | Choose the Git repository you would like to connect your Worker to.                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| **Git branch**                                                               | Select the branch you would like Cloudflare to listen to for new commits. This will be defaulted to `main`.                                                                                                                                                                                                                                                                                                                                                                            |
-| **Build command** _(Optional)_                                               | Set a build command if your project requires a build step (e.g. `npm run build`). This is necessary, for example, when using a [front-end framework](/workers/ci-cd/builds/configuration/#framework-support) such as Next.js or Remix.                                                                                                                                                                                                                                                 |
-| **[Deploy command](/workers/ci-cd/builds/configuration/#deploy-command)**    | The deploy command lets you set the [specific Wrangler command](/workers/wrangler/commands/general/#deploy) used to deploy your Worker. Your deploy command will default to `npx wrangler deploy` but you may customize this command. Workers Builds will use the Wrangler version set in your `package.json`.                                                                                                                                                                         |
-| **[Preview command](/workers/ci-cd/builds/configuration/#preview-command)**  | Set the command to run for [preview builds](/workers/ci-cd/builds/build-branches/#configure-preview-builds). Defaults to `npx wrangler preview`. Workers Builds will use the Wrangler version set in your `package.json`.                                                                                                                                                                                                                                                              |
-| **Root directory** _(Optional)_                                              | Specify the path to your project. The root directory defines where the build command will be run and can be helpful in [monorepos](/workers/ci-cd/builds/advanced-setups/#monorepos) to isolate a specific project within the repository for builds.                                                                                                                                                                                                                                   |
-| **[API token](/workers/ci-cd/builds/configuration/#api-token)** _(Optional)_ | The API token is used to authenticate your build request and authorize the upload and deployment of your Worker to Cloudflare. By default, Cloudflare will automatically generate an API token for your account when using Workers Builds, and continue to use this API token for all subsequent builds. Alternatively, you can [create your own API token](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/authentication/#generate-tokens), or select one that you already own. |
-| **Build variables and secrets** _(Optional)_                                 | Add environment variables and secrets accessible only to your build. Build variables will not be accessible at runtime. If you would like to configure runtime variables you can do so in **Settings** > **Variables & Secrets**                                                                                                                                                                                                                                                       |
+| Setting                                                                                                              | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Git account**                                                                                                      | Select the Git account you would like to use. After the initial connection, you can continue to use this Git account for future projects.                                                                                                                                                                                                                                                                                                                                              |
+| **Git repository**                                                                                                   | Choose the Git repository you would like to connect your Worker to.                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| **Git branch**                                                                                                       | Select the branch you would like Cloudflare to listen to for new commits. This will be defaulted to `main`.                                                                                                                                                                                                                                                                                                                                                                            |
+| **Build command** _(Optional)_                                                                                       | Set a build command if your project requires a build step (for example, `npm run build`). This is necessary, for example, when using a [front-end framework](/workers/ci-cd/builds/configuration/#framework-support) such as Next.js or Remix.                                                                                                                                                                                                                                          |
+| **[Deploy command](/workers/ci-cd/builds/configuration/#deploy-command)**                                            | The deploy command lets you set the [specific Wrangler command](/workers/wrangler/commands/general/#deploy) used to deploy your Worker. Your deploy command will default to `npx wrangler deploy` but you may customize this command. Workers Builds will use the Wrangler version set in your `package.json`.                                                                                                                                                                         |
+| **[Preview command](/workers/ci-cd/builds/configuration/#preview-command)**                                          | Set the command to run for [preview builds](/workers/ci-cd/builds/build-branches/#configure-preview-builds). Defaults to `npx wrangler preview`. Workers Builds will use the Wrangler version set in your `package.json`.                                                                                                                                                                                                                                                              |
+| **Root directory** _(Optional)_                                                                                      | Specify the path to your project. The root directory defines where the build command will be run and can be helpful in [monorepos](/workers/ci-cd/builds/advanced-setups/#monorepos) to isolate a specific project within the repository for builds.                                                                                                                                                                                                                                   |
+| **[API token](/workers/ci-cd/builds/configuration/#api-token)** _(Optional)_                                         | The API token is used to authenticate your build request and authorize the upload and deployment of your Worker to Cloudflare. By default, Cloudflare will automatically generate an API token for your account when using Workers Builds, and continue to use this API token for all subsequent builds. Alternatively, you can [create your own API token](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/authentication/#generate-tokens), or select one that you already own. |
+| **[Build variables and secrets](/workers/ci-cd/builds/configuration/#build-variables-and-secrets)** _(Optional)_     | Add environment variables and secrets accessible only to your build, deploy, and Preview commands inside the CI container (`process.env`). Build variables are not accessible to your Worker at runtime. For runtime variables, configure `vars` in your [Wrangler configuration file](/workers/wrangler/configuration/) or manage them under **Settings** > **Variables and Secrets**.                                                                                                      |
 
 ### Configure the Node.js heap
 
@@ -126,35 +140,62 @@ It is recommended to consistently use the same API token across all uploads and 
 
 ## Environment variables
 
-You can provide custom environment variables to your build.
+Workers Builds keeps build-time variables and Worker runtime variables separate. Variables configured under **Build variables and secrets** are only injected into the CI container (`process.env`) when your build, deploy, and Preview commands run. Worker runtime variables (`env.MY_VAR` inside your Worker handler) come from `vars` in your Wrangler configuration file, runtime secrets, or **Settings** > **Variables and Secrets** in the dashboard. Editing one does not automatically populate the other.
 
-<Tabs>
-  <TabItem label="Dashboard">
+The following table compares build-time and runtime variables:
 
-	To add environment variables via the dashboard:
+| Variable scope | Available to | Configured in |
+| --- | --- | --- |
+| **Build-time variables and secrets** | Build, deploy, and Preview commands inside the CI container (`process.env.MY_VAR` or `$MY_VAR`, for example `NODE_OPTIONS` or framework build variables such as `VITE_*` and `NEXT_PUBLIC_*`) | Cloudflare dashboard (**Settings** > **Build** > **Build variables and secrets**) or the [Builds API](/workers/ci-cd/builds/api-reference/#update-build-settings) (`environment_variables`). Not read from `wrangler.jsonc` or `wrangler.toml`. |
+| **Worker runtime variables and secrets** | Your deployed Worker code at request time (`env.MY_VAR` in your Worker handler or imported from `cloudflare:workers`) | `vars` in your [Wrangler configuration file](/workers/wrangler/configuration/), [`wrangler secret put`](/workers/configuration/secrets/), or the Cloudflare dashboard (**Settings** > **Variables and Secrets**). For Previews, configure [Preview settings](/workers/previews/configuration/). |
 
-  1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+If both your build step and your deployed Worker require the same value, configure it in both **Build variables and secrets** and your Worker runtime configuration.
+
+### Build variables and secrets
+
+Add build-time environment variables and secrets to make them available to your build, deploy, and Preview commands inside the CI container.
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
+To add build-time environment variables and secrets in the Cloudflare dashboard:
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
 
-	2. In **Overview**, select your Worker.
-	3. Select **Settings** > **Environment variables**.
-  </TabItem>
-  <TabItem label="Wrangler">
-    To add env variables using Wrangler, define text and JSON via the `[vars]` configuration in your Wrangler file.
+2. In **Overview**, select your Worker.
+3. Go to **Settings** > **Build** > **Build variables and secrets**.
+4. Add a variable name and value (or mark it as a secret to mask its value in build logs), then select **Save**.
+</Steps>
 
-		<Render file="envvar-example" product="workers" />
-  </TabItem>
+</TabItem>
+<TabItem label="API">
+
+To manage build-time variables and secrets programmatically, update `production_settings.environment_variables` or `previews_base_config.environment_variables` with the [Builds API](/workers/ci-cd/builds/api-reference/#update-build-settings). Set `is_secret` to `true` to mask a value in build logs.
+
+For complete request examples, refer to [Builds API reference](/workers/ci-cd/builds/api-reference/).
+
+</TabItem>
 </Tabs>
+
+### Worker runtime variables and secrets
+
+To pass configuration to your deployed Worker at runtime (`env.MY_VAR`), define non-secret values under `vars` in your Wrangler configuration file:
+
+<Render file="envvar-example" product="workers" />
+
+Values defined in `vars` are applied when Wrangler deploys your Worker and are not available to your build command in Workers Builds. For sensitive runtime values, use [Secrets](/workers/configuration/secrets/). To manage runtime variables in the dashboard (**Settings** > **Variables and Secrets**) or configure `keep_vars`, refer to [Environment variables](/workers/configuration/environment-variables/) and [Wrangler source of truth](/workers/wrangler/configuration/#source-of-truth). For Preview-specific runtime variables, secrets, and bindings, refer to [Preview settings](/workers/previews/configuration/).
 
 ### Default variables
 
-The following system environment variables are injected by default (but can be overridden):
+The following system environment variables are injected into the Workers Builds CI container by default (and can be overridden in **Build variables and secrets**):
 
-| Environment Variable    | Injected value                  | Example use-case                                                                        |
-| ----------------------- | ------------------------------- | --------------------------------------------------------------------------------------- |
-| `CI`                    | `true`                          | Changing build behaviour when run on CI versus locally                                  |
-| `WORKERS_CI`            | `1`                             | Changing build behaviour when run on Workers Builds versus locally                      |
-| `WORKERS_CI_BUILD_UUID` | `<build-uuid-of-current-build>` | Passing the Build UUID along to custom workflows                                        |
-| `WORKERS_CI_COMMIT_SHA` | `<sha1-hash-of-current-commit>` | Passing current commit ID to error reporting, for example, Sentry                       |
-| `WORKERS_CI_BRANCH`     | `<branch-name-from-push-event`  | Customizing build based on branch, for example, disabling debug logging on `production` |
+| Environment Variable    | Injected value                   | Example use-case                                                                        |
+| ----------------------- | -------------------------------- | --------------------------------------------------------------------------------------- |
+| `CI`                    | `true`                           | Changing build behaviour when run on CI versus locally                                  |
+| `WORKERS_CI`            | `1`                              | Changing build behaviour when run on Workers Builds versus locally                      |
+| `WORKERS_CI_BUILD_UUID` | `<build-uuid-of-current-build>`  | Passing the Build UUID along to custom workflows                                        |
+| `WORKERS_CI_COMMIT_SHA` | `<sha1-hash-of-current-commit>`  | Passing current commit ID to error reporting, for example, Sentry                       |
+| `WORKERS_CI_BRANCH`     | `<branch-name-from-push-event>`  | Customizing build based on branch, for example, disabling debug logging on `production` |
