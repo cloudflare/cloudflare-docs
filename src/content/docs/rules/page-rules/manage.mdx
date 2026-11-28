@@ -15,6 +15,10 @@ You can manage Page Rules in the Cloudflare dashboard or via API.
 
 <Render file="page-rules-migration" product="rules" />
 
+:::caution[API token compatibility]
+[Account-owned API tokens](/fundamentals/api/get-started/account-owned-tokens/#compatibility-matrix) do not work with Page Rules, even with write permissions. To [list existing Page Rules](/api/resources/page_rules/methods/list/) via the API, use a [user-owned API token](/fundamentals/api/get-started/create-token/) with **Page Rules Read** for the zone (or **Page Rules Edit** to create, update, or delete rules).
+:::
+
 ## Create a page rule
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
