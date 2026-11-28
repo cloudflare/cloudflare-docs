@@ -1,0 +1,41 @@
+---
+title: Manage security.txt and security scans with Terraform
+description: Manage your security.txt file and turn Security Insights scans on or off with the Cloudflare Terraform provider.
+products:
+  - security-center
+date: 2026-11-25
+---
+
+You can now manage your `security.txt` file and turn Security Insights scans on or off with Terraform. Define and version these settings alongside your other Cloudflare configuration.
+
+## Manage your security.txt file
+
+Use the [`cloudflare_security_txt`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/security_txt) resource to manage your `security.txt` file.
+
+The following example publishes a `security.txt` file with a contact email address and expiration date:
+
+```hcl
+resource "cloudflare_security_txt" "example" {
+  zone_id = "<ZONE_ID>"
+  enabled = true
+  contact = ["mailto:security@example.com"]
+  expires = "2027-06-01T00:00:00Z"
+}
+```
+
+For setup instructions, optional fields, and importing an existing configuration, refer to [Set up your security.txt file](/security-center/infrastructure/security-file/).
+
+## Control security scans
+
+Use `cloudflare_security_insights_configuration` to turn Security Insights scans on or off for your account:
+
+```hcl
+resource "cloudflare_security_insights_configuration" "example" {
+  account_id    = "<ACCOUNT_ID>"
+  scans_enabled = true
+}
+```
+
+Set `scans_enabled` to `false` to turn scans off.
+
+For resource arguments and examples, refer to the [Security Insights Terraform reference](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/security_insights_configuration).
