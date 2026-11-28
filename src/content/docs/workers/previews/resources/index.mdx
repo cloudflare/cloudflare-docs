@@ -368,9 +368,9 @@ Preview support for these areas may come later. If one of these limitations bloc
 
 A [service binding](/workers/runtime-apis/bindings/service-bindings/) from Worker A to Worker B tells Cloudflare: when Worker A calls `env.AUTH.fetch()`, route that request to Worker B.
 
-Today, if Worker A has a service binding to Worker B and you deploy a Preview of Worker A, the Preview of Worker A can only bind to the production Worker B. It does not automatically bind to a matching Preview of Worker B.
+By default, if Worker A has a service binding to Worker B and you deploy a Preview of Worker A, that service binding calls Worker B's production deployment, even if Worker B has a Preview for the same branch. It does not automatically bind to a matching Preview of Worker B, so writes sent through that binding affect production data.
 
-If you need same-Worker calls to stay inside the Preview, use [`ctx.exports`](/workers/runtime-apis/context/#exports) instead of a service binding.
+For calls within the same Worker — not calls between separate Workers — use [`ctx.exports`](/workers/runtime-apis/context/#exports) instead of a service binding so calls stay inside the Preview.
 
 ### Workflows
 
