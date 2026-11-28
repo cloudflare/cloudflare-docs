@@ -28,15 +28,15 @@ You will need to deploy your Workflow as a standalone Workers project first befo
 
 :::
 
-### Use Service Bindings
+## Use Service bindings
 
 [Service Bindings](/workers/runtime-apis/bindings/service-bindings/) allow you to call a Worker from another Worker or a Pages Function without needing to expose it directly.
 
 To do this, you will need to:
 
-1. Deploy your Workflow in a Worker
-2. Create a Service Binding to that Worker in your Pages project
-3. Call the Worker remotely using the binding
+1. Deploy your Workflow in a Worker.
+2. Create a Service Binding to that Worker in your Pages project.
+3. Call the Worker remotely using the binding.
 
 For example, if you have a Worker called `workflows-starter`, you would create a new Service Binding in your Pages project as follows, ensuring that the `service` name matches the name of the Worker your Workflow is defined in:
 
@@ -57,7 +57,7 @@ For example, if you have a Worker called `workflows-starter`, you would create a
 
 Your Worker can expose a specific method (or methods) that only other Workers or Pages Functions can call over the Service Binding.
 
-In the following example, we expose a specific `createInstance` method that accepts our `Payload` and returns the [`InstanceStatus`](/workflows/build/workers-api/#instancestatus) from the Workflows API:
+In the following example, we expose a specific `createInstance` method that accepts our `Payload` and returns a `Response` containing the instance ID and [`InstanceStatus`](/workflows/build/workers-api/#instancestatus) from the Workflows API:
 
 <TypeScriptExample filename="index.ts">
 
@@ -79,7 +79,7 @@ export default class WorkflowsService extends WorkerEntrypoint<Env> {
 	}
 
 	async createInstance(payload: Payload) {
-		let instance = await this.env.MY_WORKFLOW.create({
+		const instance = await this.env.MY_WORKFLOW.create({
 			params: payload,
 		});
 
@@ -98,14 +98,24 @@ Your Pages Function would resemble the following:
 <TypeScriptExample filename="functions/request.ts">
 
 ```ts
+import type { WorkerEntrypoint } from "cloudflare:workers";
+
+type Payload = {
+	hello: string;
+};
+
+declare class WorkflowsService extends WorkerEntrypoint {
+	createInstance(payload: Payload): Promise<Response>;
+}
+
 interface Env {
-	WORKFLOW_SERVICE: Service;
+	WORKFLOW_SERVICE: Service<WorkflowsService>;
 }
 
 export const onRequest: PagesFunction<Env> = async (context) => {
 	// This payload could be anything from within your app or from your frontend
-	let payload = { hello: "world" };
-	return context.env.WORKFLOWS_SERVICE.createInstance(payload);
+	const payload: Payload = { hello: "world" };
+	return context.env.WORKFLOW_SERVICE.createInstance(payload);
 };
 ```
 
@@ -113,13 +123,13 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 To learn more about binding to resources from Pages Functions, including how to bind via the Cloudflare dashboard, refer to the [bindings documentation for Pages Functions](/pages/functions/bindings/#service-bindings).
 
-### Using fetch
+## Use fetch
 
 :::note[Service Bindings vs. fetch]
 
 We recommend using [Service Bindings](/workers/runtime-apis/bindings/service-bindings/) when calling a Worker in your own account.
 
-Service Bindings don't require you to expose a public endpoint from your Worker, don't require you to configure authentication, and allow you to call methods on your Worker directly, avoiding the overhead of managing HTTP requests and responses.
+Service Bindings do not require you to expose a public endpoint from your Worker, do not require you to configure authentication, and allow you to call methods on your Worker directly, avoiding the overhead of managing HTTP requests and responses.
 
 :::
 
@@ -128,10 +138,15 @@ An alternative to setting up a Service Binding is to call the Worker over HTTP b
 <TypeScriptExample filename="index.ts">
 
 ```ts
+interface Env {
+	MY_WORKFLOW: Workflow;
+}
+
 // This is in the same file as your Workflow definition
 export default {
 	async fetch(req: Request, env: Env): Promise<Response> {
-		let instance = await env.MY_WORKFLOW.create({
+		const payload = await req.json();
+		const instance = await env.MY_WORKFLOW.create({
 			params: payload,
 		});
 		return Response.json({
@@ -149,14 +164,18 @@ Your [Pages Function](/pages/functions/get-started/) can then make a regular `fe
 <TypeScriptExample filename="functions/request.ts">
 
 ```ts
-export const onRequest: PagesFunction<Env> = async (context) => {
+export const onRequest: PagesFunction = async () => {
 	// Other code
-	let payload = { hello: "world" };
-	const instanceStatus = await fetch("https://YOUR_WORKER.workers.dev/", {
+	const payload = { hello: "world" };
+	const response = await fetch("https://YOUR_WORKER.workers.dev/", {
 		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
 		body: JSON.stringify(payload), // Send a payload for our Worker to pass to the Workflow
 	});
 
+	const instanceStatus = await response.json();
 	return Response.json(instanceStatus);
 };
 ```
@@ -165,7 +184,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 You can also choose to authenticate these requests by passing a shared secret in a header and validating that in your Worker.
 
-### Next steps
+## Next steps
 
 - Learn more about how to programmatically call and trigger Workflows from the [Workers API](/workflows/build/workers-api/)
 - Understand how to send [events and parameters](/workflows/build/events-and-parameters/) when triggering a Workflow

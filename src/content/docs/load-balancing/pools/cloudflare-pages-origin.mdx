@@ -18,7 +18,7 @@ The following sections will guide you through setting up an [active-passive fail
 
 ## Use cases
 
-This setup can be useful if you are migrating your production website or application to Pages or if you just want to have a backup or a personalized web page for when your primary origin goes down.
+This setup can be useful if you are migrating your production website or application to Pages, or if you want a backup or personalized web page when your primary origin goes down. For new static and full-stack applications, Cloudflare recommends [Cloudflare Workers](/workers/static-assets/) with [Custom Domains](/workers/configuration/routing/custom-domains/).
 
 ## Before you begin
 
@@ -78,7 +78,7 @@ Failing to add the host header will result in [response code mismatch error](/lo
 
    <DashButton url="/?to=/:account/load-balancing" />
 
-2. Select the **Pools** tab and then **Create monitor**.
+2. Select the **Pools** tab and then **Create pool**.
 
 3. For the first pool, start by filling out the fields:
 
@@ -102,7 +102,7 @@ Failing to add the host header will result in [response code mismatch error](/lo
 
   :::caution
 
-  If your production website is hosted on a platform like Cloudflare Pages, where you have a default subdomain (`example.pages.dev`) and then configure a [custom domain](/pages/configuration/custom-domains) (`my-app.com`), you will need to add a host header to avoid failing the health monitor request.
+  If your production website is hosted on a platform like Cloudflare Pages, where you have a default subdomain (`example.pages.dev`) and then configure a [custom domain](/pages/configuration/custom-domains/) (`my-app.com`), you will need to add a host header to avoid failing the health monitor request.
   :::
 
 6. Finish configuring the first pool with the following information:
@@ -166,7 +166,7 @@ After confirming the endpoints and monitors are set up correctly and return the 
 
 5. On the **Monitors** page, review the monitors attached to your pools and the expected health status, and select **Next**.
 
-6. On the **Traffic Steering** page, make sure **Off** is selected. This means the load balancer will follow the order established on the **Add a Pool** section (Step 3 above), achieving an [Active - Passive Failover](/load-balancing/load-balancers/common-configurations/#active---passive-failover) configuration.
+6. On the **Traffic Steering** page, make sure **Off** is selected. This means the load balancer will follow the order established in the **Add a Pool** section (Step 4), achieving an [Active - Passive Failover](/load-balancing/load-balancers/common-configurations/#active---passive-failover) configuration.
 
 7. For the purposes of this tutorial, leave the [**Custom Rules**](/load-balancing/additional-options/load-balancing-rules/) option empty.
 
