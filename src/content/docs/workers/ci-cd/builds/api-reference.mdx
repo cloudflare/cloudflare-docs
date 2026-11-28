@@ -8,7 +8,7 @@ products:
   - workers
 ---
 
-import { Aside, Steps } from "~/components";
+import { Aside, Steps, TabItem, Tabs } from "~/components";
 
 This guide shows you how to use the [Workers Builds REST API](/api/resources/workers_builds/) to connect a Worker to a Git repository, manage build settings and [Previews](/workers/previews/), and monitor builds. The examples use `curl` commands that you can run directly in your terminal or adapt to your preferred programming language. Some examples pipe output through [`jq`](https://jqlang.org/) to filter JSON responses.
 
@@ -258,6 +258,9 @@ Builds older than 90 days are not returned. Refer to [Limits & pricing](/workers
 
 The latest successful build in [List builds](#list-builds) does not always match the version serving live traffic — for example, after a [rollback](/workers/versions-and-deployments/rollbacks/) or during a gradual deployment. To trace the live version or versions back to their source commits, read the active deployment first and then look up builds by version ID:
 
+<Tabs>
+<TabItem label="API">
+
 <Steps>
 
 1. **Read the active deployment's version IDs and traffic percentages** using [List Worker Deployments](/api/resources/workers/subresources/scripts/subresources/deployments/methods/list/) (`GET /accounts/{account_id}/workers/scripts/{script_name}/deployments`):
@@ -291,6 +294,46 @@ The latest successful build in [List builds](#list-builds) does not always match
    ```
 
 </Steps>
+
+</TabItem>
+<TabItem label="Cloudflare CLI (cf)">
+
+With the [Cloudflare CLI](/cf/) (`cf`), you do not need to construct request URLs or headers manually. `cf` unwraps the API `result` envelope on stdout.
+
+<Steps>
+
+1. **Read the active deployment's version IDs and traffic percentages** with `cf workers deployments list`:
+
+   ```sh
+   LIVE_VERSIONS=$(cf workers deployments list --worker <SCRIPT_NAME> \
+     | jq '.deployments[0].versions')
+
+   echo "$LIVE_VERSIONS"
+   ```
+
+   Keep every `version_id` and its `percentage` from `.deployments[0].versions[]` rather than substituting the newest uploaded version.
+
+2. **Look up builds by version ID** with `cf builds versions get` (up to 20 comma-separated version UUIDs per request). The response keys `.builds` by `version_id`:
+
+   ```sh
+   VERSION_IDS=$(echo "$LIVE_VERSIONS" | jq -r '[.[].version_id] | join(",")')
+
+   BUILDS=$(cf builds versions get --version-ids "$VERSION_IDS" \
+     | jq '.builds')
+
+   jq -n --argjson versions "$LIVE_VERSIONS" --argjson builds "$BUILDS" '
+     $versions[] | {
+       version_id,
+       percentage,
+       build_uuid: ($builds[.version_id].build_uuid // null),
+       commit_hash: ($builds[.version_id].build_trigger_metadata.commit_hash // "commit unknown")
+     }'
+   ```
+
+</Steps>
+
+</TabItem>
+</Tabs>
 
 #### Example: Rollback where the latest build is not live
 
