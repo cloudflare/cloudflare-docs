@@ -25,7 +25,7 @@ export default {
 				text: "Disk usage on db-1 is above 90%.",
 			});
 		} catch (error) {
-			if (error.code === "E_RECIPIENT_PLAN_RESTRICTED") {
+			if ((error as { code?: string }).code === "E_RECIPIENT_PLAN_RESTRICTED") {
 				return new Response("Recipient is not a verified destination address", {
 					status: 403,
 				});
