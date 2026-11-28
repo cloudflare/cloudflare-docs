@@ -99,30 +99,41 @@ Refer to [Browser close reasons](/browser-run/reference/browser-close-reasons/) 
 
 ### Error: `429 Too many requests`
 
-When you make too many requests in a short period of time, Browser Run will respond with HTTP status code `429 Too many requests`. You can view your account's rate limits in the [Workers Free](#workers-free) and [Workers Paid](#workers-paid) sections above.
+When you make too many requests in a short period of time, Browser Run responds with HTTP status code `429 Too many requests` and a `Retry-After` response header. Quick Actions REST endpoints return error code `2001` in the JSON body:
 
-The example below demonstrates how to handle rate limiting gracefully by reading the `Retry-After` value and retrying the request after that delay.
+```json
+{
+	"errors": [{ "code": 2001, "message": "Rate limit exceeded" }],
+	"success": false
+}
+```
+
+You can view your account's rate limits in the [Workers Free](#workers-free) and [Workers Paid](#workers-paid) sections.
+
+The following example handles rate limiting by reading the `Retry-After` header and retrying after that delay:
 
 <Tabs syncKey="workersExamples"> <TabItem label="Quick Actions">
 
 ```js
-const response = await fetch('https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/content', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer <your-token>',
-    },
-    body: JSON.stringify({ url: 'https://example.com' })
-});
+const response = await fetch(
+	"https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/content",
+	{
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: "Bearer <your-token>",
+		},
+		body: JSON.stringify({ url: "https://example.com" }),
+	},
+);
 
 if (response.status === 429) {
-const retryAfter = response.headers.get('Retry-After');
-console.log(`Rate limited. Waiting ${retryAfter} seconds...`);
-await new Promise(resolve => setTimeout(resolve, retryAfter \* 1000));
+	const retryAfter = Number(response.headers.get("Retry-After") ?? "1");
+	console.log(`Rate limited (code 2001). Waiting ${retryAfter} seconds...`);
+	await new Promise((resolve) => setTimeout(resolve, retryAfter * 1000));
 
-    // Retry the request
-    const retryResponse = await fetch(/* same request as above */);
-
+	// Retry the request
+	const retryResponse = await fetch(/* same request as above */);
 }
 ```
 
