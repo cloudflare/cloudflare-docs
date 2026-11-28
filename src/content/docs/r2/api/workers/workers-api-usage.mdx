@@ -253,6 +253,14 @@ class Default(WorkerEntrypoint):
 
 <Render file="request-dot-clone-warning" product="workers" />
 
+:::note[Direct reads and CDN caching]
+
+Calling `env.MY_BUCKET.get()` reads directly from R2 and bypasses Cloudflare's CDN cache. Each call reads from strongly consistent storage and counts as an R2 [Class B operation](/r2/pricing/#class-b-operations).
+
+To cache your Worker's HTTP responses, enable [Workers Cache](/workers/cache/) and return a cacheable `Cache-Control` header. On a cache hit, Cloudflare returns the response without running the Worker handler or reading from R2. To serve and cache objects without a Worker, use a [public bucket custom domain](/r2/buckets/public-buckets/#custom-domains). [Compare these approaches](/r2/buckets/public-buckets/#custom-domain-cdn-cache-versus-worker-binding-reads).
+
+:::
+
 ## 5. Bucket access and privacy
 
 With the above code added to your Worker, every incoming request has the ability to interact with your bucket. This means your bucket is publicly exposed and its contents can be accessed and modified by undesired actors.

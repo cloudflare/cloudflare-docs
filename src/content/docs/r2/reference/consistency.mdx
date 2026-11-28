@@ -35,6 +35,10 @@ Operations against R2 buckets and objects adhere to the following consistency gu
 
 </table-wrap>
 
+:::note
+When you read directly from R2 through its API or a [Worker binding](/r2/api/workers/workers-api-usage/), you get strong read-after-write consistency. By contrast, when you read through a public bucket [custom domain](/r2/buckets/public-buckets/#custom-domains), Cloudflare's CDN can still return a cached `200` or `404` after a write. The CDN can serve that response until the cache TTL expires or you [purge the cache](/cache/how-to/purge-cache/). For details, refer to [Caching](#caching) and [Custom domain CDN cache versus Worker binding reads](/r2/buckets/public-buckets/#custom-domain-cdn-cache-versus-worker-binding-reads).
+:::
+
 Additional notes:
 
 * In the event two clients are writing (`PUT` or `DELETE`) to the same key, the last writer to complete "wins".
@@ -77,4 +81,4 @@ Specifically, you should expect:
 * By default, Cloudflare’s cache will [cache HTTP 404 (Not Found) responses](/cache/how-to/configure-cache-status-code/#edge-ttl) automatically. If you upload an object to that same path, the cache may continue to return HTTP 404s until the cache TTL (Time to Live) expires and the new object is fetched from R2 or the [cache is purged](/cache/how-to/purge-cache/).
 * An object for a given key is overwritten with a new object: the old (previous) object will continue to be served to clients until the cache TTL expires (or the object is evicted) or the cache is purged.
 
-The cache does not affect access via [Worker API bindings](/r2/api/workers/) or the [S3 API](/r2/api/s3/), as these operations are made directly against the bucket and do not transit through the cache.
+The cache does not affect access via [Worker API bindings](/r2/api/workers/) or the [S3 API](/r2/api/s3/), as these operations are made directly against the bucket and do not transit through the cache. For a side-by-side comparison of direct Worker binding reads and Custom Domain CDN caching, refer to [Custom domain CDN cache versus Worker binding reads](/r2/buckets/public-buckets/#custom-domain-cdn-cache-versus-worker-binding-reads).
