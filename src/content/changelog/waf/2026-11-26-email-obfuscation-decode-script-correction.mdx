@@ -1,0 +1,11 @@
+---
+title: Email obfuscation decode script documentation corrected
+description: The Email Address Obfuscation documentation now accurately describes the injected decode script; the script runs as a synchronous script tag.
+products:
+  - waf
+date: 2026-11-26
+---
+
+The documentation for [Email Address Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) previously stated that the injected decode script (`email-decode.min.js`) loads with the `defer` attribute. A change that briefly added `defer` was released in April 2026 and reverted a few days later, and the documentation was not updated at that time.
+
+The decode script is injected as a synchronous script tag, as it was before the April change, and the documentation now describes this behavior. No action is required.
