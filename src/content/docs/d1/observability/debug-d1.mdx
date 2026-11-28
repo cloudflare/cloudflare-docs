@@ -8,7 +8,7 @@ products:
   - d1
 ---
 
-import { DashButton, Example } from "~/components";
+import { CliVariant, CliVariants, DashButton, Example } from "~/components";
 
 D1 allows you to capture exceptions and log errors returned when querying a database. To debug D1, you will use the same tools available when [debugging Workers](/workers/observability/).
 
@@ -100,26 +100,41 @@ Only read-only queries (queries containing only the following SQLite keywords: `
 
 ## View logs
 
-View a stream of live logs from your Worker by using [`wrangler tail`](/workers/observability/logs/real-time-logs#view-logs-using-wrangler-tail) or via the [Cloudflare dashboard](/workers/observability/logs/real-time-logs#view-logs-from-the-dashboard).
+<CliVariants>
+<CliVariant cli="wrangler">
+
+View a stream of live logs from your Worker by using [`wrangler tail`](/workers/observability/logs/real-time-logs/#view-logs-using-wrangler-tail) or via the [Cloudflare dashboard](/workers/observability/logs/real-time-logs/#view-logs-from-the-dashboard).
+
+</CliVariant>
+<CliVariant cli="cf">
+
+View a stream of live logs from your Worker with `cf observability tail` (requires [Workers Logs](/workers/observability/logs/workers-logs/) enabled via `observability: { enabled: true }` in `cloudflare.config.ts` and deployed) or via the [Cloudflare dashboard](/workers/observability/logs/real-time-logs/#view-logs-from-the-dashboard):
+
+```sh
+cf observability tail --worker <WORKER_NAME>
+```
+
+</CliVariant>
+</CliVariants>
 
 ## Report issues
 
 * To report bugs or request features, go to the [Cloudflare Community Forums](https://community.cloudflare.com/c/developers/d1/85).
 * To give feedback, go to the [D1 Discord channel](https://discord.com/invite/cloudflaredev).
-* If you are having issues with Wrangler, report issues in the [Wrangler GitHub repository](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+* If you are having issues with the CLI, report issues in the [Cloudflare CLI GitHub repository](https://github.com/cloudflare/cf/issues) (for `cf`) or the [Wrangler GitHub repository](https://github.com/cloudflare/workers-sdk/issues/new/choose) (for Wrangler).
 
 You should include as much of the following in any bug report:
 
-* The ID of your database. Use `wrangler d1 list` to match a database name to its ID.
+* The ID of your database. Use `cf d1 list` or `wrangler d1 list` to match a database name to its ID.
 * The query (or queries) you ran when you encountered an issue. Ensure you redact any personally identifying information (PII).
 * The Worker code that makes the query, including any calls to `bind()` using the [Workers Binding API](/d1/worker-api/).
 * The full error text, including the content of [`error.cause.message`](#error-list).
 
 ## Related resources
 
-* Learn [how to debug Workers](/workers/observability/).
-* Understand how to [access logs](/workers/observability/logs/) generated from your Worker and D1.
-* Use [`wrangler dev`](/workers/wrangler/commands/general/#dev) to run your Worker and D1 locally and [debug issues before deploying](/workers/local-development/).
+* For general Worker troubleshooting, refer to [Workers Observability](/workers/observability/).
+* For accessing Worker and D1 logs, refer to [Workers Logs](/workers/observability/logs/).
+* Use [`cf dev`](/cf/projects/#start-development) or [`wrangler dev`](/workers/wrangler/commands/general/#dev) to run your Worker and D1 locally and [debug issues before deploying](/workers/local-development/).
 
 ## D1 binding timeout behavior
 
@@ -149,8 +164,8 @@ In addition to the `D1_ERROR` constants in the [Error list](#error-list), D1 ret
 
 | Code  | Name                          | Common cause                                                                                     | Recommended action                                                                                                                                                                                                   |
 | ----- | ----------------------------- | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 7403  | Service authorization failure | The API token or Wrangler OAuth session does not have sufficient scope for the operation.        | Verify the token has the required permission for the endpoint. Run `wrangler login` to refresh the Wrangler OAuth session.                                                                                            |
-| 7404  | Database not found            | The database UUID does not exist in the account, or the binding is misconfigured.                | Confirm the `database_id` in your `wrangler.toml` matches the database UUID shown in the Cloudflare dashboard.                                                                                                       |
+| 7403  | Service authorization failure | The API token or CLI OAuth session does not have sufficient scope for the operation.             | Verify the token has the required permission for the endpoint. Run `cf auth login` or `wrangler login` to refresh your OAuth session.                                                                                |
+| 7404  | Database not found            | The database UUID does not exist in the account, or the binding is misconfigured.                | Confirm the database ID in `cloudflare.config.ts` or your Wrangler configuration file matches the database UUID shown in the Cloudflare dashboard.                                                                   |
 | 7406  | Limit exceeded                | The account has reached the maximum number of D1 databases allowed on its plan.                  | Review your [current limits](/d1/platform/limits/). Enterprise accounts with a custom database limit should contact Cloudflare support if the limit is not reflected.                                                  |
 | 7429  | DB overloaded                 | Too many concurrent requests are queued, or queued requests are taking too long to complete.     | Retry with exponential backoff and jitter. If the error recurs while SQL execution time (`queryBatchTimeMs`) is fast and your workload is low, check the [Cloudflare System Status](https://www.cloudflarestatus.com/) page. |
 | 7500  | D1 error                      | Can report a platform failure or a SQLite error, such as `SQLITE_AUTH` for a disallowed `PRAGMA`. | Inspect the full error message. Fix SQL or permission errors before retrying. For a transient platform failure, check [Cloudflare System Status](https://www.cloudflarestatus.com/) and retry with exponential backoff. Contact [Cloudflare Support](/support/contacting-cloudflare-support/) if the database remains unavailable after the incident is resolved. |

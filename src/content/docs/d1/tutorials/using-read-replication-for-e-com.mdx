@@ -15,11 +15,12 @@ products:
 ---
 
 import {
-	Render,
-	Steps,
-	PackageManagers,
-	WranglerConfig,
+	CliVariant,
+	CliVariants,
 	Details,
+	PackageManagers,
+	Render,
+	WranglerConfig,
 } from "~/components";
 
 [D1 Read Replication](/d1/best-practices/read-replication/) is a feature that allows you to replicate your D1 database to multiple regions. This is useful for your e-commerce website, as it reduces read latencies and improves read throughput. In this tutorial, you will learn how to use D1 read replication for your e-commerce website.
@@ -42,6 +43,9 @@ You can then visit the deployed application.
 
 ## Step 1: Create a Workers project
 
+<CliVariants>
+<CliVariant cli="wrangler">
+
 Create a new Workers project by running the following command:
 
 <PackageManagers type="create" pkg="cloudflare@latest" args={"fast-commerce"} />
@@ -55,21 +59,31 @@ Create a new Workers project by running the following command:
 	}}
 />
 
-For creating the API routes, you will use [Hono](https://hono.dev/). You need to install Hono by running the following command:
+</CliVariant>
+<CliVariant cli="cf">
 
-<PackageManagers pkg="hono" />
+Create a new Workers project:
 
-## Step 2: Update the frontend
+```sh
+cf init fast-commerce
+```
 
-The above step creates a new Workers project with a default frontend and installs Hono. You will update the frontend to list the products. You will also add a new page to the frontend to display a single product.
+Vite serves static files placed in the `public/` directory automatically.
 
-Navigate to the newly created Worker project folder.
+</CliVariant>
+</CliVariants>
+
+Navigate to the newly created Worker project folder and install [Hono](https://hono.dev/) for creating the API routes:
 
 ```sh
 cd fast-commerce
 ```
 
-Update the `public/index.html` file to list the products. Use the below code as a reference.
+<PackageManagers pkg="hono" />
+
+## Step 2: Update the frontend
+
+Create or update the `public/index.html` file to list the products. Use the below code as a reference.
 
 <Details open={false} header="public/index.html">
 ```html
@@ -477,13 +491,16 @@ You now have a frontend that lists products and displays a single product. Howev
 
 ## Step 3: Create a D1 database and enable read replication
 
+<CliVariants>
+<CliVariant cli="wrangler">
+
 Create a new D1 database by running the following command:
 
 ```sh
 npx wrangler d1 create fast-commerce
 ```
 
-Add the D1 bindings returned in the terminal to the `wrangler` file:
+Add the D1 bindings returned in the terminal to the Wrangler configuration file:
 
 <WranglerConfig>
 
@@ -501,13 +518,52 @@ Add the D1 bindings returned in the terminal to the `wrangler` file:
 
 </WranglerConfig>
 
-Run the following command to update the `Env` interface in the `worker-configuration.d.ts` file.
+Run the following command to update the `Env` interface in the `worker-configuration.d.ts` file:
 
 ```sh
 npm run cf-typegen
 ```
 
-Next, enable read replication for the D1 database. Navigate to [**Workers & Pages** > **D1**](https://dash.cloudflare.com/?to=/:account/workers/d1), then select an existing database > **Settings** > **Enable Read Replication**.
+Next, enable read replication for the D1 database. Navigate to [**Workers & Pages** > **D1**](https://dash.cloudflare.com/?to=/:account/workers/d1), then select your database > **Settings** > **Enable Read Replication**.
+
+</CliVariant>
+<CliVariant cli="cf">
+
+Create a new D1 database with read replication enabled:
+
+```sh
+cf d1 create --name fast-commerce --read-replication-mode auto
+```
+
+Copy the `uuid` returned in the JSON output and add the `DB` binding in `cloudflare.config.ts`:
+
+```ts title="cloudflare.config.ts"
+import { bindings, defineConfig } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "fast-commerce",
+		entrypoint,
+		compatibilityDate: "<COMPATIBILITY_DATE>",
+		env: {
+			DB: bindings.d1({
+				id: "<YOUR_DATABASE_ID>",
+				name: "fast-commerce",
+			}),
+		},
+	},
+});
+```
+
+Regenerate TypeScript binding types (`.cloudflare/types/index.d.ts`):
+
+```sh
+cf workers types
+```
+
+</CliVariant>
+</CliVariants>
 
 ## Step 4: Create the API routes
 
@@ -548,7 +604,10 @@ However, the API routes are not connected to the D1 database yet. In the next st
 
 ## Step 5: Create local D1 database schema
 
-Create a products table in the D1 database by running the following command:
+<CliVariants>
+<CliVariant cli="wrangler">
+
+Create a products table in the local D1 database by running the following command:
 
 ```sh
 npx wrangler d1 execute fast-commerce --command "CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY, name TEXT NOT NULL, description TEXT, price DECIMAL(10, 2) NOT NULL, inventory INTEGER NOT NULL DEFAULT 0, category TEXT NOT NULL, created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP)"
@@ -565,6 +624,26 @@ For development purposes, you can also execute the insert statements on the loca
 ```sh
 npx wrangler d1 execute fast-commerce --command "INSERT INTO products (id, name, description, price, inventory, category) VALUES (1, 'Fast Ergonomic Chair', 'A comfortable chair for your home or office', 100.00, 10, 'Furniture'), (2, 'Fast Organic Cotton T-shirt', 'A comfortable t-shirt for your home or office', 20.00, 100, 'Clothing'), (3, 'Fast Wooden Desk', 'A wooden desk for your home or office', 150.00, 5, 'Furniture'), (4, 'Fast Leather Sofa', 'A leather sofa for your home or office', 300.00, 3, 'Furniture'), (5, 'Fast Organic Cotton T-shirt', 'A comfortable t-shirt for your home or office', 20.00, 100, 'Clothing')"
 ```
+
+</CliVariant>
+<CliVariant cli="cf">
+
+Create the `products` table, index, and seed rows in your local D1 database using `cf d1 raw` with `--local`:
+
+```sh
+cf d1 raw <YOUR_DATABASE_ID> --sql "CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY, name TEXT NOT NULL, description TEXT, price DECIMAL(10, 2) NOT NULL, inventory INTEGER NOT NULL DEFAULT 0, category TEXT NOT NULL, created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP)" --local
+```
+
+```sh
+cf d1 raw <YOUR_DATABASE_ID> --sql "CREATE INDEX IF NOT EXISTS idx_products_id ON products (id)" --local
+```
+
+```sh
+cf d1 raw <YOUR_DATABASE_ID> --sql "INSERT INTO products (id, name, description, price, inventory, category) VALUES (1, 'Fast Ergonomic Chair', 'A comfortable chair for your home or office', 100.00, 10, 'Furniture'), (2, 'Fast Organic Cotton T-shirt', 'A comfortable t-shirt for your home or office', 20.00, 100, 'Clothing'), (3, 'Fast Wooden Desk', 'A wooden desk for your home or office', 150.00, 5, 'Furniture'), (4, 'Fast Leather Sofa', 'A leather sofa for your home or office', 300.00, 3, 'Furniture'), (5, 'Fast Organic Cotton T-shirt', 'A comfortable t-shirt for your home or office', 20.00, 100, 'Clothing')" --local
+```
+
+</CliVariant>
+</CliVariants>
 
 ## Step 6: Add retry logic
 
@@ -838,15 +917,33 @@ In the above code:
 
 ## Step 8: Test the application
 
-You have now updated the API routes to connect to the D1 database. You can now test the application by starting the development server and navigating to the frontend.
+You have now updated the API routes to connect to the D1 database. Start the local development server and navigate to the frontend:
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 ```sh
 npm run dev
 ```
 
-Navigate to `http://localhost:8787. You should see the products listed. Click on a product to view the product details.
+Navigate to `http://localhost:8787`. You should see the products listed. Select a product to view the product details.
 
-To insert a new product, use the following command (while the development server is running):
+</CliVariant>
+<CliVariant cli="cf">
+
+```sh
+cf dev
+```
+
+Navigate to the local URL printed in your terminal (by default `http://localhost:5173`). You should see the products listed. Select a product to view its details.
+
+</CliVariant>
+</CliVariants>
+
+To insert a new product, run the following command while the development server is running:
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 ```sh
 curl -X POST http://localhost:8787/api/product \
@@ -854,9 +951,24 @@ curl -X POST http://localhost:8787/api/product \
      -d '{"id": 6, "name": "Fast Computer", "description": "A computer for your home or office", "price": 1000.00, "inventory": 10, "category": "Electronics"}'
 ```
 
-Navigate to `http://localhost:8787/product-details?id=6`. You should see the new product.
+</CliVariant>
+<CliVariant cli="cf">
 
-Update the product using the following command, and navigate to `http://localhost:8787/product-details?id=6` again. You will see the updated product.
+```sh
+curl -X POST http://localhost:5173/api/product \
+     -H "Content-Type: application/json" \
+     -d '{"id": 6, "name": "Fast Computer", "description": "A computer for your home or office", "price": 1000.00, "inventory": 10, "category": "Electronics"}'
+```
+
+</CliVariant>
+</CliVariants>
+
+Navigate to `/product-details?id=6` on your local server. You should see the new product.
+
+Update the product using the following command, and navigate to `/product-details?id=6` again. You will see the updated product.
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 ```sh
 curl -X POST http://localhost:8787/api/product \
@@ -864,17 +976,32 @@ curl -X POST http://localhost:8787/api/product \
      -d '{"id": 6, "name": "Fast Computer", "description": "A computer for your home or office", "price": 1050.00, "inventory": 10, "category": "Electronics"}'
 ```
 
+</CliVariant>
+<CliVariant cli="cf">
+
+```sh
+curl -X POST http://localhost:5173/api/product \
+     -H "Content-Type: application/json" \
+     -d '{"id": 6, "name": "Fast Computer", "description": "A computer for your home or office", "price": 1050.00, "inventory": 10, "category": "Electronics"}'
+```
+
+</CliVariant>
+</CliVariants>
+
 :::note
 
 Read replication is only used when the application has been [deployed](/d1/tutorials/using-read-replication-for-e-com/#step-9-deploy-the-application). D1 does not create read replicas when you develop locally.
 
-To test it locally, you can set `"remote" : true` in the D1 binding configuration. Refer to the [remote bindings documentation](/workers/local-development/#remote-bindings) for more information.
+To test against your remote database locally, enable remote bindings on your D1 binding (`dev: { remote: true }` in `cloudflare.config.ts` or `"remote": true` in your Wrangler configuration file). For more information, refer to [Remote bindings](/workers/local-development/#remote-bindings).
 
 :::
 
 ## Step 9: Deploy the application
 
-Since the database you used in the previous steps is local, you need to create the products table in the remote database. Execute the following D1 commands to create the products table in the remote database.
+Since the database you used in the previous steps is local, create the `products` table in your remote database and deploy your Worker:
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 ```sh
 npx wrangler d1 execute fast-commerce --remote --command "CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY, name TEXT NOT NULL, description TEXT, price DECIMAL(10, 2) NOT NULL, inventory INTEGER NOT NULL DEFAULT 0, category TEXT NOT NULL, created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP)"
@@ -892,11 +1019,39 @@ Optionally, you can insert the products into the remote database by running the 
 npx wrangler d1 execute fast-commerce --remote --command "INSERT INTO products (id, name, description, price, inventory, category) VALUES (1, 'Fast Ergonomic Chair', 'A comfortable chair for your home or office', 100.00, 10, 'Furniture'), (2, 'Fast Organic Cotton T-shirt', 'A comfortable t-shirt for your home or office', 20.00, 100, 'Clothing'), (3, 'Fast Wooden Desk', 'A wooden desk for your home or office', 150.00, 5, 'Furniture'), (4, 'Fast Leather Sofa', 'A leather sofa for your home or office', 300.00, 3, 'Furniture'), (5, 'Fast Organic Cotton T-shirt', 'A comfortable t-shirt for your home or office', 20.00, 100, 'Clothing')"
 ```
 
-Now, you can deploy the application with the following command:
+Now deploy the application:
 
 ```sh
 npm run deploy
 ```
+
+</CliVariant>
+<CliVariant cli="cf">
+
+Without `--local`, `cf d1 query` targets your remote D1 database by default:
+
+```sh
+cf d1 query <YOUR_DATABASE_ID> --sql "CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY, name TEXT NOT NULL, description TEXT, price DECIMAL(10, 2) NOT NULL, inventory INTEGER NOT NULL DEFAULT 0, category TEXT NOT NULL, created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP)"
+```
+
+```sh
+cf d1 query <YOUR_DATABASE_ID> --sql "CREATE INDEX IF NOT EXISTS idx_products_id ON products (id)"
+```
+
+Optionally, insert the sample products into your remote database:
+
+```sh
+cf d1 query <YOUR_DATABASE_ID> --sql "INSERT INTO products (id, name, description, price, inventory, category) VALUES (1, 'Fast Ergonomic Chair', 'A comfortable chair for your home or office', 100.00, 10, 'Furniture'), (2, 'Fast Organic Cotton T-shirt', 'A comfortable t-shirt for your home or office', 20.00, 100, 'Clothing'), (3, 'Fast Wooden Desk', 'A wooden desk for your home or office', 150.00, 5, 'Furniture'), (4, 'Fast Leather Sofa', 'A leather sofa for your home or office', 300.00, 3, 'Furniture'), (5, 'Fast Organic Cotton T-shirt', 'A comfortable t-shirt for your home or office', 20.00, 100, 'Clothing')"
+```
+
+Now deploy the application:
+
+```sh
+cf deploy
+```
+
+</CliVariant>
+</CliVariants>
 
 This will deploy the application to Workers and the D1 database will be replicated to the remote regions. If a user requests the application from any region, the request will be redirected to the nearest region where the database is replicated.
 

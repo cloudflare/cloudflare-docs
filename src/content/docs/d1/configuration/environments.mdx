@@ -1,6 +1,6 @@
 ---
 title: Environments
-description: Configure separate D1 databases for staging and production Wrangler environments.
+description: Configure separate D1 databases for staging and production environments with the Cloudflare CLI (cf) or Wrangler.
 pcx_content_type: configuration
 sidebar:
   order: 9
@@ -8,7 +8,66 @@ products:
   - d1
 ---
 
-import { WranglerConfig } from "~/components";
+import { TabItem, Tabs, WranglerConfig } from "~/components";
+
+<Tabs syncKey="cli">
+<TabItem label="Cloudflare CLI (cf)">
+
+In [`cloudflare.config.ts`](/cf/projects/cloudflare-config/), environments are modeled as [modes](/cf/projects/cloudflare-config/#evaluate-configuration). This is useful when your Worker code refers to a single D1 binding like `DB`, and you want that binding to point to different D1 databases for staging and production.
+
+Store your staging and production database IDs in a separate module (for example, `d1-databases.ts`):
+
+```ts title="d1-databases.ts"
+export const prodDatabaseId = "<PROD_DATABASE_ID>";
+export const stagingDatabaseId = "<STAGING_DATABASE_ID>";
+```
+
+Then pass a function to `defineConfig(({ mode }) => ...)` and return a complete configuration for each mode, binding `DB` to the database for that mode:
+
+```ts title="cloudflare.config.ts"
+import { bindings, defineConfig } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+import { prodDatabaseId, stagingDatabaseId } from "./d1-databases.ts";
+
+export default defineConfig(({ mode }) => {
+	const isProduction = mode === "production";
+
+	return {
+		worker: {
+			name: isProduction ? "my-worker" : "my-worker-staging",
+			entrypoint,
+			compatibilityDate: "<COMPATIBILITY_DATE>",
+			env: {
+				DB: bindings.d1({
+					id: isProduction ? prodDatabaseId : stagingDatabaseId,
+					name: isProduction ? "my-db-production" : "my-db-staging",
+				}),
+			},
+		},
+	};
+});
+```
+
+Using the same binding name (`DB`) for both databases keeps your Worker code identical across environments.
+
+Run `cf dev --mode staging` or `cf deploy --mode staging` so `env.DB` targets your staging database. Run `cf deploy --mode production` so `env.DB` targets your production database.
+
+To run queries or apply migrations from the terminal with `cf d1`, pass the database ID directly. Because each database ID is unique, `cf d1` targets the exact staging or production database without a `--mode` lookup:
+
+```sh
+cf d1 query <STAGING_DATABASE_ID> --sql "SELECT name FROM sqlite_schema WHERE type = 'table';"
+```
+
+```sh
+cf d1 migrations apply <PROD_DATABASE_ID>
+```
+
+`cf d1` commands act on your remote D1 database by default. Pass `--local` to `cf d1 raw` or `cf d1 migrations` commands to target local development state instead.
+
+To supply a separate D1 database for [Worker Previews](/cf/projects/#deploy-a-preview), inspect `isPreview` alongside `mode` in `defineConfig(({ mode, isPreview }) => ...)`.
+
+</TabItem>
+<TabItem label="Wrangler">
 
 [Environments](/workers/wrangler/environments/) are different contexts that your code runs in. Cloudflare Developer Platform allows you to create and manage different environments. Through environments, you can deploy the same project to multiple places under multiple names.
 
@@ -96,8 +155,6 @@ Therefore, the above binding is equivalent to:
 
 ### Example
 
-
-
 <WranglerConfig>
 
 ```jsonc
@@ -153,3 +210,6 @@ The above is equivalent to the following structure in JSON:
   }
 }
 ```
+
+</TabItem>
+</Tabs>

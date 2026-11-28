@@ -15,8 +15,10 @@ description: >-
 ---
 
 import {
-	Render,
+	CliVariant,
+	CliVariants,
 	PackageManagers,
+	Render,
 	Steps,
 	TypeScriptExample,
 	WranglerConfig,
@@ -29,6 +31,9 @@ In this tutorial, you will use D1 and [Hono](https://hono.dev/) to build a JSON 
 <Render file="prereqs" product="workers" />
 
 ## 1. Create a new Worker project
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 <Steps>
 
@@ -57,6 +62,28 @@ In this tutorial, you will use D1 and [Hono](https://hono.dev/) to build a JSON 
 
 </Steps>
 
+</CliVariant>
+<CliVariant cli="cf">
+
+<Steps>
+
+1. Create a new project named `d1-comments-api` by running:
+
+   ```sh
+   cf init d1-comments-api
+   ```
+
+2. Move into the project directory:
+
+   ```sh
+   cd d1-comments-api
+   ```
+
+</Steps>
+
+</CliVariant>
+</CliVariants>
+
 ## 2. Install Hono
 
 Install [Hono](https://hono.dev/), a lightweight web framework for building APIs on Workers:
@@ -64,6 +91,9 @@ Install [Hono](https://hono.dev/), a lightweight web framework for building APIs
 <PackageManagers pkg="hono" />
 
 ## 3. Create a database
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 <Steps>
 
@@ -97,35 +127,79 @@ Install [Hono](https://hono.dev/), a lightweight web framework for building APIs
 
 </Steps>
 
+</CliVariant>
+<CliVariant cli="cf">
+
+<Steps>
+
+1. Create a new D1 database with `cf`:
+
+   ```sh
+   cf d1 create --name d1-comments-api
+   ```
+
+   Copy the `uuid` returned in the JSON output.
+
+2. Add the `DB` binding to `cloudflare.config.ts` using `bindings.d1()`:
+
+   ```ts title="cloudflare.config.ts"
+   import { bindings, defineConfig } from "cf/config";
+   import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+   export default defineConfig({
+   	worker: {
+   		name: "d1-comments-api",
+   		entrypoint,
+   		compatibilityDate: "<COMPATIBILITY_DATE>",
+   		env: {
+   			DB: bindings.d1({
+   				id: "<YOUR_DATABASE_ID>",
+   				name: "d1-comments-api",
+   			}),
+   		},
+   	},
+   });
+   ```
+
+   Replace `<YOUR_DATABASE_ID>` with the `uuid` returned by `cf d1 create`.
+
+</Steps>
+
+</CliVariant>
+</CliVariants>
+
 [Bindings](/workers/runtime-apis/bindings/) allow your Workers to access resources, like D1 databases, KV namespaces, and R2 buckets, using a variable name in code. Your D1 database is accessible in your Worker on `env.DB`.
 
 ## 4. Create a schema and seed the database
 
+Create a `schemas/schema.sql` file with the following contents:
+
+```sql title="schemas/schema.sql"
+DROP TABLE IF EXISTS comments;
+CREATE TABLE IF NOT EXISTS comments (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  author TEXT NOT NULL,
+  body TEXT NOT NULL,
+  post_slug TEXT NOT NULL
+);
+CREATE INDEX idx_comments_post_slug ON comments (post_slug);
+
+-- Optionally, uncomment the below query to insert seed data
+-- INSERT INTO comments (author, body, post_slug) VALUES ('Kristian', 'Great post!', 'hello-world');
+```
+
+<CliVariants>
+<CliVariant cli="wrangler">
+
 <Steps>
 
-1. Create a `schemas/schema.sql` file with the following contents:
-
-   ```sql
-   DROP TABLE IF EXISTS comments;
-   CREATE TABLE IF NOT EXISTS comments (
-     id INTEGER PRIMARY KEY AUTOINCREMENT,
-     author TEXT NOT NULL,
-     body TEXT NOT NULL,
-     post_slug TEXT NOT NULL
-   );
-   CREATE INDEX idx_comments_post_slug ON comments (post_slug);
-
-   -- Optionally, uncomment the below query to insert seed data
-   -- INSERT INTO comments (author, body, post_slug) VALUES ('Kristian', 'Great post!', 'hello-world');
-   ```
-
-2. Run the schema against your local database first:
+1. Run the schema against your local database first:
 
    ```sh
    npx wrangler d1 execute d1-comments-api --local --file schemas/schema.sql
    ```
 
-3. Verify the table was created locally:
+2. Verify the table was created locally:
 
    ```sh
    npx wrangler d1 execute d1-comments-api --local --command "SELECT name FROM sqlite_schema WHERE type = 'table'"
@@ -139,13 +213,41 @@ Install [Hono](https://hono.dev/), a lightweight web framework for building APIs
    └──────────┘
    ```
 
-4. Once you are satisfied with the schema, apply it to your remote (production) database:
+3. Once you are satisfied with the schema, apply it to your remote (production) database:
 
    ```sh
    npx wrangler d1 execute d1-comments-api --remote --file schemas/schema.sql
    ```
 
 </Steps>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+<Steps>
+
+1. Run the schema against your local database first (`cf d1` targets remote by default, so pass `--local` with `cf d1 raw`):
+
+   ```sh
+   cf d1 raw <YOUR_DATABASE_ID> --sql @schemas/schema.sql --local
+   ```
+
+2. Verify the table was created locally:
+
+   ```sh
+   cf d1 raw <YOUR_DATABASE_ID> --sql "SELECT name FROM sqlite_schema WHERE type = 'table'" --local
+   ```
+
+3. Once you are satisfied with the schema, apply it to your remote (production) database:
+
+   ```sh
+   cf d1 query <YOUR_DATABASE_ID> --sql @schemas/schema.sql
+   ```
+
+</Steps>
+
+</CliVariant>
+</CliVariants>
 
 ## 5. Initialize the Hono application
 
@@ -258,6 +360,9 @@ When you make requests to `/api/*`, Hono will automatically generate and add COR
 
 ## 9. Deploy your application
 
+<CliVariants>
+<CliVariant cli="wrangler">
+
 <Steps>
 
 1. Log in to your Cloudflare account (if you have not already):
@@ -274,35 +379,57 @@ When you make requests to `/api/*`, Hono will automatically generate and add COR
    npx wrangler deploy
    ```
 
-3. Test the API by inserting and then retrieving a comment:
+</Steps>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+<Steps>
+
+1. Verify you are signed in to your Cloudflare account (or run `cf auth login` if you have not signed in yet):
 
    ```sh
-   # Replace <YOUR_SUBDOMAIN> with your workers.dev subdomain
-   curl -X POST https://d1-comments-api.<YOUR_SUBDOMAIN>.workers.dev/api/posts/hello-world/comments \
-     -H "Content-Type: application/json" \
-     -d '{"author": "Kristian", "body": "Great post!"}'
+   cf auth whoami
    ```
 
-   ```txt output
-   Created
-   ```
+2. Deploy your Worker:
 
    ```sh
-   curl https://d1-comments-api.<YOUR_SUBDOMAIN>.workers.dev/api/posts/hello-world/comments
-   ```
-
-   ```txt output
-   [
-     {
-       "id": 1,
-       "author": "Kristian",
-       "body": "Great post!",
-       "post_slug": "hello-world"
-     }
-   ]
+   cf deploy
    ```
 
 </Steps>
+
+</CliVariant>
+</CliVariants>
+
+Test the deployed API by inserting and then retrieving a comment:
+
+```sh
+# Replace <YOUR_SUBDOMAIN> with your workers.dev subdomain
+curl -X POST https://d1-comments-api.<YOUR_SUBDOMAIN>.workers.dev/api/posts/hello-world/comments \
+  -H "Content-Type: application/json" \
+  -d '{"author": "Kristian", "body": "Great post!"}'
+```
+
+```txt output
+Created
+```
+
+```sh
+curl https://d1-comments-api.<YOUR_SUBDOMAIN>.workers.dev/api/posts/hello-world/comments
+```
+
+```txt output
+[
+  {
+    "id": 1,
+    "author": "Kristian",
+    "body": "Great post!",
+    "post_slug": "hello-world"
+  }
+]
+```
 
 ## Full example
 

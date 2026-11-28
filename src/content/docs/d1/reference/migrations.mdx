@@ -1,6 +1,6 @@
 ---
 title: Migrations
-description: Version your D1 database schema using SQL migration files that you create, list, and apply with Wrangler.
+description: Version your D1 database schema using SQL migration files that you create, list, and apply with the Cloudflare CLI (cf) or Wrangler.
 pcx_content_type: concept
 sidebar:
   order: 1
@@ -8,31 +8,60 @@ products:
   - d1
 ---
 
-import { WranglerConfig } from "~/components";
+import { CliVariant, CliVariants, WranglerConfig } from "~/components";
 
 Database migrations are a way of versioning your database. Each migration is stored as an `.sql` file in your `migrations` folder. The `migrations` folder is created in your project directory when you create your first migration. This enables you to store and track changes throughout database development.
 
 ## Features
 
-Currently, the migrations system aims to be simple yet effective. With the current implementation, you can:
+With D1 migrations, you can:
 
-* [Create](/workers/wrangler/commands/d1/#d1-migrations-create) an empty migration file.
-* [List](/workers/wrangler/commands/d1/#d1-migrations-list) unapplied migrations.
-* [Apply](/workers/wrangler/commands/d1/#d1-migrations-apply) remaining migrations.
+- Create an empty migration file (`cf d1 migrations create` or `wrangler d1 migrations create`).
+- List unapplied migrations (`cf d1 migrations list` or `wrangler d1 migrations list`).
+- Apply remaining migrations (`cf d1 migrations apply` or `wrangler d1 migrations apply`).
 
-Every migration file in the `migrations` folder has a specified version number in the filename. Files are listed in sequential order. Every migration file is an SQL file where you can specify queries to be run.
+Every migration file in the `migrations` folder has a specified version number in the filename. Files are listed in sequential order. Every migration file is an SQL file where you can specify queries to be run. For full command options, refer to [D1 CLI commands](/d1/cli-commands/).
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 :::note[Binding name vs Database name]
-When running a migration script, you can use either the binding name or the database name.
+When running a migration script with Wrangler, you can use either the binding name or the database name.
 
 However, the binding name can change, whereas the database name cannot. Therefore, to avoid accidentally running migrations on the wrong binding, you may wish to use the database name for D1 migrations.
 :::
 
-## Wrangler customizations
+</CliVariant>
+<CliVariant cli="cf">
 
-By default, migrations are created in the `migrations/` folder in your Worker project directory. Creating migrations will keep a record of applied migrations in the `d1_migrations` table found in your database.
+`cf d1 migrations create <MESSAGE>` is entirely local and does not take a database argument. `cf d1 migrations list <DATABASE_ID>` and `cf d1 migrations apply <DATABASE_ID>` require the database UUID (returned by `cf d1 list` or `cf d1 create`) — database names and binding names are not accepted.
 
-This location and table name can be customized in your Wrangler file, inside the D1 binding.
+`cf d1 migrations list` and `cf d1 migrations apply` target your remote Cloudflare database by default. Pass `--local` to target local development state instead:
+
+```sh
+# Create a new migration file locally
+cf d1 migrations create create_users_table
+
+# Apply migrations to your local database
+cf d1 migrations apply <DATABASE_ID> --local
+
+# Apply migrations to your remote database
+cf d1 migrations apply <DATABASE_ID>
+```
+
+`cf d1 migrations` is wire-compatible with `wrangler d1 migrations`: both use the same `d1_migrations` bookkeeping table schema, relative migration names, and numeric ordering.
+
+</CliVariant>
+</CliVariants>
+
+## Customize migration directory and table
+
+By default, migrations are created in the `migrations/` folder in your Worker project directory, and applied migrations are recorded in the `d1_migrations` table in your database.
+
+<CliVariants>
+<CliVariant cli="wrangler">
+
+This location, table name, and discovery pattern can be customized in your Wrangler configuration file, inside the D1 binding:
 
 <WranglerConfig>
 
@@ -54,9 +83,26 @@ This location and table name can be customized in your Wrangler file, inside the
 
 </WranglerConfig>
 
+</CliVariant>
+<CliVariant cli="cf">
+
+With `cf`, customize the migrations directory, bookkeeping table, and discovery glob using command-line flags rather than `cloudflare.config.ts`:
+
+- `--dir <PATH>`: Directory containing migration files (default: `./migrations`).
+- `--table <NAME>`: Table recording applied migrations (default: `d1_migrations`). Must use D1's bookkeeping schema.
+- `--pattern <GLOB>`: Glob for discovering migration files under `--dir` (default: `<dir>/*.sql`). When `--pattern` is set, `--dir` must also be set and `--pattern` must start with the `--dir` prefix (for example, `--dir ./migrations --pattern "migrations/*/migration.sql"`).
+
+</CliVariant>
+</CliVariants>
+
 ## Nested migration layouts
 
-By default, `wrangler d1 migrations apply` looks for top-level `.sql` files inside `migrations_dir`. If you use an ORM such as [Drizzle](https://orm.drizzle.team/) that writes each migration as its own subdirectory (for example, `migrations/0001_init/migration.sql`), set `migrations_pattern` to the glob that matches your layout:
+By default, D1 looks for top-level `.sql` files inside your migrations directory. If you use an ORM such as [Drizzle](https://orm.drizzle.team/) that writes each migration into its own subdirectory (for example, `migrations/0001_init/migration.sql`), configure a glob pattern that matches your layout.
+
+<CliVariants>
+<CliVariant cli="wrangler">
+
+Set `migrations_pattern` in your Wrangler configuration file:
 
 <WranglerConfig>
 
@@ -86,8 +132,24 @@ The pattern is a standard glob — `*` matches one path segment, `**` matches an
 
 `wrangler d1 migrations create` only writes top-level files inside `migrations_dir`, so if your `migrations_pattern` only matches nested files (as with the Drizzle layout), generate new migrations using your ORM's command (for example, `drizzle-kit generate`) instead.
 
+</CliVariant>
+<CliVariant cli="cf">
+
+Pass `--pattern` when listing or applying migrations:
+
+```sh
+cf d1 migrations apply <DATABASE_ID> --dir ./migrations --pattern "migrations/*/migration.sql"
+```
+
+Each migration's name is recorded in the migrations table as the path relative to `--dir` (for example, `0001_init/migration.sql`). `*` matches one path segment and `**` matches any number of segments.
+
+`cf d1 migrations create` writes top-level `.sql` files inside `--dir`. If your ORM expects nested directories (such as Drizzle), generate new migration files with your ORM's generator (for example, `drizzle-kit generate`) instead.
+
+</CliVariant>
+</CliVariants>
+
 ## Foreign key constraints
 
 When applying a migration, you may need to temporarily disable [foreign key constraints](/d1/sql-api/foreign-keys/). To do so, call `PRAGMA defer_foreign_keys = true` before making changes that would violate foreign keys.
 
-Refer to the [foreign key documentation](/d1/sql-api/foreign-keys/) to learn more about how to work with foreign keys and D1.
+For more information on working with foreign keys in D1, refer to [Foreign keys](/d1/sql-api/foreign-keys/).

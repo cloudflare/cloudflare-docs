@@ -1,0 +1,37 @@
+---
+pcx_content_type: concept
+title: CLI commands
+description: Cloudflare CLI (cf) and Wrangler commands for creating, managing, and querying D1 databases.
+sidebar:
+  order: 6
+products:
+  - d1
+---
+
+import {
+	CfNamespace,
+	TabItem,
+	Tabs,
+	WranglerNamespace,
+} from "~/components";
+
+<Tabs syncKey="cli">
+<TabItem label="Cloudflare CLI (cf)">
+
+D1 commands in the [Cloudflare CLI (`cf`)](/cf/) create, query, migrate, and manage D1 databases from the command line. Unlike Wrangler, `cf d1` commands identify databases by their UUID (returned by `cf d1 create` or `cf d1 list`) rather than by name or binding, and operate on your remote Cloudflare database by default. Pass `--local` where supported (such as `cf d1 raw` and `cf d1 migrations`) to target local development state instead.
+
+:::note
+`cf d1` does not yet include dedicated bulk `export` or `import` commands. To export a database or import SQL files larger than the single-query payload limit, use the Wrangler tab or the [D1 REST API import and export guide](/d1/best-practices/import-export-data/#import-using-the-rest-api).
+:::
+
+<CfNamespace namespace="d1" />
+
+</TabItem>
+<TabItem label="Wrangler">
+
+D1 Wrangler commands use REST APIs to interact with the control plane. This page lists the Wrangler commands for D1.
+
+<WranglerNamespace namespace="d1" />
+
+</TabItem>
+</Tabs>

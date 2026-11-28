@@ -9,7 +9,19 @@ products:
   - d1
 ---
 
-import { Render, PackageManagers, Steps, FileTree, Tabs, TabItem, TypeScriptExample, WranglerConfig, DashButton } from "~/components";
+import {
+	CliVariant,
+	CliVariants,
+	DashButton,
+	FileTree,
+	PackageManagers,
+	Render,
+	Steps,
+	TabItem,
+	Tabs,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
 This guide instructs you through:
 
@@ -17,7 +29,7 @@ This guide instructs you through:
 - Creating a schema and querying your database via the command-line.
 - Connecting a [Cloudflare Worker](/workers/) to your D1 database using bindings, and querying your D1 database programmatically.
 
-You can perform these tasks through the CLI or through the Cloudflare dashboard.
+You can perform these tasks through the [Cloudflare CLI (`cf`)](/cf/), [Wrangler](/workers/wrangler/), or the Cloudflare dashboard.
 
 :::note
 If you already have an existing Worker and an existing D1 database, follow this tutorial from [3. Bind your Worker to your D1 database](/d1/get-started/#3-bind-your-worker-to-your-d1-database).
@@ -42,6 +54,9 @@ You may wish to manually follow the steps if you are new to Cloudflare Workers.
 Create a new Worker as the means to query your database.
 
 <Tabs syncKey='CLIvDash'> <TabItem label='CLI'>
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 <Steps>
 1. Create a new project named `d1-tutorial` by running:
@@ -88,6 +103,44 @@ For example: `CI=true npm create cloudflare@latest d1-tutorial --type=simple --g
 
 :::
 
+</CliVariant>
+<CliVariant cli="cf">
+
+<Steps>
+1. Create a new project named `d1-tutorial` by running:
+
+	```sh
+	cf init d1-tutorial
+	```
+
+	`cf init` prompts for your package manager, creates the project in `d1-tutorial`, installs dependencies, and generates types for your bindings.
+
+	<FileTree>
+	- d1-tutorial/
+		- .cloudflare/
+			- types/
+				- index.d.ts
+		- src/
+			- **index.ts**
+		- test/
+			- index.test.ts
+		- **cloudflare.config.ts**
+		- package.json
+		- tsconfig.json
+		- vite.config.ts
+		- vitest.config.ts
+	</FileTree>
+
+	Your new `d1-tutorial` directory includes:
+
+	- A starter [Worker](/cf/get-started/first-worker/) in `src/index.ts`.
+	- A [`cloudflare.config.ts`](/cf/projects/cloudflare-config/) configuration file, which declares how your `d1-tutorial` Worker accesses your D1 database.
+
+</Steps>
+
+</CliVariant>
+</CliVariants>
+
 </TabItem> <TabItem label='Dashboard'>
 
 <Steps>
@@ -107,6 +160,9 @@ A D1 database is conceptually similar to many other SQL databases: a database ma
 To create your first D1 database:
 
 <Tabs syncKey='CLIvDash'> <TabItem label='CLI'>
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 <Steps>
 1. Change into the directory you just created for your Workers project:
@@ -147,6 +203,33 @@ To create your first D1 database:
 
 This creates a new D1 database and outputs the [binding](/workers/runtime-apis/bindings/) configuration needed in the next step.
 
+</CliVariant>
+<CliVariant cli="cf">
+
+<Steps>
+1. Change into the directory you just created for your Workers project:
+
+	```sh
+	cd d1-tutorial
+	```
+
+2. Run `cf d1 create` and give your database a name. In this tutorial, the database is named `prod-d1-tutorial`:
+
+	:::note
+	If you have not used `cf` before, [install it and sign in](/cf/get-started/) first.
+	:::
+
+	```sh
+	cf d1 create --name prod-d1-tutorial
+	```
+
+3. `cf` prints the new database details as JSON. Keep its `uuid` value – you will use it to bind, query, and manage this database in the following steps.
+
+</Steps>
+
+</CliVariant>
+</CliVariants>
+
 </TabItem> <TabItem label='Dashboard'>
 
 <Steps>
@@ -181,6 +264,9 @@ To bind your D1 database to your Worker:
 
 <Tabs syncKey='CLIvDash'> <TabItem label='CLI'>
 
+<CliVariants>
+<CliVariant cli="wrangler">
+
 You can automatically add the binding to your Wrangler configuration file when you run the `wrangler d1 create` command (step 3 of [2. Create a database](/d1/get-started/#2-create-a-database)).
 
 But if you wish to add the binding manually, follow the steps below:
@@ -196,7 +282,7 @@ But if you wish to add the binding manually, follow the steps below:
    {
      "d1_databases": [
        {
-         "binding": "prod_d1_tutorial", // available in your Worker on env.DB
+         "binding": "prod_d1_tutorial", // available in your Worker on env.prod_d1_tutorial
          "database_name": "prod-d1-tutorial",
          "database_id": "<unique-ID-for-your-database>"
        }
@@ -219,6 +305,49 @@ When you execute the `wrangler d1 create` command, the client API package (which
 :::
 
 You can also bind your D1 database to a [Pages Function](/pages/functions/). For more information, refer to [Functions Bindings for D1](/pages/functions/bindings/#d1-databases).
+
+</CliVariant>
+<CliVariant cli="cf">
+
+<Steps>
+
+1. In `cloudflare.config.ts`, add `prod_d1_tutorial` under `worker.env` using `bindings.d1()` with the database `uuid` returned in [2. Create a database](/d1/get-started/#2-create-a-database):
+
+	```ts title="cloudflare.config.ts"
+	import { bindings, defineConfig } from "cf/config";
+	import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+	export default defineConfig({
+		worker: {
+			name: "d1-tutorial",
+			entrypoint,
+			compatibilityDate: "<COMPATIBILITY_DATE>",
+			env: {
+				prod_d1_tutorial: bindings.d1({
+					id: "<DATABASE_ID>",
+					name: "prod-d1-tutorial",
+				}),
+			},
+		},
+	});
+	```
+
+	Specifically:
+
+	- Each property key under `worker.env` is the **binding name** used to reference this database in your Worker. In this tutorial, name your binding `prod_d1_tutorial`.
+	- The binding name must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables), such as `MY_DB` or `productionDB`.
+	- Your binding is available in your Worker at `env.<BINDING_NAME>`, and the D1 [Workers Binding API](/d1/worker-api/) is exposed on this binding.
+
+2. Regenerate your TypeScript binding types (this writes `.cloudflare/types/index.d.ts`, which `cf dev` and `cf build` also update automatically):
+
+	```sh
+	cf workers types
+	```
+
+</Steps>
+
+</CliVariant>
+</CliVariants>
 
 </TabItem> <TabItem label='Dashboard'>
 
@@ -243,6 +372,9 @@ You create bindings by adding them to the Worker you have created.
 ### Populate your D1 database
 
 <Tabs syncKey='CLIvDash'> <TabItem label='CLI'>
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 After correctly preparing your [Wrangler configuration file](/workers/wrangler/configuration/), set up your database. Create a `schema.sql` file using the SQL syntax below to initialize your database.
 
@@ -298,6 +430,41 @@ After correctly preparing your [Wrangler configuration file](/workers/wrangler/c
 
 </Steps>
 
+</CliVariant>
+<CliVariant cli="cf">
+
+After adding the D1 binding to `cloudflare.config.ts`, create a `schema.sql` file to initialize your database.
+
+<Steps>
+1. Copy the following SQL and save it as `schema.sql` in the `d1-tutorial` directory you created in step 1:
+
+	```sql
+	DROP TABLE IF EXISTS Customers;
+	CREATE TABLE IF NOT EXISTS Customers (CustomerId INTEGER PRIMARY KEY, CompanyName TEXT, ContactName TEXT);
+	INSERT INTO Customers (CustomerID, CompanyName, ContactName) VALUES (1, 'Alfreds Futterkiste', 'Maria Anders'), (4, 'Around the Horn', 'Thomas Hardy'), (11, 'Bs Beverages', 'Victoria Ashworth'), (13, 'Bs Beverages', 'Random Name');
+	```
+
+2. Initialize your local development database first by running `cf d1 raw` with `--local` and `@schema.sql`:
+
+	```sh
+	cf d1 raw <DATABASE_ID> --sql @schema.sql --local
+	```
+
+	:::note
+	`cf d1` commands target your remote Cloudflare database by default. Pass `--local` with `cf d1 raw` to execute SQL against local development state (persisted in `.cloudflare/state`).
+	:::
+
+3. Validate that your data is in the local database:
+
+	```sh
+	cf d1 raw <DATABASE_ID> --sql "SELECT * FROM Customers" --local
+	```
+
+</Steps>
+
+</CliVariant>
+</CliVariants>
+
 </TabItem> <TabItem label='Dashboard'>
 
 Use the Dashboard to create a table and populate it with data.
@@ -338,8 +505,8 @@ After you have set up your database, run an SQL query from within your Worker.
     <TypeScriptExample filename="index.ts" omitTabs={true}>
     ```typescript
     export interface Env {
-    	// If you set another name in the Wrangler config file for the value for 'binding',
-    	// replace "DB" with the variable name you defined.
+    	// If you set another name in your Worker configuration for the binding,
+    	// replace "prod_d1_tutorial" with the binding name you defined.
     	prod_d1_tutorial: D1Database;
     }
 
@@ -390,7 +557,7 @@ After you have set up your database, run an SQL query from within your Worker.
 
     In the code above, you:
 
-    1. Define a binding to your D1 database in your code. This binding matches the `binding` value you set in the [Wrangler configuration file](/workers/wrangler/configuration/) under `d1_databases`.
+    1. Define a binding to your D1 database in your code. This binding matches the binding name you set in your Worker configuration (`cloudflare.config.ts` or your Wrangler configuration file).
     2. Query your database using `env.prod_d1_tutorial.prepare` to issue a [prepared query](/d1/worker-api/d1-database/#prepare) with a placeholder (the `?` in the query).
     3. Call `bind()` to safely and securely bind a value to that placeholder. In a real application, you would allow a user to pass the `CompanyName` they want to list results for. Using `bind()` prevents users from executing arbitrary SQL (known as "SQL injection") against your application and deleting or otherwise modifying your database.
     4. Execute the query by calling [`run()`](/d1/worker-api/prepared-statements/#run) to return all rows (or none, if the query returns none).
@@ -446,6 +613,9 @@ You can query your D1 database using your Worker.
 Deploy your application on Cloudflare's global network.
 
 <Tabs syncKey='CLIvDash'> <TabItem label='CLI'>
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 To deploy your Worker to production using Wrangler, you must first repeat the [database configuration](/d1/get-started/#populate-your-d1-database) steps after replacing the `--local` flag with the `--remote` flag to give your Worker data to read. This creates the database tables and imports the data into the production version of your database.
 
@@ -525,6 +695,37 @@ To deploy your Worker to production using Wrangler, you must first repeat the [d
 
 </Steps>
 
+</CliVariant>
+<CliVariant cli="cf">
+
+Before deploying your Worker to production, run `schema.sql` against your remote D1 database (without `--local`, `cf d1 query` targets your remote database by default).
+
+<Steps>
+1. Create tables and add entries to your remote database with `schema.sql`:
+
+	```sh
+	cf d1 query <DATABASE_ID> --sql @schema.sql
+	```
+
+2. Validate the data is in your remote database:
+
+	```sh
+	cf d1 query <DATABASE_ID> --sql "SELECT * FROM Customers"
+	```
+
+3. Deploy your Worker:
+
+	```sh
+	cf deploy
+	```
+
+4. Test your database is running successfully by appending `/api/beverages` to the deployed URL (for example, `https://d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev/api/beverages`).
+
+</Steps>
+
+</CliVariant>
+</CliVariants>
+
 </TabItem> <TabItem label='Dashboard'>
 <Steps>
 
@@ -541,7 +742,10 @@ This deploys the latest version of the Worker code to production.
 
 </TabItem></Tabs>
 
-## 6. (Optional) Develop locally with Wrangler
+## 6. (Optional) Develop locally
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 If you are using D1 with Wrangler, you can test your database locally. While in your project directory:
 
@@ -562,10 +766,35 @@ If you are using D1 with Wrangler, you can test your database locally. While in 
 
 </Steps>
 
+</CliVariant>
+<CliVariant cli="cf">
+
+If you are using D1 with `cf`, you can test your database locally. While in your project directory:
+
+<Steps>
+1. Run `cf dev`:
+
+	```sh
+	cf dev
+	```
+
+	`cf dev` starts the local development server and prints its URL (by default `http://localhost:5173`).
+
+2. Open the printed URL in your browser.
+
+	The page displays `Call /api/beverages to see everyone who works at Bs Beverages`.
+
+3. Append `/api/beverages` to the URL (for example, `http://localhost:5173/api/beverages`) to query your local D1 database.
+
+</Steps>
+
+</CliVariant>
+</CliVariants>
+
 If successful, the browser displays your data.
 
 :::note
-You can only develop locally if you are using Wrangler. You cannot develop locally through the Cloudflare dashboard.
+You can only develop locally if you are using the CLI (`cf` or Wrangler). You cannot develop locally through the Cloudflare dashboard.
 :::
 
 ## 7. (Optional) Delete your database
@@ -574,11 +803,26 @@ To delete your database:
 
 <Tabs syncKey='CLIvDash'> <TabItem label='CLI'>
 
+<CliVariants>
+<CliVariant cli="wrangler">
+
 Run:
 
 ```sh
 npx wrangler d1 delete prod-d1-tutorial
 ```
+
+</CliVariant>
+<CliVariant cli="cf">
+
+Run:
+
+```sh
+cf d1 delete <DATABASE_ID>
+```
+
+</CliVariant>
+</CliVariants>
 
 </TabItem><TabItem label='Dashboard'>
 
@@ -606,11 +850,26 @@ If you want to delete your Worker:
 
 <Tabs syncKey='CLIvDash'> <TabItem label='CLI'>
 
+<CliVariants>
+<CliVariant cli="wrangler">
+
 Run:
 
 ```sh
 npx wrangler delete d1-tutorial
 ```
+
+</CliVariant>
+<CliVariant cli="cf">
+
+Run:
+
+```sh
+cf workers delete d1-tutorial
+```
+
+</CliVariant>
+</CliVariants>
 
 </TabItem> <TabItem label='Dashboard'>
 
@@ -642,5 +901,5 @@ In this tutorial, you have:
 
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com).
 
-- See supported [Wrangler commands for D1](/workers/wrangler/commands/d1/).
-- Learn how to use [D1 Worker Binding APIs](/d1/worker-api/) within your Worker, and test them from the [API playground](/d1/worker-api/#api-playground).
+- Refer to supported [CLI commands for D1](/d1/cli-commands/).
+- For more information on querying D1 from your Worker, refer to [D1 Workers Binding APIs](/d1/worker-api/) and the [API playground](/d1/worker-api/#api-playground).
