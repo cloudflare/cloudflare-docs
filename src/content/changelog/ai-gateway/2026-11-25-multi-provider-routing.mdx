@@ -1,0 +1,54 @@
+---
+title: Route requests to any provider that offers a model with multi-provider routing
+description: New gateways can send a request to any provider that offers the requested model, and requests can set the order in which providers are tried.
+date: 2026-11-25
+publish_future_dated_entry: true
+---
+
+AI Gateway now supports multi-provider routing. When it is on, a request for a model can go to any provider that serves that model. For example, a request for a Claude model can go to Anthropic or to Google Vertex AI.
+
+Multi-provider routing is on by default for new gateways. Existing gateways keep using the providers they use today until you turn the setting on.
+
+To turn on multi-provider routing for an existing gateway, go to your gateway's **Settings** and turn on **Multi-Provider Routing**. To use the API, set `multiprovider_enabled` to `true` in the request body of a [`PUT` request to update the gateway](/api/resources/ai_gateway/methods/update/):
+
+```json
+{
+	"multiprovider_enabled": true
+}
+```
+
+When the setting is off, you can still choose a provider for a single request. Name the provider in the `cf-aig-allowed-providers` header or in `routing.allowedProviders`. [Model aliases](/ai-gateway/features/routing/model-aliases/) can use every provider whether the setting is on or off.
+
+With this release, more models are available from alternate providers on gateways with multi-provider routing:
+
+- [`openai/gpt-oss-20b`](https://dash.cloudflare.com/?to=/:account/ai/models/openai/gpt-oss-20b) and [`alibaba/qwen3.8-27b`](https://dash.cloudflare.com/?to=/:account/ai/models/alibaba/qwen3.8-27b) on Groq.
+- [Anthropic Claude models](https://dash.cloudflare.com/?to=/:account/ai/models&authors=anthropic) on Google Vertex AI.
+- [Google Gemini models](https://dash.cloudflare.com/?to=/:account/ai/models&authors=google) on Google AI Studio.
+- [`moonshotai/kimi-k3`](https://dash.cloudflare.com/?to=/:account/ai/models/moonshotai/kimi-k3) and [`deepseek-ai/deepseek-v4.1-flash-1017`](https://dash.cloudflare.com/?to=/:account/ai/models/deepseek-ai/deepseek-v4.1-flash-1017) on Fireworks.
+
+More models and providers are on the way.
+
+## Set the provider order
+
+You can also control which provider AI Gateway tries first for a model. Set `routing.providerOrder` in the request body, or the `cf-aig-provider-order` header, to list the providers to try first. Set `routing.providerSort` to `price`, or the `cf-aig-provider-sort` header to `price`, to order the remaining providers by their input and output token price.
+
+For example, send this body to `/accounts/{account_id}/ai/run` to try Subconscious first, then Workers AI, and order the other providers by price:
+
+```json
+{
+	"model": "deepseek-ai/deepseek-v4.1-flash-1017",
+	"input": {
+		"messages": [{ "role": "user", "content": "Reply with a short greeting." }]
+	},
+	"options": {
+		"extraHeaders": {
+			"cf-aig-provider-order": "subconscious,workers-ai",
+			"cf-aig-provider-sort": "price"
+		}
+	}
+}
+```
+
+The provider order is a preference. It does not remove providers from the pool, and it does not add providers that the gateway does not allow. AI Gateway can still choose a different provider if the preferred one is unhealthy.
+
+For more information about calling models through AI Gateway, refer to the [REST API](/ai-gateway/usage/rest-api/).
