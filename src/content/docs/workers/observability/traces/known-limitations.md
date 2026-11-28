@@ -13,10 +13,21 @@ To provide more feedback and send feature requests, head to the [Workers tracing
 
 ### Non-I/O operations may report time of 0 ms
 
-Due to [security measures put in place to prevent Spectre attacks](/workers/reference/security-model/#step-1-disallow-timers-and-multi-threading), the Workers
-Runtime does not update time until I/O events take place. This means that some spans will return a length of `0 ms` even when the operation took longer.
+Due to [security measures put in place to prevent Spectre attacks](/workers/reference/security-model/#step-1-disallow-timers-and-multi-threading), the runtime clock does not advance during JavaScript execution. It updates when I/O events take place. Native spans and [custom spans](/workers/observability/traces/custom-spans/) use this clock. A synchronous operation can therefore report `0 ms` even when it performs CPU work.
+
+Recording `Date.now()` at the start of your handler uses this same clock. It cannot independently measure how long the request waited before the handler started. Two identical `Date.now()` values do not mean that no time passed.
 
 The Cloudflare Workers team is exploring security measures that would allow exposing time lengths at millisecond-level granularity in these cases.
+
+### Trace durations and gaps
+
+Span durations and gaps may differ from the actual time that passed because they use the [runtime clock](#non-io-operations-may-report-time-of-0-ms).
+
+Invocation wall time is measured separately. Refer to [Invocation timing](/workers/observability/traces/spans-and-attributes/#invocation-timing) for measurement definitions and a `waitUntil()` example.
+
+A gap before the first child span does not tell you whether time was spent starting the Worker, waiting in a queue, or dispatching the request. Subtracting wall time from root span duration does not tell you either.
+
+When a Worker calls another Worker or a Durable Object, their clocks can be adjusted independently. Do not use differences between their span timestamps to measure network latency.
 
 ### Trace context propagation to external services
 
