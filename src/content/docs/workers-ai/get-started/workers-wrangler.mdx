@@ -112,6 +112,12 @@ export default {
 
 Up to this point, you have created an AI binding for your Worker and configured your Worker to execute the Gemma 4 26B A4B model with reasoning disabled. You can now test your project locally before you deploy globally.
 
+:::tip[TypeScript return types]
+
+Run `npx wrangler types` to generate typed `Env` bindings from your Wrangler configuration. When accessing properties such as `.choices`, `.response`, or `.data` on the return value of `env.AI.run()`, narrow the union type at runtime instead of using type assertions. Refer to [TypeScript and narrowing `env.AI.run()` return types](/workers-ai/configuration/bindings/#typescript-and-narrowing-envairun-return-types).
+
+:::
+
 ## 4. Develop locally with Wrangler
 
 While in your project directory, test Workers AI locally by running [`wrangler dev`](/workers/wrangler/commands/general/#dev):
@@ -173,4 +179,5 @@ By finishing this tutorial, you have created a Worker, connected it to Workers A
 
 - [Cloudflare Developers community on Discord](https://discord.cloudflare.com) - Submit feature requests, report bugs, and share your feedback directly with the Cloudflare team by joining the Cloudflare Discord server.
 - [Models](/workers-ai/models/) - Browse the Workers AI models catalog.
+- [Workers Bindings](/workers-ai/configuration/bindings/) - Configure Workers AI bindings and narrow `env.AI.run()` return types in TypeScript.
 - [AI SDK](/workers-ai/configuration/ai-sdk) - Learn how to integrate with an AI model.

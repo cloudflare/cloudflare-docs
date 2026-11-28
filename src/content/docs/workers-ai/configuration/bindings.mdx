@@ -8,7 +8,13 @@ products:
   - workers-ai
 ---
 
-import { Type, MetaInfo, WranglerConfig } from "~/components";
+import {
+	Type,
+	MetaInfo,
+	WranglerConfig,
+	TypeScriptExample,
+	PackageManagers,
+} from "~/components";
 
 ## Workers
 
@@ -43,36 +49,198 @@ You can route binding calls through [AI Gateway](/ai-gateway/usage/providers/wor
 
 ### async env.AI.run()
 
-`async env.AI.run()` runs a model. Takes a model as the first parameter, and an object as the second parameter.
+`async env.AI.run()` runs a model. It takes a model ID as the first parameter, an input object as the second parameter, and an optional options object as the third parameter.
 
-```javascript
-const answer = await env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
-    prompt: "What is the origin of the phrase 'Hello, World'"
-});
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export interface Env {
+	AI: Ai;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const answer = await env.AI.run("@cf/google/gemma-4-26b-a4b-it", {
+			messages: [
+				{
+					role: "user",
+					content: "What is the origin of the phrase 'Hello, World'?",
+				},
+			],
+		});
+
+		return Response.json(answer);
+	},
+} satisfies ExportedHandler<Env>;
 ```
+
+</TypeScriptExample>
 
 **Parameters**
 
-
-
 * `model` <Type text="string" /> <MetaInfo text="required" />
+  * The model ID to run.
+* `inputs` <Type text="object" /> <MetaInfo text="required" />
+  * Model-specific input parameters, such as `messages`, `prompt`, or `text`.
+  * **Supported options**
+    * `stream` <Type text="boolean" /> <MetaInfo text="optional" />
+      * Returns a `ReadableStream` of Server-Sent Events (SSE) as results become available, for models that support streaming.
+* `options` <Type text="AiOptions" /> <MetaInfo text="optional" />
+  * Request options such as `gateway`, `queueRequest`, `returnRawResponse`, or `signal`.
 
-  * The model to run.
+To stream a text-generation response directly to a client, pass `stream: true` and return the `ReadableStream` with a `text/event-stream` content type:
 
-  **Supported options**
+<TypeScriptExample filename="src/index.ts">
 
-  * `stream` <Type text="boolean" /> <MetaInfo text="optional" />
-    * Returns a stream of results as they are available.
+```ts
+export interface Env {
+	AI: Ai;
+}
 
+export default {
+	async fetch(request, env): Promise<Response> {
+		const stream = await env.AI.run("@cf/google/gemma-4-26b-a4b-it", {
+			messages: [
+				{
+					role: "user",
+					content: "What is the origin of the phrase 'Hello, World'?",
+				},
+			],
+			stream: true,
+		});
 
-
-```javascript
-const answer = await env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
-    prompt: "What is the origin of the phrase 'Hello, World'",
-    stream: true
-});
-
-return new Response(answer, {
-    headers: { "content-type": "text/event-stream" }
-});
+		return new Response(stream, {
+			headers: { "content-type": "text/event-stream" },
+		});
+	},
+} satisfies ExportedHandler<Env>;
 ```
+
+</TypeScriptExample>
+
+## TypeScript and narrowing `env.AI.run()` return types
+
+Generate typed `Env` bindings (such as `interface Env { AI: Ai; }`) and current `AiModels` definitions from your Wrangler configuration by running [`wrangler types`](/workers/wrangler/commands/workers/#types):
+
+<PackageManagers type="exec" pkg="wrangler" args="types" />
+
+Re-run `wrangler types` whenever you update your Wrangler configuration or adopt newer Workers AI models so your `worker-configuration.d.ts` file stays current. For setup details, refer to [TypeScript](/workers/languages/typescript/).
+
+When you access properties such as `.response`, `.choices`, or `.data` directly on `await env.AI.run(...)`, TypeScript may report that the property does not exist on the returned type. Many Workers AI model outputs are union types for three reasons:
+
+* **Streaming and non-streaming responses**: Passing a literal `stream: true` matches the `Promise<ReadableStream>` overload. When streaming is conditional (for example, a helper that handles both streamed and non-streamed calls, or older generated types typed as `ReadableStream | { response?: string; ... }`), the result can be either a `ReadableStream` or a JSON object.
+* **Different text-generation response shapes**: Models that use the OpenAI Chat Completions schema (such as `@cf/google/gemma-4-26b-a4b-it`) return `{ choices: [...] }` with text in `choices[0]?.message.content`, while models that use the native Workers AI schema (such as `@cf/meta/llama-3.3-70b-instruct-fp8-fast`) return `{ response: string }` in a union with `string` and async response shapes.
+* **Synchronous and asynchronous batch responses**: Models that support the [Batch API](/workers-ai/features/batch-api/workers-binding/) — including embedding models such as `@cf/baai/bge-base-en-v1.5` and text-generation models such as `@cf/meta/llama-3.3-70b-instruct-fp8-fast` — type their return value as a union of the synchronous payload (`{ data?: number[][]; shape?: number[] }` or `{ response: string }`) and an async response (`{ request_id?: string }`).
+
+Use runtime type guards (`instanceof` and `in` checks) to narrow the union safely instead of casting with `as any`.
+
+### Narrow text generation responses
+
+The following example uses runtime checks (`result instanceof ReadableStream`, `typeof result === "string"`, `"choices" in result`, and `"response" in result`) to handle streamed responses, OpenAI-compatible `choices` responses, native `response` objects, and async batch responses without type assertions:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export interface Env {
+	AI: Ai;
+}
+
+type TextGenerationResult =
+	| ReadableStream
+	| AiModels["@cf/google/gemma-4-26b-a4b-it"]["postProcessedOutputs"]
+	| AiModels["@cf/meta/llama-3.3-70b-instruct-fp8-fast"]["postProcessedOutputs"];
+
+function toHttpResponse(result: TextGenerationResult): Response {
+	if (result instanceof ReadableStream) {
+		return new Response(result, {
+			headers: { "content-type": "text/event-stream" },
+		});
+	}
+
+	if (typeof result === "string") {
+		return Response.json({ text: result });
+	}
+
+	if ("choices" in result) {
+		const text = result.choices[0]?.message.content ?? "";
+		return Response.json({ text });
+	}
+
+	if ("response" in result) {
+		return Response.json({ text: result.response });
+	}
+
+	return Response.json(
+		{ status: "queued", requestId: result.request_id },
+		{ status: 202 },
+	);
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const url = new URL(request.url);
+
+		if (url.searchParams.get("stream") === "true") {
+			const stream = await env.AI.run("@cf/google/gemma-4-26b-a4b-it", {
+				messages: [{ role: "user", content: "Explain Cloudflare Workers." }],
+				stream: true,
+			});
+			return toHttpResponse(stream);
+		}
+
+		const result =
+			url.searchParams.get("model") === "llama"
+				? await env.AI.run("@cf/meta/llama-3.3-70b-instruct-fp8-fast", {
+						messages: [{ role: "user", content: "Explain Cloudflare Workers." }],
+					})
+				: await env.AI.run("@cf/google/gemma-4-26b-a4b-it", {
+						messages: [{ role: "user", content: "Explain Cloudflare Workers." }],
+					});
+
+		return toHttpResponse(result);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+:::note
+
+If you pass a dynamic `boolean` variable to `stream` instead of a literal `true`, TypeScript selects the non-streaming overload even though `env.AI.run()` returns a `ReadableStream` at runtime when the value is `true`. Branch on the condition and pass literal `stream: true` as shown in the example, or check `result instanceof ReadableStream` before reading object fields.
+
+:::
+
+### Narrow embedding responses
+
+Embedding models that support asynchronous batching type their return value as a union of `{ data?: number[][]; shape?: number[] }` and `{ request_id?: string }`. Check `"data" in result` before reading embedding vectors:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export interface Env {
+	AI: Ai;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const result = await env.AI.run("@cf/baai/bge-base-en-v1.5", {
+			text: ["Workers AI runs inference on the Cloudflare global network."],
+		});
+
+		if (!("data" in result) || !result.data?.length) {
+			return Response.json(
+				{ error: "No embedding vectors returned", result },
+				{ status: 500 },
+			);
+		}
+
+		const vector = result.data[0];
+		return Response.json({
+			dimensions: vector?.length ?? 0,
+			shape: result.shape,
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
