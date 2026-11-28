@@ -141,8 +141,9 @@ non-interactive run:
   A new project uses the package manager that started `cf`, or npm. Pass
   `--package-manager` to choose another.
 
-Before you pass `--force` in a job, read the command's `--help` output. On some
-commands, `--force` is also an API parameter.
+Before you pass `--force` in a job, read the command's `--help` output. For
+example, `cf deploy --force` lets a deployment proceed even when the remote
+Worker has conflicting changes.
 
 ### Commit the project configuration
 
