@@ -14,6 +14,14 @@ D1 is compatible with most SQLite's SQL convention since it leverages SQLite's q
 
 You can execute any of these statements via the D1 console in the Cloudflare dashboard, [`wrangler d1 execute`](/workers/wrangler/commands/d1/#d1-execute), or with the [D1 Worker Bindings API](/d1/worker-api/d1-database).
 
+## Transactions
+
+D1 manages transactions for you. It rejects SQL transaction control statements such as `BEGIN`, `COMMIT`, `END`, `ROLLBACK`, `SAVEPOINT`, `RELEASE`, and `ROLLBACK TO` when you execute them through a Worker binding or the D1 REST API. Calling `prepare()` alone does not execute or reject the statement.
+
+To commit multiple statements together, pass prepared statements to [`env.DB.batch([...])`](/d1/worker-api/d1-database/#batch). D1 runs the statements in order and commits them in one SQLite transaction.
+
+For conditional state transitions (such as debiting a balance or claiming a job), use a single guarded `UPDATE ... WHERE ... RETURNING ...` statement instead of separate read and write queries. For an example, refer to [Conditional atomic updates](/d1/best-practices/query-d1/#conditional-atomic-updates).
+
 ## Supported SQLite extensions
 
 <Render file="d1-do-supported-sqlite-extensions" product="d1" params={{ product: "D1 supports" }}/>

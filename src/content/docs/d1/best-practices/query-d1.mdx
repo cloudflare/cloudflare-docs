@@ -8,6 +8,8 @@ products:
   - d1
 ---
 
+import { TypeScriptExample } from "~/components";
+
 D1 is compatible with most SQLite's SQL convention since it leverages SQLite's query engine. You can use SQL commands to query D1.
 
 There are a number of ways you can interact with a D1 database:
@@ -129,3 +131,56 @@ npx wrangler d1 execute prod-d1-tutorial --command="SELECT * FROM Customers"
 │ 13         │ Bs Beverages        │ Random Name       │
 └────────────┴─────────────────────┴───────────────────┘
 ```
+
+## Conditional atomic updates (`UPDATE ... WHERE ... RETURNING`) {/* conditional-atomic-updates */}
+
+Because D1 does not support interactive `BEGIN`/`COMMIT` transactions, running a `SELECT` to check a precondition followed by a separate `UPDATE` creates a race condition: two concurrent requests can both pass the check before either write commits.
+
+To debit credits, consume a single-use token, or claim a job, check the condition and write in the same `UPDATE ... WHERE ... RETURNING ...` statement. D1 applies the check and the write together. If the `UPDATE` matches no rows, [`first()`](/d1/worker-api/prepared-statements/#first) returns `null`.
+
+This example assumes `accounts.id` is unique and balances use whole credits.
+
+<TypeScriptExample>
+
+```ts
+export interface Env {
+	DB: D1Database;
+}
+
+interface AccountRow {
+	id: string;
+	balance: number;
+}
+
+async function debitAccount(
+	env: Env,
+	accountId: string,
+	amount: number,
+): Promise<Response> {
+	if (!Number.isSafeInteger(amount) || amount <= 0) {
+		return Response.json(
+			{ error: "Amount must be a positive safe integer" },
+			{ status: 400 },
+		);
+	}
+
+	const result = await env.DB.prepare(
+		"UPDATE accounts SET balance = balance - ? WHERE id = ? AND balance >= ? RETURNING id, balance",
+	)
+		.bind(amount, accountId, amount)
+		.first<AccountRow>();
+
+	if (result === null) {
+		return Response.json(
+			{ error: "Insufficient balance or account not found" },
+			{ status: 409 },
+		);
+	}
+
+	return Response.json({ id: result.id, balance: result.balance });
+}
+```
+
+</TypeScriptExample>
+
+To commit multiple writes together, use [`env.DB.batch([...])`](/d1/worker-api/d1-database/#batch). If your code needs to branch on the result of a read within the same transaction, consider a SQLite-backed Durable Object. You can read and write the object's own SQLite storage in a synchronous [`transactionSync()`](/durable-objects/api/sqlite-storage-api/#transactionsync) callback. That transaction cannot include D1 binding calls or other asynchronous operations.
