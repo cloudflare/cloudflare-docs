@@ -8,7 +8,7 @@ products:
 
 import { DashButton } from "~/components";
 
-Preview deployments allow you to preview new versions of your project without deploying it to production. To view preview deployments:
+Preview deployments allow you to preview new versions of your project without deploying it to production. For previewing projects on Cloudflare Workers, refer to [Worker Previews](/workers/previews/). To view preview deployments:
 
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
@@ -71,7 +71,7 @@ Branch name aliases are lowercased and non-alphanumeric characters are replaced 
 
 To view branch aliases within your Pages project, select **View build** for any preview deployment. **Deployment details** will display all aliases associated with that deployment.
 
-You can attach a Preview alias to a custom domain by [adding a custom domain to a branch](https://developers.cloudflare.com/pages/how-to/custom-branch-aliases/).
+You can attach a Preview alias to a custom domain by [adding a custom domain to a branch](/pages/how-to/custom-branch-aliases/).
 
 ## Delete preview deployments
 
@@ -89,7 +89,7 @@ The latest deployment for a branch cannot be deleted.
 
 ## Preview indexing by search engines
 
-To maintain a healthy SEO profile, it's vital to prevent search engines from finding duplicate content across the web. Because preview deployments are designed to be an exact replica of your production environment, they inherently create this exact situation. Cloudflare Pages by default ensures your search rankings are not harmed by these temporary previews.
+To maintain a healthy SEO profile, it is important to prevent search engines from finding duplicate content across the web. Because preview deployments are designed to be an exact replica of your production environment, they inherently create this exact situation. Cloudflare Pages by default ensures your search rankings are not harmed by these temporary previews.
 
 ### X-Robots-Tag: noindex on Preview Deployments
 
