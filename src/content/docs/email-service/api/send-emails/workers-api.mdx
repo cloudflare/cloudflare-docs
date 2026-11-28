@@ -156,10 +156,11 @@ export default {
 			}
 
 			// Email Service errors have .code and .message properties
-			console.error("Email sending failed:", error.code, error.message);
+			const err = error as { code: string; message: string };
+			console.error("Email sending failed:", err.code, err.message);
 
 			// Handle specific error types
-			switch (error.code) {
+			switch (err.code) {
 				case "E_SENDER_DOMAIN_NOT_AVAILABLE":
 					return new Response(
 						JSON.stringify({
@@ -182,7 +183,7 @@ export default {
 					return new Response(
 						JSON.stringify({
 							success: false,
-							error: error.message,
+							error: err.message,
 						}),
 						{ status: 500 },
 					);
