@@ -6,24 +6,24 @@ sidebar:
   order: 1
 products:
   - pages
-
 ---
 
 import { Render } from "~/components";
 
-Below are limits observed by the Cloudflare Free plan. For more details on removing these limits, refer to the [Cloudflare plans](https://www.cloudflare.com/plans) page.
+The following limits apply to Cloudflare Pages by plan type. For more details on plans, refer to the [Cloudflare plans](https://www.cloudflare.com/plans/) page.
 
 <Render file="limits_increase" product="workers" />
 
 ## Builds
 
-Each time you push new code to your Git repository, Pages will build and deploy your site. Build limits depend on your plan:
+Each time you push new code to your Git repository, Pages builds and deploys your site. Build limits depend on your plan:
+
 |                  | Free              | Pro                 | Business             |
 | ---------------- | ----------------- | ------------------- | -------------------- |
 | Builds           | 1 build at a time | 5 concurrent builds | 20 concurrent builds |
 | Builds per month | 500               | 5,000               | 20,000               |
 
-Builds will timeout after 20 minutes. Concurrent builds are counted per account.
+Builds time out after 20 minutes. Concurrent builds are counted per account. For Enterprise build limits, contact your account team.
 
 ## Custom domains
 
@@ -73,15 +73,15 @@ To serve larger files, consider uploading them to [R2](/r2/) and utilizing the [
 
 ## Functions
 
-Requests to [Pages functions](/pages/functions/) count towards your quota for Workers plans, including requests from your Function to KV or Durable Object bindings.
+Requests to [Pages Functions](/pages/functions/) count toward your Workers plan request quota and CPU limits. Subrequests from a Function to bindings such as KV or Durable Objects do not count as additional Workers requests, though each bound service has its own usage quotas and pricing.
 
-Pages supports the [Standard usage model](/workers/platform/pricing/#example-pricing-standard-usage-model).
+Pages supports the [Workers Standard usage model](/workers/platform/pricing/#workers).
 
 ## Headers
 
 A `_headers` file can have a maximum of 100 header rules.
 
-An individual header in a `_headers` file can have a maximum of 2,000 characters. For managing larger headers, it is recommended to implement [Pages Functions](/pages/functions/).
+Each header line in a `_headers` file can have a maximum of 2,000 characters. For managing larger headers, use [Pages Functions](/pages/functions/).
 
 ## Preview deployments
 
@@ -89,11 +89,11 @@ Preview deployments count toward the deployments that Cloudflare keeps for each 
 
 ## Redirects
 
-A `_redirects` file can have a maximum of 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. It is recommended to use [Bulk Redirects](/pages/configuration/redirects/#surpass-_redirects-limits) when you have a need for more than the `_redirects` file supports.
+A `_redirects` file can have a maximum of 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects, with a 1,000-character limit per rule. Use [Bulk Redirects](/pages/configuration/redirects/#surpass-_redirects-limits) when you need more rules than `_redirects` supports.
 
 ## Users
 
-Your Pages site can be managed by an unlimited number of users via the Cloudflare dashboard. Note that this does not correlate with your Git project – you can manage both public and private repositories, open issues, and accept pull requests via without impacting your Pages site.
+Your Pages site can be managed by an unlimited number of users via the Cloudflare dashboard. This does not correlate with your Git project — you can manage both public and private repositories, open issues, and accept pull requests without impacting your Pages site.
 
 ## Projects
 

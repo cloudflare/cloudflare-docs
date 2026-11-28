@@ -8,19 +8,22 @@ products:
 
 import { DashButton } from "~/components";
 
-With Deploy Hooks, you can trigger deployments using event sources beyond commits in your source repository. Each event source may obtain its own unique URL, which will receive HTTP POST requests in order to initiate new deployments. This feature allows you to integrate Pages with new or existing workflows. For example, you may:
+With Deploy Hooks, you can trigger deployments using event sources beyond commits in your source repository. Each event source may obtain its own unique URL, which will receive HTTP POST requests in order to initiate new deployments. This feature allows you to integrate Pages with new or existing workflows. For Deploy Hooks on Cloudflare Workers, refer to [Workers Builds Deploy Hooks](/workers/ci-cd/builds/deploy-hooks/).
+
+For example, you can:
 
 - Automatically deploy new builds whenever content in a Headless CMS changes
 - Implement a fully customized CI/CD pipeline, deploying only under desired conditions
-- Schedule a CRON trigger to update your website on a fixed timeline
+- Schedule a [Cron Trigger](/workers/configuration/cron-triggers/) to update your website on a fixed timeline
 
 To create a Deploy Hook:
 
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
+
 2. Select your Pages project.
-3. Go to **Settings** > **Builds** and select **Add deploy hook** to start configuration.
+3. Go to **Settings** > **Build** and select **Add deploy hook** to start configuration.
 
 ![Add a deploy hook on the Cloudflare dashboard](~/assets/images/pages/platform/deploy-hooks-add.png)
 
@@ -39,11 +42,11 @@ Once your configuration is complete, the Deploy Hook’s unique URL is ready to 
 
 ![Reviewing the Deploy Hook's newly generated unique URL](~/assets/images/pages/platform/deploy-hooks-details.png)
 
-Every time a request is sent to your Deploy Hook, a new build will be triggered. Review the **Source** column of your deployment log to see which deployment were triggered by a Deploy Hook.
+Every time a request is sent to your Deploy Hook, a new build will be triggered. Review the **Source** column of your deployment log to see which deployments were triggered by a Deploy Hook.
 
 ![Reviewing which deployment was triggered by a Deploy Hook](~/assets/images/pages/platform/deploy-hooks-deployment-logs.png)
 
-## Security Considerations
+## Security considerations
 
 Deploy Hooks are uniquely linked to your project and do not require additional authentication to be used. While this does allow for complete flexibility, it is important that you protect these URLs in the same way you would safeguard any proprietary information or application secret.
 
@@ -91,12 +94,10 @@ In your Strapi Admin Panel, you can set up and configure webhooks to enhance you
 
 In the Strapi Admin Panel, you can configure your webhook to be triggered based on events. You can adjust these settings to create a new deployment of your Cloudflare Pages site automatically when a Strapi entry or media asset is created, updated, or deleted.
 
-Be sure to add the webhook configuration to the [production](https://strapi.io/documentation/developer-docs/latest/setup-deployment-guides/installation.html) Strapi application that powers your Cloudflare site.
+Be sure to add the webhook configuration to the [production Strapi application](https://docs.strapi.io/cms/backend-customization/webhooks) that powers your Cloudflare site.
 
 ![Configuring Deploy Hooks with Strapi](~/assets/images/pages/platform/strapi.png)
 
 ### Storyblok
 
 You can set up and configure deploy hooks in Storyblok to trigger events. In your Storyblok space, go to **Settings** and scroll down to **Webhooks**. Paste your deploy hook into the **Story published & unpublished** field and select **Save**.
-
-![Configuring Deploy Hooks with Storyblok](https://user-images.githubusercontent.com/53130544/161367254-ff475f3b-2821-4ee8-a175-8e96e779aa08.png)
