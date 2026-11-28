@@ -44,7 +44,7 @@ To create a DNS record in the dashboard:
 3. Choose a record [**Type**](/dns/manage-dns-records/reference/dns-record-types/).
 4. Complete the required fields, which vary per record. Particularly important fields (for some records) include:
    - **Proxy status**: For `A`, `AAAA`, and `CNAME` records, decide whether hostname traffic is <GlossaryTooltip term="proxy status" link="/dns/proxy-status/">proxied through Cloudflare</GlossaryTooltip>.
-   - **TTL**: Short for [_Time to Live_](/dns/manage-dns-records/reference/ttl/), this field controls how long each record is valid and — as a result — how long it takes for record updates to reach your end users.
+   - **TTL**: [Time to Live (TTL)](/dns/manage-dns-records/reference/ttl/) controls how long DNS resolvers cache a record. For proxied records, the TTL is fixed at **Auto** (300 seconds) and cannot be changed. For DNS-only records, you can configure the TTL.
    - **Comment** and **Tag**: [Record attributes](/dns/manage-dns-records/reference/record-attributes/) meant for your reference.
    - **Private network routing**: Some Enterprise customers also have access to [private network routing](/dns/private-origins/private-network-routing/). For `A` and `AAAA` records, this feature allows you to proxy HTTP/HTTPS traffic from public hostnames to origins in your private network.
 5. Select **Save**.
@@ -115,9 +115,9 @@ If you are not sure which IP address to use, refer to your hosting provider's do
 
 ### Originless setups
 
-If you need a placeholder address for an originless setup (also referred to as parked domain or redirect-only), you can use the reserved IPv6 address `100::` or the reserved IPv4 address `192.0.2.0` in a <GlossaryTooltip term="proxy status" link="/dns/proxy-status/">proxied</GlossaryTooltip> DNS record.
+To use [Redirect Rules](/rules/url-forwarding/), [Page Rules](/rules/page-rules/), or [Workers](/workers/) without an origin server, you can configure a DNS record with a placeholder IP address. This is known as an originless setup (also referred to as a parked domain or redirect-only setup).
 
-This allows you to route requests using products such as [Redirect Rules](/rules/url-forwarding/), [Page Rules](/rules/page-rules/), or [Workers](/workers/).
+Use the reserved IPv6 address `100::` in an `AAAA` record or the reserved IPv4 address `192.0.2.0` in an `A` record. Set the **Proxy status** to <GlossaryTooltip term="proxy status" link="/dns/proxy-status/">Proxied</GlossaryTooltip>.
 
 :::note
 The address `192.0.2.0` comes from an IPv4 range reserved for documentation ([RFC 5737](https://www.rfc-editor.org/rfc/rfc5737)), and `100::` comes from the IPv6 discard prefix `0100::/64` ([RFC 6666](https://www.rfc-editor.org/rfc/rfc6666)). Neither address is expected to route to a real server on properly configured networks, which makes them safe to use as placeholder values. Because the DNS record is proxied, Cloudflare intercepts the request before it reaches the origin address.
