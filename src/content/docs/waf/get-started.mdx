@@ -36,7 +36,7 @@ This guide focuses on configuring WAF for individual domains, known as <Glossary
 ## Before you begin
 
 - Make sure that you have [set up a Cloudflare account](/fundamentals/account/) and [added your domain](/fundamentals/manage-domains/add-site/) to Cloudflare.
-- Users on the Free plan have access to the Cloudflare Free Managed Ruleset, a subset of the Cloudflare Managed Ruleset. The Free Managed Ruleset is deployed by default on Free plans and is not specifically covered in this guide.<br/>If you are on a Free plan, you may skip to [5. Review traffic in security dashboards](#5-review-traffic-in-security-dashboards).
+- Users on the Free plan have access to the Cloudflare Free Managed Ruleset, a subset of the Cloudflare Managed Ruleset. The Free Managed Ruleset is deployed by default on Free plans and is not specifically covered in this guide. When querying the Rulesets API, a `404 Not Found` response while [getting a zone entry point ruleset](/ruleset-engine/basic-operations/view-rulesets/#get-an-entry-point-ruleset) for `http_request_firewall_managed` means no custom zone entry point exists — a missing zone entry point alone does not establish whether default protection runs.<br/>If you are on a Free plan, you may skip to [5. Review traffic in security dashboards](#5-review-traffic-in-security-dashboards).
 
 ## 1. Deploy the Cloudflare Managed Ruleset
 
