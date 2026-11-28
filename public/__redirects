@@ -2706,6 +2706,7 @@
 # workflows
 /workflows/get-started/cli-quick-start/ /workflows/get-started/guide/ 301
 /workflows/reference/storage-options/ /workers/platform/storage-options/ 301
+/workflows/reference/wrangler-commands/ /workflows/reference/cli-commands/ 301
 /workflows/tutorials/ /workflows/examples 301
 # workers KV
 /kv/platform/environments/ /kv/reference/environments/ 301

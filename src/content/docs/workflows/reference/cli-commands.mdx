@@ -1,0 +1,33 @@
+---
+pcx_content_type: navigation
+title: CLI commands
+description: Cloudflare CLI (cf) and Wrangler commands for managing, deploying, and interacting with Cloudflare Workflows.
+sidebar:
+  order: 80
+products:
+  - workflows
+---
+
+import {
+	CfNamespace,
+	TabItem,
+	Tabs,
+	WranglerNamespace,
+} from "~/components";
+
+<Tabs syncKey="cli">
+<TabItem label="Cloudflare CLI (cf)">
+
+Workflows commands in the [Cloudflare CLI (`cf`)](/cf/) manage deployed Workflows and their instances from the command line. Pass an explicit instance ID (from `cf workflows instances list --workflow-name <WORKFLOW_NAME>`) to instance commands. `cf workflows instances pause`, `resume`, `terminate`, and `restart` currently also require passing `--status` (for example, `--status terminate`). To inspect or manage local Workflow instances during `cf dev`, use [Local Explorer](/workflows/build/local-development/#local-explorer).
+
+<CfNamespace namespace="workflows" />
+
+</TabItem>
+<TabItem label="Wrangler">
+
+Workflows Wrangler commands manage Workflows and their instances from the command line, including local instances when running `wrangler dev` with `--local`. This page lists the Wrangler commands for Workflows.
+
+<WranglerNamespace namespace="workflows" />
+
+</TabItem>
+</Tabs>

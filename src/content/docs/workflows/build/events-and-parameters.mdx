@@ -9,10 +9,12 @@ products:
 ---
 
 import {
+	CliVariant,
+	CliVariants,
 	MetaInfo,
+	PackageManagers,
 	Render,
 	Type,
-	WranglerConfig,
 	TypeScriptExample,
 } from "~/components";
 
@@ -24,8 +26,8 @@ Events are a powerful part of a Workflow, as you often want a Workflow to act on
 
 You can pass parameters to a Workflow in three ways:
 
-- As an optional argument to the `create` method on a [Workflow binding](/workers/wrangler/commands/general/#trigger) when triggering a Workflow from a Worker.
-- Via the `--params` flag when using the `wrangler` CLI to trigger a Workflow.
+- As an optional argument to the `create` method on a [Workflow binding](/workflows/build/workers-api/#create) or [`ctx.exports`](/workflows/build/workers-api/#call-a-workflow-through-ctxexports) when triggering a Workflow from a Worker.
+- Via the command-line interface (`wrangler` or `cf`) when triggering a Workflow.
 - Via the `step.waitForEvent` API, which allows a Workflow instance to wait for an event (and optional data) to be received _while it is running_. Workflow instances can be sent events from external services over HTTP or via the Workers API for Workflows.
 
 You can pass any JSON-serializable object as a parameter.
@@ -62,15 +64,32 @@ export default {
 
 </TypeScriptExample>
 
-To pass parameters via the `wrangler` command-line interface, pass a JSON string as the second parameter to the `workflows trigger` sub-command:
+<CliVariants>
+<CliVariant cli="wrangler">
 
-```sh
-npx wrangler@latest workflows trigger workflows-starter '{"some":"data"}'
-```
+To pass parameters via the `wrangler` command-line interface, pass a JSON string as the second parameter to the `workflows trigger` subcommand:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args={`workflows trigger workflows-starter '{"some":"data"}'`}
+/>
 
 ```sh output
 🚀 Workflow instance "57c7913b-8e1d-4a78-a0dd-dce5a0b7aa30" has been queued successfully
 ```
+
+</CliVariant>
+<CliVariant cli="cf">
+
+To pass parameters via the [Cloudflare CLI (`cf`)](/cf/), pass a JSON string with the `--params` flag to `cf workflows instances create`:
+
+```sh
+cf workflows instances create workflows-starter --params '{"some":"data"}'
+```
+
+</CliVariant>
+</CliVariants>
 
 ### Wait for events
 
@@ -215,7 +234,7 @@ export type WorkflowEvent<T> = {
 };
 ```
 
-When a Workflow instance is created by a cron schedule configured on a Workflow binding, `event.schedule` includes the cron expression that created the instance and the scheduled trigger time:
+When a Workflow instance is created by a cron schedule configured on a Workflow, `event.schedule` includes the cron expression that created the instance and the scheduled trigger time:
 
 ```ts
 export class MyWorkflow extends WorkflowEntrypoint<Env> {

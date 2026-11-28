@@ -9,10 +9,13 @@ products:
 ---
 
 import {
+	CliVariant,
+	CliVariants,
 	Details,
 	LinkCard,
 	Render,
 	PackageManagers,
+	TypeScriptExample,
 	WranglerConfig,
 	Steps,
 } from "~/components";
@@ -46,6 +49,9 @@ Follow the steps below to learn how to build a Workflow from scratch.
 <Render file="prereqs" product="workers" />
 
 ## 1. Create a new Worker project
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 <Steps>
 
@@ -83,6 +89,42 @@ Follow the steps below to learn how to build a Workflow from scratch.
    </Details>
 
 </Steps>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+If you have not used `cf` before, [install it](/cf/get-started/) first.
+
+<Steps>
+
+1. Open a terminal and run `cf init` to create your Worker project:
+
+   ```sh
+   cf init my-workflow
+   ```
+
+2. Move into your new project directory:
+
+   ```sh
+   cd my-workflow
+   ```
+
+   <Details header="What files did cf init create?">
+
+   In your project directory, `cf init` creates the following:
+   - `cloudflare.config.ts`: Your [typed Cloudflare configuration file](/cf/projects/cloudflare-config/).
+   - `src/index.ts`: A minimal Worker written in TypeScript.
+   - `vite.config.ts` and `vitest.config.ts`: Configuration for the Cloudflare Vite plugin and testing.
+   - `package.json`: Project dependencies and `cf` scripts.
+   - `tsconfig.json`: TypeScript configuration.
+   - `.cloudflare/types/index.d.ts`: Generated binding and runtime types.
+
+   </Details>
+
+</Steps>
+
+</CliVariant>
+</CliVariants>
 
 ## 2. Write your Workflow
 
@@ -144,16 +186,37 @@ Follow the steps below to learn how to build a Workflow from scratch.
 
 <Steps>
 
-1. Open `wrangler.jsonc`, which is your [Wrangler configuration file](/workers/wrangler/configuration/) for your Workers project and your Workflow, and add the `workflows` configuration:
+1. Open your configuration file (`wrangler.jsonc` or `cloudflare.config.ts`) and add the Workflow configuration:
 
-   <WranglerConfig>
+   <WranglerConfig
+   	cfConfig={[
+   		'import { defineConfig, exports } from "cf/config";',
+   		'import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };',
+   		"",
+   		"export default defineConfig({",
+   		"\tworker: {",
+   		'\t\tname: "my-workflow",',
+   		"\t\tentrypoint,",
+   		'\t\tcompatibilityDate: "$today",',
+   		"\t\tobservability: {",
+   		"\t\t\tenabled: true,",
+   		"\t\t},",
+   		"\t\texports: {",
+   		"\t\t\tMyWorkflow: exports.workflow({",
+   		'\t\t\t\tname: "my-workflow",',
+   		"\t\t\t}),",
+   		"\t\t},",
+   		"\t},",
+   		"});",
+   	].join("\n")}
+   >
 
    ```json title="wrangler.jsonc"
    {
    	"$schema": "node_modules/wrangler/config-schema.json",
    	"name": "my-workflow",
    	"main": "src/index.ts",
-       "upload_source_maps": true,
+   	"upload_source_maps": true,
    	"compatibility_date": "$today",
    	"observability": {
    		"enabled": true
@@ -168,61 +231,121 @@ Follow the steps below to learn how to build a Workflow from scratch.
    }
    ```
 
-    </WranglerConfig>
+   </WranglerConfig>
 
-    The `class_name` must match your exported class, and `binding` is the variable name you use to access the Workflow in your code (like `env.MY_WORKFLOW`).
+   <CliVariants>
+   <CliVariant cli="wrangler">
 
-    If you want the same Workflow to run automatically on a recurring interval, add `schedules` to the Workflow definition:
+   The `class_name` must match your exported class, and `binding` is the variable name you use to access the Workflow in your code (like `env.MY_WORKFLOW`).
 
-    <WranglerConfig>
+   </CliVariant>
+   <CliVariant cli="cf">
 
-    ```jsonc
-    {
-      "$schema": "node_modules/wrangler/config-schema.json",
-      "name": "my-workflow",
-      "main": "src/index.ts",
-      "upload_source_maps": true,
-      "compatibility_date": "$today",
-      "workflows": [
-        {
-          "name": "my-workflow",
-          "binding": "MY_WORKFLOW",
-          "class_name": "MyWorkflow",
-          "schedules": ["0 * * * *"]
-        }
-      ]
-    }
-    ```
+   The key under `worker.exports` (`MyWorkflow`) must match your exported class name. Because the Workflow is declared in `worker.exports`, your Worker accesses it directly through `ctx.exports.MyWorkflow` without a separate `env` binding.
 
-    </WranglerConfig>
+   </CliVariant>
+   </CliVariants>
 
-    Each matching cron expression creates a new Workflow instance automatically, so you do not need top-level `triggers.crons` and a separate `scheduled` handler for Workflow-specific recurring runs.
+   If you want the same Workflow to run automatically on a recurring interval, add `schedules` to the Workflow definition:
 
-    Scheduled instances include the matching cron expression and scheduled trigger time on `event.schedule`.
+   <WranglerConfig
+   	cfConfig={[
+   		'import { defineConfig, exports } from "cf/config";',
+   		'import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };',
+   		"",
+   		"export default defineConfig({",
+   		"\tworker: {",
+   		'\t\tname: "my-workflow",',
+   		"\t\tentrypoint,",
+   		'\t\tcompatibilityDate: "$today",',
+   		"\t\texports: {",
+   		"\t\t\tMyWorkflow: exports.workflow({",
+   		'\t\t\t\tname: "my-workflow",',
+   		'\t\t\t\tschedules: ["0 * * * *"],',
+   		"\t\t\t}),",
+   		"\t\t},",
+   		"\t},",
+   		"});",
+   	].join("\n")}
+   >
 
-    Use the latest Wrangler release when configuring Workflow schedules. If your local Wrangler schema does not recognize `schedules` yet, update Wrangler before deploying.
-
-    You can also access [bindings](/workers/runtime-apis/bindings/) (such as [KV](/kv/), [R2](/r2/), or [D1](/d1/)) via `this.env` within your Workflow. For more information on bindings within Workers, refer to [Bindings (env)](/workers/runtime-apis/bindings/).
-
-2. Now, generate types for your bindings:
-
-   ```sh
-   npx wrangler types
+   ```jsonc
+   {
+   	"$schema": "node_modules/wrangler/config-schema.json",
+   	"name": "my-workflow",
+   	"main": "src/index.ts",
+   	"upload_source_maps": true,
+   	"compatibility_date": "$today",
+   	"workflows": [
+   		{
+   			"name": "my-workflow",
+   			"binding": "MY_WORKFLOW",
+   			"class_name": "MyWorkflow",
+   			"schedules": ["0 * * * *"]
+   		}
+   	]
+   }
    ```
 
+   </WranglerConfig>
+
+   <CliVariants>
+   <CliVariant cli="wrangler">
+
+   Each matching cron expression creates a new Workflow instance automatically, so you do not need top-level `triggers.crons` and a separate `scheduled` handler for Workflow-specific recurring runs.
+
+   Use the latest Wrangler release when configuring Workflow schedules. If your local Wrangler schema does not recognize `schedules` yet, update Wrangler before deploying.
+
+   </CliVariant>
+   <CliVariant cli="cf">
+
+   Each matching cron expression creates a new Workflow instance automatically, so you do not need `triggers.scheduled()` and a separate `scheduled` handler for Workflow-specific recurring runs.
+
+   </CliVariant>
+   </CliVariants>
+
+   Scheduled instances include the matching cron expression and scheduled trigger time on `event.schedule`.
+
+   You can also access [bindings](/workers/runtime-apis/bindings/) (such as [KV](/kv/), [R2](/r2/), or [D1](/d1/)) via `this.env` within your Workflow. For more information on bindings within Workers, refer to [Bindings (env)](/workers/runtime-apis/bindings/).
+
+2. Now, generate types for your bindings and exports:
+
+   <PackageManagers
+   	type="exec"
+   	pkg="wrangler"
+   	args="types"
+   	cfCommand="cf workers types"
+   />
+
+   <CliVariants>
+   <CliVariant cli="wrangler">
+
    This creates a `worker-configuration.d.ts` file with the `Env` type that includes your `MY_WORKFLOW` binding.
+
+   </CliVariant>
+   <CliVariant cli="cf">
+
+   This updates `.cloudflare/types/index.d.ts` with types for `ctx.exports.MyWorkflow`, `env`, and the Workers runtime.
+
+   </CliVariant>
+   </CliVariants>
 
 </Steps>
 
 ## 4. Write your API
 
-Now, you'll need a place to call your Workflow.
+Now, you need a place to call your Workflow.
 
 <Steps>
 
 1. Replace `src/index.ts` with a [fetch handler](/workers/runtime-apis/handlers/fetch/) to start and check Workflow instances:
 
-   ```ts title="src/index.ts"
+   <CliVariants>
+   <CliVariant cli="wrangler">
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
    export { MyWorkflow } from "./workflow";
 
    export default {
@@ -241,9 +364,47 @@ Now, you'll need a place to call your Workflow.
    } satisfies ExportedHandler<Env>;
    ```
 
+   </TypeScriptExample>
+
+   </CliVariant>
+   <CliVariant cli="cf">
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   export { MyWorkflow } from "./workflow";
+
+   export default {
+   	async fetch(
+   		request: Request,
+   		env: Env,
+   		ctx: ExecutionContext,
+   	): Promise<Response> {
+   		const url = new URL(request.url);
+   		const instanceId = url.searchParams.get("instanceId");
+
+   		if (instanceId) {
+   			const instance = await ctx.exports.MyWorkflow.get(instanceId);
+   			return Response.json(await instance.status());
+   		}
+
+   		const instance = await ctx.exports.MyWorkflow.create();
+   		return Response.json({ instanceId: instance.id });
+   	},
+   } satisfies ExportedHandler<Env>;
+   ```
+
+   </TypeScriptExample>
+
+   </CliVariant>
+   </CliVariants>
+
 </Steps>
 
 ## 5. Develop locally
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 <Steps>
 
@@ -275,25 +436,79 @@ Now, you'll need a place to call your Workflow.
 
 </Steps>
 
+</CliVariant>
+<CliVariant cli="cf">
+
+<Steps>
+
+1. Start a local development server:
+
+   ```sh
+   cf dev
+   ```
+
+2. To start a Workflow instance, open a new terminal window and send a request to the local URL printed by `cf dev` (by default `http://localhost:5173` in Vite projects):
+
+   ```sh
+   curl http://localhost:5173
+   ```
+
+   An `instanceId` will be automatically generated:
+
+   ```json output
+   { "instanceId": "abc-123-def" }
+   ```
+
+3. Check the status using the returned `instanceId`:
+
+   ```sh
+   curl "http://localhost:5173?instanceId=abc-123-def"
+   ```
+
+   The Workflow will progress through its steps. After about 20 seconds (the sleep duration), it will complete.
+
+</Steps>
+
+</CliVariant>
+</CliVariants>
+
 ## 6. Deploy your Workflow
 
 <Steps>
 
-1. Deploy your Workflow:
+1. Deploy your Workflow (if using `cf`, sign in first with `cf auth login`):
 
-   ```sh
-   npx wrangler deploy
-   ```
+   <PackageManagers
+   	type="exec"
+   	pkg="wrangler"
+   	args="deploy"
+   	cfCommand="cf deploy"
+   />
 
-   Test in production using the same curl commands against your deployed URL. You can also [trigger a workflow instance](/workflows/build/trigger-workflows/) in production via Workers, Wrangler, or the Cloudflare dashboard.
+   Test in production using the same `curl` commands against your deployed URL. You can also [trigger a workflow instance](/workflows/build/trigger-workflows/) in production via Workers, Wrangler, the Cloudflare CLI (`cf`), or the Cloudflare dashboard.
 
    Once deployed, you can also inspect Workflow instances with the CLI:
+
+   <CliVariants>
+   <CliVariant cli="wrangler">
 
    ```sh
    npx wrangler workflows instances describe my-workflow latest
    ```
 
-   The output of `instances describe` shows:
+   </CliVariant>
+   <CliVariant cli="cf">
+
+   Pass the `instanceId` returned when you triggered the Workflow (or list instances with `cf workflows instances list --workflow-name my-workflow`):
+
+   ```sh
+   cf workflows instances get <INSTANCE_ID> --workflow-name my-workflow
+   ```
+
+   </CliVariant>
+   </CliVariants>
+
+   The output shows:
    - The status (success, failure, running) of each step
    - Any state emitted by the step. For streamed output, the CLI shows a preview or summary instead of the full contents.
    - Any `sleep` state, including when the Workflow will wake up
