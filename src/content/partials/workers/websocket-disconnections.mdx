@@ -1,0 +1,15 @@
+---
+{}
+---
+
+WebSocket connections can end when a client disconnects or loses network connectivity. A disconnect does not necessarily mean the server shut down.
+
+### Close code 1006
+
+A client reports close code `1006` when the connection ends without receiving a Close frame. The client reports this code itself; the server does not send it ([RFC 6455, section 7.4.1](https://www.rfc-editor.org/rfc/rfc6455#section-7.4.1)).
+
+The code alone does not identify the cause of the disconnection.
+
+### Reconnect and restore state
+
+After an unexpected disconnect, [reconnect with backoff and jitter](https://www.rfc-editor.org/rfc/rfc6455#section-7.2.3). Restore the application session when the new connection is established.
