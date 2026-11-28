@@ -16,16 +16,16 @@ This guide will instruct you on how to use these different module types inside y
 
 ECMAScript modules (or in short ES Modules) is the official, [standardized](https://tc39.es/ecma262/#sec-modules) module system for JavaScript. It is the recommended mechanism for writing modular and reusable JavaScript code.
 
-[ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) are defined by the use of `import` and `export` statements. Below is an example of a script written in ES Modules format, and a Pages Function that imports that module:
+[ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) are defined by the use of `import` and `export` statements. The following example shows a TypeScript module and a Pages Function that imports it:
 
-```js
+```ts
 export function greeting(name: string): string {
-  return `Hello ${name}!`;
+	return `Hello ${name}!`;
 }
 ```
 
-```js
-import { greeting } from "../src/greeting.ts";
+```ts
+import { greeting } from "../src/greeting";
 
 export async function onRequest(context) {
 	return new Response(`${greeting("Pages Functions")}`);
@@ -38,15 +38,15 @@ export async function onRequest(context) {
 
 The distributable, loadable, and executable unit of code in WebAssembly is called a [module](https://webassembly.github.io/spec/core/syntax/modules.html).
 
-Below is a basic example of how you can import Wasm Modules inside your Pages Functions code:
+The following example shows how to import a Wasm module inside Pages Functions code:
 
 ```js
-import addModule from "add.wasm";
+import addModule from "./add.wasm";
 
 export async function onRequest() {
 	const addInstance = await WebAssembly.instantiate(addModule);
 	return new Response(
-		`The meaning of life is ${addInstance.exports.add(20, 1)}`,
+		`The meaning of life is ${addInstance.exports.add(21, 21)}`,
 	);
 }
 ```

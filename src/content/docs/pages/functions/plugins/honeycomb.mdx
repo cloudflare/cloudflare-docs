@@ -18,7 +18,7 @@ The Honeycomb Pages Plugin automatically sends traces to Honeycomb for analysis 
 
 ## Usage
 
-The following usage example uses environment variables you will need to set in your Pages project settings.
+The following example reads your Honeycomb API key and dataset from [secrets and environment variables](/pages/functions/bindings/#secrets) configured in your Pages project settings:
 
 ```typescript
 import honeycombPlugin from "@cloudflare/pages-plugin-honeycomb";
@@ -34,18 +34,7 @@ export const onRequest: PagesFunction<{
 };
 ```
 
-Alternatively, you can hard-code (not advisable for API key) your settings the following way:
-
-```typescript
-import honeycombPlugin from "@cloudflare/pages-plugin-honeycomb";
-
-export const onRequest = honeycombPlugin({
-	apiKey: "YOUR_HONEYCOMB_API_KEY",
-	dataset: "YOUR_HONEYCOMB_DATASET_NAME",
-});
-```
-
-This Plugin is based on the `@cloudflare/workers-honeycomb-logger` and accepts the same [configuration options](https://github.com/cloudflare/workers-honeycomb-logger#config).
+This Plugin is based on `@cloudflare/workers-honeycomb-logger` and accepts the same [configuration options](https://github.com/cloudflare/workers-honeycomb-logger#config).
 
 Ensure that you enable the option to **Automatically unpack nested JSON** and set the **Maximum unpacking depth** to **5** in your Honeycomb dataset settings.
 

@@ -1,18 +1,17 @@
 ---
-
-summary: A Pages Functions for appending CORS headers.
+summary: A Pages Function for appending CORS headers.
 tags:
   - Headers
 pcx_content_type: configuration
 title: Adding CORS headers
 sidebar:
   order: 1002
-description: A Pages Functions for appending CORS headers.
+description: A Pages Function for appending CORS headers.
 products:
   - pages
 ---
 
-This example is a snippet from our Cloudflare Pages Template repo.
+Save this middleware as `functions/api/_middleware.ts` to add CORS headers to all `/api/*` routes in your Pages project.
 
 ```ts
 // Respond to OPTIONS method

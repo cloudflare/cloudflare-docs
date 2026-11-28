@@ -12,9 +12,9 @@ Requests to your Functions are billed as Cloudflare Workers requests. Workers pl
 
 ## Paid Plans
 
-Requests to your Pages functions count towards your quota for Workers Paid plans, including requests from your Function to KV or Durable Object bindings.
+Requests to your Pages Functions count toward your Workers Paid plan request quota and CPU limits. Subrequests from a Function to bindings such as KV or Durable Objects do not count as additional Workers requests, though each bound service has its own usage quotas and pricing.
 
-Pages supports the [Standard usage model](/workers/platform/pricing/#example-pricing-standard-usage-model).
+Pages supports the [Workers Standard usage model](/workers/platform/pricing/#workers).
 
 :::note
 

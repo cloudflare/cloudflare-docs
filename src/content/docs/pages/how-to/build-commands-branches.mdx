@@ -5,7 +5,6 @@ title: Set build commands per branch
 description: Run different build commands on specific branches in your Cloudflare Pages project.
 products:
   - pages
-
 ---
 
 import { DashButton } from "~/components";
@@ -19,17 +18,17 @@ Create a `.sh` file in your project directory. You can choose your file's name, 
 In the following script, you will use the `CF_PAGES_BRANCH` environment variable to check which branch is currently being built. Populate your `.sh` file with the following:
 
 ```bash
-# !/bin/bash
+#!/bin/bash
 
-if [ "$CF_PAGES_BRANCH" == "production" ]; then
+if [ "$CF_PAGES_BRANCH" = "production" ]; then
   # Run the "production" script in `package.json` on the "production" branch
-  # "production" should be replaced with the name of your Production branch
+  # Replace "production" with the name of your Production branch
 
   npm run production
 
-elif [ "$CF_PAGES_BRANCH" == "staging" ]; then
+elif [ "$CF_PAGES_BRANCH" = "staging" ]; then
   # Run the "staging" script in `package.json` on the "staging" branch
-  # "staging" should be replaced with the name of your specific branch
+  # Replace "staging" with the name of your specific branch
 
   npm run staging
 
@@ -46,8 +45,9 @@ To put your changes into effect:
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
+
 2. Select your Pages project.
-3. Go to **Settings** > **Build & deployments** > **Build configurations** > **Edit configurations**.
+3. Go to **Settings** > **Build** > **Build configuration**.
 4. Update the **Build command** field value to `bash build.sh` and select **Save**.
 
 To test that your build is successful, deploy your project.

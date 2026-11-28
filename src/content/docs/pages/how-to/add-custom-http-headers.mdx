@@ -5,10 +5,9 @@ description: Customize HTTP headers on Cloudflare Pages using a Workers function
 products:
   - pages
   - workers
-
 ---
 
-import { WranglerConfig } from "~/components";
+import { DashButton, PackageManagers, WranglerConfig } from "~/components";
 
 :::note
 
@@ -16,15 +15,15 @@ Cloudflare provides HTTP header customization for Pages projects by adding a `_h
 
 :::
 
-More advanced customization of HTTP headers is available through Cloudflare Workers [serverless functions](https://www.cloudflare.com/learning/serverless/what-is-serverless/).
+More advanced customization of HTTP headers is available through Cloudflare Workers [serverless functions](https://www.cloudflare.com/learning/serverless/what-is-serverless/). You can also use [Pages Functions middleware](/pages/functions/middleware/) or, for new projects, serve assets directly with [Workers Static Assets](/workers/static-assets/).
 
-If you have not deployed a Worker before, get started with our [tutorial](/workers/get-started/guide/). For the purpose of this tutorial, accomplish steps one (Sign up for a Workers account) through four (Generate a new project) before returning to this page.
+If you have not deployed a Worker before, follow the [Workers Get started guide](/workers/get-started/guide/) to set up your environment before returning to this page.
 
 Before continuing, ensure that your Cloudflare Pages project is connected to a [custom domain](/pages/configuration/custom-domains/#add-a-custom-domain).
 
 ## Writing a Workers function
 
-Workers functions are written in [JavaScript](https://www.cloudflare.com/learning/serverless/serverless-javascript/). When a Worker makes a request to a Cloudflare Pages application, it will receive a response. The response a Worker receives is immutable, meaning it cannot be changed. In order to add, delete, or alter headers, clone the response and modify the headers on a new `Response` instance. Return the new response to the browser with your desired header changes. An example of this is shown below:
+Workers functions are written in [JavaScript](https://www.cloudflare.com/learning/serverless/serverless-javascript/). When a Worker makes a request to a Cloudflare Pages application, it receives a response. The response a Worker receives is immutable, meaning it cannot be changed. In order to add, delete, or alter headers, clone the response and modify the headers on a new `Response` instance. Return the new response to the browser with your desired header changes. An example of this is shown below:
 
 ```js title="Setting custom headers with a Workers function"
 export default {
@@ -55,44 +54,50 @@ export default {
 
 ## Deploying a Workers function in the dashboard
 
-The easiest way to start deploying your Workers function is by typing [workers.new](https://workers.new/) in the browser. Log in to your account to be automatically directed to the Workers & Pages dashboard. From the Workers & Pages dashboard, write your function or use one of the [examples from the Workers documentation](/workers/examples/).
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
-Select **Save and Deploy** when your script is ready and set a [route](/workers/configuration/routing/routes/) in your domain's zone settings.
+   <DashButton url="/?to=/:account/workers-and-pages" />
 
-For example, [here is a Workers script](/workers/examples/security-headers/) you can copy and paste into the Workers dashboard that sets common security headers whenever a request hits your Pages URL, such as X-XSS-Protection, X-Frame-Options, X-Content-Type-Options, Strict-Transport-Security, Content-Security-Policy (CSP), and more.
+2. Create a new Worker and paste your header-modification code (or use one of the [examples from the Workers documentation](/workers/examples/)).
+3. Select **Deploy**, then configure a [route](/workers/configuration/routing/routes/) in your domain's zone settings matching your Pages custom domain.
+
+For example, the [security headers Worker example](/workers/examples/security-headers/) sets common security headers whenever a request hits your URL, such as `X-Frame-Options`, `X-Content-Type-Options`, `Strict-Transport-Security`, and `Content-Security-Policy`.
 
 ## Deploying a Workers function using the CLI
 
-If you would like to skip writing this file yourself, you can use our `custom-headers-example` [template](https://github.com/kristianfreeman/custom-headers-example) to generate a new Workers function with [wrangler](/workers/wrangler/install-and-update/), the Workers CLI tool.
+To deploy a header-modifying Worker with [Wrangler](/workers/wrangler/install-and-update/), create a new Worker project:
 
-```sh title="Generating a serverless function with wrangler"
-git clone https://github.com/cloudflare/custom-headers-example
-cd custom-headers-example
-npm install
-```
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args="custom-headers-worker"
+/>
 
-To operate your Workers function alongside your Pages application, deploy it to the same custom domain as your Pages application. To do this, update the Wrangler file in your project with your account and zone details:
+Replace the contents of `src/index.ts` (or `src/index.js` if you selected JavaScript) with the Worker code from the previous example.
+
+To operate your Worker alongside your Pages application, deploy it on a route matching your Pages custom domain. Update your [Wrangler configuration file](/workers/wrangler/configuration/) with your route and zone details:
 
 <WranglerConfig>
 
 ```jsonc
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
-	"name": "custom-headers-example",
-	"account_id": "FILL-IN-YOUR-ACCOUNT-ID",
+	"name": "custom-headers-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
 	"workers_dev": false,
-	"route": {
-		"pattern": "FILL-IN-YOUR-WEBSITE.com/*",
-		"zone_id": "FILL-IN-YOUR-ZONE-ID"
-	}
+	"routes": [
+		{
+			"pattern": "example.com/*",
+			"zone_name": "example.com"
+		}
+	]
 }
 ```
 
 </WranglerConfig>
 
-If you do not know how to find your Account ID and Zone ID, refer to [our guide](/fundamentals/account/find-account-and-zone-ids/).
-
-Once you have configured your [Wrangler configuration file](/pages/functions/wrangler-configuration/) , run `npx wrangler deploy` in your terminal to deploy your Worker:
+Once you have configured your [Wrangler configuration file](/workers/wrangler/configuration/), run `npx wrangler deploy` in your terminal to deploy your Worker:
 
 ```sh
 npx wrangler deploy
