@@ -8,7 +8,13 @@ products:
   - workers-ai
 ---
 
-import { Type, MetaInfo, WranglerConfig } from "~/components";
+import {
+	Type,
+	MetaInfo,
+	WranglerConfig,
+	TypeScriptExample,
+	PackageManagers,
+} from "~/components";
 
 ## Workers
 
@@ -30,6 +36,10 @@ To bind Workers AI to your Worker, add the following to the end of your Wrangler
 
 </WranglerConfig>
 
+If you use TypeScript, run [`wrangler types`](/workers/wrangler/commands/workers/#types) after adding the binding. The examples on this page use the generated `Env` type.
+
+<PackageManagers type="exec" pkg="wrangler" args="types" />
+
 ## Pages Functions
 
 [Pages Functions](/pages/functions/) allow you to build full-stack applications with Cloudflare Pages by executing code on the Cloudflare network. Functions are Workers under the hood.
@@ -40,39 +50,180 @@ To configure a Workers AI binding in your Pages Function, you must use the Cloud
 
 You can route binding calls through [AI Gateway](/ai-gateway/usage/providers/workersai/) to use its [spend limits](/ai-gateway/features/spend-limits/) and [rate limiting](/ai-gateway/features/rate-limiting/). These limits apply only to requests routed through the gateway.
 
-
 ### async env.AI.run()
 
-`async env.AI.run()` runs a model. Takes a model as the first parameter, and an object as the second parameter.
+`async env.AI.run()` runs a model. It takes a model ID as the first parameter, an input object as the second parameter, and an optional options object as the third parameter.
 
-```javascript
-const answer = await env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
-    prompt: "What is the origin of the phrase 'Hello, World'"
-});
+Gemma returns an OpenAI-compatible response. To read the first text result, check `choices[0]?.message.content` for a string:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request, env): Promise<Response> {
+		const result = await env.AI.run("@cf/google/gemma-4-26b-a4b-it", {
+			messages: [{ role: "user", content: "Explain Cloudflare Workers." }],
+		});
+		const text = result.choices[0]?.message.content;
+		if (typeof text !== "string") {
+			return Response.json(
+				{ error: "Workers AI did not return text." },
+				{ status: 502 },
+			);
+		}
+		return Response.json({ text });
+	},
+} satisfies ExportedHandler<Env>;
 ```
+
+</TypeScriptExample>
 
 **Parameters**
 
+- `model` <Type text="string" /> <MetaInfo text="required" />
+  - The model ID to run.
+- `inputs` <Type text="object" /> <MetaInfo text="required" />
+  - Model-specific input parameters, such as `messages`, `prompt`, or `text`.
+  - For models that support streaming, `stream: true` returns a `ReadableStream` of server-sent events (SSE).
+- `options` <Type text="AiOptions" /> <MetaInfo text="optional" />
+  - Request options such as `gateway`, `queueRequest`, `returnRawResponse`, or `signal`.
+  - Set `returnRawResponse: true` to receive the HTTP `Response` instead of the decoded model output.
 
+### Stream text generation
 
-* `model` <Type text="string" /> <MetaInfo text="required" />
+Pass the literal `stream: true` so TypeScript selects the `ReadableStream` overload. If streaming depends on a `boolean` variable, branch before calling `run()` and pass `stream: true` only in the streaming branch. A widened `boolean` does not select the streaming overload.
 
-  * The model to run.
+<TypeScriptExample filename="src/index.ts">
 
-  **Supported options**
+```ts
+export default {
+	async fetch(request, env): Promise<Response> {
+		const stream = await env.AI.run("@cf/google/gemma-4-26b-a4b-it", {
+			messages: [{ role: "user", content: "Explain Cloudflare Workers." }],
+			stream: true,
+		});
 
-  * `stream` <Type text="boolean" /> <MetaInfo text="optional" />
-    * Returns a stream of results as they are available.
-
-
-
-```javascript
-const answer = await env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
-    prompt: "What is the origin of the phrase 'Hello, World'",
-    stream: true
-});
-
-return new Response(answer, {
-    headers: { "content-type": "text/event-stream" }
-});
+		return new Response(stream, {
+			headers: { "content-type": "text/event-stream" },
+		});
+	},
+} satisfies ExportedHandler<Env>;
 ```
+
+</TypeScriptExample>
+
+## TypeScript and narrowing `env.AI.run()` return types
+
+Wrangler generates `Env` from your configuration and gets `AiModels` from its installed `workerd` runtime, not from the live model catalog. If a model is missing from `AiModels`, update Wrangler and rerun `wrangler types`. Make sure your [`tsconfig.json` includes `worker-configuration.d.ts`](/workers/languages/typescript/#generate-types).
+
+Use a model ID that TypeScript knows as a literal when you want model-specific types. A dynamic `string` can fall back to `Record<string, unknown>`. If TypeScript reports that a property does not exist on a union, check the result shape before reading the property instead of forcing the type with an assertion.
+
+### Narrow a native text response
+
+Llama 3.3 70B Fast uses the native Workers AI `response` field instead of Gemma's `choices` field. Its generated type also includes a plain string and a batch response. Check the shape before you read the text:
+
+<TypeScriptExample filename="src/text.ts">
+
+```ts
+export async function generateText(env: Env, prompt: string) {
+	const result = await env.AI.run("@cf/meta/llama-3.3-70b-instruct-fp8-fast", {
+		prompt,
+	});
+	if (typeof result === "string") {
+		return result;
+	}
+	if ("response" in result && typeof result.response === "string") {
+		return result.response;
+	}
+	throw new Error("Workers AI did not return text.");
+}
+```
+
+</TypeScriptExample>
+
+### Read structured output
+
+With [JSON Mode](/workers-ai/features/json-mode/) and an object schema, Llama 3.3 70B Fast returns the parsed object in `response`. Some generated model types describe `response` as a string. Treat the field as `unknown` and check the fields you need. Do not call `JSON.parse()` on an object.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request, env): Promise<Response> {
+		const result = await env.AI.run("@cf/meta/llama-3.3-70b-instruct-fp8-fast", {
+			prompt: "What is the capital of France?",
+			response_format: {
+				type: "json_schema",
+				json_schema: {
+					type: "object",
+					properties: { capital: { type: "string" } },
+					required: ["capital"],
+				},
+			},
+		});
+		const payload: unknown =
+			typeof result === "object" && result !== null && "response" in result
+				? result.response
+				: undefined;
+		if (
+			typeof payload !== "object" ||
+			payload === null ||
+			!("capital" in payload) ||
+			typeof payload.capital !== "string"
+		) {
+			return Response.json(
+				{ error: "Workers AI did not return a capital as a string." },
+				{ status: 502 },
+			);
+		}
+		return Response.json({ capital: payload.capital });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+### Narrow embedding responses
+
+For `@cf/baai/bge-base-en-v1.5`, the generated return type includes a batch response even when you call the model synchronously. Check for `data` and a non-empty first vector. A missing vector does not mean Workers AI queued a batch.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request, env): Promise<Response> {
+		const result = await env.AI.run("@cf/baai/bge-base-en-v1.5", {
+			text: ["Workers AI runs inference."],
+		});
+		const vector = "data" in result ? result.data?.[0] : undefined;
+		if (!vector?.length) {
+			return Response.json(
+				{ error: "Workers AI did not return an embedding vector." },
+				{ status: 502 },
+			);
+		}
+		return Response.json({ vector });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+### Submit a batch request
+
+To queue a batch, pass `requests` as the input and `{ queueRequest: true }` as the third argument. This overload returns a `request_id`, not the inference result. Use that ID to [poll for the batch result](/workers-ai/features/batch-api/workers-binding/#poll-batch-status).
+
+<TypeScriptExample filename="src/batch.ts">
+
+```ts
+export async function submitEmbeddingBatch(env: Env) {
+	const { request_id } = await env.AI.run(
+		"@cf/baai/bge-base-en-v1.5",
+		{ requests: [{ text: "First document" }, { text: "Second document" }] },
+		{ queueRequest: true },
+	);
+	return request_id;
+}
+```
+
+</TypeScriptExample>

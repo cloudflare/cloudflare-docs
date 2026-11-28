@@ -67,6 +67,8 @@ To bind Workers AI to your Worker, add the following to the end of your Wrangler
 
 Your binding is [available in your Worker code](/workers/reference/migrate-to-module-workers/#bindings-in-es-modules-format) on [`env.AI`](/workers/runtime-apis/handlers/fetch/).
 
+Run `npx wrangler types` to generate the `Env` type for your binding.
+
 {/* <!-- TODO update this once we know if we'll have it --> */}
 
 You can also bind Workers AI to a Pages Function. For more information, refer to [Functions Bindings](/pages/functions/bindings/#workers-ai).
@@ -75,17 +77,11 @@ You can also bind Workers AI to a Pages Function. For more information, refer to
 
 You are now ready to run an inference task in your Worker. In this case, you will use an LLM, [`gemma-4-26b-a4b-it`](/workers-ai/models/gemma-4-26b-a4b-it/), to answer a question.
 
-Update the `index.ts` file in your `hello-ai` application directory with the following code:
+Update `src/index.ts` in your `hello-ai` application directory with the following code:
 
-<TypeScriptExample filename="index.ts">
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
-export interface Env {
-	// If you set another name in the Wrangler config file as the value for 'binding',
-	// replace "AI" with the variable name you defined.
-	AI: Ai;
-}
-
 export default {
 	async fetch(request, env): Promise<Response> {
 		const response = await env.AI.run("@cf/google/gemma-4-26b-a4b-it", {
@@ -111,6 +107,12 @@ export default {
 </TypeScriptExample>
 
 Up to this point, you have created an AI binding for your Worker and configured your Worker to execute the Gemma 4 26B A4B model with reasoning disabled. You can now test your project locally before you deploy globally.
+
+:::tip[TypeScript return types]
+
+If a model's return type is a union, [narrow it before reading model-specific fields](/workers-ai/configuration/bindings/#typescript-and-narrowing-envairun-return-types).
+
+:::
 
 ## 4. Develop locally with Wrangler
 
