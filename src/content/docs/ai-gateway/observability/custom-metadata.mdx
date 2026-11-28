@@ -20,7 +20,9 @@ Custom metadata in AI Gateway allows you to tag requests with user IDs or other 
 
 :::note
 
-AI Gateway allows you to pass up to five custom metadata entries per request. If more than five entries are provided, only the first five will be saved; additional entries will be ignored. Ensure your custom metadata is limited to five entries to avoid unprocessed or lost data.
+AI Gateway saves up to 10 custom metadata entries per request, with a combined size of up to 12,288 bytes (12 KB), measured as the entries' UTF-8 encoded JSON. If a request has more than 10 entries, AI Gateway saves the first 10 and ignores the rest. If the saved entries are larger than 12,288 bytes, AI Gateway removes entries from the end until the rest fit. Keep your custom metadata within both limits to avoid lost data.
+
+Metadata that AI Gateway adds, such as [`cf.user_id`](#reserved-metadata), does not count toward either limit.
 
 :::
 
@@ -42,7 +44,7 @@ Metadata keys that begin with `cf.` are reserved for metadata added by Cloudflar
 
 When a request reaches AI Gateway through a custom domain protected by [Cloudflare Access](/ai-gateway/configuration/cloudflare-access/), AI Gateway adds the authenticated Access user ID to request metadata as `cf.user_id`. This value is the verified Access JWT `sub` claim, not the user's email address.
 
-AI Gateway guarantees that `cf.user_id` is saved when a valid Access user ID is present. If the request already has five custom metadata entries, AI Gateway may remove the last custom entry so `cf.user_id` can be saved. Service-token requests and requests without a user subject do not receive `cf.user_id` metadata.
+AI Gateway saves `cf.user_id` whenever a valid Access user ID is present. It is added on top of your custom metadata entries and does not replace any of them. Service-token requests and requests without a user subject do not receive `cf.user_id` metadata.
 
 ## Implementations
 
