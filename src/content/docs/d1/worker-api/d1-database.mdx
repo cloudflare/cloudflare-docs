@@ -8,7 +8,7 @@ products:
   - d1
 ---
 
-import { Type, MetaInfo, Details, Tabs, TabItem } from "~/components";
+import { Type, MetaInfo, Details, Tabs, TabItem, TypeScriptExample } from "~/components";
 
 To interact with your D1 database from your Worker, you need to access it through the environment bindings provided to the Worker (`env`).
 
@@ -35,7 +35,7 @@ A D1 binding has the type `D1Database`, and supports a number of methods, as lis
 
 ### `prepare()`
 
-Prepares a query statement to be later executed.
+Creates a prepared statement without executing it. D1 rejects [SQL transaction control statements](/d1/sql-api/sql-statements/#transactions) when you execute the statement, not when you call `prepare()`.
 
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
@@ -94,9 +94,9 @@ Refer to the [`bind` method documentation](/d1/worker-api/prepared-statements/#b
 
 ### `batch()`
 
-Sends multiple SQL statements inside a single call to the database. This can have a huge performance impact as it reduces latency from network round trips to D1. D1 operates in auto-commit. Our implementation guarantees that each statement in the list will execute and commit, sequentially, non-concurrently.
+Sends multiple SQL statements in one call to D1, reducing network round trips. D1 runs the statements in order in one [SQLite transaction](https://www.sqlite.org/lang_transaction.html) and commits them together. If a statement fails or D1 cannot commit the transaction, none of the changes in the batch take effect.
 
-Batched statements are [SQL transactions](https://www.sqlite.org/lang_transaction.html). If a statement in the sequence fails, then an error is returned for that specific statement, and it aborts or rolls back the entire sequence.
+D1 manages the transaction for you. Do not include [SQL transaction control statements](/d1/sql-api/sql-statements/#transactions) in a batch.
 
 To send batch statements, provide `D1Database::batch` a list of prepared statements and get the results in the same order.
 
@@ -259,6 +259,52 @@ print(stmt[1].results.to_py())
 	```
 	</TabItem> </Tabs>
 
+#### Multi-write atomic `batch()`
+
+Use `env.DB.batch([...])` when multiple dependent writes must commit or roll back together.
+
+This example inserts an order, writes a ledger entry, and debits an account in one `batch()` call. It uses whole credits and assumes `orders.account_id` references `accounts(id)` and `accounts.balance` uses `INTEGER NOT NULL CHECK (balance >= 0)`. If the account does not exist or the debit would make its balance negative, a constraint fails and D1 rolls back the batch.
+
+<TypeScriptExample>
+
+```ts
+export interface Env {
+	DB: D1Database;
+}
+
+async function placeOrder(
+	env: Env,
+	orderId: string,
+	accountId: string,
+	amount: number,
+): Promise<Response> {
+	if (!Number.isSafeInteger(amount) || amount <= 0) {
+		return Response.json(
+			{ error: "Amount must be a positive safe integer" },
+			{ status: 400 },
+		);
+	}
+
+	const results = await env.DB.batch([
+		env.DB.prepare(
+			"INSERT INTO orders (id, account_id, amount) VALUES (?, ?, ?)",
+		).bind(orderId, accountId, amount),
+		env.DB.prepare(
+			"INSERT INTO ledger (order_id, account_id, delta) VALUES (?, ?, ?)",
+		).bind(orderId, accountId, -amount),
+		env.DB.prepare(
+			"UPDATE accounts SET balance = balance - ? WHERE id = ?",
+		).bind(amount, accountId),
+	]);
+
+	return Response.json({ ok: true, results });
+}
+```
+
+</TypeScriptExample>
+
+An `UPDATE` whose `WHERE` clause matches no rows still succeeds. It does not cause D1 to roll back the batch. To check a condition and update a row in one statement, refer to [Conditional atomic updates](/d1/best-practices/query-d1/#conditional-atomic-updates).
+
 ### `exec()`
 
 Executes one or more queries directly without prepared statements or parameter bindings.
@@ -315,6 +361,7 @@ return Response.json(return_value)
 - This method can have poorer performance (prepared statements can be reused in some cases) and, more importantly, is less safe.
 - Only use this method for maintenance and one-shot tasks (for example, migration jobs).
 - The input can be one or multiple queries separated by `\n`.
+- Do not include [SQL transaction control statements](/d1/sql-api/sql-statements/#transactions). D1 rejects them when you call `exec()`.
 
 ### `dump`
 
