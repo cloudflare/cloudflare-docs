@@ -191,6 +191,10 @@ Keep your Worker and Durable Object code forward and backward compatible for as 
 - A `deferred` code update strategy is best effort. Cloudflare does not guarantee that every operation finishes or that an object keeps running its current code for the entire `max_delay`.
 - A code update strategy does not delay restarts unrelated to code updates, such as Workers runtime updates.
 
+A code update strategy controls when an object adopts new code. It does not pause requests or alarms. A request or alarm handler that started on an older version can continue running after the deployment completes.
+
+Alarms run independently of HTTP requests. Blocking requests at your Worker entrypoint does not stop scheduled alarms from running.
+
 ## Related resources
 
 - [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/)
