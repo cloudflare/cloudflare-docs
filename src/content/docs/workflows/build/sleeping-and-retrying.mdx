@@ -164,13 +164,13 @@ export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 
 The Workflow instance itself will fail immediately, no further steps will be invoked, and the Workflow will not be retried.
 
-If earlier steps registered rollback handlers, those handlers will still run before the instance settles into its terminal state.
+If earlier steps registered rollback handlers, Workflows attempts rollback before the instance reaches its terminal state.
 
 ## Register rollback handlers
 
 You can attach a rollback handler to `step.do()` to implement saga-style compensation. When the Workflow later fails, Workflows runs registered rollback handlers in reverse `step-start` order.
 
-A failed step with rollback options can also participate in rollback alongside any completed steps which have a rollback handler registered. For example, if a steps throws a `NonRetryableError` after registering rollback, its rollback handler runs with `output` set to `undefined`.
+A failed step with a registered rollback handler is also eligible for rollback, alongside completed steps with registered handlers.
 
 <TypeScriptExample>
 
@@ -214,9 +214,13 @@ export class OrderWorkflow extends WorkflowEntrypoint<Env> {
 Rollback handlers receive:
 
 - `error` - the error that caused the Workflow to fail.
-- `output` - the value returned by the forward step, or `undefined` if the step failed before returning
+- `output` - the saved result of the forward step, or `undefined` if the step has no saved result.
 
 You can use `rollbackConfig` to control retry behavior for the rollback handler. Throw a `NonRetryableError` from the rollback handler to stop retrying it immediately.
+
+Workflows runs rollback handlers one at a time. If a handler throws a `NonRetryableError` or runs out of retries, Workflows stops the current rollback run. When rollback ends with a handler failure, the instance reports `failed` in `rollback.outcome`.
+
+A step still in progress when the Workflow fails is eligible for rollback if it registered a handler. For example, an uncaught rejection from `Promise.all()` can fail the Workflow while another step is still in progress. If Workflows reaches that step's handler and the step has no saved result, the handler receives `output` set to `undefined`.
 
 ## Catch Workflow errors
 
