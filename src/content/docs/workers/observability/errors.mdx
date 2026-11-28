@@ -7,7 +7,7 @@ products:
   - workers
 ---
 
-import { TabItem, Tabs, DashButton } from "~/components";
+import { TabItem, Tabs, DashButton, Steps } from "~/components";
 
 Review Workers errors and exceptions.
 
@@ -20,8 +20,9 @@ When a Worker running in production has an error that prevents it from returning
 | Error code | Meaning                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `1101`     | Worker threw a JavaScript exception.                                                                                                                                                                                                                                                                                                                                                                                                        |
-| `1102`     | Worker exceeded [CPU time limit](/workers/platform/limits/#cpu-time).                                                                                                                                                                                                                                                                                                                                                                       |
+| `1102`     | Worker exceeded its [CPU time limit](/workers/platform/limits/#cpu-time) or [memory limit](/workers/platform/limits/#memory).                                                                                                                                                                                                                                                                                                               |
 | `1103`     | Worker execution is blocked. Check whether a [Workers spending limit](/workers/platform/spend-management/#what-stops-at-the-limit) was reached. If no spending limit explains the block, contact [Cloudflare Support](/support/contacting-cloudflare-support/).                                                                                                                                                                             |
+| `1105`     | Cloudflare could not get a usable response from the Workers runtime. Refer to [Error 1105: Temporarily unavailable](#error-1105-temporarily-unavailable).                                                                                                                                                                                                                                                                                   |
 | `1019`     | Worker hit [loop limit](#loop-limit).                                                                                                                                                                                                                                                                                                                                                                                                       |
 | `1021`     | Worker has requested a host it cannot access.                                                                                                                                                                                                                                                                                                                                                                                               |
 | `1022`     | Cloudflare has failed to route the request to the Worker.                                                                                                                                                                                                                                                                                                                                                                                   |
@@ -31,6 +32,24 @@ When a Worker running in production has an error that prevents it from returning
 | `10162`    | Module has an unsupported Content-Type.                                                                                                                                                                                                                                                                                                                                                                                                     |
 
 Other `11xx` errors generally indicate a problem with the Workers runtime itself. Refer to the [status page](https://www.cloudflarestatus.com) if you are experiencing an error.
+
+### Error 1105: Temporarily unavailable
+
+Cloudflare can return error `1105` with HTTP `503` when the Workers runtime reports that it could not serve the request or Cloudflare does not receive a usable response from the runtime.
+
+A request to a deployed Worker can fail before the handler starts if:
+
+- The runtime gives up waiting for a Worker instance to finish loading.
+- The runtime encounters an uncaught exception while evaluating the Worker's top-level code. For example, an imported dependency throws, or top-level code calls `JSON.parse()` on invalid configuration. If Cloudflare catches the exception during upload validation instead, the upload fails with [error `10021`](#validation-errors-10021).
+
+If the handler never starts, there may be no invocation log. Error `1105` alone does not tell you whether the Worker hit a CPU or memory limit.
+
+<Steps>
+
+1. Confirm that the response includes Cloudflare error code `1105`. If you see only HTTP `503`, refer to [HTTP 503 troubleshooting](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-503/).
+2. If there is no matching [invocation log](/workers/observability/logs/workers-logs/#invocation-logs), verify that invocation logs were turned on for the deployed version and that the request falls within the selected time range. [Sampling](/workers/observability/logs/workers-logs/#head-based-sampling) and [log retention](/workers/observability/logs/workers-logs/#limits) can also explain a missing log. A missing log alone does not tell you whether the handler ran.
+
+</Steps>
 
 ### Loop limit
 
@@ -248,13 +267,13 @@ To inherit a binding from a specific version, use the [Versions](/api/resources/
 
 ## Runtime errors
 
-Runtime errors will occur within the runtime, do not throw up an error page, and are not visible to the end user. Runtime errors are detected by the user with logs.
+The following runtime messages and outcomes can help you investigate a Worker failure. They are distinct from the [codes on Cloudflare error pages](#error-pages-generated-by-workers).
 
 | Error message                                            | Meaning                                                                                                          |
 | -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
 | `Network connection lost`                                | Connection failure. Catch a `fetch` or binding invocation and retry it.                                          |
 | `Memory limit`<br/>`would be exceeded`<br/> `before EOF` | Trying to read a stream or buffer that would take you over the [memory limit](/workers/platform/limits/#memory). |
-| `daemonDown`                                             | A temporary problem invoking the Worker.                                                                         |
+| `daemonDown`                                             | The runtime could not serve the request. Refer to [error 1105](#error-1105-temporarily-unavailable).             |
 
 ## Identify errors: Workers Metrics
 
