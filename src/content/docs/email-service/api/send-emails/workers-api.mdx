@@ -81,6 +81,8 @@ interface EmailSendResult {
 // try { await env.EMAIL.send(...) } catch (e) { console.log(e.code, e.message) }
 ```
 
+To track delivery after a successful send, use [Queues delivery events](#track-delivery-with-queues-events).
+
 :::note[Local development with binary attachments]
 When using `wrangler dev` without [remote bindings](/workers/local-development/#remote-bindings), `ArrayBuffer` and `ArrayBufferView` content in attachments cannot be serialized by the local simulator. Refer to [local development for email sending](/email-service/observability/local-development/sending/#known-limitations).
 :::
@@ -122,7 +124,15 @@ const response = await env.EMAIL.send({
 
 For inline images and file uploads, refer to [Email attachments](/email-service/examples/email-sending/email-attachments/).
 
+## Track delivery with Queues events
+
+A successful send means the message was accepted for sending. To track what happens next, configure [Email Sending event subscriptions](/email-service/reference/event-subscriptions/) to publish delivery events to a [Cloudflare Queue](/queues/event-subscriptions/).
+
+Use the [Email Sending event schemas](/queues/event-subscriptions/events-schemas/#email-sending) to handle `message.delivered`, `message.deferred`, and `message.bounced`. Match `payload.messageId` in each event to the `messageId` returned by `send()`. These events cover Email Sending, rather than Email Routing deliveries to verified recipients.
+
 ## Error handling
+
+For delivery failures, check [Email Service logs](/email-service/observability/logs/).
 
 Handle email sending errors gracefully:
 
