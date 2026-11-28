@@ -34,8 +34,8 @@ To get the token for a remotely-managed tunnel:
    <DashButton url="/?to=/:account/tunnels" />
 
 2. Select your tunnel.
-3. Select **Add a replica**.
-3. Copy the `cloudflared` installation command into a text editor (do not run the command). The token is the `eyJ...` string.
+3. On the **Overview** tab, go to the **Tunnel token** card. The token is masked by default.
+4. Copy the token. You can also reveal it to view the `eyJ...` string.
 
 </TabItem>
 <TabItem label="API">
@@ -57,9 +57,11 @@ Rotate tokens regularly to reduce the risk of compromise. For tunnels with multi
    <DashButton url="/?to=/:account/tunnels" />
 
 2. Select your tunnel.
-3. Select **Rotate token**.
-	After rotating the token, `cloudflared` cannot establish new connections with the old token. Existing connectors remain active until restarted.
-4. Select **Add replica** and copy the new `cloudflared` installation command.
+3. On the **Overview** tab, in the **Tunnel token** card, select **Rotate token**.
+4. Select **Rotate token** to confirm, then copy the new token from the dialog.
+
+	After rotating the token, `cloudflared` cannot establish new connections with the old token. Replicas that are already connected stay active until they restart or are disconnected.
+
 5. On each replica, reinstall the `cloudflared` service using the new token:
 
 	```sh
@@ -69,13 +71,24 @@ Rotate tokens regularly to reduce the risk of compromise. For tunnels with multi
 
 <Details header="Rotate a compromised token">
 
-If your tunnel token is compromised, immediately [rotate the token](#rotate-a-token), then force-disconnect all existing connections:
+If your tunnel token is compromised, rotate the token and disconnect every replica at the same time. Traffic through the tunnel stops until you reinstall your replicas with the new token.
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Networking** > **Tunnels**.
+
+   <DashButton url="/?to=/:account/tunnels" />
+
+2. Select your tunnel.
+3. On the **Overview** tab, in the **Tunnel token** card, select **Rotate token**.
+4. Select **Also disconnect existing replicas**, then select **Rotate token** to confirm.
+5. Copy the new token from the dialog, and reinstall the `cloudflared` service on all replicas using the new token.
+
+To do the same with the API, [rotate the token](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/remote-tunnel-permissions/#rotate-a-token-without-service-disruption), then disconnect every replica:
 
 <APIRequest
 	path="/accounts/{account_id}/cfd_tunnel/{tunnel_id}/connections"
 	method="DELETE"
 />
 
-Then reinstall the `cloudflared` service on all replicas using the new token.
+To disconnect replicas without rotating the token, refer to [Disconnect replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/remote-tunnel-permissions/#disconnect-replicas).
 
 </Details>
