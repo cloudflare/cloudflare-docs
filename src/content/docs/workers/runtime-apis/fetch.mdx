@@ -92,6 +92,16 @@ class Default(WorkerEntrypoint):
 
 Cache Rules can also affect `fetch()` requests to external APIs. Refer to [Workers and Cache Rules](/cache/interaction-cloudflare-products/workers-cache-rules/) for precedence and compatibility requirements.
 
+## Outbound request timeouts
+
+A proxy forwards a request to another server. A proxy timeout limits how long the proxy waits for that server.
+
+For example, if your Worker calls `fetch()` on a [Cloudflare-proxied hostname](/dns/proxy-status/#proxied-records), Cloudflare can forward the subrequest to the destination's origin. If Cloudflare connects to the origin but does not receive a response before the [Proxy Read Timeout](/fundamentals/reference/connection-limits/#between-cloudflare-and-origin-server), it returns [Error 524](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-524/) to `fetch()`. This timeout applies to the proxied request, not to the [duration of the Worker invocation](/workers/platform/limits/#duration).
+
+Your Worker's response to the client can differ from the response it receives from `fetch()`. For example, if `fetch()` receives a `524`, your Worker can return a cached response to the client instead. To check the status and duration of the subrequest separately, inspect the `fetch()` span in [Workers Traces](/workers/observability/traces/).
+
+If you change the Proxy Read Timeout for a Cloudflare zone, the change affects only requests that zone proxies. Check which zone handles the subrequest rather than assuming it is the same zone that received the request to your Worker.
+
 ---
 
 ## How the `Accept-Encoding` header is handled

@@ -18,7 +18,6 @@ The error `524` occurs if the origin web server acknowledges (ACK) the resource 
 
 Error `524` can also indicate that Cloudflare successfully connected to the origin web server to write data, but the write did not complete before the 30 seconds [Proxy Write Timeout](/fundamentals/reference/connection-limits/) (or 6.5 seconds in the case of [Cloudflare Images](/images/)). This timeout cannot be adjusted.
 
-
 ### Resolution at your origin
 
 Here are the options we suggest to work around this issue:
@@ -49,6 +48,8 @@ Here are some other actions you can take on the Cloudflare side:
 Note that you may observe a 1 second difference between the timeout you have set and the actual time at which the Error `524` is returned. This is expected, it is due to the current work on implementing our proxy - [Pingora](https://blog.cloudflare.com/how-we-built-pingora-the-proxy-that-connects-cloudflare-to-the-internet/).
 As a workaround, you can simply set the timeout to one second more (126 seconds instead of 125 seconds, for example).
 :::
+
+If your Worker receives a `524` in response to a `fetch()` call, refer to [Outbound request timeouts](/workers/runtime-apis/fetch/#outbound-request-timeouts).
 
 ### Diagnose with Origin Analytics
 
