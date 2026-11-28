@@ -88,6 +88,10 @@ Clone the [cloudflare/skills](https://github.com/cloudflare/skills) repository a
 | OpenAI Codex | `~/.codex/skills/`           | [OpenAI Codex skills](https://developers.openai.com/codex/skills/)                                   |
 | Pi           | `~/.pi/agent/skills/`        | [Pi coding agent skills](https://github.com/badlogic/pi-mono/tree/main/packages/coding-agent#skills) |
 
+### Limitations
+
+The Cloudflare API MCP server overwrites the `Authorization` header on requests to `api.cloudflare.com` with its own connection credential. Steps that require a separate per-session bearer token — such as uploading missing Workers Static Assets files with a session upload JWT — cannot run inside `execute`. For details and both session branches, refer to [Direct Uploads](/workers/static-assets/direct-upload/#upload-static-assets).
+
 ## Product-specific MCP servers
 
 The following product-specific MCP servers are available for targeted use cases. These are **optional** — the [Cloudflare API MCP server](#cloudflare-api-mcp-server) already covers the full Cloudflare API. Most people should just use the main Cloudflare API MCP server.

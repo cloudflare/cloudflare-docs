@@ -155,6 +155,12 @@ The provided `Content-Type` header of each file part will be attached when event
 
 The `Authorization` header must be provided as a bearer token, using the JWT (upload token) from the aforementioned manifest upload call.
 
+:::caution[Cloudflare API MCP server limitation]
+If the manifest upload session returns files to upload (`buckets` is non-empty), use the deployment CLI (such as Wrangler) or run the direct-upload requests in your own HTTP client. The [Cloudflare API MCP server](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/#cloudflare-api-mcp-server) overwrites the `Authorization` header with its own connection credential, while this step requires `Authorization: Bearer <UPLOAD_TOKEN>` with the session upload JWT. Do not broaden your account API token or paste the upload JWT into chat.
+
+When `buckets` is empty, skip this file-upload step and pass the returned completion JWT in the Worker upload metadata (`assets.jwt`), not as an `Authorization` header.
+:::
+
 Once every file in the manifest has been uploaded, a status code of 201 will be returned, with the `jwt` field present. This JWT is a final "completion" token used to attach this asset set to a Worker version. This completion token is valid for 1 hour.
 
 The completion token confirms that asset upload is complete. You must still attach the assets to a Worker version and deploy it to receive production traffic. The deployment change takes time to reach every location on the network.
