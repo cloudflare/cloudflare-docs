@@ -1,0 +1,113 @@
+---
+title: Share files with Cloudflare
+pcx_content_type: how-to
+description: Send large files, such as a Letter of Agency, to Cloudflare Support or your account team using R2.
+products:
+  - support
+  - r2
+sidebar:
+  order: 3
+---
+
+import { DashButton, Steps } from "~/components";
+
+Support cases accept attachments up to 20 MB and a fixed list of file types.
+Refer to [Accepted attachment file formats](/support/contacting-cloudflare-support/#accepted-attachment-file-formats).
+
+To send a [Letter of Agency (LOA)](/byoip/concepts/loa/) or another large file
+to your Cloudflare account team, you can use an R2 bucket. This is useful when
+email blocks the attachment, or when you want a time-limited download link.
+
+R2 keeps the file in your own Cloudflare account. You control who can download
+it, and you can remove access at any time.
+
+## Prerequisites
+
+- An R2 subscription on your Cloudflare account.
+- Cloudflare One on the same account. The free plan is sufficient.
+- A domain in the same Cloudflare account as the bucket.
+
+## Share a file
+
+Cloudflare Access restricts downloads to the email addresses you list. Access
+records each login.
+
+:::caution
+
+Leave the **Public Development URL** off for an LOA or any legal document. A
+public bucket lets anyone with the URL download the file.
+
+:::
+
+<Steps>
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and go to
+   the **R2** page.
+
+   <DashButton url="/?to=/:account/r2/overview" />
+
+2. Select **Create bucket**, enter a name, and keep the default private access.
+
+3. Add the One-time PIN login method. Go to **Zero Trust** > **Integrations** >
+   **Identity providers** and select **One-time PIN**.
+
+   <DashButton url="/?to=/:account/integrations/identity-providers/add" zeroTrust />
+
+4. Create the Access application before you connect the domain. Go to
+   **Access controls** > **Applications**, select **Create new application**,
+   and choose **Self-hosted and private**.
+
+   <DashButton url="/?to=/:account/access/apps/self-hosted" zeroTrust />
+
+5. Enter a hostname in your zone, for example `files.example.com`.
+
+6. Add an **Allow** policy. Select **Emails**, then add the addresses of your
+   Cloudflare account team.
+
+7. Connect the hostname to the bucket. Go to the bucket **Settings** page and
+   add the hostname as a custom domain.
+
+   <DashButton url="/?to=/:account/r2/:bucket/settings" />
+
+8. Upload the file to the bucket, then send the file URL to your account team,
+   for example `https://files.example.com/LOA.pdf`. R2 does not list the bucket
+   contents, so always send the exact file URL.
+
+</Steps>
+
+## Remove access
+
+After your account team confirms receipt, remove the file and the access.
+
+<Steps>
+1. Delete the object. Go to **R2** > your bucket, select the file, and select
+   **Delete**.
+2. Delete the Access application, or remove the email addresses from the policy.
+3. Delete the bucket. Go to **R2** > your bucket > **Settings** > **Delete bucket**.
+</Steps>
+
+## Cost
+
+R2 includes this usage each month at no cost:
+
+| Resource           | Free tier           |
+| ------------------ | ------------------- |
+| Standard storage   | 10 GB-month         |
+| Class A operations | 1 million requests  |
+| Class B operations | 10 million requests |
+| Egress             | Free                |
+
+The free tier applies to Standard storage only. For more information, refer to
+[R2 pricing](/r2/pricing/).
+
+Delete the bucket after your account team confirms receipt. Deleting objects and
+buckets is free. Charges can apply if you keep data above the free tier limits.
+
+## Notes
+
+- A one-time PIN is single-use and expires after 10 minutes.
+- Access sends PIN emails from `noreply@notify.cloudflare.com`. If a PIN does not
+  arrive, ask the recipient to check the spam filter.
+- Each person who logs in uses one Cloudflare One seat.
+- To share a single file without a login, use a
+  [presigned URL](/r2/api/s3/presigned-urls/) instead. Anyone with the link can
+  download the file until it expires, up to 7 days.
