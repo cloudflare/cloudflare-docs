@@ -11,6 +11,12 @@ products:
 
 import { PackageManagers, Steps, WranglerConfig } from "~/components";
 
+:::note[Effect UI preview]
+This guide applies to Foldkit 0.x. Its frontend successor, [Effect UI](https://ui.effect.website/), is in public preview.
+
+See how the [Effect UI launch site deploys to Workers](https://github.com/Effect-TS/ui/blob/main/examples/launch).
+:::
+
 [Foldkit](https://foldkit.dev/) supports single-page applications (SPA), static site generation (SSG), and server-side rendering (SSR). Each mode uses [Workers Assets](/workers/static-assets/) to serve browser files. SSR also runs a Worker `fetch` handler.
 
 You need Node.js 22.22.2 or newer and a Cloudflare account.
