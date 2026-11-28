@@ -1,0 +1,20 @@
+---
+{}
+---
+
+:::caution[Browser WebSockets hide HTTP handshake errors]
+
+When a Worker or Durable Object rejects a WebSocket upgrade with an HTTP error, the browser hides the HTTP status code and response body from client JavaScript. The browser fires a generic `error` event, then a `close` event with code `1006` (abnormal closure) and an empty `reason`.
+
+:::
+
+Network failures can also result in `1006`, so the code does not tell your client whether retrying will help. When your client needs a machine-readable failure reason, use one of these patterns:
+
+| Pattern                               | How it works                                                                                                                                                                                                                 | When to use                                                                               |
+| ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| Check over HTTP first                 | Call a regular HTTP endpoint with `fetch()` before opening the WebSocket. Browser JavaScript can inspect the HTTP status code and response body.                                                                             | Pre-connection checks such as validating a session or minting a short-lived join ticket.  |
+| Accept, then close with `4000`–`4999` | Accept the server WebSocket, immediately call [`server.close(code, reason)`](/workers/runtime-apis/websockets/#close) with a private-use code and a UTF-8 reason of at most 123 bytes, and return `101 Switching Protocols`. | Application failures that the browser's `close` handler needs to distinguish from `1006`. |
+
+Reject the upgrade with an HTTP error when authentication or authorization fails. If the browser needs details, use a separate HTTP check.
+
+If the server accepts and immediately closes the connection, the browser fires `open` before `close`. The `open` event confirms the upgrade, not that your application admitted the client.

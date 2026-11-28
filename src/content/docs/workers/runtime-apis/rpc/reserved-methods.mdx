@@ -28,6 +28,8 @@ On the client side, `fetch()` called on a service binding or Durable Object stub
 
 Some properties of `Request` control the behavior of `fetch()` on the client side and are not actually sent to the server. For example, the property `redirect: "auto"` (which is the default) instructs `fetch()` that if the server returns a redirect response, it should automatically be followed, resulting in an HTTP request to the public internet. Again, this behavior is according to the Fetch API standard. In short, `fetch()` doesn't have RPC semantics, it has Fetch API semantics.
 
+For ordinary Worker-to-Worker, Worker-to-Durable Object, and Durable Object-to-Durable Object calls, define typed RPC methods. Typed RPC methods can pass [requests, responses, and byte streams](/workers/runtime-apis/rpc/#readablestream-writablestream-request-and-response), but they cannot return a `Response` with an attached WebSocket. To forward a [WebSocket upgrade](/durable-objects/best-practices/websockets/) over a service binding or Durable Object stub, use `fetch()`. Refer to [Combine `fetch()` upgrades with RPC methods](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/#combine-fetch-upgrades-with-rpc-methods) for an example.
+
 ### `connect()`
 
 The `connect()` method is reserved for handling a raw socket connection. Implement it on a `WorkerEntrypoint` or `DurableObject` to receive a [`Socket`](/workers/runtime-apis/tcp-sockets/#socket).

@@ -8,6 +8,8 @@ products:
   - workers
 ---
 
+import { Render, TypeScriptExample } from "~/components";
+
 ## Background
 
 WebSockets allow you to communicate in real time with your Cloudflare Workers serverless functions. For a complete example, refer to [Using the WebSockets API](/workers/examples/websockets/).
@@ -111,7 +113,7 @@ If you provide a reason, also provide a code. Otherwise, `close()` throws an `In
 
 The runtime validates arguments before checking the connection state. These errors can also occur when the WebSocket is already closing or closed.
 
-For automatic replies to Close frames, refer to [Close behavior](#close-behavior).
+For automatic replies to Close frames, refer to [Close behavior](#close-behavior). To send an application-defined failure reason to a browser after accepting an upgrade, refer to [Communicate errors to browser WebSocket clients](#communicate-errors-to-browser-websocket-clients).
 
 
 
@@ -235,6 +237,40 @@ The receive-only `CLOSING` case applies to manual-reply and half-open modes, and
 When a hibernatable WebSocket receives a Close frame, reply with `ws.close()` in `webSocketClose()`, unless you have already closed the outgoing side. This is required even when `web_socket_auto_reply_to_close` is enabled. Before your reply, `readyState` is `CLOSING`; afterward, it is `CLOSED`. An abnormal disconnection reported as `1006` has no Close frame to acknowledge.
 
 Before accepting the server side of a `WebSocketPair`, `send()` throws `TypeError`. A `close()` call with valid arguments also throws `TypeError`. Call `accept()` or `DurableObjectState.acceptWebSocket()` first.
+
+### Communicate errors to browser WebSocket clients
+
+<Render file="browser-websocket-errors" product="workers" />
+
+The following Worker supports `?mode=live`. To see the failure path, connect with `?mode=replay`: the Worker upgrades the connection, then closes it with `4001` and `unsupported_mode`.
+
+<TypeScriptExample>
+```ts
+const CLOSE_UNSUPPORTED_MODE = 4001;
+
+export default {
+	async fetch(request: Request): Promise<Response> {
+		if (request.headers.get("Upgrade") !== "websocket") {
+			return new Response("Expected Upgrade: websocket", { status: 426 });
+		}
+
+		const mode = new URL(request.url).searchParams.get("mode");
+		const [client, server] = Object.values(new WebSocketPair());
+		server.accept();
+		if (mode !== "live") {
+			server.close(CLOSE_UNSUPPORTED_MODE, "unsupported_mode");
+		}
+
+		return new Response(null, {
+			status: 101,
+			webSocket: client,
+		});
+	},
+} satisfies ExportedHandler;
+```
+</TypeScriptExample>
+
+For a Durable Object example, refer to [communicating errors with the Hibernation WebSocket API](/durable-objects/best-practices/websockets/#communicate-errors-to-browser-websocket-clients).
 
 ### Half-open mode for proxying
 
