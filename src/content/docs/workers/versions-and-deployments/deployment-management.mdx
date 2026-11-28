@@ -81,11 +81,27 @@ You can also create versions and deployments directly with the API, library SDKs
 
 A deployment changes which versions receive new requests. Requests already executing can continue running the version that accepted them. Deploying new code does not update code in an invocation that has already started.
 
-A successful deployment does not confirm that earlier invocations or their external operations have completed. If a release requires earlier work to finish, coordinate that in your application before making incompatible data or configuration changes.
+Even at 100% rollout, a successful deployment does not confirm that earlier invocations or their external operations have completed. If a release requires earlier work to finish, coordinate that in your application before making incompatible data or configuration changes.
 
 Existing requests remain subject to the [invocation duration rules](/workers/platform/limits/#duration) and [`ctx.waitUntil()` limits](/workers/runtime-apis/context/#waituntil). The grace period for [Workers runtime updates](/workers/platform/limits/#runtime-updates) applies when Cloudflare updates the runtime, rather than when you deploy your code.
 
 Durable Objects have separate [code update behavior](/durable-objects/deployments/durable-objects-code-updates/).
+
+### Storage changes
+
+Add the new schema or storage location without breaking the old version. Keep reads and writes compatible with both versions while you copy the data. Verify the new data before relying on it.
+
+If both versions cannot safely share storage, stop new work on every affected path, including background jobs and direct clients. Confirm that in-flight operations have finished before making the change. Resume work only with versions that support the change.
+
+Before removing the old schema or storage location, confirm that in-flight writes to it have finished and no readers or writers still need it. Keep a rollback version that works without it. A [Worker rollback](/workers/versions-and-deployments/rollbacks/) does not undo storage changes.
+
+For D1, use [migrations](/d1/reference/migrations/) to change the database schema. If you only need to rename a field in your API, map the new field name to the existing column instead.
+
+For R2 objects that you never overwrite or delete, deploy readers that check the new bucket first. Fall back to the old bucket only when the object is missing, not on other read errors. Once all readers can use both buckets, send new writes to the new bucket.
+
+After writes to the old bucket have finished, use [Super Slurper](/r2/data-migration/super-slurper/) to copy the remaining objects with **Overwrite files?** set to **Skip**. Verify the destination before removing the fallback.
+
+If you overwrite or delete objects, pause writes and deletes during the move or use a migration that reconciles new objects, overwrites, and deletes.
 
 ## Limits
 
