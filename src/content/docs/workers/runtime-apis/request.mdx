@@ -118,6 +118,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 * `cacheKey` <Type text="string" /> <MetaInfo text="optional" />
 
   * A request’s cache key is what determines if two requests are the same for caching purposes. If a request has the same cache key as some previous request, then Cloudflare can serve the same cached response for both.
+  * On outgoing `fetch()` subrequests, custom `cacheKey` overrides require an Enterprise plan (refer to [Cache Keys](/cache/how-to/cache-keys/)). On [Workers Cache](/workers/cache/cache-keys/) subrequests through `ctx.exports`, `cf.cacheKey` is available on all plans.
 
 * `cacheTags` Array\<string> optional
 
